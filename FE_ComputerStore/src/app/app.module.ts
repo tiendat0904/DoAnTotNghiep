@@ -52,6 +52,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './net/jwt.interceptor';
 import { ProfileComponent } from './views/profile/profile/profile.component';
 import { environment } from '../environments/environment';
+import { SupplierComponent } from './views/admin/supplier/supplier/supplier.component';
+import { UpdateSupplierComponent } from './views/admin/supplier/update-supplier/update-supplier.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.component';
+import { UpdateTrademarkComponent } from './views/admin/trademark/update-trademark/update-trademark/update-trademark.component';
+import { UpdateProductComponent } from './views/admin/product/update-product/update-product.component';
+import { ProductComponent } from './views/admin/product/product/product.component';
 
 @NgModule({
   imports: [
@@ -81,7 +89,9 @@ import { environment } from '../environments/environment';
 		  }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    NgbPaginationModule,
+    Ng2SearchPipeModule,
   ],
   declarations: [
     AppComponent,
@@ -90,7 +100,13 @@ import { environment } from '../environments/environment';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    SupplierComponent,
+    UpdateSupplierComponent,
+    TrademarkComponent,
+    UpdateTrademarkComponent,
+    ProductComponent,
+    UpdateProductComponent
   ],
   providers: [
     {

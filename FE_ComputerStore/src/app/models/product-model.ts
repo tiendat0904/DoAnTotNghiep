@@ -4,5 +4,6 @@ export interface productModel{
     trademark_id?: bigint,
     product_type_id?: bigint,
     price?: number,
-    amount?: number
+    amount?: number,
+    checked?: boolean
  }

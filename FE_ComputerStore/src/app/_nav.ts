@@ -3,7 +3,7 @@ import { INavData } from '@coreui/angular';
 export const navItems: INavData[] = [
   {
     name: 'Dashboard',
-    url: '/dashboard',
+    url: '/admin/dashboard',
     icon: 'icon-speedometer',
     badge: {
       variant: 'info',
@@ -18,6 +18,21 @@ export const navItems: INavData[] = [
     name: 'Colors',
     url: '/admin/theme/colors',
     icon: 'icon-drop'
+  },
+  {
+    name: 'Nhãn hiệu',
+    url: '/admin/trademark',
+    icon: 'icon-star'
+  },
+  {
+    name: 'Nhà cung cấp',
+    url: '/admin/supplier',
+    icon: 'icon-handbag'
+  },
+  {
+    name: 'Sản phẩm',
+    url: '/admin/product',
+    icon: 'icon-rocket'
   },
   {
     name: 'Typography',
@@ -225,7 +240,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Disabled',
-    url: '/dashboard',
+    url: '/admin/dashboard',
     icon: 'icon-ban',
     badge: {
       variant: 'secondary',

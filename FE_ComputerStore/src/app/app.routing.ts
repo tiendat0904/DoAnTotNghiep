@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
+import { ProductComponent } from './views/admin/product/product/product.component';
+import { SupplierComponent } from './views/admin/supplier/supplier/supplier.component';
+import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.component';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
@@ -65,7 +68,7 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard',
-        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () => import('./views/admin/dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
         path: 'icons',
@@ -86,6 +89,18 @@ export const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'supplier',
+        component: SupplierComponent,
+      },
+      {
+        path: 'trademark',
+        component: TrademarkComponent,
+      },
+      {
+        path: 'product',
+        component: ProductComponent,
       },
     ]
   },

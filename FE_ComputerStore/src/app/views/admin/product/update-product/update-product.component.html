@@ -1,0 +1,166 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
+        
+  
+        <div class="form-group">
+          <label>Tên sản phẩm</label>
+          <input
+            type="text"
+            name=""
+            class="form-control"
+            formControlName="product_name"
+            id="product_name"
+          />
+          <div *ngIf="submitted && formGroup.controls['product_name'].errors?.required">
+            <div
+              *ngIf="formGroup.controls['product_name'].errors?.required"
+              style="color: red"
+            >
+              * Tên sản phẩm không được để trống
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Loại sản phẩm</label>
+          <select class="form-control" name="" formControlName="product_type_id" id="" placeholder="Hãy chọn loại sản phẩm">
+            <option *ngFor="let e of arraylist_product_type" value="{{e.product_type_id}}">{{e.product_type_name}}</option>
+          </select>
+          <div *ngIf="submitted && formGroup.controls['product_type_id'].errors?.required">
+            <div
+              *ngIf="formGroup.controls['product_type_id'].errors?.required"
+              style="color: red"
+            >
+              * Loại sản phẩm không được để trống
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Thương hiệu</label>
+          <select class="form-control" name="" formControlName="trademark_id" id="" placeholder="Hãy chọn thương hiệu">
+            <option *ngFor="let e of arraylist_trademark" value="{{e.trademark_id}}">{{e.trademark_name}}</option>
+          </select>
+          <div *ngIf="submitted && formGroup.controls['trademark_id'].errors?.required">
+            <div
+              *ngIf="formGroup.controls['trademark_id'].errors?.required"
+              style="color: red"
+            >
+              * Mã thương hiệu không được để trống
+            </div>
+          </div>
+        </div>
+  
+        <!-- <div class="form-group">
+          <label>Địa chỉ</label>
+          <input
+            type="text"
+            name=""
+            class="form-control"
+            formControlName="dia_chi"
+            id="dia_chi"
+          />
+          <div *ngIf="submitted && formGroup.controls['dia_chi'].errors?.required">
+            <div
+              *ngIf="formGroup.controls['dia_chi'].errors?.required"
+              style="color: red"
+            >
+              * địa chỉ không được để trống
+            </div>
+          </div>
+        </div> -->
+        
+        <!-- <div class="form-group">
+          <label>Hotline</label>
+          <input
+            type="text"
+            name=""
+            class="form-control"
+            formControlName="hot_line"
+            id="hot_line"
+          />
+        </div> -->
+        
+        <!-- <div class="form-group">
+          <label>Email</label>
+          <input
+            type="text"
+            name=""
+            class="form-control"
+            formControlName="email"
+            id="email"
+          />
+        </div> -->
+        
+        <!-- <div class="form-group">
+          <label>Số điện thoại</label>
+          <input
+            type="text"
+            name=""
+            class="form-control"
+            formControlName="so_dien_thoai"
+            id="so_dien_thoai"
+          />
+          <div *ngIf="submitted && formGroup.controls['so_dien_thoai'].errors?.required">
+            <div
+              *ngIf="formGroup.controls['so_dien_thoai'].errors?.required"
+              style="color: red"
+            >
+              * số điện thoại không được để trống
+            </div>
+          </div>
+        </div> -->
+        
+        <!-- <div class="form-group">
+            <label>Hình ảnh</label>
+              <div class="profile-img">
+                <img [src]="urlPictureDefault"   alt="Ảnh đại diện" />
+              </div>
+              <div [hidden]="isInfo" id="profile-input" class="file btn btn-lg btn-primary">
+                      Change Photo
+                      <input type="file"  formControlName="image" (change)="uploadImage($event)" name="file"/>
+              </div>
+              <div *ngIf="submitted && formGroup.controls['image'].errors?.required">
+              <div
+                *ngIf="formGroup.controls['image'].errors?.required"
+                style="color: red"
+              >
+                * Hình ảnh thương hiệu không được để trống
+              </div>
+            </div>
+          </div> -->
+        
+        <div class="form-group" align="center">
+          <button
+            [hidden]="checkButton"
+            type="submit"
+            class="btn btn-success"
+            style="width: 100px;height:38px; background:'green';"
+            *ngIf="isEdit || isAdd"
+          >
+            Lưu
+          </button>
+          <button
+            class="btn btn-danger"
+            style="width: 100px"
+            (click)="modal.dismiss('Cross click')"
+          >
+            Thoát
+          </button>
+        </div>
+       
+      </form>
+    </div>
+  </ng-template>
