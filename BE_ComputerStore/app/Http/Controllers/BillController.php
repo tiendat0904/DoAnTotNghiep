@@ -46,7 +46,7 @@ class BillController extends Controller
             $objs = DB::table(self::table)
                 ->leftJoin(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
                 ->leftJoin(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
-                ->select(self::table . '.*', 'emp.' . AccountConTroller::full_name . ' as employ_name', 'cus.' . AccountConTroller::full_name . ' as cus_name')
+                ->select(self::table . '.*', 'emp.' . AccountConTroller::full_name . ' as employee_name', 'cus.' . AccountConTroller::full_name . ' as customer_name')
                 ->get();
             $code = 200;
 
@@ -107,11 +107,10 @@ class BillController extends Controller
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $objs = DB::table(self::table)
-                ->leftJoin(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
-                ->leftJoin(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
-                ->select(self::table . '.*', 'emp.' . AccountConTroller::full_name . ' as employ_name', 'cus.' . AccountConTroller::full_name . ' as cus_name')
-                ->where(self::table . '.' . self::id, '=', $id)
-                ->get();
+                ->Join(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
+                ->Join(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
+                ->select(self::table . '.*', 'emp.' . AccountConTroller::full_name . ' as employee_name', 'cus.' . AccountConTroller::full_name . ' as customer_name')
+                ->where(self::table . '.' . self::id, '=', $id)->first();
 
     //            $listBillDetail = DB::table(BillDetailController::table)
     //                ->join(SanPhamController::table, BillDetailController::table . '.' . BillDetailController::ma_san_pham, '=', SanPhamController::table . '.' . SanPhamController::id)
@@ -153,12 +152,12 @@ class BillController extends Controller
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $hd = DB::table(self::table)->where(self::id, '=', $id)->first();
-            if ($hd->status_id == false && $request->get(self::order_status_id) == true) {
+            // if ($hd->order_status_id == 1 && $request->get(self::order_status_id) == 2) {
                 DB::table(self::table)->where(self::id, '=', $id)->update([self::order_status_id => true]);
                 return response()->json(['success' => 'Cập nhật thành công'], 201);
-            } else {
-                return response()->json(['error' => 'Cập nhật thất bại'], 400);
-            }
+            // } else {
+            //     return response()->json(['error' => 'Cập nhật thất bại'], 400);
+            // }
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
@@ -179,17 +178,11 @@ class BillController extends Controller
             try {
                 if ($listId = $request->get(BaseController::listId)) {
                     DB::table(BillDetailController::table)->whereIn(BillDetailController::bill_id, $listId)
-                        ->delete();
-                    // DB::table(VoucherController::table)->join(self::table, self::table . '.' . self::ma_voucher, '=', VoucherController::table . '.' . VoucherController::id)
-                    //     ->whereIn(self::table . '.' . self::id, $listId)
-                    //     ->update([BillDetailController::isActive => true]);
+                        ->delete();    
                 } else {
                     $id = $request->get(BaseController::key_id);
-                    DB::table(BillDetailController::table)->where(BillDetailController::bill_id, $id)
+                    DB::table(BillDetailController::table)->whereIn(BillDetailController::bill_id, $id)
                         ->delete();
-                    // DB::table(VoucherController::table)->join(self::table, self::table . '.' . self::ma_voucher, '=', VoucherController::table . '.' . VoucherController::id)
-                    //     ->where(self::table . '.' . self::id, $id)
-                    //     ->update([BillDetailController::isActive => true]);
                 }
             } catch (\Throwable $e) {
                 report($e);

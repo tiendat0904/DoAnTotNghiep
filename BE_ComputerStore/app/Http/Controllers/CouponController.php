@@ -43,7 +43,7 @@ class CouponController extends Controller
             $objs = DB::table(self::table)
             ->join(SupplierController::table, SupplierController::table . '.' . SupplierController::id, '=', self::table . '.' . self::supplier_id)
             ->join(AccountController::table, self::table . '.' . self::employee_id, '=', AccountController::table . '.' . AccountController::id)
-            ->select(self::table . '.*', SupplierController::table . '.' . SupplierController::supplier_name, AccountController::table . '.' . AccountController::full_name . ' as employ_id')
+            ->select(self::table . '.*', SupplierController::table . '.' . SupplierController::supplier_name, AccountController::table . '.' . AccountController::full_name . ' as employee_name')
             ->get();
             $code = 200;
 
@@ -114,9 +114,8 @@ class CouponController extends Controller
             $objs = DB::table(self::table)
                 ->join(SupplierController::table, SupplierController::table . '.' . SupplierController::id, '=', self::table . '.' . self::supplier_id)
                 ->join(AccountController::table, self::table . '.' . self::employee_id, '=', AccountController::table . '.' . AccountController::id)
-                ->select(self::table . '.*', SupplierController::table . '.' . SupplierController::supplier_name, AccountController::table . '.' . AccountController::full_name . ' as employ_id')
-                ->where(self::table . '.' . self::id, '=', $id)
-                ->get();
+                ->select(self::table . '.*', SupplierController::table . '.' . SupplierController::supplier_name, AccountController::table . '.' . AccountController::full_name . ' as employee_name')
+                ->where(self::table . '.' . self::id, '=', $id)->first();
     //            $listCouponDetail = DB::table(ChiTietPhieuNhapController::table)
     //                ->join(SanPhamController::table, ChiTietPhieuNhapController::table . '.' . ChiTietPhieuNhapController::ma_san_pham, '=', SanPhamController::table . '.' . SanPhamController::id)
     //                ->select(ChiTietPhieuNhapController::table . '.*', SanPhamController::table . '.' . SanPhamController::ten_san_pham)

@@ -24,7 +24,7 @@ export class OrderTypeService {
   }
 
   detail(id: any): Observable<any>{
-    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'order-type',id);
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'order-type/'+id);
   }
 
   delete(modelDelete: any): Observable<any>{

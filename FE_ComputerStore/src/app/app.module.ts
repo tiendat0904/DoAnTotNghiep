@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, PathLocationStrategy, CurrencyPipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -59,7 +59,10 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.component';
 import { UpdateTrademarkComponent } from './views/admin/trademark/update-trademark/update-trademark/update-trademark.component';
 import { UpdateProductComponent } from './views/admin/product/update-product/update-product.component';
-import { ProductComponent } from './views/admin/product/product/product.component';
+import { PipesModule } from './pipe/pipes/pipes.module';
+import { CouponComponent } from './views/admin/coupon/coupon.component';
+import { DatePipe } from '@angular/common';
+import { OrderComponent } from './views/admin/order/order.component';
 
 @NgModule({
   imports: [
@@ -92,6 +95,7 @@ import { ProductComponent } from './views/admin/product/product/product.componen
     AngularFireDatabaseModule,
     NgbPaginationModule,
     Ng2SearchPipeModule,
+    PipesModule
   ],
   declarations: [
     AppComponent,
@@ -105,11 +109,13 @@ import { ProductComponent } from './views/admin/product/product/product.componen
     UpdateSupplierComponent,
     TrademarkComponent,
     UpdateTrademarkComponent,
-    ProductComponent,
-    UpdateProductComponent
+    
+   
   ],
   providers: [
+    DatePipe,CurrencyPipe,
     {
+      
       provide: LocationStrategy,
       useClass: HashLocationStrategy,
     },

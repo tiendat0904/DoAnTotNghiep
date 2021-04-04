@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ProductImageController extends Controller
@@ -30,8 +31,12 @@ class ProductImageController extends Controller
     public function index()
     {
         //
-        $this->base->index();
-        return response()->json($this->base->getMessage(), $this->base->getStatus());
+        $objs = DB::table(self::table)
+        ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+        ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
+        ->get();
+    $code = 200;
+    return response()->json(['data' => $objs], $code);
     }
 
     /**
@@ -84,8 +89,16 @@ class ProductImageController extends Controller
     public function show($id)
     {
         //
-        $this->base->show($id);
-        return response()->json($this->base->getMessage(), $this->base->getStatus());
+        $obj = DB::table(self::table)
+            ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
+            ->where(self::table . '.' . self::id, '=', $id)
+            ->get();
+        if ($obj) {
+            return response()->json(['data' => $obj], 200);
+        } else {
+            return response()->json(['error' => 'Không tìm thấy'], 200);
+        }
     }
 
     /**

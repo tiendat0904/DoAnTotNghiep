@@ -7,6 +7,7 @@ export interface accountModel{
     full_name?: string,
     address?: string,
     phone_number?: string,
+    value?: string,
     image?: string,
     account_type_id?: bigint,
     checked?:  boolean

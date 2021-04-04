@@ -22,7 +22,6 @@ class CreateAccountsTable extends Migration
             $table->string('phone_number', 10)->default('');
             $table->string('image');
             $table->bigInteger('account_type_id')->default('3');
-            $table->string('remember_token');
             $table->date('created_at')->default(now());
         });
     }

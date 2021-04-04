@@ -33,13 +33,21 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $objs = DB::table(self::table)
-        ->join(ProductTypeController::table, self::table . '.' . self::product_type_id, '=', ProductTypeController::table . '.' . ProductTypeController::id)
-        ->join(TradeMarkController::table, self::table . '.' . self::trademark_id, '=', TradeMarkController::table . '.' . TradeMarkController::id)
-        ->select(self::id, self::product_name, TradeMarkController::table . '.' . TradeMarkController::id, TradeMarkController::table . '.' . TradeMarkController::trademark_name, ProductTypeController::table . '.' . ProductTypeController::id, ProductTypeController::table . '.' . ProductTypeController::product_type_name, self::price, self::amount)
-        ->get();
-    $code = 200;
-    return response()->json(['data' => $objs], $code);
+        date_default_timezone_set(BaseController::timezone);
+        $date = date('Y-m-d');
+        $objs = null;
+        $code = null;
+        try {
+            $objs = DB::select('call listProduct(?)', array($date));
+            if (count($objs) == 0) {
+                $objs = DB::table('products')->get();
+            }
+            $code = 200;
+            return response()->json(['data' => $objs], $code);
+        } catch (\Throwable $e) {
+            $objs = DB::table('products')->get();
+            return response()->json(['data' => $objs], 200);
+        }
     }
 
     /**
@@ -88,15 +96,13 @@ class ProductController extends Controller
     public function show($id)
     {
         //
-        $objs = DB::table(self::table)
-        ->join(ProductTypeController::table, self::table . '.' . self::product_type_id, '=', ProductTypeController::table . '.' . ProductTypeController::id)
-        ->join(TradeMarkController::table, self::table . '.' . self::trademark_id, '=', TradeMarkController::table . '.' . TradeMarkController::id)
-        ->select(self::id, self::product_name, TradeMarkController::table . '.' . TradeMarkController::id, TradeMarkController::table . '.' . TradeMarkController::trademark_name, ProductTypeController::table . '.' . ProductTypeController::id, ProductTypeController::table . '.' . ProductTypeController::product_type_name, self::price, self::amount)
-            ->where(self::table . '.' . self::id, '=', $id)->first();
-        if ($objs) {
-            return response()->json(['data' => $objs], 200);
+        date_default_timezone_set(BaseController::timezone);
+        $date = date('Y-m-d');
+        $obj = DB::select('call itemProduct(?,?)', array($date, $id));
+        if ($obj) {
+            return response()->json(['data' => $obj[0]], 200);
         } else {
-            return response()->json(['message' => "Không tìm thấy"], 200);
+            return response()->json(['error' => 'Không tìm thấy'], 200);
         }
     }
 

@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
-import { ProductComponent } from './views/admin/product/product/product.component';
 import { SupplierComponent } from './views/admin/supplier/supplier/supplier.component';
 import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.component';
 
@@ -100,7 +99,15 @@ export const routes: Routes = [
       },
       {
         path: 'product',
-        component: ProductComponent,
+        loadChildren: () => import('./views/admin/product/product/product.module').then(m => m.ProductModule)
+      },
+      {
+        path: 'coupon',
+        loadChildren: () => import('./views/admin/coupon/coupon.module').then(m => m.CouponModule)
+      },
+      {
+        path: 'order',
+        loadChildren: () => import('./views/admin/order/order.module').then(m => m.OrderModule)
       },
     ]
   },

@@ -24,7 +24,7 @@ export class SupplierService {
   }
 
   detail(id: any): Observable<any>{
-    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'suppliers',id);
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'suppliers/'+id);
   }
 
   delete(modelDelete: any): Observable<any>{

@@ -1,0 +1,251 @@
+use computerstore;
+SET SQL_SAFE_UPDATES = 0;
+DELIMITER $$
+create trigger after_coupon_detail_insert
+after insert on computerstore.coupon_detail
+for each row
+begin
+    declare muc1 double(15,2) default 500000.00;
+    declare muc2 double(15,2) default 2000000.00;
+    declare muc3 double(15,2) default 10000000.00;
+    declare muc4 double(15,2) default 20000000.00;
+    declare muc5 double(15,2) default 50000000.00;
+    declare muc6 double(15,2) default 100000000.00;
+    declare masp bigint(20);
+    declare mapn bigint(20);
+    declare slpn int(11) default 0;
+    declare slsp int(11) default 0;
+    declare gia_nhap_sp double(15,2) default 0.00;
+    declare gia_ban_sp double(15,2) default 0.00;
+    declare tong_tien_pn double(15,2) default 0.00;
+    
+    set mapn = NEW.coupon_id;
+    set masp = NEW.product_id;
+    set slpn = NEW.amount;
+    set gia_nhap_sp = NEW.price;
+    set slsp = (select amount from computerstore.product where product.product_id = masp);
+    set tong_tien_pn = (select total_money from computerstore.coupon where coupon.coupon_id = mapn);
+	
+    if gia_nhap_sp<=muc1 then
+		set gia_ban_sp = (gia_nhap_sp*1.2);
+	elseif gia_nhap_sp>muc1 and gia_nhap_sp<=muc2 then
+		set gia_ban_sp = (gia_nhap_sp*1.15);
+	elseif gia_nhap_sp>muc2 and gia_nhap_sp<=muc3 then
+		set gia_ban_sp = (gia_nhap_sp*1.1);
+	elseif gia_nhap_sp>muc3 and gia_nhap_sp<=muc4 then
+		set gia_ban_sp = (gia_nhap_sp*1.08);
+	elseif gia_nhap_sp>muc4 and gia_nhap_sp<=muc5 then
+		set gia_ban_sp = (gia_nhap_sp*1.04);
+	else
+		set gia_ban_sp = (gia_nhap_sp*1.02);
+	end if;
+        
+    update computerstore.coupon set computerstore.coupon.total_money= (tong_tien_pn + slpn*gia_nhap_sp)
+	where computerstore.coupon.coupon_id = mapn;
+    update computerstore.product set computerstore.product.amount = (slsp+slpn) where computerstore.product.product_id = masp;
+    update computerstore.product set computerstore.product.price = gia_ban_sp where computerstore.product.product_id = masp;
+end $$
+
+
+
+DELIMITER $$
+create trigger after_coupon_detail_delete
+after update on computer.coupon_detail
+for each row
+begin
+    declare masp bigint(20);
+    declare mapn bigint(20);
+    declare slpn int(11) default 0;
+    declare slsp int(11) default 0;
+    declare sldtsp int(11) default -1;
+    declare gia_nhap_sp double(15,2);
+    declare tong_tien_pn double(15,2);
+    
+    set masp = OLD.product_id;
+    set mapn =  OLD.coupon_id;
+    set slpn =  OLD.amount;
+    set gia_nhap_sp =  OLD.price;
+    
+    set tong_tien_pn = (select total_moneyfrom computerstore.coupon where coupon.coupon_id = mapn);
+    set slsp = (select amount from computerstore.product where product.product_id = masp);    
+      
+    
+		update computerstore.product set computerstore.product.amount = (slsp-slpn) 
+		where computerstore.product.product_id = masp;
+        update computerstore.coupon set computerstore.coupon.total_money = (total_money- slpn*gia_nhap_sp) 
+		where computerstore.coupon.coupon_id = mapn;
+end $$
+
+
+
+-- hóa đơn
+-- cập nhật số lượng trong bảng sản phẩm sau khi thêm mới chi tiết hóa đơn và số lượng sản phẩm >= số lượng sản phẩm trong hóa đơn
+-- cập nhật tổng tiền trong bảng hóa đơn sau khi thêm chi tiết hóa đơn
+-- cập nhật thành tiền trong bảng hóa đơn sau khi thêm chi tiết hóa đơn
+ELIMITER $$
+create trigger after_bill_detail_insert
+after insert on computerstore.bill_detail
+for each row
+begin
+    declare masp bigint(20);
+    declare mahd bigint(20);
+    declare ds_ldt varchar(255);
+    declare slhd int(11) default 0;
+    declare slsp int(11) default 0;
+    declare gia_ban_moi double(15,2) default 0;
+    declare tong_tien_hd double(15,2) default 0.00;
+    declare tt double(15,2) default 0.00;
+    
+    set mahd = NEW.bill_id;
+	set masp = NEW.product_id;    
+    set gia_ban_moi = NEW.price;
+    set slhd = NEW.amount;
+    
+    set tong_tien_hd = (select total_money from computerstore.bill where bill.bill_id = mahd);
+    set slsp = (select amount from computerstore.product where product.product_id = masp);
+    
+    
+    if slsp >= slhd then
+		set tt = (tong_tien_hd + gia_ban_moi*slhd);
+		update product set product.amount = (slsp-slhd) where product.product_id = masp;
+		update bill set bill.into_money = tt where bill.bill_id = mahd;
+		update bill set bill.total_money = tt where bill.bill_id = mahd;
+		
+        
+    end if;
+
+end $$
+
+-- cập nhật số lượng trong bảng sản phẩm sau khi xóa (update isActive) chi tiết hóa đơn và isActive = false
+-- cập nhật tổng tiền trong bảng hóa đơn sau khi xóa (update isActive) chi tiết hóa đơn
+DELIMITER $$
+create trigger after_bill_detail_delete
+after delete on computerstore.bill_detail
+for each row
+begin
+
+    declare masp bigint(20);
+    declare mahd bigint(20);
+    declare slhd int(11) default 0;
+    declare slsp int(11) default 0;
+    declare gia_ban_moi double(15,2) default 0;
+    declare tong_tien_hd double(15,2) default 0.00;
+    declare tt double(15,2) default 0.00;
+    
+    set mahd = OLD.bill_id;
+    set masp = OLD.product_id;    
+    set gia_ban_moi = OLD.price;
+    set slhd = OLD.amount;
+    
+    set tong_tien_hd = (select total_money from computerstore.bill where bill.bill_id = mahd);
+    set slsp = (select amount from computerstore.product where product.product_id = masp);
+    
+   
+    set tt = (tong_tien_hd - gia_ban_moi*slhd);
+    update product set product.amount = (slsp+slhd) where product.product_id = masp;
+    update bill set bill.into_money = tt where bill.bill_id = mahd;
+    update bill set bill.total_money = tt where bill.bill_id = mahd;
+end $$
+
+-- voucher
+-- tặng voucher sau khi khách hàng tạo tài khoản
+DELIMITER $$
+create trigger after_account_create
+after insert on computerstore.account
+for each row
+begin
+    declare makh bigint(20);
+    declare loaitk varchar(255);
+    set makh = NEW.account_id;
+    set loaitk = NEW.account_type_id;
+    if loaitk = '3' then
+		insert into computer_store.voucher (customer_id, level_voucher) values (makh, 50);
+    end if;
+end $$
+
+
+
+-- tặng voucher cho khách hàng khi có sản phẩm mới
+DELIMITER $$
+create trigger after_product_insert
+after insert on computerstore.product
+for each row
+begin
+    declare makh bigint(20);
+    
+    declare list_makh cursor for (select account_id from computerstore.account where account.account_type_id = '3');
+    open list_makh;
+	fetch list_makh into makh;
+        insert into voucher (customer_id, promotion_level) values (makh, 20); 
+    close list_makh;
+end $$
+
+
+-- tạo view cho sản phẩm
+create view products as
+select product.*, trademark_name, product_type_name, 
+(select image from product_image where product_image.product_id = product.product_id and image is not null) as image
+from product, trademark, product_type
+where product.product_type_id = product_type.product_type_id
+and product.trademark_id = trademark.trademark_id;
+
+-- tạo view cho sản phẩm kết hợp với khuyến mãi
+DELIMITER $$
+create procedure listProduct(in ngay date)
+begin
+	select product.*, trademark_name, product_type_name, 
+	(select promotion_level from product_promotion, promotion_date where product_promotion.promotion_date_id = promotion_date.promotion_date_id and promotion_date.date = ngay and product_promotion.product_id = product.product_id) as muc_km,
+	(select image from product_image where product_image.product_id = product.product_id and image is not null) as image,
+	(price*(1-(select promotion_level from product_promotion, promotion_date where product_promotion.promotion_date_id = promotion_date.promotion_date_id and promotion_date.date = ngay and product_promotion.product_id = product.product_id and promotion_date.date is not null)/100)) as gia_moi
+	from product, trademark, product_type
+	where product.product_type_id = product_type.product_type_id
+	and product.trademark_id = trademark.trademark_id;
+end $$
+
+call listProduct('2020-10-30');
+
+-- tạo view cho sản phẩm theo id kết hợp với khuyến mãi
+DELIMITER $$
+create procedure itemProduct(in ngay date, in masp bigint(20))
+begin
+	select product.*, trademark_name, product_type_name, 
+	(select promotion_level from product_promotion, promotion_date where product_promotion.promotion_date_id = promotion_date.promotion_date_id and promotion_date.date = ngay and product_promotion.product_id = product.product_id) as muc_km,
+	(select image from product_image where product_image.product_id = product.product_id and image is not null) as image,
+	(price*(1-(select promotion_level from product_promotion, promotion_date where product_promotion.promotion_date_id = promotion_date.promotion_date_id and promotion_date.date = ngay and product_promotion.product_id = product.product_id and promotion_date.date is not null)/100)) as gia_moi
+	from product, trademark, product_type
+	where product.product_type_id = product_type.product_type_id
+	and product.trademark_id = trademark.trademark_id and product.product_id = masp;
+end $$
+
+call itemProduct('2020-10-30', 2);
+
+-- xóa khuyến mãi sp khi xóa sản phẩm
+DELIMITER $$
+create trigger after_product_delete
+after delete on computerstore.product
+for each row
+begin
+    declare masp bigint(20);
+    declare isactive tinyint(1);
+    
+    set masp = OLD.product_id;
+    delete from product_promotion where product_promotion.product_id = masp;
+    delete from product_image where product_image.product_id = masp;
+end $$
+
+-- xóa voucher kh khi xóa tài khoản
+DELIMITER $$
+create trigger after_account_delete
+after delete on computerstore.account
+for each row
+begin
+    declare makh bigint(20);
+    declare loaitk varchar(255);
+    declare isactive tinyint(1);
+    
+    set makh = OLD.account_id;
+    set loaitk = OLD.account_type_id;
+    if loaitk = '3'then
+		delete from voucher where voucher.customer_id = makh;
+    end if;
+end $$

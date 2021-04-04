@@ -87,7 +87,7 @@ export class UpdateProductComponent implements OnInit {
   fetcharraylist_product(){
     this.subscription=this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
-      this.avatarUrl = data.data.hinh_anh;
+      console.log(data.data.product_id);
     },
     err => {
         this.isLoading = false;

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -53,6 +53,10 @@ export class UpdateTrademarkComponent implements OnInit {
   ngOnInit(): void {
     this.submitted = false;
     this.fetcharraylist_trademark();
+    this.formGroup = new FormGroup({
+      trademark_name: new FormControl(),
+      image : new FormControl()
+    });
     
   }
 
@@ -107,7 +111,7 @@ export class UpdateTrademarkComponent implements OnInit {
     if (model.trademark_id === null || model.trademark_id === undefined) {
       this.formGroup = this.fb.group({
         trademark_name: [ null, [Validators.required]],
-        image: [ null,[Validators.required]],
+        
         // so_dien_thoai: [ null, [Validators.required]],
         
       });
@@ -115,11 +119,7 @@ export class UpdateTrademarkComponent implements OnInit {
     } else {
       this.formGroup = this.fb.group({
         trademark_name: [{value: this.model.trademark_name, disabled: this.isInfo}, [Validators.required]],
-        image: [{value: this.model.image, disabled: this.isInfo},[Validators.required]],
-        // dia_chi: [{value: this.model.supplier_address, disabled: this.isInfo}, [Validators.required]],
-        // hot_line: [{value: this.model.hotline, disabled: this.isInfo}],
-        // email: [{value: this.model.email, disabled: this.isInfo}],
-        // so_dien_thoai: [{value: this.model., disabled: this.isInfo}, [Validators.required]],
+        
       });
       if(this.model.image===""){
         this.urlPictureDefault = avatarDefault;
@@ -169,7 +169,6 @@ export class UpdateTrademarkComponent implements OnInit {
     }
     if (this.isEdit) {
       trademark = {
-        trademark_id: this.model.trademark_id,
         trademark_name: this.formGroup.get('trademark_name')?.value,
         // supplier_address: this.formGroup.get('dia_chi')?.value,
         // hotline: this.formGroup.get('hot_line')?.value,
@@ -180,7 +179,6 @@ export class UpdateTrademarkComponent implements OnInit {
      
     } else {
       trademark = {
-        trademark_id: this.model.trademark_id,
         trademark_name: this.formGroup.get('trademark_name')?.value,
         // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
         image : this.urlPictureDefault,

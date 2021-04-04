@@ -24,7 +24,7 @@ export class TrademarkService {
   }
 
   detail(id: any): Observable<any>{
-    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'brands',id);
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'brands/'+id);
   }
 
   delete(modelDelete: any): Observable<any>{

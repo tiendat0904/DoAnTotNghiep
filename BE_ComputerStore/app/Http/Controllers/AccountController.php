@@ -50,7 +50,7 @@ class AccountController extends Controller
         if ($ac_type == self::NV || $ac_type == self::QT) {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id, self::email, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, self::image)
+                ->select(self::id, self::email,self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, self::image)
                 ->where(self::table . '.' . self::account_type_id, '=', '2')
                 ->orWhere(self::table . '.' . self::account_type_id, '=', '3')
                 ->get();

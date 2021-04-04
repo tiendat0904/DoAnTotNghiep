@@ -30,10 +30,47 @@ export const navItems: INavData[] = [
     icon: 'icon-handbag'
   },
   {
-    name: 'Sản phẩm',
-    url: '/admin/product',
-    icon: 'icon-rocket'
+    name: 'Nhập kho',
+    url: '/admin/coupon',
+    icon: 'icon-arrow-down-circle'
   },
+  {
+    name: 'Quản lý đơn hàng',
+    url: '/admin/order',
+    icon: 'icon-basket'
+  },
+  {
+    name: 'Sản phẩm',
+    url: '/product',
+    icon: 'icon-rocket',
+    children: [
+      {
+        name: 'Sản phẩm',
+        url: '/admin/product/product',
+        icon: 'icon-rocket'
+      },
+      {
+        name: 'Hình ảnh sản phẩm',
+        url: '/admin/product/product-image',
+        icon: 'icon-rocket'
+      },
+      // {
+      //   name: 'Dropdowns',
+      //   url: '/admin/buttons/dropdowns',
+      //   icon: 'icon-cursor'
+      // },
+      // {
+      //   name: 'Brand Buttons',
+      //   url: '/admin/buttons/brand-buttons',
+      //   icon: 'icon-cursor'
+      // }
+    ]
+  },
+  // {
+  //   name: 'Sản phẩm',
+  //   url: '/admin/product',
+  //   icon: 'icon-rocket'
+  // },
   {
     name: 'Typography',
     url: '/admin/theme/typography',

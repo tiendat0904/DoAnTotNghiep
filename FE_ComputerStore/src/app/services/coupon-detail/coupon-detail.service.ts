@@ -25,7 +25,7 @@ export class CouponDetailService {
   }
 
   detail(id: any): Observable<any>{
-    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'coupons_detail',id);
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'coupons_detail/'+id);
   }
 
   delete(modelDelete: any): Observable<any>{

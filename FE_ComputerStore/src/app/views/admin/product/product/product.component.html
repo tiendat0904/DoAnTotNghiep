@@ -13,16 +13,48 @@
                    </div>
                 </div>
                 <button (click)="initModal({},'add')" type="button" class="btn btn-primary" style="margin-left: 17px;" ><i class="fa fa-plus" style="margin-right: 12px;"></i>Thêm mới</button>
-                <button
-                type="button"
-                [hidden]="isDelete"
-                (click)="delete_product()"
-                class="btn btn-danger"
-                >
-                <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
-                </button>
-                &nbsp;
-                &nbsp;
+                <ng-template #mymodal1  let-modal>
+                  <div class="modal-header">
+                     <h4 class="modal-title" id="modal-basic-title">
+                        Xác nhận xóa thông tin
+                     </h4>
+                     <button
+                        type="button"
+                        class="close"
+                        aria-label="Close"
+                        (click)="modal.dismiss('Cross click')"
+                        >
+                     <span aria-hidden="true">x</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+                     Bạn có chắc chắn muốn xóa những thông tin này ?
+                  </div>
+                  <div class="modal-footer">
+                     <button
+                        class="btn btn-danger"
+                        style="width: 80px"
+                        (click)="delete_product()"
+                        >
+                     Có
+                     </button>
+                     <button
+                        class="btn btn-outline-dark"
+                        style="width: 80px"
+                        (click)="modal.dismiss('Cross click')"
+                        >
+                     Không
+                     </button>
+                  </div>
+               </ng-template>
+   <button
+            type="button"
+            [hidden]="isDelete"
+            (click)="open(mymodal1)"
+            class="btn btn-danger"
+            >
+   <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
+   </button>
              </div>
           </div>
           <div class="row">
@@ -40,6 +72,7 @@
                          <th>Tên sản phẩm</th>
                          <th>Nhãn hiệu</th>
                          <th>Thể loại</th>
+                         <th>Hình ảnh</th>
                          <th>Thao tác</th>
                       </tr>
                    </thead>
@@ -62,7 +95,8 @@
                          <td>{{ i + (page-1)*pageSize + 1 }}</td>
                          <td [innerHTML]="e.product_name "></td>       
                          <td [innerHTML]="e.trademark_name "></td>       
-                         <td [innerHTML]="e.product_type_name "></td>          
+                         <td [innerHTML]="e.product_type_name "></td>   
+                         <td> <img [src]="e.image" alt="" style="width:60px;height:50px"> </td>                             
                          <td>
                             <ng-template #mymodal let-modal>
                                <div class="modal-header">
@@ -79,7 +113,7 @@
                                   </button>
                                </div>
                                <div class="modal-body">
-                                  Bạn có chắc chắn muốn xóa thông tin nhãn hiệu {{ e.product_name }} ?
+                                  Bạn có chắc chắn muốn xóa thông tin sản phẩm {{ e.product_name }} ?
                                </div>
                                <div class="modal-footer">
                                   <button

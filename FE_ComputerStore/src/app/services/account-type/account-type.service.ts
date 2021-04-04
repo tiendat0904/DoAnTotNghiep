@@ -24,7 +24,7 @@ export class AccountTypeService {
   }
 
   detail(id: any): Observable<any>{
-    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'account_type',id);
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'account_type/'+id);
   }
 
   delete(modelDelete: any): Observable<any>{
