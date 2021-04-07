@@ -249,3 +249,13 @@ begin
 		delete from voucher where voucher.customer_id = makh;
     end if;
 end $$
+
+
+-- reports
+-- báo cáo danh sách các sản phẩm tồn kho
+create view inventoryProducts as
+select product.*, trademark_name, product_type_name, 
+(select image from product_promotion where product_promotion .product_id = product.product_id  and image is not null) as image
+from product, trademark, product_type
+where product.product_type_id = product_type.product_type_id
+and product.trademark_id = trademark.trademark_id and product.amount > 0;

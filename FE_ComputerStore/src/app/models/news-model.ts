@@ -3,7 +3,8 @@ export interface newsModel{
     title?: String,
     news_content?: Text,
     highlight?: number,
-    thumbnail?: String,
+    thumbnail?: string,
     url?: String,
-    created_at?: Date
+    created_at?: Date,
+    checked?: boolean,
  }

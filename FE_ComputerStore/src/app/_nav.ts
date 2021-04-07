@@ -54,23 +54,30 @@ export const navItems: INavData[] = [
         url: '/admin/product/product-image',
         icon: 'icon-rocket'
       },
-      // {
-      //   name: 'Dropdowns',
-      //   url: '/admin/buttons/dropdowns',
-      //   icon: 'icon-cursor'
-      // },
-      // {
-      //   name: 'Brand Buttons',
-      //   url: '/admin/buttons/brand-buttons',
-      //   icon: 'icon-cursor'
-      // }
     ]
   },
-  // {
-  //   name: 'Sản phẩm',
-  //   url: '/admin/product',
-  //   icon: 'icon-rocket'
-  // },
+  {
+    name: 'Tin tức',
+    url: '/admin/news',
+    icon: 'icon-pencil'
+  },
+  {
+    name: 'Báo cáo',
+    url: '/report',
+    icon: 'icon-rocket',
+    children: [
+      {
+        name: 'Báo cáo hàng tồn kho',
+        url: '/admin/report/inventory-report',
+        icon: 'icon-rocket'
+      },
+      {
+        name: 'Báo cáo hóa đơn',
+        url: '/admin/report/bill-report',
+        icon: 'icon-rocket'
+      },
+    ]
+  },
   {
     name: 'Typography',
     url: '/admin/theme/typography',

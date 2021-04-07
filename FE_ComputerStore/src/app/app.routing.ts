@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
+import { NewsComponent } from './views/admin/news/news/news.component';
 import { SupplierComponent } from './views/admin/supplier/supplier/supplier.component';
 import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.component';
 
@@ -11,12 +12,13 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { ProfileComponent } from './views/profile/profile/profile.component';
 import { RegisterComponent } from './views/register/register.component';
+import { UserComponent } from './views/user/user.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
     pathMatch: 'full',
+    component: UserComponent
   },
   {
     path: '404',
@@ -30,6 +32,13 @@ export const routes: Routes = [
     component: P500Component,
     data: {
       title: 'Page 500'
+    }
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      title: 'Login Page'
     }
   },
   {
@@ -108,6 +117,14 @@ export const routes: Routes = [
       {
         path: 'order',
         loadChildren: () => import('./views/admin/order/order.module').then(m => m.OrderModule)
+      },
+      {
+        path: 'news',
+        component: NewsComponent,
+      },
+      {
+        path: 'report',
+        loadChildren: () => import('./views/admin/report/report.module').then(m => m.ReportModule)
       },
     ]
   },

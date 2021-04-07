@@ -60,9 +60,10 @@ import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.
 import { UpdateTrademarkComponent } from './views/admin/trademark/update-trademark/update-trademark/update-trademark.component';
 import { UpdateProductComponent } from './views/admin/product/update-product/update-product.component';
 import { PipesModule } from './pipe/pipes/pipes.module';
-import { CouponComponent } from './views/admin/coupon/coupon.component';
 import { DatePipe } from '@angular/common';
-import { OrderComponent } from './views/admin/order/order.component';
+import { UpdateNewsComponent } from './views/admin/news/update-news/update-news.component';
+import { NewsComponent } from './views/admin/news/news/news.component';
+import { UserComponent } from './views/user/user.component';
 
 @NgModule({
   imports: [
@@ -109,6 +110,8 @@ import { OrderComponent } from './views/admin/order/order.component';
     UpdateSupplierComponent,
     TrademarkComponent,
     UpdateTrademarkComponent,
+    NewsComponent,
+    UpdateNewsComponent,
     
    
   ],

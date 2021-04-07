@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
-
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +22,14 @@ Route::middleware('auth:api')->group(function () {
     Route::get('info', [AccountController::class, 'userInfo']);
     Route::post('logout', [AccountController::class, 'logout']);
     
+
+    //report
+    Route::get('/reports/inventory-product', [ReportController::class, 'inventoryProduct']);
+    Route::post('/reports/report-coupons', [ReportController::class, 'reportCoupons']);
+    Route::post('/reports/report-bills', [ReportController::class, 'reportBills']);
+    Route::post('/reports/report-employees', [ReportController::class, 'reportEmployees']);
+
+
     // tài khoản
     Route::get('/accounts', [AccountController::class, 'index']);
 
