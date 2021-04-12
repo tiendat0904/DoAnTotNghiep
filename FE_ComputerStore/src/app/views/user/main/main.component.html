@@ -1,0 +1,84 @@
+<div class = 'container'>
+    <div class = 'row main-slider'>
+        <div class= 'main-slider-left col-lg-2'>
+            <ul>
+                <a href=""><li><i class="fas fa-laptop"></i>Laptop,máy tính xách tay</li></a>
+                <a href=""><li><i class="fas fa-desktop"></i>PC Gaming,Streaming</li></a>
+                <a href=""><li>Main - Bo mạch chủ</li></a>
+                <a href=""><li>CPU - Bộ vi xử lý</li></a>
+                <a href=""><li><i class = '	fas fa-memory'></i>Ram-bộ nhớ trong</li></a>
+                <a href=""><li>Ổ cứng HDD,SSD</li></a>
+                <a href=""><li>VGA - Card đồ họa</li></a>
+                <a href=""><li>PSU - Nguồn máy tính</li></a>
+                <a href=""><li>CASE - Vỏ máy tính</li></a>
+                <a href=""><li>Màn hình máy tính</li></a>
+                <a href=""><li>Phụ kiện máy tính</li></a>
+                <a href=""><li>Camera</li></a>
+                <a href=""><li>Máy in - TB văn phòng</li></a>
+                <a href=""><li>Tản nhiệt</li></a>
+            </ul>
+        </div>
+        <div class = 'col-lg-7'>
+            <ngb-carousel *ngIf="images">
+                <ng-template ngbSlide>
+                  <div class="picsum-img-wrapper">
+                    <img [src]="images[0]" alt="Random first slide">
+                  </div>
+                  <!-- <div class="carousel-caption">
+                    <h3>First slide label</h3>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                  </div> -->
+                </ng-template>
+                <ng-template ngbSlide>
+                  <div class="picsum-img-wrapper">
+                    <img [src]="images[1]" alt="Random second slide">
+                  </div>
+                  <!-- <div class="carousel-caption">
+                    <h3>Second slide label</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  </div> -->
+                </ng-template>
+                <ng-template ngbSlide>
+                  <div class="picsum-img-wrapper">
+                    <img [src]="images[2]" alt="Random third slide">
+                  </div>
+                  <!-- <div class="carousel-caption">
+                    <h3>Third slide label</h3>
+                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                  </div> -->
+                </ng-template>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                      <img [src]="images[3]" alt="Random four slide">
+                    </div>
+                    <!-- <div class="carousel-caption">
+                      <h3>Third slide label</h3>
+                      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                    </div> -->
+                  </ng-template>
+              </ngb-carousel>
+        </div>
+        <div class = 'main-slider-right '>
+            <div class = 'picsum-img-wrapper'>
+                <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Flaptop-gaming.jpg?alt=media&token=133a9b9e-04bc-400c-9bb5-3b9b2dfa2a15" alt="">
+            </div>
+            <div class = 'picsum-img-wrapper'>
+                <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Ftop-mouse.jpg?alt=media&token=26bafe1f-808b-414b-a12e-47f6eb6e89d5" alt="">
+            </div>
+        </div>
+    </div>
+    <div class = "banner-duoi-slider">
+        <div class = 'picsum-img-banner'>
+            <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fpc-1.png?alt=media&token=4385752f-2ebe-44cf-bfba-5af1b988a5a0" alt="">
+        </div>
+        <div class = 'picsum-img-banner'>
+            <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fpc-2.png?alt=media&token=49c9cc5d-ba7a-454c-9b1c-723353457486" alt="">
+        </div>
+        <div class = 'picsum-img-banner'>
+            <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fghe-gaming-1.png?alt=media&token=b3e7b9a4-eb85-44e9-82ce-d2b22c2f315a" alt="">
+        </div>
+        <div class = 'picsum-img-banner'>
+            <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Ftragop.png?alt=media&token=80955a56-aa60-4f66-b7bf-efba21f7eecd" alt="">
+        </div>
+    </div>
+</div>

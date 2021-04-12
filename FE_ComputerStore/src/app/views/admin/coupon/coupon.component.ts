@@ -167,7 +167,7 @@ export class CouponComponent implements OnInit {
     } else {
         this.router.navigate([link + '/' + id]);
     }
-}
+  }
 
   public delete(listid: any) {
     const modelDelete = {

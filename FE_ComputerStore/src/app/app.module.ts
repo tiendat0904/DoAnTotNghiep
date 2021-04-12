@@ -47,6 +47,7 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './net/jwt.interceptor';
@@ -64,10 +65,14 @@ import { DatePipe } from '@angular/common';
 import { UpdateNewsComponent } from './views/admin/news/update-news/update-news.component';
 import { NewsComponent } from './views/admin/news/news/news.component';
 import { UserComponent } from './views/user/user.component';
+import { MainComponent } from './views/user/main/main.component';
+import { ProductDetailComponent } from './views/user/main/product-detail/product-detail.component';
+import { UserModule } from './views/user/user.module';
 
 @NgModule({
   imports: [
     BrowserModule,
+    NgbModule,  
     BrowserAnimationsModule,
     AppRoutingModule,
     AppAsideModule,
@@ -78,6 +83,7 @@ import { UserComponent } from './views/user/user.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    UserModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
@@ -112,7 +118,8 @@ import { UserComponent } from './views/user/user.component';
     UpdateTrademarkComponent,
     NewsComponent,
     UpdateNewsComponent,
-    
+    MainComponent,
+    ProductDetailComponent
    
   ],
   providers: [

@@ -1,0 +1,134 @@
+.header-top{
+    background-color: #ffee00ef;
+    color:black;
+    height: 45px;
+}
+
+.header-toolbar{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 1300px;
+}
+
+
+span{
+    font-size: 18px;
+    color: black;
+}
+
+a{
+    padding-left: 20px;
+}
+
+.header-main{
+    background-color:white;
+    height: 140px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.header-main-center{
+    margin-top: 25px;
+    margin-left: 55px;
+    
+
+}
+
+.header-main-logo-img{
+    width: 40%;
+}
+
+.header-main div{
+    display: inline-block;
+}
+
+.header-main-search input{
+    background-color: #e5e5e5;
+    width: 400px;
+    height: 40px;
+    border:  0.5px solid white;
+    border-radius: 5px;
+}
+.header-main-search button{
+    background-color: #ffee00ef;
+    position: relative;
+    right: 10px;
+    height: 40px;
+    width: 50px;
+}
+.header-i{
+    height: 10px;
+    width: 30px;
+    font-size: 20px;
+}
+
+.header-main-search button{
+    border:  0.5px solid #ffee00ef;
+    border-radius: 5px;
+}
+
+.header-item{
+    display: grid;
+}
+
+.header-item i{
+    text-align: center;
+    font-size: 25px;
+}
+
+
+
+
+#header-hide{
+    background-color:rgb(255, 255, 255);
+    border-radius: 10px;
+    display: none;
+    transform: translate(1060px,0px);
+    position: absolute;
+    width: 384px;
+    max-height: 480px;
+    text-align: center;
+    margin-right: 0px;
+    left:0px;
+    margin-left: 0px;
+    transition: 0.6s;
+}
+
+#header-hide img{
+    width: 200px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+#header-hide button{
+    background-color: #ffd400;
+    border: 1px solid;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+// #header-basket{
+//     position: relative;
+//     z-index: 1;
+// }
+
+
+// #header-basket:hover +  #header-hide{
+//     display: block;
+//     transition: 0.6s;
+   
+// }
+
+.header-bottom{
+    background-color: #ffee00ef;
+    height: 50px;
+}
+
+.header-bottom a{
+    position: relative;
+    top: 30%;
+    margin-right: 10px;
+    margin-left: 80px;
+}

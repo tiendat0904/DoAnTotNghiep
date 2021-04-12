@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
+import { ProductDetailComponent } from './main/product-detail/product-detail.component';
 import { UserComponent } from './user.component';
 
 // import { DropdownsComponent } from './dropdowns.component';
@@ -9,17 +12,11 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Products'
+      title: 'User'
     },
-    component:UserComponent
-    //   {
-    //     path: 'brand-buttons',
-    //     component: BrandButtonsComponent,
-    //     data: {
-    //       title: 'Brand buttons'
-    //     }
-    //   }
-  }
+    component:UserComponent,
+  },
+  
 ];
 
 @NgModule({

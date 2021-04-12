@@ -12,13 +12,24 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { ProfileComponent } from './views/profile/profile/profile.component';
 import { RegisterComponent } from './views/register/register.component';
+import { MainComponent } from './views/user/main/main.component';
+import { ProductDetailComponent } from './views/user/main/product-detail/product-detail.component';
 import { UserComponent } from './views/user/user.component';
 
 export const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    component: UserComponent
+    component: UserComponent,
+    children: [
+      {
+        path: '',
+        component: MainComponent
+      },
+      {
+        path:'product-detail',
+        component: ProductDetailComponent
+      },
+    ]
   },
   {
     path: '404',

@@ -31,13 +31,6 @@ const routes: Routes = [
           title: 'Product-Image'
         }
       },
-    //   {
-    //     path: 'brand-buttons',
-    //     component: BrandButtonsComponent,
-    //     data: {
-    //       title: 'Brand buttons'
-    //     }
-    //   }
     ]
   }
 ];

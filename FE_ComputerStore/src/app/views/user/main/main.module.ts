@@ -5,22 +5,16 @@ import { NgModule } from '@angular/core';
 
 
 // Dropdowns Component
-
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { UserRoutingModule } from './user-routing.module';
-import { PipesModule } from '../../pipe/pipes/pipes.module';
-import { UserComponent } from './user.component';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
-import { ProductDetailComponent } from './main/product-detail/product-detail.component';
-
+import { PipesModule } from '../../../pipe/pipes/pipes.module';
+import { MainComponent } from './main.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 // Angular
 
 @NgModule({
   imports: [
     CommonModule,
-    UserRoutingModule,
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -29,9 +23,8 @@ import { ProductDetailComponent } from './main/product-detail/product-detail.com
     PipesModule
   ],
   declarations: [
-    UserComponent,
-    FooterComponent,
-    HeaderComponent,
+    // MainComponent,
+    // ProductDetailComponent
   ]
 })
-export class UserModule { }
+export class MainModule { }
