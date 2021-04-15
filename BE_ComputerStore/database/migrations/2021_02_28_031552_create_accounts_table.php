@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateAccountsTable extends Migration
 {
@@ -24,6 +25,8 @@ class CreateAccountsTable extends Migration
             $table->bigInteger('account_type_id')->default('3');
             $table->date('created_at')->default(now());
         });
+
+      
     }
 
     /**

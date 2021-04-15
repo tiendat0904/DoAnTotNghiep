@@ -55,7 +55,7 @@ export class UpdateTrademarkComponent implements OnInit {
     this.fetcharraylist_trademark();
     this.formGroup = new FormGroup({
       trademark_name: new FormControl(),
-      image : new FormControl()
+      // image : new FormControl()
     });
     
   }
@@ -169,6 +169,7 @@ export class UpdateTrademarkComponent implements OnInit {
     }
     if (this.isEdit) {
       trademark = {
+        trademark_id: this.model.trademark_id,
         trademark_name: this.formGroup.get('trademark_name')?.value,
         // supplier_address: this.formGroup.get('dia_chi')?.value,
         // hotline: this.formGroup.get('hot_line')?.value,
@@ -179,23 +180,13 @@ export class UpdateTrademarkComponent implements OnInit {
      
     } else {
       trademark = {
+        trademark_id: this.model.trademark_id,
         trademark_name: this.formGroup.get('trademark_name')?.value,
         // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
         image : this.urlPictureDefault,
       };
     }
     if (this.isAdd) {
-      
-      for (let i = 0; i < this.arrCheck.length; i++) {
-        if (this.arrCheck[i].trademark_id === trademark.trademark_id) {
-          check = true;
-          break;
-        }
-      }
-      if (check === true) {
-        this.toastr.error('Mã nhãn hiệu đã tồn tại');
-        return;
-      }
       this.trademardService.create(trademark).subscribe(res => {
         this.closeModalReloadData();
         this.toastr.success(res.success);

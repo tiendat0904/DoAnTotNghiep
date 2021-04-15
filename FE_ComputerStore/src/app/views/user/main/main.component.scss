@@ -58,4 +58,44 @@
 .picsum-img-banner:hover img{
     transform: scale(1.25);
 }
+.product-bestseller{
+    margin-left: -15px;
+    margin-top: 30px;
+}
+
+.product-title-container{
+    padding : 9px;
+    height: 45px;
+    background-color: #ffee00ef;
+    width: 325px;
+    color: white;
+}
+.product-image img{
+    width: 250px;
+    height: 250px;
+}
+.product-title-container h3::after{
+    content: '';
+    position: relative;
+    left: 36px;
+    bottom: 40px;
+    border-bottom: 46px solid #ffee00ef;
+    border-right: 50px solid #00000000;
+}
+
+
+
+
+.product-grid{
+    display: flex;
+}
+
+.product-item{
+    border: 1px solid #ddd;
+    max-width: 255px;
+}
+
+.product-description{
+    margin-left: 15px;
+}
 

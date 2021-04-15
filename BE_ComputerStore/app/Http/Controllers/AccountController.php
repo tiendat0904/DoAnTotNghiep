@@ -270,7 +270,6 @@ class AccountController extends Controller
             self::full_name => 'required',
             self::address => 'required',
             self::phone_number => 'required',
-            self::account_type_id => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()], 400);
@@ -289,7 +288,6 @@ class AccountController extends Controller
         if ($request->image != null) {
             $array[self::image] = $request->image;
         }
-        $array[self::account_type_id] = $request->account_type_id;
         $array[self::created_at] = date('Y-m-d');
         DB::table(self::table)->insert($array);
 

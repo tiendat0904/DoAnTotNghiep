@@ -31,12 +31,11 @@ export class DefaultLayoutComponent implements OnInit{
   fetchgetInfo(){
     this.accountService.getInfo().subscribe(data => {
       this.name = "Hi "+data.data.full_name;
-      if(data.image=== null){
+      if(data.image == null){
         this.picture = this.urlPictureDefault;
       }else{
         this.picture = data.data.image;
       }
-      
     },)
   }
 

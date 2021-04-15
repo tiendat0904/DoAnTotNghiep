@@ -19,4 +19,4 @@ export const environment = {
   }
 };
 
-export const avatarDefault = "https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/t%E1%BA%A3i%20xu%E1%BB%91ng.png?alt=media&token=4cf88b6c-db6d-4c76-86c6-e049f5fa901c";
+export const avatarDefault = "https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fdefault-avatar-profile.jpg?alt=media&token=fda73be2-cab4-4e57-9436-12bd88affe61";

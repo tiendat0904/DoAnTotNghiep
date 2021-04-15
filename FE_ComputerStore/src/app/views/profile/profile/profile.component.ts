@@ -62,7 +62,13 @@ export class ProfileComponent implements OnInit {
       this.address = data.data.address;
       this.account_id = data.data.account_id;
       this.phone_number = data.data.phone_number;
-      this.urlPictureDefault = data.data.image;
+      if(data.data.image === null){
+        this.urlPictureDefault = avatarDefault;
+      }
+      else{
+        this.urlPictureDefault = data.data.image;
+      }
+      
       this.account_type_id = data.data.account_type_id;
       this.formGroup = this.fb.group({
         email:[{value: this.email}],
