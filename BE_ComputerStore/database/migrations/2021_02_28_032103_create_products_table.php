@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger('product_type_id');
             $table->double('price', 15, 2)->default(0.00);
             $table->integer('amount')->default(0);
+            $table->text('description');
         });
     }
 

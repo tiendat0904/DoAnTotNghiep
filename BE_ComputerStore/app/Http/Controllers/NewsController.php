@@ -34,14 +34,16 @@ class NewsController extends Controller
     public function index()
     {
         //
-        $user = auth()->user();
-        $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $this->base->index();
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
-        } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        }
+        $this->base->index();
+        return response()->json($this->base->getMessage(), $this->base->getStatus());
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        //     $this->base->index();
+        //     return response()->json($this->base->getMessage(), $this->base->getStatus());
+        // } else {
+        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        // }
     }
 
     /**

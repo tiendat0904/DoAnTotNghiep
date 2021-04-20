@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { newsModel } from '../../../models/news-model';
 import { productModel } from '../../../models/product-model';
+import { productTypeModel } from '../../../models/product-type-model';
+import { NewsService } from '../../../services/news/news.service';
+import { ProductTypeService } from '../../../services/product-type/product-type.service';
 import { ProductService } from '../../../services/product/product.service';
 
 @Component({
@@ -9,7 +13,34 @@ import { ProductService } from '../../../services/product/product.service';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+  customOptions: any = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: true,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true
+  }
 
+
+  list_news: Array<newsModel> = [];
+  list_product_type: Array<productTypeModel> = [];
   list_product: Array<productModel> = [];
   list_product_psu: Array<productModel> = [];
   list_product_vga: Array<productModel> = [];
@@ -24,7 +55,9 @@ export class MainComponent implements OnInit {
 'https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fbanner4.png?alt=media&token=a1b70248-924a-4c9d-8595-7043c8d7cb18'];
   constructor(
     private router: Router,
-    private productService : ProductService
+    private productService : ProductService,
+    private newService : NewsService,
+    private productTypeService : ProductTypeService
                           ) { }
  
   ngOnInit(): void {
@@ -35,6 +68,20 @@ export class MainComponent implements OnInit {
     this.fetchProductVGA();
     this.fetchProductCPU();
     this.fetchProductComputerComponent();
+    this.fetchNews();
+    this.fetchProductType();
+  }
+
+  fetchProductType(){
+    this.productTypeService.getAll().subscribe(data => {
+      this.list_product_type = data.data;
+    },)
+  }
+
+  fetchNews(){
+    this.newService.getAll().subscribe(data => {
+      this.list_news = data.data;
+    },)
   }
 
   fetchProductPSU(){

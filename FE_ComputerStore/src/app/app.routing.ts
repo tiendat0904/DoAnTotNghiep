@@ -18,17 +18,29 @@ import { UserComponent } from './views/user/user.component';
 
 export const routes: Routes = [
   {
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      title: 'Login Page'
+    }
+  },
+  {
+    
     path: '',
-    component: UserComponent,
+     component: UserComponent,
     children: [
       {
         path: '',
-        component: MainComponent
+        loadChildren: () => import('./views/user/user.module').then(m => m.UserModule)
       },
-      {
-        path:'product-detail',
-        component: ProductDetailComponent
-      },
+      // {
+      //   path: '',
+      //   component: MainComponent
+      // },
+      // {
+      //   path:':product_id',
+      //   component: ProductDetailComponent
+      // },
     ]
   },
   {
@@ -45,20 +57,7 @@ export const routes: Routes = [
       title: 'Page 500'
     }
   },
-  {
-    path: 'login',
-    component: LoginComponent,
-    data: {
-      title: 'Login Page'
-    }
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    data: {
-      title: 'Login Page'
-    }
-  },
+  
   {
     path: 'register',
     component: RegisterComponent,

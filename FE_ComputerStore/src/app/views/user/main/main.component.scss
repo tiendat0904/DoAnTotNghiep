@@ -8,13 +8,23 @@
 .main-slider-left ul{
     list-style: none;
     padding-left: 0px;
+    display: grid;
 }
 
-.main-slider-left ul li{
+.main-slider-left ul a{
     font-size: 17px;
     border: 1px solid #ddd;
     height: 30.78px;
+    color: black;
+    
 }
+
+.main-slider-left ul a:hover{
+    background-color: #ffee00ef;
+    color: white;
+    text-decoration: none
+}
+
 
 .picsum-img-wrapper{
     overflow: hidden; 
@@ -83,7 +93,11 @@
     border-right: 50px solid #00000000;
 }
 
-
+.product-news h5,p{
+    margin-right: 15px;
+    margin-left: 15px;
+    text-align: center;
+}
 
 
 .product-grid{

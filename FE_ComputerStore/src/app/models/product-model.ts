@@ -5,7 +5,8 @@ export interface productModel{
     trademark_name?:String,
     product_type_name?: String,
     product_type_id?: bigint,
+    description? : String,
     price?: number,
     amount?: number,
-    checked?: boolean
+    checked?: boolean,
  }

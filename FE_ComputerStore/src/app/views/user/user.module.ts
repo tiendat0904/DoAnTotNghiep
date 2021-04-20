@@ -14,13 +14,18 @@ import { UserComponent } from './user.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { ProductDetailComponent } from './main/product-detail/product-detail.component';
-
+import { MainComponent } from './main/main.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProductLaptopComponent } from './main/product-laptop/product-laptop.component';
 // Angular
 
 @NgModule({
   imports: [
     CommonModule,
+    CarouselModule,
     UserRoutingModule,
+    NgbModule,
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -32,6 +37,9 @@ import { ProductDetailComponent } from './main/product-detail/product-detail.com
     UserComponent,
     FooterComponent,
     HeaderComponent,
+    MainComponent,
+    ProductDetailComponent,
+    ProductLaptopComponent
   ]
 })
 export class UserModule { }

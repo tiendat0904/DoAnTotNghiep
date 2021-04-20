@@ -137,6 +137,7 @@ export class UpdateProductComponent implements OnInit {
         product_name: [ null, [Validators.required]],
         trademark_id: [ null,[Validators.required]],
         product_type_id: [ null,[Validators.required]],
+        description:[ null,[Validators.required]],
         // so_dien_thoai: [ null, [Validators.required]],
         
       });
@@ -146,6 +147,7 @@ export class UpdateProductComponent implements OnInit {
         product_name: [{value: this.model.product_name, disabled: this.isInfo}, [Validators.required]],
         trademark_id :[{value: this.model.trademark_id, disabled: this.isInfo}, [Validators.required]],
         product_type_id :[{value: this.model.product_type_id, disabled: this.isInfo}, [Validators.required]],
+        description:[{value: this.model.description, disabled: this.isInfo}, [Validators.required]],
         // image: [{value: this.model.image, disabled: this.isInfo},[Validators.required]],
         // dia_chi: [{value: this.model.supplier_address, disabled: this.isInfo}, [Validators.required]],
         // hot_line: [{value: this.model.hotline, disabled: this.isInfo}],
@@ -204,6 +206,7 @@ export class UpdateProductComponent implements OnInit {
         product_name: this.formGroup.get('product_name')?.value,
         trademark_id: this.formGroup.get('trademark_id')?.value,
         product_type_id: this.formGroup.get('product_type_id')?.value,
+        description : this.formGroup.get('description')?.value
         // supplier_address: this.formGroup.get('dia_chi')?.value,
         // hotline: this.formGroup.get('hot_line')?.value,
         // email: this.formGroup.get('email')?.value,
@@ -217,6 +220,7 @@ export class UpdateProductComponent implements OnInit {
         product_name: this.formGroup.get('product_name')?.value,
         trademark_id: this.formGroup.get('trademark_id')?.value,
         product_type_id: this.formGroup.get('product_type_id')?.value,
+        description : this.formGroup.get('description')?.value
         // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
         // image : this.urlPictureDefault,
       };

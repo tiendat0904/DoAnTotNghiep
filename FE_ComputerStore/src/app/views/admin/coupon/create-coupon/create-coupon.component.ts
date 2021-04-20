@@ -63,8 +63,13 @@ export class CreateCouponComponent implements OnInit {
     ) {
       this.couponService.getAll().subscribe(data => {
         this.arraylist_coupon = data.data;
-        this.update_coupon_id = this.arraylist_coupon[this.arraylist_coupon.length-1].coupon_id;
-        this.update_coupon_id = this.update_coupon_id+1;
+        if(this.arraylist_coupon.length === 0){
+          this.update_coupon_id = 1;
+        }else{
+          this.update_coupon_id = this.arraylist_coupon[this.arraylist_coupon.length-1].coupon_id;
+          this.update_coupon_id = this.update_coupon_id+1;
+        }
+        
       },)
       
      

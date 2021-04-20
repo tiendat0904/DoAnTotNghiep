@@ -21,14 +21,77 @@ hr{
     height: 450px;
 }
 
+.product-shop-title{
+    margin-bottom: 20px;
+}
 
+.product-description p{
+    margin-bottom: 0;
+    font-size: 15px;
+}
 
-.p{
+.product-description i{
+    margin-right: 5px;
+    color: #ffee00;
+}
+
+#p{
     background-color: #ffee00ef;
     text-align: center;
-    font-size: 12px;
+    font-size: 17px;
+    margin-bottom: 0;
+}
+.product-shop-detail i{
+    color: #ffee00ef;
+    margin-right: 5px;
+}
+.product-shop-title p{
+    margin-bottom: 2px;
+}
+
+
+h4{
+    color: white;
 }
 
 .product-shop-detail{
     border: 1px solid #ddd;
+}
+
+.product-button{
+    display: flex;
+}
+
+.product-price-old{
+    font-size: 15px;
+}
+
+.product-price-new{
+    font-size: 25px;
+    color: red;
+}
+.product-button button{
+    width: 255px;
+    height: 55px;
+    color: white;
+    border-radius: 30px;
+    border :1px;
+}
+
+.product-title-container{
+    padding : 9px;
+    height: 45px;
+    background-color: #ffee00ef;
+    width: 325px;
+    color: white;
+}
+.product-image img{
+    width: 250px;
+    height: 250px;
+}
+
+
+.product-item{
+    border: 1px solid #ddd;
+    max-width: 255px;
 }

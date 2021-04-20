@@ -43,7 +43,7 @@ export class DefaultLayoutComponent implements OnInit{
     localStorage.removeItem('Token');
     localStorage.clear();
     this.picture = this.urlPictureDefault;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   onProfile(){

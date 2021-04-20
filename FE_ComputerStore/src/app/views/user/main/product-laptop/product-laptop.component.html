@@ -1,0 +1,42 @@
+<div class = 'product-detail-page'>
+    <div class = 'product-detail-icon' >
+        <a href=""><i class="fas fa-home"></i></a>
+        <p style="margin-top: 5px;margin-left: 5px;">></p>
+        <h5 style="margin-top: 5px;margin-left: 5px;">Laptop</h5>
+    </div>
+    <hr/>
+</div>
+<div class = 'container'>
+    <div class = 'row'>
+        <div class = 'col-lg-2'>
+            <h5 style="font-weight: normal ; text-align: center; border:1px solid #ddd;height: 33px;padding-top: 6px;">LỌC SẢN PHẨM</h5>
+            <h4>Hãng sản xuất</h4>
+            <div *ngFor = "let item of list_trademark_show">
+                <input type="checkbox"  [(ngModel)]="item.selected"  (ngModelChange)="filterProducts()"  style="margin-right: 3px">{{item.trademark_name}}
+            </div>
+            
+        </div>
+        <div class = 'col-lg-10'>
+            <div class = "product-grid" style="display: flex;flex-wrap: wrap;">
+                <div class= 'product-item' style="width: 25%;" *ngFor="let item of list_product_laptop">
+                  <div class = 'product-item-detail' style="display: grid;height: 100%;">
+                    <div class = 'product-image'>
+                      <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt="" style="width: 250px;"></a>
+                    </div>
+                    <div class = 'product-description'>
+                      <div class = 'product-title'>
+                        <p><a href=""></a> {{[item.product_name]}}</p>
+                      </div>
+                    </div>
+                    <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
+                      <del class = 'product-price-old'>18.900.000</del>
+                      <span class = 'product-price-new'>17.990.000 đ</span>
+                    </div>
+                    <div class = 'product-'></div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+   
+</div>

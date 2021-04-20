@@ -10,6 +10,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PipesModule } from '../../../pipe/pipes/pipes.module';
 import { MainComponent } from './main.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ProductLaptopComponent } from './product-laptop/product-laptop.component';
 // Angular
 
 @NgModule({
@@ -25,6 +26,6 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
   declarations: [
     // MainComponent,
     // ProductDetailComponent
-  ]
+    ]
 })
 export class MainModule { }

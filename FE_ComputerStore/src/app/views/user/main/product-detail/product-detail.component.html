@@ -1,50 +1,91 @@
 <div class = 'product-detail-page'>
-    <div class = 'product-detail-icon'>
+    <div class = 'product-detail-icon' *ngIf="product">
         <a href=""><i class="fas fa-home"></i></a>
         <p style="margin-top: 5px;margin-left: 5px;">></p>
-        <h5 style="margin-top: 5px;margin-left: 5px;">Laptop</h5>
+        <h5 style="margin-top: 5px;margin-left: 5px;">{{product.product_type_name}}</h5>
     </div>
     <hr/>
     <div class = 'product-detail-description'></div>
     <div></div>
 </div>
 <div class = 'container'>
-    <div class = 'product-detail-main row'>
+    <div class = 'product-detail-main row' *ngIf="product">
         <div class = 'product-detail-image col-lg-4'> 
-            <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fproduct%2Flaptop-1.png?alt=media&token=99364f1a-c078-4d2f-809c-951125f3d719" alt="">
+            <img src="{{product.image}}" alt="">
         </div>
-        <div class = 'col-lg-5'>
-            <h3 style="margin-bottom: 15px;">CPU AMD EPYC 7302 8 Nhân 16 Luồng</h3>
+        <div class = 'col-lg-5 product-description'>
+            <h3 style=" color: #000000ef; text-transform: uppercase;">{{product.product_name}}</h3>
+            <hr style="width: 100%;"/>
             <span>Lượt mua : 326</span>
-            <p>Dòng CPU AMD EPYC™ 7002 Series</p>
-            <p>Tốc độ 3.0GHz turbo up to 3.3GHz</p>
-            <p>Bus Ram hỗ trợ 3200MHz, DDR4</p>
-            <p>8 kênh Nhân CPU 16 Luồng CPU 32</p>
+            <p *ngFor = "let description1 of descriptions"><i class="far fa-check-square"></i>{{[description1]}}</p>
+            <div style="background-color: #ffee00ef;text-align: center; height: 65px;">
+                <div style="padding-top: 5px;">
+                    <h4 style="margin-bottom: 0;">MỚI 100%</h4>
+                    <h4>BẢO HÀNH 36 THÁNG</h4>
+                </div>
+            </div>
+            <div class = 'product-price' style="align-self: flex-end">
+                <span>Giá bán : </span>
+                <span class = 'product-price-new'>17.990.000 đ</span>
+                <del class = 'product-price-old'>18.900.000</del>
+            </div>
+            <div class ='product-button'>
+                <div >
+                    <button style="margin-right: 6px; background-color: red;">ĐẶT MUA NGAY</button>
+                </div>
+                <div>
+                    <button style="color: black;">CHO VÀO GIỎ</button>
+                </div>
+            </div>
         </div>
         <div class = 'col-lg-3 product-shop'>
             <div class = 'product-shop-title'>
-                <p class = 'p'>LƯU Ý KHÔNG BÁN LẺ VGA</p>
+                <p id = 'p'>LƯU Ý KHÔNG BÁN LẺ VGA</p>
                 <div class = 'product-shop-detail'>
-                    <p>Do thiếu nguồn hàng nên TIENDATCOMPUTER không bán lẻ VGA</p>
+                    <p style="margin-top: 5px;"><i class="fas fa-star"></i>Do thiếu nguồn hàng nên TDC không bán lẻ VGA</p>
                 </div>
             </div>
             <div class = 'product-shop-title'>
-                <p class = 'p'>YÊN TÂM MUA SẮM TẠI TIENDATCOMPUTER</p>
+                <p id = 'p'>YÊN TÂM MUA SẮM TẠI TDC</p>
                 <div class = 'product-shop-detail'>
-                    <p>Cam kết giá thành tốt nhất khi mua ở TIENDATCOMPUTER</p>
-                    <p>TIENDATCOMPUTER có 3 chi nhánh tại các TP lớn</p>
-                    <p>Bảo hành lỗi 1 đổi 1 trong 30 ngày đầu</p>
-                    <p>Hỗ trợ bảo hành tại nhà</p>
-                    <p>Mua hàng trả góp lãi suất 0%</p>
+                    <p style="margin-top: 5px;"><i class="fas fa-star"></i>Cam kết giá thành tốt nhất khi mua ở TDC</p>
+                    <p><i class="fas fa-star"></i>TDC có 3 chi nhánh tại các TP lớn</p>
+                    <p><i class="fas fa-star"></i>Bảo hành lỗi 1 đổi 1 trong 30 ngày đầu</p>
+                    <p><i class="fas fa-star"></i>Hỗ trợ bảo hành tại nhà</p>
+                    <p><i class="fas fa-star"></i>Mua hàng trả góp lãi suất 0%</p>
                 </div>
             </div>
             <div class = 'product-shop-title'>
-                <p class = 'p'>CHÍNH SÁCH GIAO HÀNG</p>
+                <p id = 'p'>CHÍNH SÁCH GIAO HÀNG</p>
                 <div class = 'product-shop-detail'>
-                    <p>Giao hàng trước trả tiền sau COD toàn quốc</p>
-                    <p>Miễn phí giao hàng nội thành HN & HCM</p>
+                    <p style="margin-top: 5px;"><i class="fas fa-star"></i>Giao hàng trước trả tiền sau COD toàn quốc</p>
+                    <p><i class="fas fa-star"></i>Miễn phí giao hàng nội thành HN & HCM</p>
                 </div>
             </div>
         </div>
     </div>
+    <div class = "product-bestseller">
+        <div class = "product-title-container" style="width: 340px; margin-bottom: 20px;" *ngIf="product">
+          <h3>Cùng thương hiệu {{product.trademark_name}}</h3>
+        </div>
+        <div class = "product-grid" style="display: flex;">
+          <div class= 'product-item' *ngFor="let item of (list_product_trademark | slice:list_product_trademark.length - 5);">
+            <div class = 'product-item-detail' style="display: grid;height: 100%;" >
+              <div class = 'product-image'>
+                <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+              </div>
+              <div class = 'product-description1'>
+                <div class = 'product-title'>
+                  <p><a href=""></a> {{[item.product_name]}}</p>
+                </div>
+              </div>
+              <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
+                <del class = 'product-price-old'>18.900.000</del>
+                <span class = 'product-price-new'>17.990.000 đ</span>
+              </div>
+              <div class = 'product-'></div>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>

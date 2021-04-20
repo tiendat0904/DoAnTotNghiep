@@ -79,8 +79,13 @@ export class UpdateCouponDetailComponent implements OnInit {
     this.arraylist_coupon=[];
     this.couponService.getAll().subscribe(data => {
       this.arraylist_coupon = data.data;
-      this.update_coupon_id = this.arraylist_coupon[this.arraylist_coupon.length-1].coupon_id;
-      this.update_coupon_id = this.update_coupon_id+1;
+      if(this.arraylist_coupon.length === 0 ){
+        this.update_coupon_id = 1;
+      }else{
+        this.update_coupon_id = this.arraylist_coupon[this.arraylist_coupon.length-1].coupon_id;
+        this.update_coupon_id = this.update_coupon_id+1;
+      }
+      
     },
     err => {
         this.isLoading = false;
@@ -137,6 +142,8 @@ export class UpdateCouponDetailComponent implements OnInit {
    
     if (model.coupon_detail_id === null || model.coupon_detail_id === undefined) {
       if(this.mess_coupon1===undefined){
+        console.log(this.update_coupon_id);
+        console.log("a"); 
         this.formGroup = this.fb.group({
           coupon_id: [ this.update_coupon_id],
           product_id: [ null, [Validators.required]],

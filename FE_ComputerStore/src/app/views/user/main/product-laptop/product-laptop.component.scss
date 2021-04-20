@@ -1,0 +1,26 @@
+.product-detail-icon{
+    display: flex;
+    padding: 15px;
+    height: 45px;
+}
+
+.product-detail-icon a{
+    margin-left: 17px;
+    font-size: 20px;
+}
+
+hr{
+    border : 1px solid #ffee00ef;
+    background-color: #ffee00ef;
+    width: 95%;
+    text-align: left;
+}
+
+.product-grid{
+    display: flex;
+}
+
+.product-item{
+    border: 1px solid #ddd;
+    max-width: 255px;
+}

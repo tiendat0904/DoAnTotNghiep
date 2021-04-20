@@ -44,6 +44,7 @@ import {
 import { AppRoutingModule } from './app.routing';
 
 // Import 3rd party components
+import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
@@ -68,6 +69,8 @@ import { UserComponent } from './views/user/user.component';
 import { MainComponent } from './views/user/main/main.component';
 import { ProductDetailComponent } from './views/user/main/product-detail/product-detail.component';
 import { UserModule } from './views/user/user.module';
+import { PromotionDateComponent } from './views/admin/promotion-date/promotion-date/promotion-date.component';
+import { ProductPromotionComponent } from './views/admin/product-promotion/product-promotion/product-promotion.component';
 
 @NgModule({
   imports: [
@@ -82,6 +85,7 @@ import { UserModule } from './views/user/user.module';
     AppSidebarModule,
     ReactiveFormsModule,
     HttpClientModule,
+    CarouselModule,
     FormsModule,
     UserModule,
     PerfectScrollbarModule,
@@ -118,8 +122,10 @@ import { UserModule } from './views/user/user.module';
     UpdateTrademarkComponent,
     NewsComponent,
     UpdateNewsComponent,
-    MainComponent,
-    ProductDetailComponent
+    PromotionDateComponent,
+    ProductPromotionComponent,
+    // MainComponent,
+    // ProductDetailComponent
    
   ],
   providers: [

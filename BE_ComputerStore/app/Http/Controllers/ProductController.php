@@ -16,6 +16,7 @@ class ProductController extends Controller
     const product_type_id = 'product_type_id';
     const price = 'price';
     const amount = 'amount';
+    const description = 'description';
 
     /**
      * NhaCungCapController constructor.
@@ -76,6 +77,7 @@ class ProductController extends Controller
                 self::product_name => 'required',
                 self::trademark_id => 'required',
                 self::product_type_id => 'required',
+                self::description => ' required',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->all()], 400);

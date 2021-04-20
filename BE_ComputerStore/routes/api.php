@@ -18,6 +18,23 @@ use App\Http\Controllers\ReportController;
 Route::post('register', [AccountController::class, 'register']);
 Route::post('login', [AccountController::class, 'login']);
 
+Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
+Route::get('/products/{id}', [\App\Http\Controllers\ProductController::class, 'show']);
+
+
+Route::get('/suppliers', [\App\Http\Controllers\SupplierController::class, 'index']);
+Route::get('/suppliers/{id}', [\App\Http\Controllers\SupplierController::class, 'show']);
+
+Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index']);
+Route::get('/news/{id}', [\App\Http\Controllers\NewsController::class, 'show']);
+
+Route::get('/brands', [\App\Http\Controllers\TrademarkController::class, 'index']);
+Route::get('/brands/{id}', [\App\Http\Controllers\TrademarkController::class, 'show']);
+
+Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
+Route::get('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'show']);
+
+
 Route::middleware('auth:api')->group(function () {
     Route::get('info', [AccountController::class, 'userInfo']);
     Route::post('logout', [AccountController::class, 'logout']);
@@ -53,11 +70,12 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/account_type/delete', [\App\Http\Controllers\AccountTypeController::class, 'destroy']);
 
+    
 
     //nhà cung cấp
-    Route::get('/suppliers', [\App\Http\Controllers\SupplierController::class, 'index']);
+    
 
-    Route::get('/suppliers/{id}', [\App\Http\Controllers\SupplierController::class, 'show']);
+    
 
     Route::post('/suppliers', [\App\Http\Controllers\SupplierController::class, 'store']);
 
@@ -67,9 +85,7 @@ Route::middleware('auth:api')->group(function () {
 
 
     //tin tức
-    Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index']);
-
-    Route::get('/news/{id}', [\App\Http\Controllers\NewsController::class, 'show']);
+  
 
     Route::post('/news', [\App\Http\Controllers\NewsController::class, 'store']);
 
@@ -79,9 +95,7 @@ Route::middleware('auth:api')->group(function () {
 
 
     //thương hiệu
-    Route::get('/brands', [\App\Http\Controllers\TrademarkController::class, 'index']);
-
-    Route::get('/brands/{id}', [\App\Http\Controllers\TrademarkController::class, 'show']);
+   
 
     Route::post('/brands', [\App\Http\Controllers\TrademarkController::class, 'store']);
 
@@ -92,10 +106,7 @@ Route::middleware('auth:api')->group(function () {
 
 
     //Bình luận đánh giá
-    Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
-
-    Route::get('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'show']);
-
+   
     Route::post('/comments', [\App\Http\Controllers\CommentController::class, 'store']);
 
     Route::put('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'update']);
@@ -104,9 +115,9 @@ Route::middleware('auth:api')->group(function () {
 
 
     //Sản phẩm
-    Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
 
-    Route::get('/products/{id}', [\App\Http\Controllers\ProductController::class, 'show']);
+
+   
 
     Route::post('/products', [\App\Http\Controllers\ProductController::class, 'store']);
 
@@ -139,6 +150,28 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/product_images/delete', [\App\Http\Controllers\ProductImageController::class, 'destroy']);
 
 
+    //ngày khuyến mãi
+    Route::get('/promotion_date', [\App\Http\Controllers\PromotionDateController::class, 'index']);
+
+    Route::get('/promotion_date/{id}', [\App\Http\Controllers\PromotionDateController::class, 'show']);
+
+    Route::post('/promotion_date', [\App\Http\Controllers\PromotionDateController::class, 'store']);
+
+    Route::put('/promotion_date/{id}', [\App\Http\Controllers\PromotionDateController::class, 'update']);
+
+    Route::post('/promotion_date/delete', [\App\Http\Controllers\PromotionDateController::class, 'destroy']);
+
+
+    //khuyến mãi sản phẩm
+    Route::get('/product_promotion', [\App\Http\Controllers\ProductPromotionController::class, 'index']);
+
+    Route::get('/product_promotion/{id}', [\App\Http\Controllers\ProductPromotionController::class, 'show']);
+
+    Route::post('/product_promotion', [\App\Http\Controllers\ProductPromotionController::class, 'store']);
+
+    Route::put('/product_promotion/{id}', [\App\Http\Controllers\ProductPromotionController::class, 'update']);
+
+    Route::post('/product_promotion/delete', [\App\Http\Controllers\ProductPromotionController::class, 'destroy']);
 
     //Loại đơn
     Route::get('/order_type', [\App\Http\Controllers\OrderTypeController::class, 'index']);
