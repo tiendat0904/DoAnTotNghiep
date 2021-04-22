@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
 import { NewsComponent } from './views/admin/news/news/news.component';
+import { PromotionDateComponent } from './views/admin/promotion-date/promotion-date/promotion-date.component';
 import { SupplierComponent } from './views/admin/supplier/supplier/supplier.component';
 import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.component';
 
@@ -115,6 +116,10 @@ export const routes: Routes = [
       {
         path: 'trademark',
         component: TrademarkComponent,
+      },
+      {
+        path: 'promotion-date',
+        component: PromotionDateComponent,
       },
       {
         path: 'product',

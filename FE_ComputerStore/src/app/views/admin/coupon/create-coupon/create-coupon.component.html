@@ -36,7 +36,7 @@
                   <div class="form-group">
                      <label>Tên nhân viên</label>
                      <select [(ngModel)]="update_employee_id" class="form-control" name="" formControlName="employee_id" id="">
-                        <option *ngFor="let e of arraylist_employee" value="{{e.account_id}}">{{e.full_name}}</option>
+                        <option *ngFor="let e of arraylist_employee_filter" value="{{e.account_id}}">{{e.full_name}}</option>
                      </select>
                      <div *ngIf="submitted && formGroup.controls['employee_id'].errors?.required">
                         <div
@@ -230,13 +230,13 @@
                                              </button>
                                           </div>
                                           <div class="modal-body">
-                                             Bạn có chắc chắn muốn xóa thông tin Chi tiết phiếu nhập {{ e.id }} ?
+                                             Bạn có chắc chắn muốn xóa thông tin Chi tiết phiếu nhập {{ e.coupon_detail_id }} ?
                                           </div>
                                           <div class="modal-footer">
                                              <button
                                                 class="btn btn-danger"
                                                 style="width: 80px"
-                                                (click)="delete_coupon_detail(e.id)"
+                                                (click)="delete_coupon_detail(e.coupon_detail_id)"
                                                 >
                                              Có
                                              </button>

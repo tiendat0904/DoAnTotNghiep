@@ -13,13 +13,13 @@ import { TrademarkService } from '../../../../services/trademark/trademark.servi
 export class ProductLaptopComponent implements OnInit {
 
   list_product: Array<productModel> = [];
-  l
   list_trademark: Array<trademarkModel> = [];
   list_trademark_selected: Array<trademarkModel> = [];
   list_trademark_show: Array<trademarkModel> = [];
   list_product_laptop = [];
   list_product_laptop1 = [];
   product_type_id :any;
+  product_type_name: any;
   constructor(private productService : ProductService,private route :ActivatedRoute,private trademarkService : TrademarkService) { }
 
   ngOnInit(): void {
@@ -33,9 +33,11 @@ export class ProductLaptopComponent implements OnInit {
     this.productService.getAll().subscribe(data =>{
       let product_type = this.product_type_id;
       this.list_product = data.data;
+      // this.product_type_name = data.data[0].product_type_name;
       this.list_product_laptop1=this.list_product_laptop = this.list_product.filter(function (laptop) {
         return (laptop.product_type_id === product_type);
       });
+      this.product_type_name = this.list_product_laptop1[0].product_type_name;
     });
     
     this.trademarkService.getAll().subscribe(data =>{
@@ -61,19 +63,49 @@ export class ProductLaptopComponent implements OnInit {
     let list_product_filter = this.list_product_laptop;
     const activeColors = this.list_trademark_show.filter(c => c.selected).map(c => c.trademark_id);
     
-    if(activeColors.length ===0 ){
+    if(activeColors.length === 0 ){
       this.list_product_laptop = this.list_product_laptop1;
 
     }else{
       let list = list_product_filter.filter(product => activeColors.includes(product.trademark_id));
       this.list_product_laptop= [];
       this.list_product_laptop = list;
-      console.log(4);
      
     }
-    
-    
-
-    
-};
+  }
+  changeStatus(event: any) {
+    // this.isLoading = true;
+    // let list = [];
+    // tslint:disable-next-line: radix
+    switch (parseInt(event)) {
+      case 0:
+        this.list_product_laptop = [...this.list_product_laptop];
+        // this.isLoading = false;
+        break;
+      case 1:
+        // list = [...this.list_product_laptop];
+        this.list_product_laptop.sort(function (a, b) {
+          return b.product_id - a.product_id;
+        });
+        // this.isLoading = false;
+        break;
+      case 2:
+        // list = [...this.list_product_laptop];
+        this.list_product_laptop.sort(function (a, b) {
+          return a.price - b.price;
+        });
+        // this.isLoading = false;
+        break;
+      case 3:
+        // list = [...this.list_product_laptop];
+        this.list_product_laptop.sort(function (a, b) {
+          return b.price - a.price;
+        });
+        // this.isLoading = false;
+        break;
+      default:
+        break;
+    }
+  }
+  
 }

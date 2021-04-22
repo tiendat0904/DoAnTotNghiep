@@ -11,6 +11,7 @@ import { ProductService } from '../../../../services/product/product.service';
 export class ProductDetailComponent implements OnInit {
 
   list_product: Array<productModel> = [];
+  list_product_trademark_filter: Array<productModel> = [];
   list_product_trademark: Array<productModel> = [];
   product : productModel;
   descriptions: any;
@@ -28,18 +29,22 @@ export class ProductDetailComponent implements OnInit {
         this.trademark_name = data.data.trademark_name;
         this.descriptions = this.product.description.split("\n");
       });
+      this.productService.getAll().subscribe(data => {
+        this.list_product = data.data;
+        let trademark_name_product = this.trademark_name;
+        this.list_product_trademark_filter = this.list_product.filter(function (product) {
+          return (product.trademark_name === trademark_name_product);
+        });
+        this.list_product_trademark = [];
+        for(let item of this.list_product_trademark_filter){
+          if(item.product_id === product_id){
+          }else{
+            this.list_product_trademark.push(item);
+          }
+        }
+      },)
     });
 
-    this.productService.getAll().subscribe(data => {
-      this.list_product = data.data;
-      let trademark_name_product = this.trademark_name;
-      this.list_product_trademark = this.list_product.filter(function (laptop) {
-        return laptop.trademark_name === trademark_name_product;
-      });
-    },)
+    
   }
-
-
-  
-
 }

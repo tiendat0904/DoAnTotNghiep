@@ -1,7 +1,6 @@
 .product-detail-icon{
     display: flex;
     padding: 15px;
-    height: 45px;
 }
 
 .product-detail-icon a{
@@ -14,6 +13,7 @@ hr{
     background-color: #ffee00ef;
     width: 95%;
     text-align: left;
+    margin-top: 0px;
 }
 
 .product-grid{
@@ -23,4 +23,9 @@ hr{
 .product-item{
     border: 1px solid #ddd;
     max-width: 255px;
+}
+
+.product-price-new{
+    color: red;
+    font-size: 20px;
 }

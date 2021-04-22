@@ -25,7 +25,7 @@ export class ViewCouponComponent implements OnInit {
   arraylist_supplier: Array<supplierModel> = [];
   arraylist_coupon: Array<couponModel> = [];
   arraylist_employee: Array<accountModel> = [];
-  arraylist_employee_filler: Array<accountModel> = [];
+  arraylist_employee_filter: Array<accountModel> = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
@@ -144,9 +144,7 @@ export class ViewCouponComponent implements OnInit {
     this.isLoading =  true;
     this.accountService.getAll().subscribe(data => {
       this.arraylist_employee = data.data;
-      this.arraylist_employee_filler = this.arraylist_employee.filter(function (employee) {
-        return employee.value === "KH";
-      });
+      this.arraylist_employee_filter = this.arraylist_employee.filter(employee => employee.value==="NV" || employee.value==="AD");
     },
     err => {
         this.isLoading = false;

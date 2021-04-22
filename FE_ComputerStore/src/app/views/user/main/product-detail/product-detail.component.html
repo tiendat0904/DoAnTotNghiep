@@ -2,10 +2,9 @@
     <div class = 'product-detail-icon' *ngIf="product">
         <a href=""><i class="fas fa-home"></i></a>
         <p style="margin-top: 5px;margin-left: 5px;">></p>
-        <h5 style="margin-top: 5px;margin-left: 5px;">{{product.product_type_name}}</h5>
+        <p style="font-size: 20px;margin-left: 5px;">{{product.product_type_name}}</p>
     </div>
     <hr/>
-    <div class = 'product-detail-description'></div>
     <div></div>
 </div>
 <div class = 'container'>
@@ -26,8 +25,8 @@
             </div>
             <div class = 'product-price' style="align-self: flex-end">
                 <span>Giá bán : </span>
-                <span class = 'product-price-new'>17.990.000 đ</span>
-                <del class = 'product-price-old'>18.900.000</del>
+                <span class = 'product-price-new'>{{product.price_new | currency: 'VND'}}</span>
+                <del class = 'product-price-old'>{{product.price |  currency: 'VND' }}</del>
             </div>
             <div class ='product-button'>
                 <div >
@@ -80,8 +79,8 @@
                 </div>
               </div>
               <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-                <del class = 'product-price-old'>18.900.000</del>
-                <span class = 'product-price-new'>17.990.000 đ</span>
+                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
+                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
               </div>
               <div class = 'product-'></div>
             </div>

@@ -1,0 +1,79 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
+        
+  
+        <div class="form-group">
+            <label>Ngày khuyến mãi</label>
+            <input
+              type="date"
+              name=""
+              class="form-control"
+              formControlName="date"
+              id="date"
+            />
+            <div *ngIf="submitted && formGroup.controls['date'].errors?.required">
+                <div
+                  *ngIf="formGroup.controls['date'].errors?.required"
+                  style="color: red"
+                >
+                  * Ngày khuyến mãi không được để trống
+                </div>
+              </div>
+          </div>
+
+
+          <div class="form-group">
+            <label>Mức khuyến mãi</label>
+            <input
+              type="number"
+              name=""
+              min="0"
+              max="100"
+              class="form-control"
+              formControlName="promotion_level"
+              id="promotion_level"
+            />
+            <div *ngIf="submitted && formGroup.controls['promotion_level'].errors?.required">
+                <div
+                  *ngIf="formGroup.controls['promotion_level'].errors?.required"
+                  style="color: red"
+                >
+                  * Mức khuyến mãi không được để trống
+                </div>
+              </div>
+          </div>
+  
+        <div class="form-group" align="center">
+          <button
+            [hidden]="checkButton"
+            type="submit"
+            class="btn btn-success"
+            style="width: 100px;height:38px; background:'green';"
+            *ngIf="isEdit || isAdd"
+          >
+            Lưu
+          </button>
+          <button
+            class="btn btn-danger"
+            style="width: 100px"
+            (click)="modal.dismiss('Cross click')"
+          >
+            Thoát
+          </button>
+        </div>
+       
+      </form>
+    </div>
+  </ng-template>

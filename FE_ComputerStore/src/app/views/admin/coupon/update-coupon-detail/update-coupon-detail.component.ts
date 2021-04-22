@@ -82,6 +82,9 @@ export class UpdateCouponDetailComponent implements OnInit {
       if(this.arraylist_coupon.length === 0 ){
         this.update_coupon_id = 1;
       }else{
+        this.arraylist_coupon.sort(function (a, b) {
+          return a.coupon_id - b.coupon_id;
+        });
         this.update_coupon_id = this.arraylist_coupon[this.arraylist_coupon.length-1].coupon_id;
         this.update_coupon_id = this.update_coupon_id+1;
       }
@@ -143,7 +146,6 @@ export class UpdateCouponDetailComponent implements OnInit {
     if (model.coupon_detail_id === null || model.coupon_detail_id === undefined) {
       if(this.mess_coupon1===undefined){
         console.log(this.update_coupon_id);
-        console.log("a"); 
         this.formGroup = this.fb.group({
           coupon_id: [ this.update_coupon_id],
           product_id: [ null, [Validators.required]],

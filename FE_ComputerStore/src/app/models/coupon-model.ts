@@ -1,5 +1,5 @@
 export interface couponModel{
-    coupon_id?: bigint,
+    coupon_id?: number,
     employee_id?: bigint,
     supplier_id?: bigint,
     total_money?: number,

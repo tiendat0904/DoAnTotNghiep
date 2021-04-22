@@ -23,6 +23,7 @@ export class CreateCouponComponent implements OnInit {
 
   @ViewChild(UpdateCouponDetailComponent) view!: UpdateCouponDetailComponent;
   arraylist_coupon_detail: Array<couponDetailModel> = [];
+  arraylist_employee_filter: Array<accountModel> = [];
   arraylist_supplier: Array<supplierModel> = [];
   arraylist_coupon: Array<couponModel> = [];
   arraylist_employee: Array<accountModel> = [];
@@ -66,6 +67,9 @@ export class CreateCouponComponent implements OnInit {
         if(this.arraylist_coupon.length === 0){
           this.update_coupon_id = 1;
         }else{
+          this.arraylist_coupon.sort(function (a, b) {
+            return a.coupon_id - b.coupon_id;
+          });
           this.update_coupon_id = this.arraylist_coupon[this.arraylist_coupon.length-1].coupon_id;
           this.update_coupon_id = this.update_coupon_id+1;
         }
@@ -147,7 +151,7 @@ export class CreateCouponComponent implements OnInit {
     this.isLoading =  true;
     this.accountService.getAll().subscribe(data => {
       this.arraylist_employee = data.data;
-      console.log(data.data);
+      this.arraylist_employee_filter = this.arraylist_employee.filter(employee => employee.value==="NV" || employee.value==="AD");
     },
     err => {
         this.isLoading = false;
@@ -262,7 +266,7 @@ export class CreateCouponComponent implements OnInit {
     
   }
 
-  xoacouponDetail(item: any = null) {
+  delete_coupon_detail(item: any = null) {
     let selectedcouponDetail= [];
     if (item !== null && item !== undefined && item !== '') {
       selectedcouponDetail.push(item);

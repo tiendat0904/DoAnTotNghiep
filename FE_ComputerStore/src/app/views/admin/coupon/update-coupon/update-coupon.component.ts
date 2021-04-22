@@ -149,9 +149,7 @@ export class UpdateCouponComponent implements OnInit {
     this.isLoading =  true;
     this.accountService.getAll().subscribe(data => {
       this.arraylist_employee = data.data;
-      this.arraylist_employee_filter = this.arraylist_employee.filter(function (employee) {
-        return employee.value === "NV";
-      });
+      this.arraylist_employee_filter = this.arraylist_employee.filter(employee => employee.value==="NV" || employee.value==="AD");
     },
     err => {
         this.isLoading = false;
@@ -263,7 +261,7 @@ export class UpdateCouponComponent implements OnInit {
     }
   }
 
-  xoacouponDetail(item: any = null) {
+  delete_coupon_detail(item: any = null) {
     let selectedthongtincd= [];
     if (item !== null && item !== undefined && item !== '') {
       selectedthongtincd.push(item);

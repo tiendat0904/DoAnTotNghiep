@@ -84,11 +84,15 @@
     width: 250px;
     height: 250px;
 }
+
+.product-title-container h3{
+    font-size: 25px;
+}
 .product-title-container h3::after{
     content: '';
     position: relative;
     left: 36px;
-    bottom: 40px;
+    bottom: 38px;
     border-bottom: 46px solid #ffee00ef;
     border-right: 50px solid #00000000;
 }
@@ -113,3 +117,7 @@
     margin-left: 15px;
 }
 
+.product-price-new{
+    font-size: 22px;
+    color: red;
+}

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule,LOCALE_ID } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy, PathLocationStrategy, CurrencyPipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -71,7 +71,10 @@ import { ProductDetailComponent } from './views/user/main/product-detail/product
 import { UserModule } from './views/user/user.module';
 import { PromotionDateComponent } from './views/admin/promotion-date/promotion-date/promotion-date.component';
 import { ProductPromotionComponent } from './views/admin/product-promotion/product-promotion/product-promotion.component';
-
+import { UpdatePromotionDateComponent } from './views/admin/promotion-date/update-promotion-date/update-promotion-date.component';
+import localeFr from '@angular/common/locales/vi';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
     BrowserModule,
@@ -124,6 +127,7 @@ import { ProductPromotionComponent } from './views/admin/product-promotion/produ
     UpdateNewsComponent,
     PromotionDateComponent,
     ProductPromotionComponent,
+    UpdatePromotionDateComponent
     // MainComponent,
     // ProductDetailComponent
    
@@ -140,6 +144,10 @@ import { ProductPromotionComponent } from './views/admin/product-promotion/produ
 		  useClass: JwtInterceptor,
 		  multi: true
 		},
+    {
+      provide: LOCALE_ID,
+      useValue: 'vi' // 'de' for Germany, 'fr' for France ...
+     },
     IconSetService,
   ],
   bootstrap: [ AppComponent ]

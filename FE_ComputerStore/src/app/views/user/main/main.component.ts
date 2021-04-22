@@ -7,6 +7,7 @@ import { NewsService } from '../../../services/news/news.service';
 import { ProductTypeService } from '../../../services/product-type/product-type.service';
 import { ProductService } from '../../../services/product/product.service';
 
+
 @Component({
   selector: 'app-Main',
   templateUrl: './main.component.html',
@@ -116,7 +117,7 @@ export class MainComponent implements OnInit {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.list_product_cpu = this.list_product.filter(function (laptop) {
-        return laptop.product_type_name === "PSU";
+        return laptop.product_type_name === "CPU";
       });
     },)
   }
