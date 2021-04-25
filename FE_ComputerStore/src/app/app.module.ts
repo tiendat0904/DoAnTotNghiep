@@ -70,10 +70,11 @@ import { MainComponent } from './views/user/main/main.component';
 import { ProductDetailComponent } from './views/user/main/product-detail/product-detail.component';
 import { UserModule } from './views/user/user.module';
 import { PromotionDateComponent } from './views/admin/promotion-date/promotion-date/promotion-date.component';
-import { ProductPromotionComponent } from './views/admin/product-promotion/product-promotion/product-promotion.component';
 import { UpdatePromotionDateComponent } from './views/admin/promotion-date/update-promotion-date/update-promotion-date.component';
 import localeFr from '@angular/common/locales/vi';
 import { registerLocaleData } from '@angular/common';
+import { UpdateProductPromotionComponent } from './views/admin/promotion-date/update-product-promotion/update-product-promotion.component';
+import { ProductPromotionComponent } from './views/admin/promotion-date/product-promotion/product-promotion.component';
 registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
@@ -127,7 +128,8 @@ registerLocaleData(localeFr, 'vi');
     UpdateNewsComponent,
     PromotionDateComponent,
     ProductPromotionComponent,
-    UpdatePromotionDateComponent
+    UpdatePromotionDateComponent,
+    UpdateProductPromotionComponent
     // MainComponent,
     // ProductDetailComponent
    

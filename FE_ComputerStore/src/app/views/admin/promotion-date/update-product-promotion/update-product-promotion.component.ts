@@ -5,24 +5,25 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 import { avatarDefault } from '../../../../../environments/environment';
-import { productImageModel } from '../../../../models/product-image-model';
 import { productModel } from '../../../../models/product-model';
-import { ProductImageService } from '../../../../services/product-image/product-image.service';
+import { productPromotionDModel } from '../../../../models/product-promotion-model';
+import { ProductPromotionService } from '../../../../services/product-promotion/product-promotion.service';
 import { ProductService } from '../../../../services/product/product.service';
+import { PromotionDateService } from '../../../../services/promotion-date/promotion-date.service';
 
 @Component({
-  selector: 'app-update-product-image',
-  templateUrl: './update-product-image.component.html',
-  styleUrls: ['./update-product-image.component.scss']
+  selector: 'app-update-product-promotion',
+  templateUrl: './update-product-promotion.component.html',
+  styleUrls: ['./update-product-promotion.component.scss']
 })
-export class UpdateProductImageComponent implements OnInit {
+export class UpdateProductPromotionComponent implements OnInit {
 
   @ViewChild('content') public childModal!: ModalDirective;
-  @Input() arraylist_product_image: Array<productImageModel>;
+  @Input() arraylist_product_promotion: Array<productPromotionDModel>;
   @Output() eventEmit: EventEmitter<any> = new EventEmitter<any>();
   arraylist_product: Array<productModel> = [];
+  arraylist_promotion_date: Array<productPromotionDModel> = [];
   checkButton = false;
   closeResult: String;
   uploadPercent: Observable<number>;
@@ -42,29 +43,48 @@ export class UpdateProductImageComponent implements OnInit {
   type: any;
   arrCheck = [];
   update_ma_tai_khoan:any;
-  model: productImageModel;
+  model: productPromotionDModel;
   urlPictureDefault = avatarDefault;
  
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
+    private productPromotionService: ProductPromotionService,
     private productService: ProductService,
-    private productImageService: ProductImageService,
-    private store: AngularFireStorage) {
+    private promotionDateService:PromotionDateService) {
     }
 
   ngOnInit(): void {
     this.submitted = false;
     this.fetcharraylist_product();
+    this.fetcharraylist_product_promotion();
+    this.fetcharraylist_promotion_date();
     
   }
 
-
-
   fetcharraylist_product(){
-    this.subscription=this.productService.getAll().subscribe(data => {
+    this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
+    },
+    err => {
+        this.isLoading = false;
+      })
+  }
+
+  fetcharraylist_product_promotion(){
+    this.subscription=this.productPromotionService.getAll().subscribe(data => {
+      this.arraylist_product_promotion = data.data;
+    },
+    err => {
+        this.isLoading = false;
+      })
+  }
+
+  fetcharraylist_promotion_date(){
+    this.arraylist_promotion_date = [];
+    this.subscription=this.promotionDateService.getAll().subscribe(data => {
+      this.arraylist_promotion_date = data.data;
     },
     err => {
         this.isLoading = false;
@@ -76,22 +96,22 @@ export class UpdateProductImageComponent implements OnInit {
         this.isInfo = false;
         this.isEdit = false;
         this.isAdd = true;
-        this.title = `Thêm mới thông tin hình ảnh sản phẩm`;
+        this.title = `Thêm mới thông tin khuyến mãi sản phẩm`;
         // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
-        this.title = `Xem chi tiết thông tin hình ảnh sản phẩm`;
-        // this.update_ma_tai_khoan = this.model.product_id;
+        this.title = `Xem chi tiết thông tin khuyến mãi sản phẩm`;
+        // this.update_ma_tai_khoan = this.model.promotion_date_id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
-        this.title = `Chỉnh sửa thông tin hình ảnh sản phẩm`;
-        // this.update_ma_tai_khoan = this.model.product_id;
+        this.title = `Chỉnh sửa thông tin khuyến mãi sản phẩm`;
+        // this.update_ma_tai_khoan = this.model.promotion_date_id;
         break;
       default:
         this.isInfo = false;
@@ -101,31 +121,30 @@ export class UpdateProductImageComponent implements OnInit {
     }
   }
 
-  view(model: productImageModel, type = null): void {
-    this.arrCheck = this.arraylist_product_image;
+  view(model: productPromotionDModel, type = null): void {
+    this.arrCheck = this.arraylist_product_promotion;
     this.open(this.childModal);
     this.type = type;
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
    
-    if (model.product_id === null || model.product_id === undefined) {
+    if (model.promotion_date_id === null || model.promotion_date_id === undefined) {
       this.formGroup = this.fb.group({
-        product_id: [ null, [Validators.required]],
+        product_id :[ null, [Validators.required]],
+        promotion_date_id: [ null, [Validators.required]],
+        promotion_level: [ null, [Validators.required]],
         
       });
       this.urlPictureDefault = avatarDefault;
     } else {
       this.formGroup = this.fb.group({
-        product_id: [{value: this.model.product_id, disabled: this.isInfo}, [Validators.required]],
-      }); 
-      if(this.model.image===""){
-        this.urlPictureDefault = avatarDefault;
-      }else{
-        this.urlPictureDefault = this.model.image;
-      }    
+        product_id :[{value: this.model.product_id, disabled: this.isInfo}, [Validators.required]],
+        promotion_date_id: [{value: this.model.promotion_date_id, disabled: this.isInfo}, [Validators.required]],
+        promotion_level: [{value: this.model.promotion_level, disabled: this.isInfo}, [Validators.required]],
+       
+      });     
     }
-    
   }
 
 
@@ -157,27 +176,40 @@ export class UpdateProductImageComponent implements OnInit {
 
   save() {
     let check = false;
-    let product: productImageModel;
+    let promotion_date: productPromotionDModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
       this.toastr.error('Kiểm tra thông tin các trường đã nhập');
       return;
     }
     if (this.isEdit) {
-      product = {
-        product_id: this.formGroup.get('product_id')?.value,
-        image: this.urlPictureDefault,
+      promotion_date = {
+        product_promotion_id: this.model.product_promotion_id,
+        product_id :this.formGroup.get('product_id')?.value,
+        promotion_date_id: this.formGroup.get('promotion_date_id')?.value,
+        promotion_level:this.formGroup.get('promotion_level')?.value,
       };
      
     } else {
-      product = {
-        product_id: this.formGroup.get('product_id')?.value,
-        image: this.urlPictureDefault,
+      promotion_date = {
+        product_id :this.formGroup.get('product_id')?.value,
+        promotion_date_id: this.formGroup.get('promotion_date_id')?.value,
+        promotion_level:this.formGroup.get('promotion_level')?.value,
       };
     }
     if (this.isAdd) {
       
-      this.productImageService.create(product).subscribe(res => {
+      for (let i = 0; i < this.arrCheck.length; i++) {
+        if (this.arrCheck[i].promotion_date_id === promotion_date.promotion_date_id) {
+          check = true;
+          break;
+        }
+      }
+      if (check === true) {
+        this.toastr.error('Mã nhà cung cấp đã tồn tại');
+        return;
+      }
+      this.productPromotionService.create(promotion_date).subscribe(res => {
         this.closeModalReloadData();
         this.toastr.success(res.success);
         this.modalReference.dismiss();
@@ -188,7 +220,7 @@ export class UpdateProductImageComponent implements OnInit {
       );
     }
     if (this.isEdit) {
-      this.productImageService.update(product.product_id, product).subscribe(res => {
+      this.productPromotionService.update(promotion_date.promotion_date_id, promotion_date).subscribe(res => {
         this.closeModalReloadData();
         this.toastr.success(res.success);
         this.modalReference.dismiss();
@@ -203,31 +235,6 @@ export class UpdateProductImageComponent implements OnInit {
   public closeModalReloadData(): void {
     this.submitted = false;
     this.eventEmit.emit('success');
-  }
-
-  uploadImage(event) {
-    // tslint:disable-next-line:prefer-const
-    let file = event.target.files[0];
-    // tslint:disable-next-line:prefer-const
-    let path = `computerstore/${file.name}`;
-    if (file.type.split('/')[0] !== 'image') {
-      return alert('Erreur, ce fichier n\'est pas une image');
-    } else {
-      // tslint:disable-next-line:prefer-const
-      let ref = this.store.ref(path);
-      // tslint:disable-next-line:prefer-const
-      let task = this.store.upload(path, file);
-      this.uploadPercent = task.percentageChanges();
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          this.downloadURL = ref.getDownloadURL();
-          this.downloadURL.subscribe(url => {
-          this.urlPictureDefault=url;
-          });
-        }
-        )
-      ).subscribe();
-    }
   }
 
 }

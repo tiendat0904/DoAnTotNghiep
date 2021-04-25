@@ -1,0 +1,98 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
+        
+  
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="form-group">
+                   <label>Tên sản phẩm</label>
+                   <select class="form-control" name="" formControlName="product_id" id="">
+                      <option *ngFor="let e of arraylist_product" value="{{e.product_id}}">{{e.product_name}}</option>
+                   </select>
+                   <div *ngIf="submitted && formGroup.controls['product_id'].errors?.required">
+                      <div
+                         *ngIf="formGroup.controls['product_id'].errors?.required"
+                         style="color: red"
+                         >
+                         * Tên sản phẩm không được để trống
+                      </div>
+                   </div>
+                </div>
+             </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="form-group">
+                   <label>Ngày khuyến mãi</label>
+                   <select class="form-control" name="" formControlName="promotion_date_id" id="">
+                      <option *ngFor="let e of arraylist_promotion_date" value="{{e.promotion_date_id}}">{{e.date}}</option>
+                   </select>
+                   <div *ngIf="submitted && formGroup.controls['promotion_date_id'].errors?.required">
+                      <div
+                         *ngIf="formGroup.controls['promotion_date_id'].errors?.required"
+                         style="color: red"
+                         >
+                         * Ngày khuyến mãi không được để trống
+                      </div>
+                   </div>
+                </div>
+             </div>
+        </div>
+
+
+          <div class="form-group">
+            <label>Mức khuyến mãi</label>
+            <input
+              type="number"
+              name=""
+              min="0"
+              max="100"
+              class="form-control"
+              formControlName="promotion_level"
+              id="promotion_level"
+            />
+            <div *ngIf="submitted && formGroup.controls['promotion_level'].errors?.required">
+                <div
+                  *ngIf="formGroup.controls['promotion_level'].errors?.required"
+                  style="color: red"
+                >
+                  * Mức khuyến mãi không được để trống
+                </div>
+              </div>
+          </div>
+  
+        <div class="form-group" align="center">
+          <button
+            [hidden]="checkButton"
+            type="submit"
+            class="btn btn-success"
+            style="width: 100px;height:38px; background:'green';"
+            *ngIf="isEdit || isAdd"
+          >
+            Lưu
+          </button>
+          <button
+            class="btn btn-danger"
+            style="width: 100px"
+            (click)="modal.dismiss('Cross click')"
+          >
+            Thoát
+          </button>
+        </div>
+       
+      </form>
+    </div>
+  </ng-template>

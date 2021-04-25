@@ -60,6 +60,11 @@ h4{
 
 .product-button{
     display: flex;
+
+}
+
+.product-button :single-button{
+    border: 0px;
 }
 
 .product-price-old{

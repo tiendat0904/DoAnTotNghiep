@@ -34,6 +34,8 @@ Route::get('/brands/{id}', [\App\Http\Controllers\TrademarkController::class, 's
 Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
 Route::get('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'show']);
 
+Route::get('/product_type', [\App\Http\Controllers\ProductTypeController::class, 'index']);
+Route::get('/product_type/{id}', [\App\Http\Controllers\ProductTypeController::class, 'show']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('info', [AccountController::class, 'userInfo']);
@@ -127,9 +129,8 @@ Route::middleware('auth:api')->group(function () {
 
 
     //Loại Sản phẩm
-    Route::get('/product_type', [\App\Http\Controllers\ProductTypeController::class, 'index']);
 
-    Route::get('/product_type/{id}', [\App\Http\Controllers\ProductTypeController::class, 'show']);
+    
 
     Route::post('/product_type', [\App\Http\Controllers\ProductTypeController::class, 'store']);
 

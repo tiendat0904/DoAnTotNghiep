@@ -62,6 +62,11 @@ export const navItems: INavData[] = [
     icon: 'icon-pencil'
   },
   {
+    name: 'Khuyến mãi sản phẩm',
+    url: '/admin/product-promotion',
+    icon: 'icon-pencil'
+  },
+  {
     name: 'Tin tức',
     url: '/admin/news',
     icon: 'icon-pencil'

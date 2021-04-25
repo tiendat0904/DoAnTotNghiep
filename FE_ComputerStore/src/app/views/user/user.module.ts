@@ -18,6 +18,8 @@ import { MainComponent } from './main/main.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductLaptopComponent } from './main/product-laptop/product-laptop.component';
+import { CartComponent } from './cart/cart.component';
+import { ProfileComponent } from './profile/profile.component';
 // Angular
 
 @NgModule({
@@ -39,7 +41,9 @@ import { ProductLaptopComponent } from './main/product-laptop/product-laptop.com
     HeaderComponent,
     MainComponent,
     ProductDetailComponent,
-    ProductLaptopComponent
+    ProductLaptopComponent,
+    CartComponent,
+    ProfileComponent
   ]
 })
 export class UserModule { }

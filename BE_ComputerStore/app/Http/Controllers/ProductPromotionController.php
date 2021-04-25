@@ -39,14 +39,10 @@ class ProductPromotionController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $this->base->index();
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
-        } else {
             $objs = DB::table(self::table)
                 ->leftJoin(ProductController::table, ProductController::table . '.' . ProductController::id, '=', self::table . '.' . self::product_id)
                 ->join(PromotionDateController::table, PromotionDateController::table . '.' . PromotionDateController::id, '=', self::table . '.' . self::promotion_date_id)
-                ->select(self::table . '.' . self::id, self::table . '.' . self::product_id, ProductController::table . '.' . ProductController::product_name, self::table . '.' . self::promotion_date_id, PromotionDateController::table . '.' . PromotionDateController::date, self::promotion_level)
-                ->where(PromotionDateController::date, '=', $date)
+                ->select(self::table . '.' . self::id, self::table . '.' . self::product_id, ProductController::table . '.' . ProductController::product_name, self::table . '.' . self::promotion_date_id, PromotionDateController::table . '.' . PromotionDateController::date, self::promotion_level)        
                 ->get();
             return response()->json(['data' => $objs], 200);
         }
@@ -80,6 +76,7 @@ class ProductPromotionController extends Controller
                     if ($count > 0) {
                         foreach ($listObj as $obj) {
                             $validator = Validator::make($obj, [
+                                self::product_id => 'required',
                                 self::promotion_date_id => 'required',
                                 self::promotion_level => 'required',
                             ]);
@@ -94,6 +91,7 @@ class ProductPromotionController extends Controller
                     $arr_value = $request->all();
                     if (count($arr_value) > 0) {
                         $validator = Validator::make($arr_value, [
+                            self::product_id => 'required',
                             self::promotion_date_id => 'required',
                             self::promotion_level => 'required',
                         ]);
@@ -147,6 +145,14 @@ class ProductPromotionController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+            $this->base->update($request, $id);
+            return response()->json($this->base->getMessage(), $this->base->getStatus());
+          } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
     }
 
     /**
