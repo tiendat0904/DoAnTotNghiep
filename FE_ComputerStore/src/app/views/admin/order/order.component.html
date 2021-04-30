@@ -12,7 +12,7 @@
                       <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" class="form-control" placeholder="Search&hellip;">
                    </div>
                 </div>
-                <button (click)="getNavigation('admin/order/create', '')" type="button" class="btn btn-primary" style="margin-left: 17px;" ><i class="fa fa-plus" style="margin-right: 12px;"></i>Thêm mới</button>
+                <!-- <button (click)="getNavigation('admin/order/create', '')" type="button" class="btn btn-primary" style="margin-left: 17px;" ><i class="fa fa-plus" style="margin-right: 12px;"></i>Thêm mới</button> -->
                 <ng-template #mymodal1 let-modal>
                     <div class="modal-header">
                        <h4 class="modal-title" id="modal-basic-title">
@@ -69,11 +69,11 @@
                             (change)="checkAllCheckBox($event)"
                             />
                          <th>STT</th>
-                         <th>Tên nhân Viên</th>
                          <th>Tên khách hàng</th>
                          <th>Tổng tiền</th>
-                         <th>Ngày tạo</th>
-                         <th>Thao tác</th>
+                         <th>Trạng thái</th>
+                         <th>Tạo lúc</th>
+                         <th>Hành động</th>
                       </tr>
                    </thead>
                    <tbody>
@@ -92,10 +92,10 @@
                             (ngModelChange)="changeModel()"
                             value="{{ e.bill_id }}"
                             />
-                         <td>{{ i + (page-1)*pageSize + 1 }}</td>
-                         <td [innerHTML]="e.employee_name"></td>       
+                         <td>{{ i + (page-1)*pageSize + 1 }}</td>      
                          <td [innerHTML]="e.customer_name"></td>       
-                         <td [innerHTML]="e.total_money"></td>   
+                         <td [innerHTML]="e.total_money |  currency: 'VND'"></td>   
+                         <td><div class= 'order_status' [innerHTML]="e.order_status_description" [ngStyle]="{'background-color':getColor(e.order_status_description)}"></div></td> 
                          <td [innerHTML]="e.created_at"></td>                                
                          <td>
                             <ng-template #mymodal let-modal>
@@ -133,8 +133,8 @@
                                </div>
                             </ng-template>
                             <div class="row justify-content-center">                  
-                                <button (click)="getNavigation('admin/order/view/', e.bill_id)"  class="btn btn-info" title="View" ><i class="fa fa-info-circle" aria-hidden="true"></i></button>         
-                               <button (click)="getNavigation('admin/order/update/', e.bill_id)"  class="btn btn-warning" title="Edit" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
+                                <!-- <button (click)="getNavigation('admin/order/view/', e.bill_id)"  class="btn btn-info" title="View" ><i class="fa fa-info-circle" aria-hidden="true"></i></button>          -->
+                               <button (click)="getNavigation('admin/order/update/', e.bill_id)"  class="btn btn-warning" title="Edit" ><i class="fas fa-edit edit" aria-hidden="true"></i></button>  
                                <button class="btn btn-danger"  (click)="open(mymodal)" title="Delete" data-toggle="tooltip"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </div>
                          </td>

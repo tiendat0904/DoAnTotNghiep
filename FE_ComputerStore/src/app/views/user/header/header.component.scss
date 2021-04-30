@@ -6,11 +6,9 @@
 
 .header-toolbar{
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    max-width: 1300px;
+    padding-left: 413px;
+    padding-top: 10px;
+    max-width: 1420px;
 }
 
 
@@ -21,6 +19,7 @@ span{
 
 a{
     padding-left: 20px;
+    text-decoration: none;
 }
 
 .header-main{
@@ -31,10 +30,11 @@ a{
     z-index: 1;
 }
 .header-main-center{
-    margin-top: 25px;
+    margin-top: 13px;
     margin-left: 55px;
-    
-
+}
+.header-main-center img{
+    width: 275px;
 }
 
 .header-main-logo-img{
@@ -47,7 +47,7 @@ a{
 
 .header-main-search input{
     background-color: #e5e5e5;
-    width: 400px;
+    width: 600px;
     height: 40px;
     border:  0.5px solid white;
     border-radius: 5px;
@@ -131,4 +131,24 @@ a{
     top: 30%;
     margin-right: 10px;
     margin-left: 80px;
+}
+
+
+.autocomplete-suggestions{
+    width: 645px;
+    position: absolute;
+    display: none;
+    overflow: auto;
+    z-index: 999;
+    background-color: #fff;
+    max-height: 300px;
+}
+
+.autocomplete-suggestions img{
+    height: 65px;
+    width: 65px;
+}
+
+.autocomplete-suggestions a{
+    display: block;
 }

@@ -5,7 +5,9 @@ import { CartComponent } from './cart/cart.component';
 import { MainComponent } from './main/main.component';
 import { ProductDetailComponent } from './main/product-detail/product-detail.component';
 import { ProductLaptopComponent } from './main/product-laptop/product-laptop.component';
+import { OrderSucessComponent } from './order-sucess/order-sucess.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SearchComponent } from './search/search.component';
 
 // import { DropdownsComponent } from './dropdowns.component';
 // import { BrandButtonsComponent } from './brand-buttons.component';
@@ -22,12 +24,20 @@ const routes: Routes = [
         component: MainComponent
       },
       {
-        path: 'product_type/:product_type_id',
+        path: 'product-type/:product_type_id',
         component: ProductLaptopComponent
+      },
+      {
+        path: 'send-cart',
+        component: OrderSucessComponent,
       },
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path:'search',
+        component: SearchComponent
       },
       {
         path: 'cart',

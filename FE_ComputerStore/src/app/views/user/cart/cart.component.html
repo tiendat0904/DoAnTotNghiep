@@ -1,79 +1,111 @@
-<div class = 'product-detail-page'>
-    <div class = 'product-detail-icon'>
+<div class='product-detail-page'>
+    <div class='product-detail-icon'>
         <a href=""><i class="fas fa-home"></i></a>
         <p style="margin-top: 5px;margin-left: 5px;">></p>
         <p style="font-size: 20px;margin-left: 5px;">Giỏ hàng của bạn</p>
     </div>
-    <hr/>
+    <hr />
     <div></div>
 </div>
-<div class = 'cart-main'>
+<div class='cart-main'>
     <div style="margin-right: 20px;">
         <h2>THÔNG TIN GIỎ HÀNG</h2>
     </div>
     <div class='cart-main-button'>
-        <div class = "cart-button">
-            <button class ="select-product">CHỌN TIẾP SẢN PHẨM KHÁC</button>
+        <div class="cart-button">
+            <button class="select-product">CHỌN TIẾP SẢN PHẨM KHÁC</button>
         </div>
         <div>
-            <button class ="delete-cart" (click)="deletecart()">XÓA GIỎ HÀNG</button>
+            <button class="delete-cart" (click)="deletecart()">XÓA GIỎ HÀNG</button>
         </div>
     </div>
-    <div class = 'product-cart' > 
+    <div class='product-cart'>
         <div *ngFor="let item of list_product">
-            <div class = 'product-cart-detail' >
-                <div class = 'product-cart-image'>
-                    <a href=""><img src="{{item.product.image}}" alt=""></a>
+            <div class='product-cart-detail'>
+                <div class='product-cart-image'>
+                    <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
                 </div>
-                <div class = "product-description-cart">
-                    <h5>{{item.product.product_name}}</h5>
-                    <p>{{item.product.product_id}}</p>
+                <div class="product-description-cart">
+                    <h5>{{item.product_name}}</h5>
+                    <p>{{item.product_id}}</p>
                     <p>Bảo hành: 12 Tháng</p>
                 </div>
-                <div class = 'product-price-cart'>
-                    <span>{{item.product.price_new | currency: 'VND'}}</span>
+                <div class='product-price-cart'>
+                    <span>{{item.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" (click) = "minusQuantity(item);"><i class = 'fa fa-minus'></i></button>
-                        <input type="text" value= {{item.quantity}} readonly>
-                        <button type="button" (click) = "addQuantity(item);"><i class = 'fa fa-plus' ></i></button></div>   
-                        <button id = "delete-product-cart" (click) = "deleteItem(item);"><i class="far fa-trash-alt"></i></button>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(item.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{item.amount}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(item.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="delete-product-cart" (click)="deleteItem(item.product_id);"><i
+                            class="far fa-trash-alt"></i></button>
                 </div>
             </div>
         </div>
-        <div class = "total-cart">
-            <Span style="margin-left: 835px;">Tổng tiền đơn hàng : </Span><Span style="font-weight: bold;color: red;">{{total | currency: 'VND'}}</Span>
+        <div class="total-cart">
+            <Span style="margin-left: 835px;">Tổng tiền đơn hàng : </Span><Span
+                style="font-weight: bold;color: red;">{{total | currency: 'VND'}}</Span>
         </div>
     </div>
 </div>
 
-<div class = "order-cart">
-    <div class ="order-info-custommer">
+<div class="order-cart">
+    <div class="order-info-custommer">
         <h3>THÔNG TIN KHÁCH HÀNG</h3>
-        <span style="margin-right: 76px;">Họ tên*</span><input type="text">
-        <br>
-        <br>
-        <span style="margin-right: 85px;">Email*</span><input type="text">
-        <br>
-        <br>
-        <span style="margin-right: 36px;">Số điện thoại*</span><input type="text">
-        <br>
-        <br>
-        <span style="margin-right: 76px;">Địa chỉ*</span><input type="text">
-        <br>
-        <br>
-        <span style="margin-right: 76px;">Ghi chú</span><input type="text">
-    </div>
-    <div class ="order-type">
-        <h3>HÌNH THỨC THANH TOÁN</h3>
-            <input type="radio" value="1" name="1" checked><span>Thanh toán tiền mặt khi nhận hàng</span> 
+        <form [formGroup]="formGroup" (ngSubmit)="save()">
+            <div>
+                <span style="margin-right: 76px;">Họ tên*</span><input type="text" [(ngModel)]="update_customer_name" formControlName="customer_name">
+                <div *ngIf="submitted && formGroup.controls['customer_name'].errors?.required">
+                    <div *ngIf="formGroup.controls['customer_name'].errors?.required" style="color: red">
+                        * Họ tên không được để trống
+                    </div>
+                </div>
+            </div>
             <br>
-            <input type="radio" value="2" name="1"><span>Thanh toán qua chuyển khoản qua tài khoản ngân hàng</span> 
+            <div>
+                <span style="margin-right: 85px;">Email*</span><input type="text" [(ngModel)]="update_email" formControlName="email">
+                <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
+                    <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
+                        * Email không được để trống
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div>
+                <span style="margin-right: 36px;">Số điện thoại*</span><input type="text" [(ngModel)]="update_phone_number" formControlName="phone_number">
+                <div *ngIf="submitted && formGroup.controls['phone_number'].errors?.required">
+                    <div *ngIf="formGroup.controls['phone_number'].errors?.required" style="color: red">
+                        * Số điện thoại không được để trống
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div>
+                <span style="margin-right: 76px;">Địa chỉ*</span><input type="text" [(ngModel)]="update_address" formControlName="address">
+                <div *ngIf="submitted && formGroup.controls['address'].errors?.required">
+                    <div *ngIf="formGroup.controls['address'].errors?.required" style="color: red">
+                        * Địa chỉ không được để trống
+                    </div>
+                </div>
+            </div>
+            <br>
+        </form>
+
     </div>
-    <div class ="order-pay">
+    <div class="order-type">
+        <h3>HÌNH THỨC THANH TOÁN</h3>
+        <input type="radio" value="1" [(ngModel)]="selectedType" name="1" checked><span>Thanh toán tiền mặt khi nhận hàng</span>
+        <br>
+        <input type="radio" value="2" [(ngModel)]="selectedType" name="1"><span>Thanh toán qua chuyển khoản qua tài khoản ngân hàng</span>
+    </div>
+    <div class="order-pay">
         <p>Mã giảm giá/quà tặng</p>
         <div>
-            <input type="text" >
-            <button style="border-radius: 3px;border:0px;height: 35px;background-color: #ffee00ef;width: 78px;">Áp dụng</button>
+            <input type="text">
+            <button style="border-radius: 3px;border:0px;height: 35px;background-color: #ffee00ef;width: 78px;">Áp
+                dụng</button>
         </div>
         <div>
             <span style="margin-right: 142px;">Tổng tiền</span><span>{{total | currency: 'VND'}}</span>
@@ -82,8 +114,8 @@
             <span style="margin-right: 134px;">Thành tiền</span><span>{{total | currency: 'VND'}}</span>
         </div>
         <div style="margin-top:10px">
-            <a href="" class = "order-success">ĐẶT HÀNG</a>
-            <a href="/#/" class= "order-continue">CHỌN THÊM SẢN PHẨM</a>
+            <button class="order-success" (click)="orderSuccess();">ĐẶT HÀNG</button>
+            <a href="/#/" class="order-continue">CHỌN THÊM SẢN PHẨM</a>
         </div>
     </div>
 </div>

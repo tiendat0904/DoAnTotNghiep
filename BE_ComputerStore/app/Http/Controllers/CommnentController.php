@@ -59,6 +59,7 @@ class CommnentController extends Controller
         $user = auth()->user();
         $validator = Validator::make($request->all(), [
             self::comment_content => 'required',
+            self::customer_id => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()], 400);

@@ -74,7 +74,6 @@ export class ViewOrderComponent implements OnInit {
     this.update_bill_id = this.actRoute.snapshot.params['id'];
     this.billService.detail(this.update_bill_id).subscribe(data => {
       this.arraylist_bill = data.data;
-      console.log(data.data);
       if(data.data === undefined){
       }else{
         if(data.data.bill_id === undefined || data.data.bill_id === null){

@@ -36,7 +36,24 @@ export class OrderComponent implements OnInit {
     this.fetcharraylist_order();
   }
 
-
+  getColor(color){ (5)
+    switch(color){
+      case "SELECTING":
+        return '#5bc0de';
+      case "PENDING":
+        return 'rgb(255 150 0)';
+      case "PROCESSING":
+        return '#337ab7';
+      case "PROCESSING":
+        return '#337ab7';
+      case "SHIPPING":
+        return "rgb(99, 90, 90)";
+      case "DONE":
+        return '#5cb85c';
+      case "CANCEL":
+        return "d9534f";
+    }
+  }
   
 
   fetcharraylist_order() {

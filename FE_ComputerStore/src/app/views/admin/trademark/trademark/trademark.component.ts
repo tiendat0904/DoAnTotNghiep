@@ -115,7 +115,7 @@ export class TrademarkComponent implements OnInit {
     }
   }
 
-  delete_supplier(item: any = null) {
+  delete_trademark(item: any = null) {
     let selectedsupplier= [];
     if (item !== null && item !== undefined && item !== '') {
       selectedsupplier.push(item);

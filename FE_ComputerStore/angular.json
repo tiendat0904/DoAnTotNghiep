@@ -26,6 +26,7 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/simple-line-icons/dist/styles/simple-line-icons.css",
               "src/scss/style.scss",
+              "node_modules/ngx-toastr/toastr.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css"
             ],
@@ -54,7 +55,7 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
+              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,

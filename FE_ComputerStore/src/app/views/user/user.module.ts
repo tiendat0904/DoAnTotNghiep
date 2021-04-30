@@ -20,6 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductLaptopComponent } from './main/product-laptop/product-laptop.component';
 import { CartComponent } from './cart/cart.component';
 import { ProfileComponent } from './profile/profile.component';
+import { OrderSucessComponent } from './order-sucess/order-sucess.component';
+import { SearchComponent } from './search/search.component';
 // Angular
 
 @NgModule({
@@ -43,7 +45,9 @@ import { ProfileComponent } from './profile/profile.component';
     ProductDetailComponent,
     ProductLaptopComponent,
     CartComponent,
-    ProfileComponent
+    ProfileComponent,
+    OrderSucessComponent,
+    SearchComponent
   ]
 })
 export class UserModule { }

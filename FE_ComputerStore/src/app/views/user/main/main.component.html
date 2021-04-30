@@ -2,7 +2,7 @@
     <div class = 'row main-slider'>
         <div class= 'main-slider-left col-lg-2'>
             <ul>
-              <a *ngFor="let item of list_product_type;" [routerLink] = "['/product_type/',item.product_type_id]">{{item.product_type_name}} - {{item.description}}</a>
+              <a *ngFor="let item of list_product_type;" [routerLink] = "['/product-type/',item.product_type_id]">{{item.product_type_name}} - {{item.description}}</a>
             </ul>
         </div>
         <div class = 'col-lg-7'>
@@ -67,11 +67,15 @@
                 <p><a href=""></a> {{[item.product_name]}}</p>
               </div>
             </div>
-            <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-              <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-              <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-            </div>
-            <div class = 'product-'></div>
+            <div style="align-self: flex-end; margin-left: 15px;">
+              <div class = 'product-price' >
+                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
+                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+              </div>
+              <div class = 'product-checked'>
+                <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+              </div>
+            </div>   
           </div>
         </div>
       </div>
@@ -91,11 +95,15 @@
                 <p><a href=""></a> {{[item.product_name]}}</p>
               </div>
             </div>
-            <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-              <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-              <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}} </span>
+            <div style="align-self: flex-end; margin-left: 15px;">
+              <div class = 'product-price' >
+                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
+                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+              </div>
+              <div class = 'product-checked'>
+               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+              </div>
             </div>
-            <div class = 'product-'></div>
           </div>
         </div>
       </div>
@@ -115,11 +123,15 @@
                 <p><a href=""></a> {{[item.product_name]}}</p>
               </div>
             </div>
-            <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-              <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-              <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+            <div style="align-self: flex-end; margin-left: 15px;">
+              <div class = 'product-price' >
+                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
+                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+              </div>
+              <div class = 'product-checked'>
+               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+              </div>
             </div>
-            <div class = 'product-'></div>
           </div>
         </div>
       </div>
@@ -139,11 +151,15 @@
                 <p><a href=""></a> {{[item.product_name]}}</p>
               </div>
             </div>
-            <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-              <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-              <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+            <div style="align-self: flex-end; margin-left: 15px;">
+              <div class = 'product-price' >
+                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
+                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+              </div>
+              <div class = 'product-checked'>
+               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+              </div>
             </div>
-            <div class = 'product-'></div>
           </div>
         </div>
       </div>
@@ -163,11 +179,15 @@
                 <p><a href=""></a> {{[item.product_name]}}</p>
               </div>
             </div>
-            <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-              <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-              <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+            <div style="align-self: flex-end; margin-left: 15px;">
+              <div class = 'product-price' >
+                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
+                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+              </div>
+              <div class = 'product-checked'>
+               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+              </div>
             </div>
-            <div class = 'product-'></div>
           </div>
         </div>
       </div>
@@ -187,11 +207,15 @@
                 <p><a href=""></a> {{[item.product_name]}}</p>
               </div>
             </div>
-            <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-              <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-              <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+            <div style="align-self: flex-end; margin-left: 15px;">
+              <div class = 'product-price' >
+                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
+                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+              </div>
+              <div class = 'product-checked'>
+               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+              </div>
             </div>
-            <div class = 'product-'></div>
           </div>
         </div>
       </div>
@@ -211,11 +235,15 @@
                 <p><a href=""></a> {{[item.product_name]}}</p>
               </div>
             </div>
-            <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-              <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-              <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+            <div style="align-self: flex-end; margin-left: 15px;">
+              <div class = 'product-price' >
+                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
+                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+              </div>
+              <div class = 'product-checked'>
+               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+              </div>
             </div>
-            <div class = 'product-'></div>
           </div>
         </div>
       </div>
@@ -235,11 +263,15 @@
                 <p><a href=""></a> {{[item.product_name]}}</p>
               </div>
             </div>
-            <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-              <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-              <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+            <div style="align-self: flex-end; margin-left: 15px;">
+              <div class = 'product-price' >
+                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
+                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
+              </div>
+              <div class = 'product-checked'>
+               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+              </div>
             </div>
-            <div class = 'product-'></div>
           </div>
         </div>
       </div>

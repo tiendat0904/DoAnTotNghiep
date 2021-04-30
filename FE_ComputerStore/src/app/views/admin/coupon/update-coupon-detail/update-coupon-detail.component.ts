@@ -145,7 +145,6 @@ export class UpdateCouponDetailComponent implements OnInit {
    
     if (model.coupon_detail_id === null || model.coupon_detail_id === undefined) {
       if(this.mess_coupon1===undefined){
-        console.log(this.update_coupon_id);
         this.formGroup = this.fb.group({
           coupon_id: [ this.update_coupon_id],
           product_id: [ null, [Validators.required]],

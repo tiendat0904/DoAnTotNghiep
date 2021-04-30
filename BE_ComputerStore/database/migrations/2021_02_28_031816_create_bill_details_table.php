@@ -17,7 +17,6 @@ class CreateBillDetailsTable extends Migration
             $table->id('bill-detail_id');
             $table->bigInteger('bill_id');
             $table->bigInteger("product_id");
-            $table->bigInteger('order_type_id');
             $table->double('price', 15, 2)->default(0.00);
             $table->integer('amount')->default(0);
 

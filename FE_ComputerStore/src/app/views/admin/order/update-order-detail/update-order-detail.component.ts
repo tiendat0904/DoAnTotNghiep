@@ -80,7 +80,6 @@ export class UpdateOrderDetailComponent implements OnInit {
     this.billService.getAll().subscribe(data => {
       this.arraylist_bill = data.data;
       this.update_bill_id = this.arraylist_bill[this.arraylist_bill.length-1].bill_id;
-      console.log(this.update_bill_id);
       this.update_bill_id = this.update_bill_id+1;
     },
     err => {

@@ -17,6 +17,7 @@ use App\Http\Controllers\ReportController;
 
 Route::post('register', [AccountController::class, 'register']);
 Route::post('login', [AccountController::class, 'login']);
+Route::put('/accounts', [AccountController::class, 'update']);
 
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/products/{id}', [\App\Http\Controllers\ProductController::class, 'show']);
@@ -26,16 +27,29 @@ Route::get('/suppliers', [\App\Http\Controllers\SupplierController::class, 'inde
 Route::get('/suppliers/{id}', [\App\Http\Controllers\SupplierController::class, 'show']);
 
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index']);
-Route::get('/news/{id}', [\App\Http\Controllers\NewsController::class, 'show']);
+
 
 Route::get('/brands', [\App\Http\Controllers\TrademarkController::class, 'index']);
 Route::get('/brands/{id}', [\App\Http\Controllers\TrademarkController::class, 'show']);
 
-Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
-Route::get('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'show']);
+Route::get('/comments', [\App\Http\Controllers\CommnentController::class, 'index']);
+Route::get('/comments/{id}', [\App\Http\Controllers\CommnentController::class, 'show']);
+Route::post('/comments', [\App\Http\Controllers\CommnentController::class, 'store']);
+Route::put('/comments/{id}', [\App\Http\Controllers\CommnentController::class, 'update']);
 
 Route::get('/product_type', [\App\Http\Controllers\ProductTypeController::class, 'index']);
 Route::get('/product_type/{id}', [\App\Http\Controllers\ProductTypeController::class, 'show']);
+
+Route::get('/bills', [\App\Http\Controllers\BillController::class, 'index']);
+Route::post('/bills', [\App\Http\Controllers\BillController::class, 'store']);
+Route::put('/bills/{id}', [\App\Http\Controllers\BillController::class, 'update']);
+Route::post('/bills/delete', [\App\Http\Controllers\BillController::class, 'destroy']);
+
+Route::get('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'index']);
+Route::get('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'show']);
+Route::put('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'update']);
+Route::post('/bills_detail/delete', [\App\Http\Controllers\BillDetailController::class, 'destroy']);
+
 
 Route::middleware('auth:api')->group(function () {
     Route::get('info', [AccountController::class, 'userInfo']);
@@ -56,8 +70,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/accounts', [AccountController::class, 'store']);
 
-    Route::put('/accounts/{id}', [AccountController::class, 'update']);
-
     Route::post('/accounts/delete', [AccountController::class, 'destroy']);
 
 
@@ -75,10 +87,6 @@ Route::middleware('auth:api')->group(function () {
     
 
     //nhà cung cấp
-    
-
-    
-
     Route::post('/suppliers', [\App\Http\Controllers\SupplierController::class, 'store']);
 
     Route::put('/suppliers/{id}', [\App\Http\Controllers\SupplierController::class, 'update']);
@@ -87,9 +95,9 @@ Route::middleware('auth:api')->group(function () {
 
 
     //tin tức
-  
-
     Route::post('/news', [\App\Http\Controllers\NewsController::class, 'store']);
+
+    Route::get('/news/{id}', [\App\Http\Controllers\NewsController::class, 'show']);
 
     Route::put('/news/{id}', [\App\Http\Controllers\NewsController::class, 'update']);
 
@@ -97,8 +105,6 @@ Route::middleware('auth:api')->group(function () {
 
 
     //thương hiệu
-   
-
     Route::post('/brands', [\App\Http\Controllers\TrademarkController::class, 'store']);
 
     Route::put('/brands/{id}', [\App\Http\Controllers\TrademarkController::class, 'update']);
@@ -108,19 +114,9 @@ Route::middleware('auth:api')->group(function () {
 
 
     //Bình luận đánh giá
-   
-    Route::post('/comments', [\App\Http\Controllers\CommentController::class, 'store']);
-
-    Route::put('/comments/{id}', [\App\Http\Controllers\CommentController::class, 'update']);
-
-    Route::post('/comments/delete', [\App\Http\Controllers\CommentController::class, 'destroy']);
-
+    Route::post('/comments/delete', [\App\Http\Controllers\CommnentController::class, 'destroy']);
 
     //Sản phẩm
-
-
-   
-
     Route::post('/products', [\App\Http\Controllers\ProductController::class, 'store']);
 
     Route::put('/products/{id}', [\App\Http\Controllers\ProductController::class, 'update']);
@@ -129,9 +125,6 @@ Route::middleware('auth:api')->group(function () {
 
 
     //Loại Sản phẩm
-
-    
-
     Route::post('/product_type', [\App\Http\Controllers\ProductTypeController::class, 'store']);
 
     Route::put('/product_type/{id}', [\App\Http\Controllers\ProductTypeController::class, 'update']);
@@ -174,17 +167,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/product_promotion/delete', [\App\Http\Controllers\ProductPromotionController::class, 'destroy']);
 
-    //Loại đơn
-    Route::get('/order_type', [\App\Http\Controllers\OrderTypeController::class, 'index']);
-
-    Route::get('/order_type/{id}', [\App\Http\Controllers\OrderTypeController::class, 'show']);
-
-    Route::post('/order_type', [\App\Http\Controllers\OrderTypeController::class, 'store']);
-
-    Route::put('/order_type/{id}', [\App\Http\Controllers\OrderTypeController::class, 'update']);
-
-    Route::post('/order_type/delete', [\App\Http\Controllers\OrderTypeController::class, 'destroy']);
-
 
     //Trạng thái đơn hàng
     Route::get('/order_status', [\App\Http\Controllers\OrderStatusController::class, 'index']);
@@ -197,6 +179,16 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/order_status/delete', [\App\Http\Controllers\OrderStatusController::class, 'destroy']);
 
+    //Loại đơn
+    Route::get('/order_type', [\App\Http\Controllers\OrderTypeController::class, 'index']);
+
+    Route::get('/order_type/{id}', [\App\Http\Controllers\OrderTypeController::class, 'show']);
+
+    Route::post('/order_type', [\App\Http\Controllers\OrderTypeController::class, 'store']);
+
+    Route::put('/order_type/{id}', [\App\Http\Controllers\OrderTypeController::class, 'update']);
+
+    Route::post('/order_type/delete', [\App\Http\Controllers\OrderTypeController::class, 'destroy']);
 
     //Hóa đơn nhập
     Route::get('/coupons', [\App\Http\Controllers\CouponController::class, 'index']);
@@ -223,25 +215,10 @@ Route::middleware('auth:api')->group(function () {
 
 
     // Hóa đơn bán
-    Route::get('/bills', [\App\Http\Controllers\BillController::class, 'index']);
-
+    
+    
     Route::get('/bills/{id}', [\App\Http\Controllers\BillController::class, 'show']);
 
-    Route::post('/bills', [\App\Http\Controllers\BillController::class, 'store']);
-
-    Route::put('/bills/{id}', [\App\Http\Controllers\BillController::class, 'update']);
-
-    Route::post('/bills/delete', [\App\Http\Controllers\BillController::class, 'destroy']);
-
-
-    //chi tiết hóa đơn bán
-    Route::get('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'index']);
-
-    Route::get('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'show']);
-
     Route::post('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'store']);
-
-    Route::put('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'update']);
-
-    Route::post('/bills_detail/delete', [\App\Http\Controllers\BillDetailController::class, 'destroy']);
+    //chi tiết hóa đơn bán
 });

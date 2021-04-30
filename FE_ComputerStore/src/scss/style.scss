@@ -90,7 +90,13 @@ table.table td:last-child {
 table.table td i {
     font-size: 15px;
     margin-left: -3px;
+    display: block;
+    position: relative;
 } 
+
+table.table td .edit{
+    margin-left: -4px;
+}
  
 
 .hint-text {
@@ -116,7 +122,6 @@ table.table td i {
     }
 }
 
-
 .modal-content{
     
     margin-bottom: 370px;
@@ -126,4 +131,19 @@ table.table td i {
 .justify-content-center {
     display: flex !important;
     justify-content: center !important;
+}
+.justify-content-center button{
+    border-radius: 16px;
+    height: 32px;
+    width: 32px;
+}
+
+.justify-content-center button:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.justify-content-center i{
+    width: 11px;
+    height: 13.6px;
 }

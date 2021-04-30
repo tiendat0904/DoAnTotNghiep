@@ -12,19 +12,19 @@ export class OrderTypeService {
   constructor(private httpClient: HttpClient) { }
 
   create(model: orderTypeModel): Observable<any>{
-    return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'order-type', model);
+    return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'order_type', model);
   }
 
   getAll(): Observable<any>{
-    return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'order-type');
+    return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'order_type');
   }
 
   update(id: any, model: orderTypeModel): Observable<any>{
-    return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'order-type/' + id, model);
+    return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'order_type/' + id, model);
   }
 
   detail(id: any): Observable<any>{
-    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'order-type/'+id);
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'order_type/'+id);
   }
 
   delete(modelDelete: any): Observable<any>{

@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Bill;
+use App\Models\Status;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -38,22 +40,24 @@ class BillController extends Controller
     public function index()
     {
         //
-        $user = auth()->user();
-        $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $objs = null;
             $code = null;
             $objs = DB::table(self::table)
                 ->leftJoin(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
                 ->leftJoin(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
-                ->select(self::table . '.*', 'emp.' . AccountConTroller::full_name . ' as employee_name', 'cus.' . AccountConTroller::full_name . ' as customer_name')
+                ->leftjoin(OrderStatusController::table, self::table . '.' . self::order_status_id, '=', OrderStatusController::table . '.' . OrderStatusController::id)
+                ->leftjoin(OrderTypeController::table, self::table . '.' . self::order_type_id, '=', OrderTypeController::table . '.' . OrderTypeController::id)
+                ->select(self::table . '.*',OrderStatusController::table . '.' . OrderStatusController::description . ' as order_status_description' ,OrderTypeController::table . '.' . OrderTypeController::description . ' as order_type_description', 'emp.' . AccountConTroller::full_name . ' as employee_name', 'cus.' . AccountConTroller::full_name . ' as customer_name')
                 ->get();
             $code = 200;
 
             return response()->json(['data' => $objs], $code);
-        } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        }
+        // } else {
+        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        // }
     }
 
     /**
@@ -75,23 +79,32 @@ class BillController extends Controller
     public function store(Request $request)
     {
         //
-        $user = auth()->user();
-        $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+            $validator = Validator::make($request->all(), [
+                self::customer_id => 'required'
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->all()], 400);
+            }
             date_default_timezone_set(BaseController::timezone);
             $arr_value = [];
-            $arr_value[self::employee_id] = $request->customer_id;
-            if ($request->customer_id) {
-                $arr_value[self::customer_id] = $request->customer_id;
+            $arr_value[self::customer_id] = $request->customer_id;
+            if ($request->employee_id) {
+                $arr_value[self::employee_id] = $request->employee_id;
             }
-            $arr_value[self::order_type_id] = 1;
-            $arr_value[self::order_status_id] = 2;
-            $arr_value[self::created_at] = date('Y-m-d');
+            $arr_value[self::order_status_id] = 1;
+            $arr_value[self::created_at] = date('Y-m-d h:i:s');
             DB::table(self::table)->insert($arr_value);
-            return response()->json(['success' => "Thêm mới thành công"], 201);
-        } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        }
+            $objs = null;
+            $objs = DB::table(self::table)
+                ->where(self::table . '.' .self::customer_id,"=", $arr_value[self::customer_id])
+                ->where(self::table . '.' .self::order_status_id,"=", $arr_value[self::order_status_id])->get();
+            return response()->json(['success' => "Thêm mới thành công","data"=>$objs], 201);
+        // } else {
+        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        // }
     }
 
     /**
@@ -107,8 +120,8 @@ class BillController extends Controller
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $objs = DB::table(self::table)
-                ->Join(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
-                ->Join(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
+                ->leftJoin(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
+                ->leftJoin(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
                 ->select(self::table . '.*', 'emp.' . AccountConTroller::full_name . ' as employee_name', 'cus.' . AccountConTroller::full_name . ' as customer_name')
                 ->where(self::table . '.' . self::id, '=', $id)->first();
 
@@ -148,19 +161,31 @@ class BillController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $user = auth()->user();
-        $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $hd = DB::table(self::table)->where(self::id, '=', $id)->first();
+        // date_default_timezone_set(BaseController::timezone);
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // $ac_id = $user->account_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT){
+            $this->base->update($request, $id);
+            return response()->json($this->base->getMessage(), $this->base->getStatus());
+        // }else{
+        //     $this->base->update($request, $id);
+        //     return response()->json($this->base->getMessage(), $this->base->getStatus());
+        // }
+        
+
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             // if ($hd->order_status_id == 1 && $request->get(self::order_status_id) == 2) {
-                DB::table(self::table)->where(self::id, '=', $id)->update([self::order_status_id => true]);
-                return response()->json(['success' => 'Cập nhật thành công'], 201);
+                // DB::table(self::table)->where(self::id, '=', $id)->update([self::order_status_id => true]);
+                // return response()->json(['success' => 'Cập nhật thành công'], 201);
             // } else {
             //     return response()->json(['error' => 'Cập nhật thất bại'], 400);
             // }
-        } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        }
+        // } else {
+        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        // }
     }
 
     /**
@@ -172,25 +197,27 @@ class BillController extends Controller
     public function destroy(Request $request)
     {
         //
-        $user = auth()->user();
-        $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             try {
                 if ($listId = $request->get(BaseController::listId)) {
-                    DB::table(BillDetailController::table)->whereIn(BillDetailController::bill_id, $listId)
+                    DB::table(BillDetailController::table)->where(BillDetailController::bill_id, $listId)
                         ->delete();    
+                        // return response()->json(['error' => 'Không tìm thấy1'], 200);
                 } else {
                     $id = $request->get(BaseController::key_id);
-                    DB::table(BillDetailController::table)->whereIn(BillDetailController::bill_id, $id)
+                    DB::table(BillDetailController::table)->where(BillDetailController::bill_id, $id)
                         ->delete();
+                        // return response()->json(['error' => 'Không tìm thấy'], 200);
                 }
             } catch (\Throwable $e) {
                 report($e);
             }
             $this->base->destroy($request);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-        } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        }
+        // } else {
+        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        // }
     }
 }

@@ -72,10 +72,8 @@ export class ViewCouponComponent implements OnInit {
     this.fetcharraylist_employee();
     this.fetcharraylist_supplier();
     this.update_coupon_id = this.actRoute.snapshot.params['id'];
-    console.log(this.update_coupon_id);
     this.couponService.detail(this.update_coupon_id).subscribe(data => {
       this.arraylist_coupon = data.data;
-      console.log(data.data);
       if(data.data === undefined){
       }else{
         if(data.data.coupon_id === undefined || data.data.coupon_id === null){

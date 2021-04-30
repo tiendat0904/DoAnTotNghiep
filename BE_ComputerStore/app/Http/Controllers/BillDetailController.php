@@ -34,20 +34,21 @@ class BillDetailController extends Controller
     public function index()
     {
         //
-        $user = auth()->user();
-        $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $objs = null;
             $code = null;
             $objs = DB::table(self::table)
                 ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
-                ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
+                ->join(ProductImageController::table, self::table . '.' . self::product_id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+                ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name, ProductImageController::table . '.' . ProductImageController::image)
                 ->get();
             $code = 200;
             return response()->json(['data' => $objs], $code);
-        } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        }
+        // } else {
+        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        // }
     }
 
     /**
@@ -69,70 +70,143 @@ class BillDetailController extends Controller
     public function store(Request $request)
     {
         //
-        $arr_value = $request->all();
-            if (count($arr_value) > 0) {
-                $validator = Validator::make($arr_value, [
-                    self::bill_id => 'required',
-                    self::product_id => 'required',
-                    self::price => 'required',
-                    self::amount => 'required',
-                ]);
-                if ($validator->fails()) {
-                    return response()->json(['error' => $validator->errors()->all()], 400);
-                }
-                if ($arr_value[self::amount] < 1) {
-                    return response()->json(['error' => 'Số lượng phải lớn hơn 0'], 400);
-                }
-                
-                $data = DB::table(self::table)
-                    ->select(self::table . '.*')
-                    ->where(self::product_id, '=', $arr_value[self::product_id])
-                    ->where(self::bill_id, '=', $arr_value[self::bill_id])
-                    ->get();
-                if (count($data) > 0) {
-                    return response()->json(['error' => 'Thêm mới thất bại. Có 1 row đã tồn tại mã hóa đơn và mã sản phẩm'], 400);
-                }
-                $sl = DB::table(ProductController::table)
-                    ->select(ProductController::amount)
-                    ->where(ProductController::id, '=', $arr_value[self::product_id])
-                    ->get();
+        // date_default_timezone_set(BaseController::timezone);
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // $ac_id = $user->account_id;
+        // if ($ac_type == AccountController::KH) {
+        // DB::table(BillController::table)
+        //     ->insert([BillController::order_status_id => 1,
+        //     BillController::customer_id => $ac_id,
+        //     BillController::created_at => date('Y-m-d')]);
+        // $bill_id = DB::table(BillController::table)->select(self::id)->latest();
+        try {
+            if ($listObj = $request->get(BaseController::listObj)) {
+                $count = count($listObj);
+                if ($count > 0) {
+                    foreach ($listObj as $obj) {
+                        $validator = Validator::make($obj, [  
+                            self::bill_id => "required",              
+                            self::product_id => 'required',
+                            self::price => 'required',
+                            self::amount => 'required',
+                        ]);
+                        
+                        if ($validator->fails()) {
+                            return response()->json(['error' => $validator->errors()->all()], 400);
+                        }
 
-                $sl = $sl[0]->amount;
-                if ($arr_value[self::amount] > $sl) {
-                    return response()->json(['error' => 'Thêm mới thất bại. Số lượng sản phẩm không đủ'], 400);
+                        // if (self::amount < 1) {
+                        //     return response()->json(['error' => 'Số lượng phải lớn hơn 0'], 400);
+                        // }
+                        
+                        // $data = DB::table(self::table)
+                        //     ->select(self::table . '.*')
+                        //     ->where(self::product_id, '=', self::product_id)
+                        //     ->where(self::bill_id, '=', self::bill_id)
+                        //     ->get();
+                        // if (count($data) > 0) {
+                        //     return response()->json(['error' => 'Thêm mới thất bại. Có 1 row đã tồn tại mã hóa đơn và mã sản phẩm'], 400);
+                        // }
+                        // $sl = DB::table(ProductController::table)
+                        //     ->select(ProductController::amount)
+                        //     ->where(ProductController::id, '=', self::product_id)
+                        //     ->get();
+        
+                        // $sl = $sl[0]->amount;
+                        // if (self::amount > $sl) {
+                        //     return response()->json(['error' => 'Thêm mới thất bại. Số lượng sản phẩm không đủ'], 400);
+                        // }
+                    }
+                } else {
+                    return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
                 }
-                // $ngay_lap = DB::table(HoaDonController::table)->where(HoaDonController::table . '.' . HoaDonController::id, '=', $arr_value[self::ma_hoa_don])
-                //     ->where(HoaDonController::table . '.' . HoaDonController::isActive, '=', true)
-                //     ->select(HoaDonController::ngay_lap)->get();
-                // $ngay_lap = $ngay_lap[0]->ngay_lap;
-                // $ma_ngay_km = DB::table(NgayKhuyenMaiController::table)
-                //     ->select(NgayKhuyenMaiController::id)
-                //     ->where(NgayKhuyenMaiController::table . '.' . NgayKhuyenMaiController::ngay_gio, '=', $ngay_lap)
-                //     ->where(NgayKhuyenMaiController::table . '.' . NgayKhuyenMaiController::isActive, '=', true)
-                //     ->get();
-                // $muc_km = 0;
-                // if (count($ma_ngay_km) > 0) {
-                //     $ma_ngay_km = $ma_ngay_km->ma_ngay_khuyen_mai;
-                //     $muc_km = DB::table(KhuyenMaiSanPhamController::table)
-                //         ->where(KhuyenMaiSanPhamController::table . '.' . KhuyenMaiSanPhamController::ma_san_pham, '=', $arr_value[self::ma_san_pham])
-                //         ->where(KhuyenMaiSanPhamController::table . '.' . KhuyenMaiSanPhamController::ma_ngay_khuyen_mai, '=', $ma_ngay_km)
-                //         ->where(KhuyenMaiSanPhamController::table . '.' . KhuyenMaiSanPhamController::isActive, '=', true)
-                //         ->select(KhuyenMaiSanPhamController::muc_khuyen_mai)->get();
-                // }
-                // $gia_ban_sp = DB::table(SanPhamController::table)->where(SanPhamController::table . '.' . SanPhamController::id, '=', $arr_value[self::ma_san_pham])
-                //     ->where(SanPhamController::isActive, '=', true)
-                //     ->select(SanPhamController::gia_ban)->get();
-                // $gia_ban_sp = $gia_ban_sp[0]->gia_ban;
-                // if ($muc_km > 0) {
-                //     $arr_value[self::gia_ban] = $gia_ban_sp * (1 - $muc_km / 100);
-                // } else {
-                //     $arr_value[self::gia_ban] = $gia_ban_sp;
-                // }
-                DB::table(self::table)->insert($arr_value);
-                return response()->json(['success' => 'Thêm mới thành công'], 201);
             } else {
-                return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
+                $arr_value = $request->all();
+                if (count($arr_value) > 0) {
+                    $validator = Validator::make($arr_value, [
+                        self::bill_id => 'required',
+                        self::product_id => 'required',
+                        self::price => 'required',
+                        self::amount => 'required',
+                    ]);
+                    if ($validator->fails()) {
+                        return response()->json(['error' => $validator->errors()->all()], 400);
+                    }
+                    if ($arr_value[self::amount] < 1) {
+                        return response()->json(['error' => 'Số lượng phải lớn hơn 0'], 400);
+                    }
+                    
+                    $data = DB::table(self::table)
+                        ->select(self::table . '.*')
+                        ->where(self::product_id, '=', $arr_value[self::product_id])
+                        ->where(self::bill_id, '=', $arr_value[self::bill_id])
+                        ->get();
+                    if (count($data) > 0) {
+                        return response()->json(['error' => 'Thêm mới thất bại. Có 1 row đã tồn tại mã hóa đơn và mã sản phẩm'], 400);
+                    }
+                    $sl = DB::table(ProductController::table)
+                        ->select(ProductController::amount)
+                        ->where(ProductController::id, '=', $arr_value[self::product_id])
+                        ->get();
+        
+                    $sl = $sl[0]->amount;
+                    if ($arr_value[self::amount] > $sl) {
+                        return response()->json(['error' => 'Thêm mới thất bại. Số lượng sản phẩm không đủ'], 400);
+                    }
+                } else {
+                    return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
+                }
             }
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e], 500);
+        }
+
+        $this->base->store($request);
+        return response()->json($this->base->getMessage(), $this->base->getStatus());
+
+        
+        
+        // $arr_value = $request->all();
+        // if (count($arr_value) > 0) {
+        //     $validator = Validator::make($arr_value, [
+        //         self::bill_id => 'required',
+        //         self::product_id => 'required',
+        //         self::price => 'required',
+        //         self::amount => 'required',
+        //     ]);
+        //     if ($validator->fails()) {
+        //         return response()->json(['error' => $validator->errors()->all()], 400);
+        //     }
+        //     if ($arr_value[self::amount] < 1) {
+        //         return response()->json(['error' => 'Số lượng phải lớn hơn 0'], 400);
+        //     }
+            
+        //     $data = DB::table(self::table)
+        //         ->select(self::table . '.*')
+        //         ->where(self::product_id, '=', $arr_value[self::product_id])
+        //         ->where(self::bill_id, '=', $arr_value[self::bill_id])
+        //         ->get();
+        //     if (count($data) > 0) {
+        //         return response()->json(['error' => 'Thêm mới thất bại. Có 1 row đã tồn tại mã hóa đơn và mã sản phẩm'], 400);
+        //     }
+        //     $sl = DB::table(ProductController::table)
+        //         ->select(ProductController::amount)
+        //         ->where(ProductController::id, '=', $arr_value[self::product_id])
+        //         ->get();
+
+        //     $sl = $sl[0]->amount;
+        //     if ($arr_value[self::amount] > $sl) {
+        //         return response()->json(['error' => 'Thêm mới thất bại. Số lượng sản phẩm không đủ'], 400);
+        //     }
+
+
+
+        //     DB::table(self::table)->insert($arr_value);
+        //     return response()->json(['success' => 'Thêm mới thành công'], 201);
+        // } else {
+        //     return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
+        // }
     }
 
     /**
@@ -176,14 +250,14 @@ class BillDetailController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $user = auth()->user();
-        $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $this->base->update($request, $id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-        } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        }
+        // } else {
+        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        // }
     }
 
     /**

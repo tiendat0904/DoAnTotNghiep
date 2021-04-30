@@ -7,11 +7,11 @@
             </a>
             <a href="">
                 <span class = 'glyphicon glyphicon-headphones'></span>
-                Tư vấn mua hàng<span>19001009</span>
+                <span>Tư vấn mua hàng: </span><span>19001009</span>
             </a>
             <a href="">
                 <span class = 'glyphicon glyphicon-headphones'></span>
-                CSKH:<span>18001008</span>
+                 <span>CSKH: </span><span>18001008</span>
             </a>
             <a href="">
                 <span class = 'glyphicon glyphicon-list-alt'></span>
@@ -25,12 +25,24 @@
     </div>
     <div class = "header-main">
         <div class="header-main-center">
-            <img class ="header-main-logo-img" src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Flogouser.PNG?alt=media&token=68cf0df9-ff39-49aa-bf9e-59b4450b6b38" alt="">
+            <a href="#/"><img class ="header-main-logo-img" src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Flogodone4.PNG?alt=media&token=da4d981c-cba2-4c74-98b9-7cd58792cf0e" alt=""></a>
             <div class = "header-main-search">
-                <input type="text" placeholder="Nhập tên sản phẩm,từ khóa cần tìm">
-                <button style="background-color: #ffee00ef;"><i class="header-i fa fa-search " aria-hidden="true"></i></button>
+                <div>
+                    <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off" style="outline: none;">
+                    <button style="background-color: #ffee00ef;outline: none;" (click) ="search();"><i class="header-i fa fa-search " aria-hidden="true"></i></button>
+                </div>             
+                <div style="display: block;" class = "autocomplete-suggestions" >
+                    <p [hidden] ="check_product">Không tìm thấy sản phẩm phù hợp</p>
+                    <a [routerLink] = "['/',item.product_id]" *ngFor="let item of list_product_filter" (click)="searchDetail()">
+                        <img src="{{item.image}}" alt="">
+                        <span style="display: inline-grid; position: relative; bottom: 15px;width: 530px;">
+                            <span style="font-size: 14px;">{{item.product_name}}</span>
+                            <span style="font-size: 14px;color: red;">{{item.price_new | currency: 'VND'}}</span>
+                        </span>                
+                    </a>
+                </div>
             </div>
-            <div style="width: 300px; display:-webkit-inline-box;position: absolute;margin:12px">
+            <div style="width: 300px; display:-webkit-inline-box;position: absolute;margin:20px">
                 <a class="header-item" href="">
                     <i class = "icon-tag"></i>
                     <div style="height: 5px;"></div>
@@ -48,7 +60,7 @@
                 </a>
                 <div>
                     <div id = "header-basket">
-                        <a class="header-item" href="/#/cart">
+                        <a class="header-item" href="/#/cart" (click) = "addOrder();">
                             <i class = "icon-basket"></i>
                             <div style="height: 5px;"></div>
                             <span style="font-size: 15px;">Giỏ hàng</span>

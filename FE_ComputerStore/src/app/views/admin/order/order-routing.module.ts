@@ -18,13 +18,13 @@ export const routes: Routes = [
       title: 'Order'
     }
   },
-  {
-    path: 'view/:id',
-    component: ViewOrderComponent,
-    data: {
-      title: 'View Order'
-    }
-  },
+  // {
+  //   path: 'view/:id',
+  //   component: ViewOrderComponent,
+  //   data: {
+  //     title: 'View Order'
+  //   }
+  // },
   {
     path: 'update/:id',
     component: UpdateOrderComponent,
@@ -32,13 +32,13 @@ export const routes: Routes = [
       title: 'View Order'
     }
   },
-  {
-    path: 'create',
-    component: CreateOrderComponent,
-    data: {
-      title: 'View Order'
-    }
-  },
+  // {
+  //   path: 'create',
+  //   component: CreateOrderComponent,
+  //   data: {
+  //     title: 'View Order'
+  //   }
+  // },
   
 ];
 

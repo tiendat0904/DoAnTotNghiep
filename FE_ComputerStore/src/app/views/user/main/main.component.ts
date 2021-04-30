@@ -96,6 +96,14 @@ export class MainComponent implements OnInit {
       this.list_product_psu = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "PSU";
       });
+      for(let item of this.list_product_psu){
+        if(item.amount === 0){
+          item.check = "Liên hệ";   
+        }
+        else{
+          item.check = "Còn hàng";
+        }
+      }
     },)
   }
 
@@ -105,6 +113,14 @@ export class MainComponent implements OnInit {
       this.list_product_laptop = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "Laptop";
       });
+      for(let item of this.list_product_laptop){
+        if(item.amount == 0){
+          item.check = "Liên hệ";
+        }
+        else{
+          item.check = "Còn hàng";
+        }
+      }
     },)
   }
 
@@ -115,6 +131,14 @@ export class MainComponent implements OnInit {
         return (laptop.product_type_name === "Headphone" || laptop.product_type_name === "Mouse" || laptop.product_type_name === "Keyboard");
        
       });
+      for(let item of this.list_product_computer_conponent){
+        if(item.amount === 0){
+          item.check = "Liên hệ";
+        }
+        else{
+          item.check = "Còn hàng";
+        }
+      }
     },)
   }
 
@@ -133,6 +157,14 @@ export class MainComponent implements OnInit {
       this.list_product_vga = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "VGA";
       });
+      for(let item of this.list_product_vga){
+        if(item.amount === 0){
+          item.check = "Liên hệ";
+        }
+        else{
+          item.check = "Còn hàng";
+        }
+      }
     },)
   }
 
@@ -142,6 +174,14 @@ export class MainComponent implements OnInit {
       this.list_product_main = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "Main";
       });
+      for(let item of this.list_product_main){
+        if(item.amount === 0){
+          item.check = "Liên hệ";
+        }
+        else{
+          item.check = "Còn hàng";
+        }
+      }
     },)
   }
 
@@ -151,6 +191,14 @@ export class MainComponent implements OnInit {
       this.list_product_ram = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "RAM";
       });
+      for(let item of this.list_product_ram){
+        if(item.amount === 0){
+          item.check = "Liên hệ";
+        }
+        else{
+          item.check = "Còn hàng";
+        }
+      }
     },)
   }
   

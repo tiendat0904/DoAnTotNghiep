@@ -9,5 +9,7 @@ export interface productModel{
     price?: number,
     price_new?: number,
     amount?: number,
+    image?: string,
     checked?: boolean,
+    check?:string,
  }

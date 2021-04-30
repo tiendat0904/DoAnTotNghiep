@@ -27,13 +27,14 @@
                 <span>Giá bán : </span>
                 <span class = 'product-price-new'>{{product.price_new | currency: 'VND'}}</span>
                 <del class = 'product-price-old'>{{product.price |  currency: 'VND' }}</del>
+                <p  [ngStyle]="{'color':check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{check}}</p>
             </div>
             <div class ='product-button'>
                 <div >
                     <button style="margin-right: 6px; background-color: red;">ĐẶT MUA NGAY</button>
                 </div>
                 <div>
-                    <button style="color: black;" (click) = "addProductToCart()">CHO VÀO GIỎ</button>
+                    <button style="color: black; outline: none;" (click) = "addProductToCart()">CHO VÀO GIỎ</button>
                 </div>
             </div>
         </div>

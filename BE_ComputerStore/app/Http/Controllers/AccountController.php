@@ -26,6 +26,7 @@ class AccountController extends Controller
     const created_at = 'created_at';
     const NV = '2';
     const QT = '1';
+    const KH = '3';
 
     /**
      * AccountController constructor.
@@ -58,7 +59,13 @@ class AccountController extends Controller
             $code = 200;
             return response()->json(['data' => $objs], $code);
         } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+            $objs = DB::table(self::table)
+                ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
+                ->select(self::id, self::email,self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, self::image)
+                ->Where(self::table . '.' . self::account_type_id, '=', '3')
+                ->get();
+            $code = 200;
+            return response()->json(['data' => $objs], $code);
         }
     }
 
@@ -186,8 +193,8 @@ class AccountController extends Controller
         if ($request->full_name != null) {
             $array[self::full_name] = $request->full_name;
         }
-        if ($request->adress != null) {
-            $array[self::address] = $request->adress;
+        if ($request->address != null) {
+            $array[self::address] = $request->address;
         }
         if ($request->phone_number != null) {
             $array[self::phone_number] = $request->phone_number;

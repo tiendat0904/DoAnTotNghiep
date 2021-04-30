@@ -50,7 +50,6 @@ export class ProductComponent implements OnInit {
       err => {
         this.isLoading = false;
       })
-      console.log(this.listFilterResult);
   }
 
   public filterByKeyword() {
