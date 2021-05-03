@@ -5,6 +5,7 @@ import { CartComponent } from './cart/cart.component';
 import { MainComponent } from './main/main.component';
 import { ProductDetailComponent } from './main/product-detail/product-detail.component';
 import { ProductLaptopComponent } from './main/product-laptop/product-laptop.component';
+import { NewsComponent } from './news/news.component';
 import { OrderSucessComponent } from './order-sucess/order-sucess.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path: 'send-cart',
         component: OrderSucessComponent,
+      },
+      {
+        path: 'news',
+        component: NewsComponent,
       },
       {
         path: 'profile',

@@ -1,0 +1,40 @@
+.product-detail-icon{
+    display: flex;
+    padding: 15px;
+}
+
+.product-detail-icon a{
+    margin-left: 17px;
+    font-size: 20px;
+}
+
+hr{
+    border : 1px solid #ffee00ef;
+    background-color: #ffee00ef;
+    width: 95%;
+    text-align: left;
+    margin-top: 0px;
+}
+
+h2{
+    margin-left: 33px;
+}
+
+.news-main{
+    width: 70%;
+    margin-left: 33px;
+}
+
+.news-detail{
+    display: flex;
+    padding: 15px;
+}
+
+.news-detail-image img{
+   width: 226px;
+   height: 150px;
+}
+
+.news-detail-info{
+    margin-left: 22px;
+}

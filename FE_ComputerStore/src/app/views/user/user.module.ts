@@ -22,6 +22,7 @@ import { CartComponent } from './cart/cart.component';
 import { ProfileComponent } from './profile/profile.component';
 import { OrderSucessComponent } from './order-sucess/order-sucess.component';
 import { SearchComponent } from './search/search.component';
+import { NewsComponent } from './news/news.component';
 // Angular
 
 @NgModule({
@@ -47,7 +48,8 @@ import { SearchComponent } from './search/search.component';
     CartComponent,
     ProfileComponent,
     OrderSucessComponent,
-    SearchComponent
+    SearchComponent,
+    NewsComponent
   ]
 })
 export class UserModule { }

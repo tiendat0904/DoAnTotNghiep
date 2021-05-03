@@ -63,7 +63,7 @@ export class UpdateTrademarkComponent implements OnInit {
   fetcharraylist_trademark(){
     this.subscription=this.trademardService.getAll().subscribe(data => {
       this.arraylist_trademark = data.data;
-      this.avatarUrl = data.data.hinh_anh;
+      this.avatarUrl = data.data.image;
     },
     err => {
         this.isLoading = false;

@@ -83,6 +83,7 @@ export class CartComponent implements OnInit {
           this.billDetailService.getAll().subscribe(data => {
             this.list_product_filter = data.data;
             this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id);
+            localStorage.setItem("listProduct",JSON.stringify(this.list_product));
             this.bill_detail_id = this.list_product[0].bill_detail_id;
           })
           // for (let item of this.list_bill_filter){
@@ -183,6 +184,8 @@ export class CartComponent implements OnInit {
         })
       })
 
+    }else{
+      this.toastr.warning("Vui lòng đăng nhập trước khi đặt hàng !!")
     }
   }
 
@@ -205,6 +208,7 @@ export class CartComponent implements OnInit {
               for (let i of this.list_product) {
                 this.total += i.amount * i.price;
               }
+              localStorage.setItem("total",this.total.toString());
             }
             else {
             }

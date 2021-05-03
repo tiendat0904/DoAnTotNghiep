@@ -25,9 +25,8 @@
                  Xuất báo cáo
               </button>
                 <select [(ngModel)]="label" (change)="changeStatus($event.target.value)"
-                     class="custom-select col-md-3 col-lg-4 col-sm-12">
-                     <option [selected]="isSelected" disabled>--</option>
-                     <option value="-1">Tất cả</option>
+                     class="custom-select col-md-3 col-lg-4 col-sm-12" value = "-1">
+                     <option  value="-1">Tất cả</option>
                      <option value="0">Tháng</option>
                      <option value="1">Quý</option>
                      <option value="2">Năm</option>
@@ -80,16 +79,7 @@
                         <td [innerHTML]="e.order_type_description"></td>
                         <td [innerHTML]="e.into_money | currency:'VND'"></td>
                         <td [innerHTML]="e.created_at "></td>
-                        <td class="justify-content-center" style="display:flex;">
-                           <div class="status"
-                              style="background-color: green; height: 30px;width: 70%;text-align: center; border-radius: 5px;line-height: 30px;vertical-align: middle;"
-                              *ngIf="e.order_status_description==='Hoàn thành'">Hoàn thành
-                           </div>
-                           <div class="status"
-                              style="background-color: red;height: 30px;width: 70%;text-align: center; border-radius: 5px;line-height: 30px;vertical-align: middle;"
-                              *ngIf="e.order_status_description==='Đang giao hàng'">Đang giao hàng
-                           </div>
-                        </td>
+                        <td><div class= 'order_status' [innerHTML]="e.order_status_description" [ngStyle]="{'background-color':getColor(e.order_status_description)}"></div></td> 
                      </tr>
                   </tbody>
                </table>

@@ -95,7 +95,7 @@
                          <td>{{ i + (page-1)*pageSize + 1 }}</td>
                          <td [innerHTML]="e.employee_name "></td>       
                          <td [innerHTML]="e.supplier_name "></td>       
-                         <td [innerHTML]="e.total_money "></td>   
+                         <td [innerHTML]="e.total_money | currency: 'VND'"></td>   
                          <td [innerHTML]="e.created_at "></td>                                
                          <td>
                             <ng-template #mymodal let-modal>

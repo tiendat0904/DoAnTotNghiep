@@ -2,8 +2,8 @@
     <div class = 'product-detail-icon' >
         <a href=""><i class="fas fa-home"></i></a>
         <p style="margin-top: 5px;margin-left: 5px;">></p>
-        <p style="font-size: 20px;margin-left: 5px;margin-right: 905px;">{{product_type_name}}</p>
-        <select (change)="changeStatus($event.target.value)" class="custom-select col-md-4 col-lg-2 col-sm-12">
+        <p style="font-size: 20px;margin-left: 5px">{{product_type_name}}</p>
+        <select (change)="changeStatus($event.target.value)" class="custom-select col-md-4 col-lg-2 col-sm-12" style="position: relative;left: 919px;">
             <option value="0">Lọc sản phẩm</option>
             <option value="1">Sản phẩm mới về</option>
             <option value="2">Giá giảm dần</option>
@@ -13,7 +13,7 @@
     <hr/>
 </div>
 <div class = 'container'>
-    <div class = 'row'>
+    <div class = 'row' style="margin-left: 3px;">
         <div class = 'col-lg-2'>
             <h5 style="font-weight: normal ; text-align: center; border:1px solid #ddd;height: 33px;padding-top: 6px;">LỌC SẢN PHẨM</h5>
             <h4>Hãng sản xuất</h4>

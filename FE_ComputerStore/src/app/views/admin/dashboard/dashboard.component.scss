@@ -1,0 +1,31 @@
+.header{
+    display: flex;
+    background-color: white;
+    width: 310px;
+    height: 90px;
+    border-radius: 5px;
+}
+
+.header-icon{
+    background-color: #02d12e;
+    height: 70px;
+    width: 70px;
+    border-radius: 5px;
+    margin-top: 9px;
+    margin-left: 15px;
+}
+
+.header-icon i{
+    padding: 14px;
+    font-size: 35px;
+    color: white;
+}
+
+.header-detail{
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.header-detail p{
+    margin: 0px;
+}

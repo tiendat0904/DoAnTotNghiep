@@ -87,7 +87,7 @@ class CouponController extends Controller
             $obj = [];
             $obj[self::supplier_id] = $request->supplier_id;
             $obj[self::employee_id] = $request->employee_id;
-            $obj[self::created_at] = date('Y-m-d');
+            $obj[self::created_at] = date('Y-m-d h:i:s');
             if ($request->note) {
                 $obj[self::note] = $request->note;
             }

@@ -110,7 +110,7 @@ export class HeaderComponent implements OnInit {
     var filterResult = [];
     this.productService.getAll().subscribe(data =>{
       this.list_product = data.data;
-      if (this.searchedKeyword.length == 0) {
+      if (this.searchedKeyword === null) {
         this.list_product_filter = null;
         this.check_product = true;
       } else {

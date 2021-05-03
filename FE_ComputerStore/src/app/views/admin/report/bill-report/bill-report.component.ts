@@ -67,6 +67,25 @@ export class BillReportComponent implements OnInit {
     this.exportService.exportExcel(this.listFilterResult, 'Hoadon');
   }
 
+  getColor(color){ (5)
+    switch(color){
+      case "SELECTING":
+        return '#5bc0de';
+      case "PENDING":
+        return 'rgb(255 150 0)';
+      case "PROCESSING":
+        return '#337ab7';
+      case "PROCESSING":
+        return '#337ab7';
+      case "SHIPPING":
+        return "rgb(99, 90, 90)";
+      case "DONE":
+        return '#5cb85c';
+      case "CANCEL":
+        return "d9534f";
+    }
+  }
+
   changeStatus(event: any) {
     this.isLoading = true;
     // var thamso: excelModel;
@@ -193,6 +212,4 @@ export class BillReportComponent implements OnInit {
     };
     this.fetcharraylist_bill(thamso);
   }
-
-
 }

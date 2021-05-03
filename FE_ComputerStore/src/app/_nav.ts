@@ -30,6 +30,11 @@ export const navItems: INavData[] = [
     icon: 'icon-handbag'
   },
   {
+    name: 'Khách hàng',
+    url: '/admin/customer',
+    icon: 'icon-handbag'
+  },
+  {
     name: 'Nhập kho',
     url: '/admin/coupon',
     icon: 'icon-arrow-down-circle'
@@ -84,6 +89,16 @@ export const navItems: INavData[] = [
       {
         name: 'Báo cáo hóa đơn',
         url: '/admin/report/bill-report',
+        icon: 'icon-rocket'
+      },
+      {
+        name: 'Báo cáo phiếu nhập kho',
+        url: '/admin/report/coupon-report',
+        icon: 'icon-rocket'
+      },
+      {
+        name: 'Báo cáo phiếu nhân viên',
+        url: '/admin/report/employee-report',
         icon: 'icon-rocket'
       },
     ]

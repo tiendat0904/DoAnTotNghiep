@@ -130,7 +130,6 @@ export class ProductDetailComponent implements OnInit {
                   }
                   this.billDetailService.create(this.billDetailModel).subscribe(data => {
                     this.toastr.success("Đã thêm sản phẩm vào giỏ hàng");
-                    data.data.success();
                   });
                 }
               }

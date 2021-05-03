@@ -75,6 +75,8 @@ import localeFr from '@angular/common/locales/vi';
 import { registerLocaleData } from '@angular/common';
 import { UpdateProductPromotionComponent } from './views/admin/promotion-date/update-product-promotion/update-product-promotion.component';
 import { ProductPromotionComponent } from './views/admin/promotion-date/product-promotion/product-promotion.component';
+import { CustomerComponent } from './views/admin/customer/customer/customer.component';
+import { UpdateCustomerComponent } from './views/admin/customer/update-customer/update-customer.component';
 registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
@@ -129,7 +131,9 @@ registerLocaleData(localeFr, 'vi');
     PromotionDateComponent,
     ProductPromotionComponent,
     UpdatePromotionDateComponent,
-    UpdateProductPromotionComponent
+    UpdateProductPromotionComponent,
+    CustomerComponent,
+    UpdateCustomerComponent
     // MainComponent,
     // ProductDetailComponent
    

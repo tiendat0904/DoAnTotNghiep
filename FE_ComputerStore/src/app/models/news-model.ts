@@ -1,5 +1,5 @@
 export interface newsModel{
-    news_id?: bigint,
+    news_id?: number,
     title?: String,
     news_content?: Text,
     highlight?: number,

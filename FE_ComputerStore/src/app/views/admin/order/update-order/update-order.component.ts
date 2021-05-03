@@ -84,8 +84,9 @@ export class UpdateOrderComponent implements OnInit {
     this.submitted = false;
     this.fetcharraylistOrderStatus();
     this.fetcharraylistOrderType();
+    this.fetcharraylist_employee();
     this.update_bill_id = this.actRoute.snapshot.params['id'];
-    this.update_employee_id = localStorage.getItem("full_name");
+    this.update_employee_id = localStorage.getItem("account_id");
     this.billService.detail(this.update_bill_id).subscribe(data => {
       this.arraylist_bill = data.data;
       if (data.data === undefined) {
@@ -115,7 +116,19 @@ export class UpdateOrderComponent implements OnInit {
       total_money: [this.update_total_money],
     });
     this.fetcharraylist_bill_detail();
+    
+  }
 
+  fetcharraylist_employee(){
+    this.arraylist_employee=[];
+    this.isLoading =  true;
+    this.employeeService.getAll().subscribe(data => {
+      this.arraylist_employee = data.data;
+      this.arraylist_employee_filter = this.arraylist_employee.filter(employee => employee.value==="NV" || employee.value==="AD");
+    },
+    err => {
+        this.isLoading = false;
+      })
   }
 
   save() {
@@ -127,6 +140,7 @@ export class UpdateOrderComponent implements OnInit {
       return;
     }
     bill = {
+      employee_id:this.formGroup.get('employee_id')?.value,
       order_status_id: this.formGroup.get('order_status_id')?.value,
       order_type_id: this.formGroup.get('order_type_id')?.value,
     };

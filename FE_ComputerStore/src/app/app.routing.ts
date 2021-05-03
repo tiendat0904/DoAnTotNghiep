@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
 import { AuthGuard } from './guard/auth/auth.guard';
+import { CustomerComponent } from './views/admin/customer/customer/customer.component';
 import { NewsComponent } from './views/admin/news/news/news.component';
 import { ProductPromotionComponent } from './views/admin/promotion-date/product-promotion/product-promotion.component';
 import { PromotionDateComponent } from './views/admin/promotion-date/promotion-date/promotion-date.component';
@@ -112,6 +113,10 @@ export const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'customer',
+        component: CustomerComponent,
       },
       {
         path: 'supplier',

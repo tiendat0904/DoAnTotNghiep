@@ -1,5 +1,5 @@
 export interface accountModel{
-    account_id? : bigint,
+    account_id? : number,
     email?: string,
     password?: string,
     old_password?: string,
@@ -10,5 +10,6 @@ export interface accountModel{
     value?: string,
     image?: string,
     account_type_id?: bigint,
+    created_at?: Date;
     checked?:  boolean
  }

@@ -31,7 +31,7 @@ export class CouponReportComponent implements OnInit {
   pageSize = 5;
   update: any;
   update1: any;
-  update2: [2018,2019,2020];
+  update2: [2018,2019,2020,2021];
   arr_year: any;
   arr_quarter: any;
   arr_month: any;
@@ -105,7 +105,7 @@ export class CouponReportComponent implements OnInit {
         // }
         this.arr_quarter = [];
         this.arr_month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        this.arr_year = [2018, 2019, 2020];
+        this.arr_year = [2018, 2019, 2020,2021];
         var thamso = {
           key: this.key,
           param: value
@@ -120,7 +120,7 @@ export class CouponReportComponent implements OnInit {
         this.key = "bcq";
         this.arr_month = [];
         this.arr_quarter = [1, 2, 3, 4];
-        this.arr_year = [2018, 2019, 2020];
+        this.arr_year = [2018, 2019, 2020,2021];
         var value = "";
         var thamso = {
           key: this.key,
@@ -137,7 +137,7 @@ export class CouponReportComponent implements OnInit {
         this.arr_month = [];
         this.arr_quarter = [];
         var value = "";
-        this.arr_year = [2018, 2019, 2020];
+        this.arr_year = [2018, 2019, 2020,2021];
         this.key = "bcn";
         value = this.year;
         var thamso = {
