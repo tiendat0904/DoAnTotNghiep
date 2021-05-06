@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
     <div class="modal-header">
-       <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+       <h1 class="modal-title" id="modal-basic-title">{{ title }}</h1>
        <button
           type="button"
           class="close"
@@ -98,6 +98,7 @@
           Lưu
           </button>
           <button
+          type="button"
              class="btn btn-danger"
              style="width: 100px"
              (click)="modal.dismiss('Cross click')"

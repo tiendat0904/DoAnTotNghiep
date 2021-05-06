@@ -8,8 +8,10 @@ export interface productModel{
     description? : String,
     price?: number,
     price_new?: number,
+    price_display?:number;
     amount?: number,
     image?: string,
     checked?: boolean,
     check?:string,
+    isCheckPrice ?: boolean
  }

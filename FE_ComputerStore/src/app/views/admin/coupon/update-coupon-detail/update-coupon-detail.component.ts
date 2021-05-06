@@ -20,9 +20,9 @@ export class UpdateCouponDetailComponent implements OnInit {
 
   @ViewChild('content') public childModal!: ModalDirective;
   @Input() arraylist_coupon_detail: Array<couponDetailModel>;
-  @Input() mess_coupon : couponModel;
-  @Input() mess_coupon1 : any;
-  @Input() isAdd1 : Boolean;
+  @Input() mess_coupon: couponModel;
+  @Input() mess_coupon1: any;
+  @Input() isAdd1: Boolean;
   @Output() eventEmit: EventEmitter<any> = new EventEmitter<any>();
   listFilterResult: couponDetailModel[] = [];
   listFilterResult1: Array<couponDetailModel> = [];
@@ -36,18 +36,18 @@ export class UpdateCouponDetailComponent implements OnInit {
   image: string = null;
   isEdit = false;
   avatarUrl;
-  isEditimage=false;
+  isEditimage = false;
   isInfo = false;
   submitted = false;
-  isLoading=false;
+  isLoading = false;
   title = '';
   type: any;
   arrCheck = [];
-  update_coupon_id:any;
+  update_coupon_id: any;
   model: couponDetailModel;
   dem: number = 0;
-  checkNumber : number = 0;
- 
+  checkNumber: number = 0;
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -55,8 +55,8 @@ export class UpdateCouponDetailComponent implements OnInit {
     private couponDetailService: CouponDetailService,
     private productService: ProductService,
     private couponService: CouponService,
-    ) {
-    }
+  ) {
+  }
 
   ngOnInit(): void {
     this.submitted = false;
@@ -65,66 +65,65 @@ export class UpdateCouponDetailComponent implements OnInit {
     this.fetcharraylist_coupon();
   }
 
-  fetcharraylist_coupon_detail(){
-    this.arraylist_coupon_detail=[];
+  fetcharraylist_coupon_detail() {
+    this.arraylist_coupon_detail = [];
     this.couponDetailService.getAll().subscribe(data => {
-      this.arraylist_coupon_detail = data.data; 
+      this.arraylist_coupon_detail = data.data;
     },
-    err => {
+      err => {
         this.isLoading = false;
       })
   }
 
-  fetcharraylist_coupon(){
-    this.arraylist_coupon=[];
+  fetcharraylist_coupon() {
+    this.arraylist_coupon = [];
     this.couponService.getAll().subscribe(data => {
       this.arraylist_coupon = data.data;
-      if(this.arraylist_coupon.length === 0 ){
+      if (this.arraylist_coupon.length === 0) {
         this.update_coupon_id = 1;
-      }else{
+      } else {
         this.arraylist_coupon.sort(function (a, b) {
           return a.coupon_id - b.coupon_id;
         });
-        this.update_coupon_id = this.arraylist_coupon[this.arraylist_coupon.length-1].coupon_id;
-        this.update_coupon_id = this.update_coupon_id+1;
+        this.update_coupon_id = this.arraylist_coupon[this.arraylist_coupon.length - 1].coupon_id;
+        this.update_coupon_id = this.update_coupon_id + 1;
       }
-      
+
     },
-    err => {
+      err => {
         this.isLoading = false;
       })
   }
 
-  fetcharraylist_product(){
-    this.arraylist_product=[];
+  fetcharraylist_product() {
+    this.arraylist_product = [];
     this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
     },
-    err => {
+      err => {
         this.isLoading = false;
       })
   }
+
   updateFormType(type: any) {
     switch (type) {
       case 'add':
         this.isInfo = false;
         this.isEdit = false;
         this.isAdd = true;
-        this.title = `Thêm mới thông tin chi tiết hóa đơn nhập`;
-        //  this.update_coupon_id = this.arrCheck.length+1;
+        this.title = `Thêm mới thông tin chi tiết phiếu nhập`;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
-        this.title = `Xem chi tiết thông tin chi tiết hóa đơn nhập`;
-        //  this.update_coupon_id = this.model.id;
+        this.title = `Xem chi tiết thông tin chi tiết phiếu nhập`;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
-        this.title = `Chỉnh sửa thông tin chi tiết hóa đơn nhập`;
+        this.title = `Chỉnh sửa thông tin chi tiết phiếu nhập`;
         //  this.update_coupon_id = this.model.id;
         break;
       default:
@@ -142,36 +141,36 @@ export class UpdateCouponDetailComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
-   
+
     if (model.coupon_detail_id === null || model.coupon_detail_id === undefined) {
-      if(this.mess_coupon1===undefined){
+      if (this.mess_coupon1 === undefined) {
         this.formGroup = this.fb.group({
-          coupon_id: [ this.update_coupon_id],
-          product_id: [ null, [Validators.required]],
-          amount: [ null, [Validators.required]],
-          price : [ null , [Validators.required]],
-  
-          
+          coupon_id: [this.update_coupon_id],
+          product_id: [null, [Validators.required]],
+          amount: [null, [Validators.required]],
+          price: [null, [Validators.required]],
+
+
         });
-      }else{
+      } else {
         this.formGroup = this.fb.group({
-          coupon_id: [ this.mess_coupon1],
-          product_id: [ null, [Validators.required]],
-          amount: [ null, [Validators.required]],
-          price : [ null , [Validators.required]],
-  
-          
+          coupon_id: [this.mess_coupon1],
+          product_id: [null, [Validators.required]],
+          amount: [null, [Validators.required]],
+          price: [null, [Validators.required]],
+
+
         });
       }
-      
+
     } else {
       this.formGroup = this.fb.group({
-        coupon_id: [{value: this.mess_coupon1, disabled: this.isInfo}],
-        product_id:[{value: this.model.product_id, disabled: this.isInfo}, [Validators.required]],
-        amount:[{value: this.model.amount, disabled: this.isInfo}, [Validators.required]],
-        price : [{value: this.model.price, disabled: this.isInfo}, [Validators.required]],
+        coupon_id: [{ value: this.mess_coupon1, disabled: this.isInfo }],
+        product_id: [{ value: this.model.product_id, disabled: this.isInfo }, [Validators.required]],
+        amount: [{ value: this.model.amount, disabled: this.isInfo }, [Validators.required]],
+        price: [{ value: this.model.price, disabled: this.isInfo }, [Validators.required]],
       });
-      
+
     }
   }
 
@@ -203,7 +202,7 @@ export class UpdateCouponDetailComponent implements OnInit {
   }
 
   save() {
-    
+
     let check = false;
     let couponDetail: couponDetailModel;
     this.submitted = true;
@@ -211,32 +210,32 @@ export class UpdateCouponDetailComponent implements OnInit {
       this.toastr.error('Kiểm tra thông tin các trường đã nhập');
       return;
     }
-    
-    if(this.checkNumber === 0 && this.isAdd1===true){
+
+    if (this.checkNumber === 0 && this.isAdd1 === true) {
       this.couponService.create(this.mess_coupon).subscribe(res => {
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
-    
-    
+
+
     if (this.isEdit) {
       couponDetail = {
         coupon_detail_id: this.model.coupon_detail_id,
         coupon_id: this.formGroup.get('coupon_id')?.value,
         product_id: this.formGroup.get('product_id')?.value,
         amount: this.formGroup.get('amount')?.value,
-        price : this.formGroup.get('price')?.value,
+        price: this.formGroup.get('price')?.value,
       };
-     
+
     } else {
       couponDetail = {
         coupon_id: this.formGroup.get('coupon_id')?.value,
         product_id: this.formGroup.get('product_id')?.value,
         amount: this.formGroup.get('amount')?.value,
-        price : this.formGroup.get('price')?.value,
+        price: this.formGroup.get('price')?.value,
       };
     }
     if (this.isAdd) {
@@ -252,25 +251,24 @@ export class UpdateCouponDetailComponent implements OnInit {
       }
       this.couponDetailService.create(couponDetail).subscribe(res => {
         this.closeModalReloadData();
-        
-        this.listFilterResult=[];
+
+        this.listFilterResult = [];
         this.couponDetailService.getAll().subscribe(data => {
           this.arraylist_coupon_detail = data.data;
-          for(let item of this.arraylist_coupon_detail){
-            if(item.coupon_id===this.mess_coupon1 || item.coupon_id=== this.update_coupon_id){
-                this.listFilterResult.push(item);
-                this.checkNumber = this.listFilterResult.length;
+          for (let item of this.arraylist_coupon_detail) {
+            if (item.coupon_id === this.mess_coupon1 || item.coupon_id === this.update_coupon_id) {
+              this.listFilterResult.push(item);
+              this.checkNumber = this.listFilterResult.length;
             }
           }
-        },)
-
+        })
         this.toastr.success(res.success);
         this.modalReference.dismiss();
-       
+
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
     if (this.isEdit) {
@@ -279,9 +277,9 @@ export class UpdateCouponDetailComponent implements OnInit {
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
   }

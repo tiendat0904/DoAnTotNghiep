@@ -1,282 +1,296 @@
-<div class = 'container'>
-    <div class = 'row main-slider'>
-        <div class= 'main-slider-left col-lg-2'>
-            <ul>
-              <a *ngFor="let item of list_product_type;" [routerLink] = "['/product-type/',item.product_type_id]">{{item.product_type_name}} - {{item.description}}</a>
-            </ul>
-        </div>
-        <div class = 'col-lg-7'>
-            <ngb-carousel *ngIf="images">
-                <ng-template ngbSlide>
-                  <div class="picsum-img-wrapper">
-                    <img [src]="images[0]" alt="Random first slide">
-                  </div>
-                </ng-template>
-                <ng-template ngbSlide>
-                  <div class="picsum-img-wrapper">
-                    <img [src]="images[1]" alt="Random second slide">
-                  </div>
-                </ng-template>
-                <ng-template ngbSlide>
-                  <div class="picsum-img-wrapper">
-                    <img [src]="images[2]" alt="Random third slide">
-                  </div>
-                </ng-template>
-                <ng-template ngbSlide>
-                    <div class="picsum-img-wrapper">
-                      <img [src]="images[3]" alt="Random four slide">
-                    </div>
-                  </ng-template>
-              </ngb-carousel>
-        </div>
-        <div class = 'main-slider-right '>
-            <div class = 'picsum-img-wrapper'>
-                <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Flaptop-gaming.jpg?alt=media&token=133a9b9e-04bc-400c-9bb5-3b9b2dfa2a15" alt="">
-            </div>
-            <div class = 'picsum-img-wrapper'>
-                <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Ftop-mouse.jpg?alt=media&token=26bafe1f-808b-414b-a12e-47f6eb6e89d5" alt="">
-            </div>
-        </div>
+<div class='container'>
+  <div class='row main-slider'>
+    <div class='main-slider-left col-lg-2'>
+      <ul>
+        <a *ngFor="let item of list_product_type;"
+          [routerLink]="['/product-type/',item.product_type_id]">{{item.product_type_name}} - {{item.description}}</a>
+      </ul>
     </div>
-    <div class = "banner-duoi-slider">
-        <div class = 'picsum-img-banner'>
-            <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fpc-1.png?alt=media&token=4385752f-2ebe-44cf-bfba-5af1b988a5a0" alt="">
-        </div>
-        <div class = 'picsum-img-banner'>
-            <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fpc-2.png?alt=media&token=49c9cc5d-ba7a-454c-9b1c-723353457486" alt="">
-        </div>
-        <div class = 'picsum-img-banner'>
-            <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fghe-gaming-1.png?alt=media&token=b3e7b9a4-eb85-44e9-82ce-d2b22c2f315a" alt="">
-        </div>
-        <div class = 'picsum-img-banner'>
-            <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Ftragop.png?alt=media&token=80955a56-aa60-4f66-b7bf-efba21f7eecd" alt="">
-        </div>
-    </div>
-    <div class = "product-bestseller">
-      <div class = "product-title-container" style="width: 321px;">
-        <h3>SẢN PHẨM MỚI RA MẮT</h3>
-      </div>
-      <div class = "product-grid">
-        <div class= 'product-item' *ngFor="let item of (list_product | slice:list_product.length - 5);">
-          <div class = 'product-item-detail' style="display: grid;height: 100%;">
-            <div class = 'product-image'>
-              <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-            </div>
-            <div class = 'product-description'>
-              <div class = 'product-title'>
-                <p><a href=""></a> {{[item.product_name]}}</p>
-              </div>
-            </div>
-            <div style="align-self: flex-end; margin-left: 15px;">
-              <div class = 'product-price' >
-                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-              </div>
-              <div class = 'product-checked'>
-                <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              </div>
-            </div>   
+    <div class='col-lg-7'>
+      <ngb-carousel *ngIf="images">
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[0]" alt="Random first slide">
           </div>
-        </div>
+        </ng-template>
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[1]" alt="Random second slide">
+          </div>
+        </ng-template>
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[2]" alt="Random third slide">
+          </div>
+        </ng-template>
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[3]" alt="Random four slide">
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </div>
+    <div class='main-slider-right '>
+      <div class='picsum-img-wrapper'>
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Flaptop-gaming.jpg?alt=media&token=133a9b9e-04bc-400c-9bb5-3b9b2dfa2a15"
+          alt="">
+      </div>
+      <div class='picsum-img-wrapper'>
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Ftop-mouse.jpg?alt=media&token=26bafe1f-808b-414b-a12e-47f6eb6e89d5"
+          alt="">
       </div>
     </div>
-    <div class = "product-bestseller">
-      <div class = "product-title-container" style="width: 394px;"> 
-        <h3>LAPTOP - MÁY TÍNH SÁCH TAY</h3>
-      </div>
-      <div class = "product-grid">
-        <div class= 'product-item' *ngFor="let item of list_product_laptop">
-          <div class = 'product-item-detail' style="display: grid;height: 100%;">
-            <div class = 'product-image'>
-              <a  [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+  </div>
+  <div class="banner-duoi-slider">
+    <div class='picsum-img-banner'>
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fpc-1.png?alt=media&token=4385752f-2ebe-44cf-bfba-5af1b988a5a0"
+        alt="">
+    </div>
+    <div class='picsum-img-banner'>
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fpc-2.png?alt=media&token=49c9cc5d-ba7a-454c-9b1c-723353457486"
+        alt="">
+    </div>
+    <div class='picsum-img-banner'>
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fghe-gaming-1.png?alt=media&token=b3e7b9a4-eb85-44e9-82ce-d2b22c2f315a"
+        alt="">
+    </div>
+    <div class='picsum-img-banner'>
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Ftragop.png?alt=media&token=80955a56-aa60-4f66-b7bf-efba21f7eecd"
+        alt="">
+    </div>
+  </div>
+  <div class="product-bestseller">
+    <div class="product-title-container" style="width: 321px;">
+      <h3>SẢN PHẨM MỚI RA MẮT</h3>
+    </div>
+    <div class="product-grid">
+      <div class='product-item' *ngFor="let item of (list_product | slice:list_product.length - 5);">
+        <div class='product-item-detail' style="display: grid;height: 100%;">
+          <div class='product-image'>
+            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+          </div>
+          <div class='product-description'>
+            <div class='product-title'>
+              <p><a href=""></a> {{[item.product_name]}}</p>
             </div>
-            <div class = 'product-description'>
-              <div class = 'product-title'>
-                <p><a href=""></a> {{[item.product_name]}}</p>
-              </div>
+          </div>
+          <div style="align-self: flex-end; margin-left: 15px;">
+            <div class='product-price'>
+              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-            <div style="align-self: flex-end; margin-left: 15px;">
-              <div class = 'product-price' >
-                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-              </div>
-              <div class = 'product-checked'>
-               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              </div>
+            <div class='product-checked'>
+              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class = "product-bestseller">
-      <div class = "product-title-container" style="width: 295px;">
-        <h3>MAIN - BO MẠCH CHỦ</h3>
-      </div>
-      <div class = "product-grid">
-        <div class= 'product-item' *ngFor="let item of list_product_main">
-          <div class = 'product-item-detail' style="display: grid;height: 100%;">
-            <div class = 'product-image'>
-              <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+  </div>
+  <div class="product-bestseller">
+    <div class="product-title-container" style="width: 394px;">
+      <h3>LAPTOP - MÁY TÍNH SÁCH TAY</h3>
+    </div>
+    <div class="product-grid">
+      <div class='product-item' *ngFor="let item of list_product_laptop">
+        <div class='product-item-detail' style="display: grid;height: 100%;">
+          <div class='product-image'>
+            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+          </div>
+          <div class='product-description'>
+            <div class='product-title'>
+              <p><a href=""></a> {{[item.product_name]}}</p>
             </div>
-            <div class = 'product-description'>
-              <div class = 'product-title'>
-                <p><a href=""></a> {{[item.product_name]}}</p>
-              </div>
+          </div>
+          <div style="align-self: flex-end; margin-left: 15px;">
+            <div class='product-price'>
+              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-            <div style="align-self: flex-end; margin-left: 15px;">
-              <div class = 'product-price' >
-                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-              </div>
-              <div class = 'product-checked'>
-               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              </div>
+            <div class='product-checked'>
+              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class = "product-bestseller">
-      <div class = "product-title-container" style="width: 298px;">
-        <h3>RAM - BỘ NHỚ TRONG</h3>
-      </div>
-      <div class = "product-grid">
-        <div class= 'product-item' *ngFor="let item of list_product_ram">
-          <div class = 'product-item-detail' style="display: grid;height: 100%;">
-            <div class = 'product-image'>
-              <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+  </div>
+  <div class="product-bestseller">
+    <div class="product-title-container" style="width: 295px;">
+      <h3>MAIN - BO MẠCH CHỦ</h3>
+    </div>
+    <div class="product-grid">
+      <div class='product-item' *ngFor="let item of list_product_main">
+        <div class='product-item-detail' style="display: grid;height: 100%;">
+          <div class='product-image'>
+            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+          </div>
+          <div class='product-description'>
+            <div class='product-title'>
+              <p><a href=""></a> {{[item.product_name]}}</p>
             </div>
-            <div class = 'product-description'>
-              <div class = 'product-title'>
-                <p><a href=""></a> {{[item.product_name]}}</p>
-              </div>
+          </div>
+          <div style="align-self: flex-end; margin-left: 15px;">
+            <div class='product-price'>
+              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-            <div style="align-self: flex-end; margin-left: 15px;">
-              <div class = 'product-price' >
-                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-              </div>
-              <div class = 'product-checked'>
-               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              </div>
+            <div class='product-checked'>
+              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class = "product-bestseller">
-      <div class = "product-title-container" style="width: 249px;">
-        <h3>VGA - Card đồ họa</h3>
-      </div>
-      <div class = "product-grid">
-        <div class= 'product-item' *ngFor="let item of list_product_vga">
-          <div class = 'product-item-detail' style="display: grid;height: 100%;">
-            <div class = 'product-image'>
-              <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+  </div>
+  <div class="product-bestseller">
+    <div class="product-title-container" style="width: 298px;">
+      <h3>RAM - BỘ NHỚ TRONG</h3>
+    </div>
+    <div class="product-grid">
+      <div class='product-item' *ngFor="let item of list_product_ram">
+        <div class='product-item-detail' style="display: grid;height: 100%;">
+          <div class='product-image'>
+            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+          </div>
+          <div class='product-description'>
+            <div class='product-title'>
+              <p><a href=""></a> {{[item.product_name]}}</p>
             </div>
-            <div class = 'product-description'>
-              <div class = 'product-title'>
-                <p><a href=""></a> {{[item.product_name]}}</p>
-              </div>
+          </div>
+          <div style="align-self: flex-end; margin-left: 15px;">
+            <div class='product-price'>
+              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-            <div style="align-self: flex-end; margin-left: 15px;">
-              <div class = 'product-price' >
-                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-              </div>
-              <div class = 'product-checked'>
-               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              </div>
+            <div class='product-checked'>
+              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class = "product-bestseller">
-      <div class = "product-title-container" style="width: 286px;">
-        <h3>PSU - Nguồn máy tính</h3>
-      </div>
-      <div class = "product-grid">
-        <div class= 'product-item' *ngFor="let item of list_product_psu">
-          <div class = 'product-item-detail' style="display: grid;height: 100%;">
-            <div class = 'product-image'>
-              <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+  </div>
+  <div class="product-bestseller">
+    <div class="product-title-container" style="width: 249px;">
+      <h3>VGA - Card đồ họa</h3>
+    </div>
+    <div class="product-grid">
+      <div class='product-item' *ngFor="let item of list_product_vga">
+        <div class='product-item-detail' style="display: grid;height: 100%;">
+          <div class='product-image'>
+            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+          </div>
+          <div class='product-description'>
+            <div class='product-title'>
+              <p><a href=""></a> {{[item.product_name]}}</p>
             </div>
-            <div class = 'product-description'>
-              <div class = 'product-title'>
-                <p><a href=""></a> {{[item.product_name]}}</p>
-              </div>
+          </div>
+          <div style="align-self: flex-end; margin-left: 15px;">
+            <div class='product-price'>
+              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-            <div style="align-self: flex-end; margin-left: 15px;">
-              <div class = 'product-price' >
-                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-              </div>
-              <div class = 'product-checked'>
-               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              </div>
+            <div class='product-checked'>
+              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class = "product-bestseller">
-      <div class = "product-title-container" style="width: 225px;">
-        <h3>CPU - Bộ vi xử lý</h3>
-      </div>
-      <div class = "product-grid">
-        <div class= 'product-item' *ngFor="let item of list_product_cpu">
-          <div class = 'product-item-detail' style="display: grid;height: 100%;">
-            <div class = 'product-image'>
-              <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+  </div>
+  <div class="product-bestseller">
+    <div class="product-title-container" style="width: 286px;">
+      <h3>PSU - Nguồn máy tính</h3>
+    </div>
+    <div class="product-grid">
+      <div class='product-item' *ngFor="let item of list_product_psu">
+        <div class='product-item-detail' style="display: grid;height: 100%;">
+          <div class='product-image'>
+            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+          </div>
+          <div class='product-description'>
+            <div class='product-title'>
+              <p><a href=""></a> {{[item.product_name]}}</p>
             </div>
-            <div class = 'product-description'>
-              <div class = 'product-title'>
-                <p><a href=""></a> {{[item.product_name]}}</p>
-              </div>
+          </div>
+          <div style="align-self: flex-end; margin-left: 15px;">
+            <div class='product-price'>
+              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-            <div style="align-self: flex-end; margin-left: 15px;">
-              <div class = 'product-price' >
-                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-              </div>
-              <div class = 'product-checked'>
-               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              </div>
+            <div class='product-checked'>
+              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class = "product-bestseller" style="padding-bottom: 20px;">
-      <div class = "product-title-container" style="width: 243px;">
-        <h3>Linh kiện máy lính</h3>
-      </div>
-      <div class = "product-grid" >
-        <div class= 'product-item' *ngFor="let item of (list_product_computer_conponent | slice:list_product_computer_conponent.length - 5);">
-          <div class = 'product-item-detail' style="display: grid;height: 100%;">
-            <div class = 'product-image'>
-              <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+  </div>
+  <div class="product-bestseller">
+    <div class="product-title-container" style="width: 225px;">
+      <h3>CPU - Bộ vi xử lý</h3>
+    </div>
+    <div class="product-grid">
+      <div class='product-item' *ngFor="let item of list_product_cpu">
+        <div class='product-item-detail' style="display: grid;height: 100%;">
+          <div class='product-image'>
+            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+          </div>
+          <div class='product-description'>
+            <div class='product-title'>
+              <p><a href=""></a> {{[item.product_name]}}</p>
             </div>
-            <div class = 'product-description'>
-              <div class = 'product-title'>
-                <p><a href=""></a> {{[item.product_name]}}</p>
-              </div>
+          </div>
+          <div style="align-self: flex-end; margin-left: 15px;">
+            <div class='product-price'>
+              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-            <div style="align-self: flex-end; margin-left: 15px;">
-              <div class = 'product-price' >
-                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-              </div>
-              <div class = 'product-checked'>
-               <p  [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              </div>
+            <div class='product-checked'>
+              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class = "product-bestseller">
+  </div>
+  <div class="product-bestseller" style="padding-bottom: 20px;">
+    <div class="product-title-container" style="width: 243px;">
+      <h3>Linh kiện máy lính</h3>
+    </div>
+    <div class="product-grid">
+      <div class='product-item'
+        *ngFor="let item of (list_product_computer_conponent | slice:list_product_computer_conponent.length - 5);">
+        <div class='product-item-detail' style="display: grid;height: 100%;">
+          <div class='product-image'>
+            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+          </div>
+          <div class='product-description'>
+            <div class='product-title'>
+              <p><a href=""></a> {{[item.product_name]}}</p>
+            </div>
+          </div>
+          <div style="align-self: flex-end; margin-left: 15px;">
+            <div class='product-price'>
+              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+            </div>
+            <div class='product-checked'>
+              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class = "product-bestseller">
       <div class = "product-title-container" style="width: 204px;">
         <h3>Tin công nghệ</h3>
       </div>

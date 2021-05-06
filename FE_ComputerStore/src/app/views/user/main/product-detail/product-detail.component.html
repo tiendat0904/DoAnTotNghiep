@@ -1,53 +1,55 @@
-<div class = 'product-detail-page'>
-    <div class = 'product-detail-icon' *ngIf="product">
+<div class='product-detail-page'>
+    <div class='product-detail-icon' *ngIf="product">
         <a href=""><i class="fas fa-home"></i></a>
         <p style="margin-top: 5px;margin-left: 5px;">></p>
         <p style="font-size: 20px;margin-left: 5px;">{{product.product_type_name}}</p>
     </div>
-    <hr/>
+    <hr />
     <div></div>
 </div>
-<div class = 'container'>
-    <div class = 'product-detail-main row' *ngIf="product">
-        <div class = 'product-detail-image col-lg-4'> 
+<div class='container'>
+    <div class='product-detail-main row' *ngIf="product">
+        <div class='product-detail-image col-lg-4'>
             <img src="{{product.image}}" alt="">
         </div>
-        <div class = 'col-lg-5 product-description'>
+        <div class='col-lg-5 product-description'>
             <h3 style=" color: #000000ef; text-transform: uppercase;">{{product.product_name}}</h3>
-            <hr style="width: 100%;"/>
+            <hr style="width: 100%;" />
             <span>Lượt mua : 326</span>
-            <p *ngFor = "let description1 of descriptions"><i class="far fa-check-square"></i>{{[description1]}}</p>
+            <p *ngFor="let description1 of descriptions"><i class="far fa-check-square"></i>{{[description1]}}</p>
             <div style="background-color: #ffee00ef;text-align: center; height: 65px;">
                 <div style="padding-top: 5px;">
                     <h4 style="margin-bottom: 0;">MỚI 100%</h4>
                     <h4>BẢO HÀNH 36 THÁNG</h4>
                 </div>
             </div>
-            <div class = 'product-price' style="align-self: flex-end">
+            <div class='product-price' style="align-self: flex-end">
                 <span>Giá bán : </span>
-                <span class = 'product-price-new'>{{product.price_new | currency: 'VND'}}</span>
-                <del class = 'product-price-old'>{{product.price |  currency: 'VND' }}</del>
-                <p  [ngStyle]="{'color':check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{check}}</p>
+            <span class='product-price-new'>{{product.price_display | currency: 'VND'}}</span>
+            <del class='product-price-old' [hidden]="product.isCheckPrice">{{product.price | currency: 'VND'
+            }}</del>
+                <p [ngStyle]="{'color':check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{check}}</p>
             </div>
-            <div class ='product-button'>
-                <div >
+            <div class='product-button'>
+                <div>
                     <button style="margin-right: 6px; background-color: red;">ĐẶT MUA NGAY</button>
                 </div>
                 <div>
-                    <button style="color: black; outline: none;" (click) = "addProductToCart()">CHO VÀO GIỎ</button>
+                    <button style="color: black; outline: none;" (click)="addProductToCart()">CHO VÀO GIỎ</button>
                 </div>
             </div>
         </div>
-        <div class = 'col-lg-3 product-shop'>
-            <div class = 'product-shop-title'>
-                <p id = 'p'>LƯU Ý KHÔNG BÁN LẺ VGA</p>
-                <div class = 'product-shop-detail'>
-                    <p style="margin-top: 5px;"><i class="fas fa-star"></i>Do thiếu nguồn hàng nên TDC không bán lẻ VGA</p>
+        <div class='col-lg-3 product-shop'>
+            <div class='product-shop-title'>
+                <p id='p'>LƯU Ý KHÔNG BÁN LẺ VGA</p>
+                <div class='product-shop-detail'>
+                    <p style="margin-top: 5px;"><i class="fas fa-star"></i>Do thiếu nguồn hàng nên TDC không bán lẻ VGA
+                    </p>
                 </div>
             </div>
-            <div class = 'product-shop-title'>
-                <p id = 'p'>YÊN TÂM MUA SẮM TẠI TDC</p>
-                <div class = 'product-shop-detail'>
+            <div class='product-shop-title'>
+                <p id='p'>YÊN TÂM MUA SẮM TẠI TDC</p>
+                <div class='product-shop-detail'>
                     <p style="margin-top: 5px;"><i class="fas fa-star"></i>Cam kết giá thành tốt nhất khi mua ở TDC</p>
                     <p><i class="fas fa-star"></i>TDC có 3 chi nhánh tại các TP lớn</p>
                     <p><i class="fas fa-star"></i>Bảo hành lỗi 1 đổi 1 trong 30 ngày đầu</p>
@@ -55,37 +57,39 @@
                     <p><i class="fas fa-star"></i>Mua hàng trả góp lãi suất 0%</p>
                 </div>
             </div>
-            <div class = 'product-shop-title'>
-                <p id = 'p'>CHÍNH SÁCH GIAO HÀNG</p>
-                <div class = 'product-shop-detail'>
-                    <p style="margin-top: 5px;"><i class="fas fa-star"></i>Giao hàng trước trả tiền sau COD toàn quốc</p>
+            <div class='product-shop-title'>
+                <p id='p'>CHÍNH SÁCH GIAO HÀNG</p>
+                <div class='product-shop-detail'>
+                    <p style="margin-top: 5px;"><i class="fas fa-star"></i>Giao hàng trước trả tiền sau COD toàn quốc
+                    </p>
                     <p><i class="fas fa-star"></i>Miễn phí giao hàng nội thành HN & HCM</p>
                 </div>
             </div>
         </div>
     </div>
-    <div class = "product-bestseller">
-        <div class = "product-title-container" style="width: 340px; margin-bottom: 20px;" *ngIf="product">
-          <h3>Cùng thương hiệu {{product.trademark_name}}</h3>
+    <div class="product-bestseller">
+        <div class="product-title-container" style="width: 340px; margin-bottom: 20px;" *ngIf="product">
+            <h3>Cùng thương hiệu {{product.trademark_name}}</h3>
         </div>
-        <div class = "product-grid" style="display: flex;">
-          <div class= 'product-item' *ngFor="let item of (list_product_trademark | slice:list_product_trademark.length - 5);">
-            <div class = 'product-item-detail' style="display: grid;height: 100%;" >
-              <div class = 'product-image'>
-                <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-              </div>
-              <div class = 'product-description1'>
-                <div class = 'product-title'>
-                  <p><a href=""></a> {{[item.product_name]}}</p>
+        <div class="product-grid" style="display: flex;">
+            <div class='product-item'
+                *ngFor="let item of (list_product_trademark | slice:list_product_trademark.length - 5);">
+                <div class='product-item-detail' style="display: grid;height: 100%;">
+                    <div class='product-image'>
+                        <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                    </div>
+                    <div class='product-description1'>
+                        <div class='product-title'>
+                            <p><a href=""></a> {{[item.product_name]}}</p>
+                        </div>
+                    </div>
+                    <div class='product-price' style="align-self: flex-end; margin-left: 15px;">
+                        <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                            }}</del>
+                        <span class='product-price-new'>{{item.price_display | currency: 'VND'}}</span>
+                    </div>
                 </div>
-              </div>
-              <div class = 'product-price' style="align-self: flex-end; margin-left: 15px;">
-                <del class = 'product-price-old'>{{item.price |  currency: 'VND' }}</del>
-                <span class = 'product-price-new'>{{item.price_new | currency: 'VND'}}</span>
-              </div>
-              <div class = 'product-'></div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 </div>

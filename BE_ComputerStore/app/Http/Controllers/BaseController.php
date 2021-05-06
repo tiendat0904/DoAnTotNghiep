@@ -177,7 +177,7 @@ class BaseController extends Controller
         $arr_value = $request->all();
         if (DB::table($this->table)->where($this->id, '=', $id)->update($arr_value)) {
             $obj = DB::table($this->table)->where($this->id, '=', $id)->get();
-            $this->message = ['data' => $obj];
+            $this->message = ['success' => "Chỉnh sửa thành công",'data' => $obj];
             $this->status = 201;
         } else {
             $this->message = ['error' => "Chỉnh sửa thất bại"];

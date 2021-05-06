@@ -85,6 +85,7 @@ export class UpdateOrderComponent implements OnInit {
     this.fetcharraylistOrderStatus();
     this.fetcharraylistOrderType();
     this.fetcharraylist_employee();
+    this.fetcharraylist_customer();
     this.update_bill_id = this.actRoute.snapshot.params['id'];
     this.update_employee_id = localStorage.getItem("account_id");
     this.billService.detail(this.update_bill_id).subscribe(data => {
@@ -94,7 +95,7 @@ export class UpdateOrderComponent implements OnInit {
         if (data.data.bill_id === undefined || data.data.bill_id === null) {
         }
         else {
-          this.update_customer_id = data.data.customer_name;
+          this.update_customer_id = data.data.customer_id;
           this.update_total_money = data.data.total_money;
           this.update_into_money = data.data.into_money;
           this.update_created_at = data.data.created_at;
@@ -125,6 +126,18 @@ export class UpdateOrderComponent implements OnInit {
     this.employeeService.getAll().subscribe(data => {
       this.arraylist_employee = data.data;
       this.arraylist_employee_filter = this.arraylist_employee.filter(employee => employee.value==="NV" || employee.value==="AD");
+    },
+    err => {
+        this.isLoading = false;
+      })
+  }
+
+  fetcharraylist_customer(){
+    this.arraylist_customer=[];
+    this.isLoading =  true;
+    this.employeeService.getAll().subscribe(data => {
+      this.arraylist_customer = data.data;
+      this.arraylist_customer_filter = this.arraylist_customer.filter(employee => employee.value==="KH");
     },
     err => {
         this.isLoading = false;

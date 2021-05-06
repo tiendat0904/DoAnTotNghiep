@@ -6,3 +6,20 @@
     color: white;
     border-radius: 20px;
 }
+
+.close{
+    outline: none;
+    height: 40px;
+}
+
+.close:hover{
+    span{
+        color: white;
+    }
+    background-color: red;
+}
+
+.close span {
+    position: relative;
+    bottom: 8px;
+}

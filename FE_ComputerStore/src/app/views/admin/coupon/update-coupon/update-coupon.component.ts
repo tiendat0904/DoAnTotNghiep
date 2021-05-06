@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +16,7 @@ import { UpdateCouponDetailComponent } from '../update-coupon-detail/update-coup
 @Component({
   selector: 'app-update-coupon',
   templateUrl: './update-coupon.component.html',
-  styleUrls: ['./update-coupon.component.scss']
+  styleUrls: ['./update-coupon.component.scss'],
 })
 export class UpdateCouponComponent implements OnInit {
 
@@ -63,13 +63,7 @@ export class UpdateCouponComponent implements OnInit {
         this.arraylist_coupon = data.data;
         // this.update_coupon_id = this.arraylist_coupon.length+1;
       },)
-      
-     
-      
-     
     }
-
-  
   ngOnInit(): void {
     
     this.submitted = false;

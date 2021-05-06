@@ -35,9 +35,10 @@
                   <input
                         type="text"
                         class="form-control"
-                        name="email"
+                        name=""
                         formControlName="email"
                         placeholder="Nhập email"
+                        autocomplete="off"
                         required
                         />
                      <div
@@ -80,11 +81,12 @@
                   <input
                         type="text"
                         class="form-control"
-                        name="address"
+                        name=""
                         formControlName="address"
                         required
                         minlength="6"
                         placeholder="Nhập địa chỉ"
+                        autocomplete="off"
                         />
                      <div
                         *ngIf="submitted && formRegister.controls['address'].errors?.required || formRegister.controls['address'].errors?.pattern">
@@ -103,11 +105,13 @@
                   <input
                         type="password"
                         class="form-control"
-                        name="password"
+                        name=""
                         formControlName="password"
                         required
                         minlength="8"
+                        autocomplete="new-password"
                         placeholder="Nhập mật khẩu"
+
                         />
                      <div
                         *ngIf="submitted && formRegister.controls['password'].errors?.required || formRegister.controls['password'].errors?.pattern">
@@ -126,7 +130,7 @@
                   <input
                         type="password"
                         class="form-control"
-                        name="confirm_password"
+                        name=""
                         formControlName="confirm_password"
                         required
                         minlength="8"
@@ -135,7 +139,7 @@
                      <div
                         *ngIf="submitted && formRegister.controls['confirm_password'].errors?.required || formRegister.controls['confirm_password'].errors?.pattern">
                         <div *ngIf="formRegister.controls['confirm_password'].errors?.required" style="color: red">
-                           * Mật khẩu không được để trống
+                           * Vui lòng điền lại mật khẩu 
                         </div>
                         <div *ngIf="formRegister.controls['confirm_password'].errors?.pattern" style="color: red">
                            * Mật khẩu tối thiểu 8 kí tự

@@ -77,7 +77,7 @@ export class LoginComponent {
             this.list_bill = data.data;
             list_bill_filter = this.list_bill;
             this.account_id = Number(localStorage.getItem("account_id"));
-            if (this.cartService.getItems() !== null && this.account_id != 0) {
+            if (this.cartService.getItems() !== null && this.account_id !== 0) {
               if (list_bill_filter.length !== 0) {
                 for (let item of list_bill_filter) {
                   if (item.customer_id === this.account_id && item.order_status_id === 1) {
@@ -89,26 +89,24 @@ export class LoginComponent {
                         this.billDetailModel = {
                           bill_id: update_bill_id,
                           product_id: item.product.product_id,
-                          price: item.product.price_new,
+                          price: item.product.price_display,
                           amount: item.quantity,
                         }
                         this.billDetailService.create(this.billDetailModel).subscribe(data => {
-                          // this.toastr.success("thanh cong");
-                          this.list_item = this.cartService.getItems();
-                          if (this.list_item !== null) {
-                            for (let item of this.list_item) {
-                              this.billDetailModel = {
-                                bill_id: data.data[0].bill_id,
-                                product_id: item.product.product_id,
-                                price: item.product.price_new,
-                                amount: item.quantity,
-                              }
-                              this.billDetailService.create(this.billDetailModel).subscribe(data => {
-                                // this.toastr.success("thanh cong");
-                                data.data.success();
-                              });
-                            }
-                          }
+                          // this.list_item = this.cartService.getItems();
+                          // if (this.list_item !== null) {
+                          //   for (let item of this.list_item) {
+                          //     this.billDetailModel = {
+                          //       bill_id: data.data[0].bill_id,
+                          //       product_id: item.product.product_id,
+                          //       price: item.product.price_display,
+                          //       amount: item.quantity,
+                          //     }
+                          //     this.billDetailService.create(this.billDetailModel).subscribe(data => {
+                          //       data.data.success();
+                          //     });
+                          //   }
+                          // }
                         });
                       }
                     }
@@ -119,19 +117,17 @@ export class LoginComponent {
                     customer_id: this.account_id,
                   }
                   this.billService.create(this.billModel).subscribe(data => {
-                    // this.toastr.success("thanh cong");
                     this.list_item = this.cartService.getItems();
                     if (this.list_item !== null) {
                       for (let item of this.list_item) {
                         this.billDetailModel = {
                           bill_id: data.data[0].bill_id,
                           product_id: item.product.product_id,
-                          price: item.product.price_new,
+                          price: item.product.price_display,
                           amount: item.quantity,
                         }
                         this.billDetailService.create(this.billDetailModel).subscribe(data => {
-                          // this.toastr.success("thanh cong");
-                          // data.data.success();
+                          data.data.success();
                         });
                       }
                     }
@@ -144,7 +140,6 @@ export class LoginComponent {
                   customer_id: this.account_id,
                 }
                 this.billService.create(this.billModel).subscribe(data => {
-                  // this.toastr.success("thanh cong");
                   this.list_item = this.cartService.getItems();
                   if (this.list_item !== null) {
                     for (let item of this.list_item) {
@@ -155,7 +150,6 @@ export class LoginComponent {
                         amount: item.quantity,
                       }
                       this.billDetailService.create(this.billDetailModel).subscribe(data => {
-                        // this.toastr.success("thanh cong");
                         data.data.success();
                       });
                     }

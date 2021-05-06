@@ -112,12 +112,14 @@ export class UpdateProductImageComponent implements OnInit {
     if (model.product_id === null || model.product_id === undefined) {
       this.formGroup = this.fb.group({
         product_id: [ null, [Validators.required]],
+        image:[ null, [Validators.required]],
         
       });
       this.urlPictureDefault = avatarDefault;
     } else {
       this.formGroup = this.fb.group({
         product_id: [{value: this.model.product_id, disabled: this.isInfo}, [Validators.required]],
+        image:'',
       }); 
       if(this.model.image===""){
         this.urlPictureDefault = avatarDefault;

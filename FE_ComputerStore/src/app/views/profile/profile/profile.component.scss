@@ -25,4 +25,19 @@
     right: 0;
     top: 0;
     width: 100%;
+}.close{
+    outline: none;
+    height: 40px;
+}
+
+.close:hover{
+    span{
+        color: white;
+    }
+    background-color: red;
+}
+
+.close span {
+    position: relative;
+    bottom: 8px;
 }

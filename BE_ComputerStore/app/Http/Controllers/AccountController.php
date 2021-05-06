@@ -118,7 +118,7 @@ class AccountController extends Controller
             $array[self::image] = $request->image;
         }
         $array[self::account_type_id] = $request->account_type_id;
-        $array[self::created_at] = date('Y-m-d');
+        $array[self::created_at] = date('Y-m-d h:i:s');
         DB::table(self::table)->insert($array);
 
         $email = $request->email;
@@ -296,7 +296,7 @@ class AccountController extends Controller
         if ($request->image != null) {
             $array[self::image] = $request->image;
         }
-        $array[self::created_at] = date('Y-m-d');
+        $array[self::created_at] = date('Y-m-d h:i:s');
         DB::table(self::table)->insert($array);
 
         $email = $request->email;

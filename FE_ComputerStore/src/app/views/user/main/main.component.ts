@@ -103,6 +103,13 @@ export class MainComponent implements OnInit {
         else{
           item.check = "Còn hàng";
         }
+        if(item.price_new === null){
+          item.isCheckPrice = true;
+          item.price_display = item.price;
+        }else{
+          item.isCheckPrice = false;
+          item.price_display = item.price_new;
+        }
       }
     },)
   }
@@ -119,6 +126,13 @@ export class MainComponent implements OnInit {
         }
         else{
           item.check = "Còn hàng";
+        }
+        if(item.price_new === null){
+          item.isCheckPrice = true;
+          item.price_display = item.price;
+        }else{
+          item.isCheckPrice = false;
+          item.price_display = item.price_new;
         }
       }
     },)
@@ -138,6 +152,13 @@ export class MainComponent implements OnInit {
         else{
           item.check = "Còn hàng";
         }
+        if(item.price_new === null){
+          item.isCheckPrice = true;
+          item.price_display = item.price;
+        }else{
+          item.isCheckPrice = false;
+          item.price_display = item.price_new;
+        }
       }
     },)
   }
@@ -148,6 +169,21 @@ export class MainComponent implements OnInit {
       this.list_product_cpu = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "CPU";
       });
+      for(let item of this.list_product_cpu){
+        if(item.amount === 0){
+          item.check = "Liên hệ";
+        }
+        else{
+          item.check = "Còn hàng";
+        }
+        if(item.price_new === null){
+          item.isCheckPrice = true;
+          item.price_display = item.price;
+        }else{
+          item.isCheckPrice = false;
+          item.price_display = item.price_new;
+        }
+      }
     },)
   }
 
@@ -163,6 +199,13 @@ export class MainComponent implements OnInit {
         }
         else{
           item.check = "Còn hàng";
+        }
+        if(item.price_new === null){
+          item.isCheckPrice = true;
+          item.price_display = item.price;
+        }else{
+          item.isCheckPrice = false;
+          item.price_display = item.price_new;
         }
       }
     },)
@@ -181,6 +224,13 @@ export class MainComponent implements OnInit {
         else{
           item.check = "Còn hàng";
         }
+        if(item.price_new === null){
+          item.isCheckPrice = true;
+          item.price_display = item.price;
+        }else{
+          item.isCheckPrice = false;
+          item.price_display = item.price_new;
+        }
       }
     },)
   }
@@ -197,6 +247,13 @@ export class MainComponent implements OnInit {
         }
         else{
           item.check = "Còn hàng";
+        }
+        if(item.price_new === null){
+          item.isCheckPrice = true;
+          item.price_display = item.price;
+        }else{
+          item.isCheckPrice = false;
+          item.price_display = item.price_new;
         }
       }
     },)

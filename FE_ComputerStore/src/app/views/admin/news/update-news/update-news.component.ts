@@ -96,9 +96,9 @@ export class UpdateNewsComponent implements OnInit {
       this.formGroup = this.fb.group({
         title: [ null, [Validators.required]],
         news_content: [ null, [Validators.required]],
-        highlight: [ null ],
-        thumbnail: [ null ],
-        url : [ null ],
+        highlight: [ null],
+        thumbnail: [ null,[Validators.required] ],
+        url : [ null,[Validators.required] ],
         created_at: [ this.datePipe.transform(Date.now(),"yyyy/MM/dd")],
         
       });
@@ -108,8 +108,8 @@ export class UpdateNewsComponent implements OnInit {
         title: [{value: this.model.title, disabled: this.isInfo}, [Validators.required]],
         news_content: [{value: this.model.news_content, disabled: this.isInfo}, [Validators.required]],
         highlight: [{value: this.model.highlight, disabled: this.isInfo}],
-        thumbnail: [{value: this.model.thumbnail, disabled: this.isInfo}],
-        url : [{value: this.model.url, disabled: this.isInfo}],
+        thumbnail: '',
+        url : [{value: this.model.url, disabled: this.isInfo},[Validators.required]],
         created_at: [{value: this.model.created_at, disabled: this.isInfo}],
       });
       if(this.model.thumbnail===""){

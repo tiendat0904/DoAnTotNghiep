@@ -65,6 +65,10 @@ export class CartComponent implements OnInit {
   }
 
 
+  selectcontinue() {
+    this.router.navigate(['/']);
+  }
+
   loadListProductCart() {
     this.list_product = [];
     this.list_bill = [];
@@ -83,7 +87,7 @@ export class CartComponent implements OnInit {
           this.billDetailService.getAll().subscribe(data => {
             this.list_product_filter = data.data;
             this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id);
-            localStorage.setItem("listProduct",JSON.stringify(this.list_product));
+            localStorage.setItem("listProduct", JSON.stringify(this.list_product));
             this.bill_detail_id = this.list_product[0].bill_detail_id;
           })
           // for (let item of this.list_bill_filter){
@@ -125,10 +129,17 @@ export class CartComponent implements OnInit {
       this.list_item = this.cartService.getItems();
       // this.list_product.length = this.list_item.length;
       if (this.list_item !== null) {
+        let checkprice: boolean;
+        let pricecheck: any;
         for (let item of this.list_item) {
+          if (item.product.price_new === null) {
+            pricecheck = item.product.price;
+          } else {
+            pricecheck = item.product.price_new;
+          }
           this.billDetailModel = {
             product_id: item.product.product_id,
-            price: item.product.price_new,
+            price: pricecheck,
             image: item.product.image,
             amount: item.quantity,
             product_name: item.product.product_name,
@@ -166,9 +177,9 @@ export class CartComponent implements OnInit {
             this.toastr.warning("Giỏ hàng trống, vui lòng thêm sản phẩm vào giỏ hàng");
           }
           else {
-            if(this.selectedType === 0){
+            if (this.selectedType === 0) {
               this.toastr.warning("Vui lòng chọn hình thức thanh toán");
-            }else{
+            } else {
               bill = {
                 order_status_id: 2,
                 order_type_id: this.selectedType
@@ -179,12 +190,12 @@ export class CartComponent implements OnInit {
                 this.router.navigate(['/send-cart']);
               })
             }
-            
+
           }
         })
       })
 
-    }else{
+    } else {
       this.toastr.warning("Vui lòng đăng nhập trước khi đặt hàng !!")
     }
   }
@@ -208,7 +219,7 @@ export class CartComponent implements OnInit {
               for (let i of this.list_product) {
                 this.total += i.amount * i.price;
               }
-              localStorage.setItem("total",this.total.toString());
+              localStorage.setItem("total", this.total.toString());
             }
             else {
             }
@@ -255,10 +266,10 @@ export class CartComponent implements OnInit {
       this.cartService.clearCart();
       this.totalCart();
     }
-    this.totalCart();
-
+    this.loadListProductCart();
   }
 
+  
   deleteItem(item) {
     this.list_bill_detail = [];
     if (localStorage.getItem("account_id")) {
@@ -280,7 +291,7 @@ export class CartComponent implements OnInit {
     }
     else {
       this.cartService.deleteItem(item);
-      this.totalCart();
+      this.loadListProductCart();
     }
 
   }

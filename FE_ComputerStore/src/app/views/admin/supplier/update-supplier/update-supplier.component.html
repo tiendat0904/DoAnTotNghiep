@@ -1,80 +1,55 @@
 <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
-        
-  
-        <div class="form-group">
-          <label>Tên nhà cung cấp</label>
-          <input
-            type="text"
-            name=""
-            class="form-control"
-            formControlName="ten"
-            id="ten"
-          />
-          <div *ngIf="submitted && formGroup.controls['ten'].errors?.required">
-            <div
-              *ngIf="formGroup.controls['ten'].errors?.required"
-              style="color: red"
-            >
-              * Tên nhà cung cấp không được để trống
-            </div>
+  <div class="modal-header">
+    <h1 class="modal-title" id="modal-basic-title">{{ title }}</h1>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
+
+
+      <div class="form-group">
+        <label>Tên nhà cung cấp</label>
+        <input type="text" name="" class="form-control" formControlName="ten" id="ten" />
+        <div *ngIf="submitted && formGroup.controls['ten'].errors?.required">
+          <div *ngIf="formGroup.controls['ten'].errors?.required" style="color: red">
+            * Tên nhà cung cấp không được để trống
           </div>
         </div>
-  
-        <div class="form-group">
-          <label>Địa chỉ</label>
-          <input
-            type="text"
-            name=""
-            class="form-control"
-            formControlName="dia_chi"
-            id="dia_chi"
-          />
-          <div *ngIf="submitted && formGroup.controls['dia_chi'].errors?.required">
-            <div
-              *ngIf="formGroup.controls['dia_chi'].errors?.required"
-              style="color: red"
-            >
-              * địa chỉ không được để trống
-            </div>
+      </div>
+
+      <div class="form-group">
+        <label>Địa chỉ</label>
+        <input type="text" name="" class="form-control" formControlName="dia_chi" id="dia_chi" />
+        <div *ngIf="submitted && formGroup.controls['dia_chi'].errors?.required">
+          <div *ngIf="formGroup.controls['dia_chi'].errors?.required" style="color: red">
+            * địa chỉ không được để trống
           </div>
         </div>
-        
-        <div class="form-group">
-          <label>Hotline</label>
-          <input
-            type="text"
-            name=""
-            class="form-control"
-            formControlName="hot_line"
-            id="hot_line"
-          />
+      </div>
+
+      <div class="form-group">
+        <label>Hotline</label>
+        <input type="text" name="" class="form-control" formControlName="hot_line" id="hot_line" />
+        <div *ngIf="submitted && formGroup.controls['hot_line'].errors?.required">
+          <div *ngIf="formGroup.controls['hot_line'].errors?.required" style="color: red">
+            * Hotline không được để trống
+          </div>
         </div>
-        
-        <div class="form-group">
-          <label>Email</label>
-          <input
-            type="text"
-            name=""
-            class="form-control"
-            formControlName="email"
-            id="email"
-          />
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" name="" class="form-control" formControlName="email" id="email" />
+        <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
+          <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
+            * Email không được để trống
+          </div>
         </div>
-        
-        <!-- <div class="form-group">
+      </div>
+
+      <!-- <div class="form-group">
           <label>Số điện thoại</label>
           <input
             type="text"
@@ -92,8 +67,8 @@
             </div>
           </div>
         </div> -->
-        
-        <!-- <div class="form-group">
+
+      <!-- <div class="form-group">
           <label>Hình ảnh</label>
             <div class="profile-img">
               <img [src]="urlPictureDefault"  alt="Ảnh đại diện"/>
@@ -104,25 +79,16 @@
             </div>
         </div>
          -->
-        <div class="form-group" align="center">
-          <button
-            [hidden]="checkButton"
-            type="submit"
-            class="btn btn-success"
-            style="width: 100px;height:38px; background:'green';"
-            *ngIf="isEdit || isAdd"
-          >
-            Lưu
-          </button>
-          <button
-            class="btn btn-danger"
-            style="width: 100px"
-            (click)="modal.dismiss('Cross click')"
-          >
-            Thoát
-          </button>
-        </div>
-       
-      </form>
-    </div>
-  </ng-template>
+      <div class="form-group" align="center">
+        <button [hidden]="checkButton" type="submit" class="btn btn-success"
+          style="width: 100px;height:38px; background:'green';" *ngIf="isEdit || isAdd">
+          Lưu
+        </button>
+        <button type="button" class="btn btn-danger" style="width: 100px" (click)="modal.dismiss('Cross click')">
+          Thoát
+        </button>
+      </div>
+
+    </form>
+  </div>
+</ng-template>

@@ -95,6 +95,7 @@
        <div class="form-group" align="center">
          
           <button
+          type="button"
              (click)="getNavigation('danhsachhoadonnhap', '')"
              class="btn btn-danger"
              style="width: 100px"
@@ -155,7 +156,7 @@
                       </table>
                    </div>
                    <div class="col-12 ngb">
-                      <ngb-pagination [ellipses]="true" [rotate]="true" [boundaryLinks]="true" [(page)]="page"
+                      <ngb-pagination [ellipses]="true"  [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
                       [pageSize]="pageSize" style="display:'flex'; margin:'0 auto';" [collectionSize]="listFilterResult.length"></ngb-pagination>
                    </div>
                 </div>

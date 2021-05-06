@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
   billModel: billModel;
   searchedKeyword: string;
   check_product: boolean;
+  check_search:boolean;
   // update_bill_id: any;
   constructor(
     private accountService: AccountService,
@@ -110,10 +111,11 @@ export class HeaderComponent implements OnInit {
     var filterResult = [];
     this.productService.getAll().subscribe(data =>{
       this.list_product = data.data;
-      if (this.searchedKeyword === null) {
+      if (this.searchedKeyword === null || this.searchedKeyword.length === 0) {
+        this.check_search = true;
         this.list_product_filter = null;
-        this.check_product = true;
       } else {
+        this.check_search = false;
         this.list_product_filter = this.list_product;
         var keyword = this.searchedKeyword.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
         this.list_product_filter.forEach(item => {

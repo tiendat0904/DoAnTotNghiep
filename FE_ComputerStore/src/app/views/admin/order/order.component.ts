@@ -28,16 +28,17 @@ export class OrderComponent implements OnInit {
     private orderService: BillService,
     private toastr: ToastrService,
     private router: Router
-    ) {
-    }
+  ) {
+  }
 
-  
+
   ngOnInit(): void {
     this.fetcharraylist_order();
   }
 
-  getColor(color){ (5)
-    switch(color){
+  getColor(color) {
+    (5)
+    switch (color) {
       case "SELECTING":
         return '#5bc0de';
       case "PENDING":
@@ -54,7 +55,7 @@ export class OrderComponent implements OnInit {
         return "d9534f";
     }
   }
-  
+
 
   fetcharraylist_order() {
     this.isLoading = true;
@@ -87,7 +88,7 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  
+
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -134,7 +135,7 @@ export class OrderComponent implements OnInit {
   }
 
   delete_order(item: any = null) {
-    let selectedorder= [];
+    let selectedorder = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedorder.push(item);
       this.delete(selectedorder);
@@ -159,18 +160,38 @@ export class OrderComponent implements OnInit {
     let list = [];
     // tslint:disable-next-line: radix
     switch (parseInt(event)) {
-      case -1:
+      case 0:
         this.listFilterResult = [...this.arraylist_order];
         this.isLoading = false;
         break;
       case 1:
         list = [...this.arraylist_order];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
+        this.listFilterResult = list.filter(item => item.order_status_id === 1);
         this.isLoading = false;
         break;
-      case 0:
+      case 2:
         list = [...this.arraylist_order];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
+        this.listFilterResult = list.filter(item => item.order_status_id === 2);
+        this.isLoading = false;
+        break;
+      case 3:
+        list = [...this.arraylist_order];
+        this.listFilterResult = list.filter(item => item.order_status_id === 3);
+        this.isLoading = false;
+        break;
+      case 4:
+        list = [...this.arraylist_order];
+        this.listFilterResult = list.filter(item => item.order_status_id === 4);
+        this.isLoading = false;
+        break;
+      case 5:
+        list = [...this.arraylist_order];
+        this.listFilterResult = list.filter(item => item.order_status_id === 5);
+        this.isLoading = false;
+        break;
+      case 6:
+        list = [...this.arraylist_order];
+        this.listFilterResult = list.filter(item => item.order_status_id === 6);
         this.isLoading = false;
         break;
       default:
@@ -178,13 +199,13 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  getNavigation(link, id){
-    if(id === ''){
-        this.router.navigate([link]);
+  getNavigation(link, id) {
+    if (id === '') {
+      this.router.navigate([link]);
     } else {
-        this.router.navigate([link + '/' + id]);
+      this.router.navigate([link + '/' + id]);
     }
-}
+  }
 
   public delete(listid: any) {
     const modelDelete = {

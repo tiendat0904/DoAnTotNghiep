@@ -31,7 +31,7 @@
                     <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off" style="outline: none;">
                     <button style="background-color: #ffee00ef;outline: none;" (click) ="search();"><i class="header-i fa fa-search " aria-hidden="true"></i></button>
                 </div>             
-                <div style="display: block;" class = "autocomplete-suggestions" >
+                <div style="display: block;" class = "autocomplete-suggestions" [hidden] ="check_search">
                     <p [hidden] ="check_product">Không tìm thấy sản phẩm phù hợp</p>
                     <a [routerLink] = "['/',item.product_id]" *ngFor="let item of list_product_filter" (click)="searchDetail()">
                         <img src="{{item.image}}" alt="">

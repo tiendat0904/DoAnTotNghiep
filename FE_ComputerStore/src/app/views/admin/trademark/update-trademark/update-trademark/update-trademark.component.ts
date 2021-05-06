@@ -55,7 +55,7 @@ export class UpdateTrademarkComponent implements OnInit {
     this.fetcharraylist_trademark();
     this.formGroup = new FormGroup({
       trademark_name: new FormControl(),
-      // image : new FormControl()
+      image : new FormControl()
     });
     
   }
@@ -111,7 +111,7 @@ export class UpdateTrademarkComponent implements OnInit {
     if (model.trademark_id === null || model.trademark_id === undefined) {
       this.formGroup = this.fb.group({
         trademark_name: [ null, [Validators.required]],
-        
+        image :[ null, [Validators.required]],
         // so_dien_thoai: [ null, [Validators.required]],
         
       });
@@ -119,6 +119,7 @@ export class UpdateTrademarkComponent implements OnInit {
     } else {
       this.formGroup = this.fb.group({
         trademark_name: [{value: this.model.trademark_name, disabled: this.isInfo}, [Validators.required]],
+        image: '',
         
       });
       if(this.model.image===""){
@@ -171,10 +172,6 @@ export class UpdateTrademarkComponent implements OnInit {
       trademark = {
         trademark_id: this.model.trademark_id,
         trademark_name: this.formGroup.get('trademark_name')?.value,
-        // supplier_address: this.formGroup.get('dia_chi')?.value,
-        // hotline: this.formGroup.get('hot_line')?.value,
-        // email: this.formGroup.get('email')?.value,
-        // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
         image : this.urlPictureDefault,
       };
      
@@ -182,7 +179,6 @@ export class UpdateTrademarkComponent implements OnInit {
       trademark = {
         trademark_id: this.model.trademark_id,
         trademark_name: this.formGroup.get('trademark_name')?.value,
-        // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
         image : this.urlPictureDefault,
       };
     }

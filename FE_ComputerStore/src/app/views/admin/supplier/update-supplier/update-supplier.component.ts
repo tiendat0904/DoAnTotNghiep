@@ -59,7 +59,7 @@ export class UpdateSupplierComponent implements OnInit {
   fetcharraylist_supplier(){
     this.subscription=this.supplierService.getAll().subscribe(data => {
       this.arraylist_supplier = data.data;
-      this.avatarUrl = data.data.hinh_anh;
+      // this.avatarUrl = data.data.hinh_anh;
     },
     err => {
         this.isLoading = false;
@@ -108,8 +108,8 @@ export class UpdateSupplierComponent implements OnInit {
       this.formGroup = this.fb.group({
         ten: [ null, [Validators.required]],
         dia_chi: [ null, [Validators.required]],
-        hot_line : [ null],
-        email: [ null],
+        hot_line : [ null, [Validators.required]],
+        email: [ null, [Validators.required]],
         // so_dien_thoai: [ null, [Validators.required]],
         
       });
@@ -118,8 +118,8 @@ export class UpdateSupplierComponent implements OnInit {
       this.formGroup = this.fb.group({
         ten: [{value: this.model.supplier_name, disabled: this.isInfo}, [Validators.required]],
         dia_chi: [{value: this.model.supplier_address, disabled: this.isInfo}, [Validators.required]],
-        hot_line: [{value: this.model.hotline, disabled: this.isInfo}],
-        email: [{value: this.model.email, disabled: this.isInfo}],
+        hot_line: [{value: this.model.hotline, disabled: this.isInfo}, [Validators.required]],
+        email: [{value: this.model.email, disabled: this.isInfo}, [Validators.required]],
         // so_dien_thoai: [{value: this.model., disabled: this.isInfo}, [Validators.required]],
       });
       // if(this.model.image===""){
@@ -230,29 +230,29 @@ export class UpdateSupplierComponent implements OnInit {
     this.eventEmit.emit('success');
   }
 
-  uploadImage(event) {
-    // tslint:disable-next-line:prefer-const
-    let file = event.target.files[0];
-    // tslint:disable-next-line:prefer-const
-    let path = `${file.name}`;
-    if (file.type.split('/')[0] !== 'image') {
-      return alert('Erreur, ce fichier n\'est pas une image');
-    } else {
-      // tslint:disable-next-line:prefer-const
-      let ref = this.store.ref(path);
-      // tslint:disable-next-line:prefer-const
-      let task = this.store.upload(path, file);
-      this.uploadPercent = task.percentageChanges();
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          this.downloadURL = ref.getDownloadURL();
-          this.downloadURL.subscribe(url => {
-          this.urlPictureDefault=url;
-          });
-        }
-        )
-      ).subscribe();
-    }
-  }
+  // uploadImage(event) {
+  //   // tslint:disable-next-line:prefer-const
+  //   let file = event.target.files[0];
+  //   // tslint:disable-next-line:prefer-const
+  //   let path = `${file.name}`;
+  //   if (file.type.split('/')[0] !== 'image') {
+  //     return alert('Erreur, ce fichier n\'est pas une image');
+  //   } else {
+  //     // tslint:disable-next-line:prefer-const
+  //     let ref = this.store.ref(path);
+  //     // tslint:disable-next-line:prefer-const
+  //     let task = this.store.upload(path, file);
+  //     this.uploadPercent = task.percentageChanges();
+  //     task.snapshotChanges().pipe(
+  //       finalize(() => {
+  //         this.downloadURL = ref.getDownloadURL();
+  //         this.downloadURL.subscribe(url => {
+  //         this.urlPictureDefault=url;
+  //         });
+  //       }
+  //       )
+  //     ).subscribe();
+  //   }
+  // }
 
 }

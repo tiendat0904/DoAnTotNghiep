@@ -66,21 +66,16 @@
           <div class="col-md-12">
                <div class="form-group">
                    <label for="total_money">Tổng tiền(VNĐ)</label>
-                   <input
-                   type="number"
-                   name=""
-                   class="form-control"
-                   [(ngModel)] = "update_total_money"
-                   formControlName="total_money"
-                   id="total_money"
-                   readonly
-                   />
+                   <input type="text" name="" class="form-control" [ngModel]="update_total_money | currency: 'VND'"
+                        (ngModelChange)="update_total_money=$event" formControlName="total_money" id="total_money"
+                        readonly />
                </div>
            </div>
        </div>
        <div class="form-group" align="center">
          
           <button
+          type="button"
              (click)="getNavigation('admin/coupon', '')"
              class="btn btn-danger"
              style="width: 100px"
@@ -141,7 +136,7 @@
                       </table>
                    </div>
                    <div class="col-12 ngb">
-                      <ngb-pagination [ellipses]="true" [rotate]="true" [boundaryLinks]="true" [(page)]="page"
+                      <ngb-pagination [ellipses]="true"  [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
                       [pageSize]="pageSize" style="display:'flex'; margin:'0 auto';" [collectionSize]="listFilterResult.length"></ngb-pagination>
                    </div>
                 </div>

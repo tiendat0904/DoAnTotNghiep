@@ -50,23 +50,38 @@ export class ProductDetailComponent implements OnInit {
         else{
           this.check = "Còn hàng";
         }
+        if(this.product.price_new === null){
+          this.product.isCheckPrice = true;
+          this.product.price_display = this.product.price;
+        }else{
+          this.product.isCheckPrice = false;
+          this.product.price_display = this.product.price_new;
+        }
         this.trademark_name = data.data.trademark_name;
         this.descriptions = this.product.description.split("\n");
-      });
-      this.productService.getAll().subscribe(data => {
-        this.list_product = data.data;
-        let trademark_name_product = this.trademark_name;
-        this.list_product_trademark_filter = this.list_product.filter(function (product) {
-          return (product.trademark_name === trademark_name_product);
-        });
-        this.list_product_trademark = [];
-        for(let item of this.list_product_trademark_filter){
-          if(item.product_id === product_id){
-          }else{
-            this.list_product_trademark.push(item);
+        this.productService.getAll().subscribe(data => {
+          this.list_product = data.data;
+          let trademark_name_product = this.trademark_name;
+          this.list_product_trademark_filter = this.list_product.filter(function (product) {
+            return (product.trademark_name === trademark_name_product);
+          });
+          this.list_product_trademark = [];
+          for(let item of this.list_product_trademark_filter){
+            if(item.product_id === product_id){
+            }else{
+              if(item.price_new === null){
+                item.isCheckPrice = true;
+                item.price_display = item.price;
+              }else{
+                item.isCheckPrice = false;
+                item.price_display = item.price_new;
+              }
+              this.list_product_trademark.push(item);
+            }
           }
-        }
-      },)
+        },)
+      });
+      
     });
   }
 
@@ -118,7 +133,6 @@ export class ProductDetailComponent implements OnInit {
               customer_id: account_id,
             }
             this.billService.create(this.billModel).subscribe(data => {
-              this.toastr.success("Đã thêm sản phẩm vào giỏ hàng");
               this.list_item = this.cartService.getItems();
               if (this.list_item !== null) {
                 for (let item of this.list_item) {
@@ -129,7 +143,6 @@ export class ProductDetailComponent implements OnInit {
                     amount: item.quantity,
                   }
                   this.billDetailService.create(this.billDetailModel).subscribe(data => {
-                    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng");
                   });
                 }
               }
@@ -138,7 +151,7 @@ export class ProductDetailComponent implements OnInit {
         })
       }
       this.cartService.addToCart(this.product);
-      this.toastr.success("thêm ")
+      this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
     }
     
   }

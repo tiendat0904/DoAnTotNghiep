@@ -94,7 +94,7 @@ class CouponDetailController extends Controller
                 ->where(self::coupon_id, '=', $arr_value[self::coupon_id])
                 ->get();
             if (count($obj) > 0) {
-                return response()->json(['error' => 'Thêm mới thất bại. Có 1 row đã tồn tại mã phiếu nhập và mã sản phẩm'], 400);
+                return response()->json(['error' => 'Thêm mới thất bại. Sản phẩm đã có trong phiếu nhập này'], 400);
             }
             DB::table(self::table)->insert($arr_value);
             return response()->json(['success' => 'Thêm mới thành công'], 201);

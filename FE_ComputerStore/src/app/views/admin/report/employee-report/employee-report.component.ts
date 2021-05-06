@@ -14,7 +14,7 @@ import { ReportService } from '../../../../services/report.service';
 export class EmployeeReportComponent implements OnInit {
 
   arraylist_employee: Array<employeeReportModel> = [];
-  model : excelModel;
+  model: excelModel;
   modalReference: any;
   ismonth = true;
   isQuarter = true;
@@ -25,7 +25,7 @@ export class EmployeeReportComponent implements OnInit {
   filterResultTemplist: employeeReportModel[] = [];
   isSelected = true;
   page = 1;
-  label: any;
+  label = -1;
   label1: any;
   label2: any;
   pageSize = 5;
@@ -38,29 +38,46 @@ export class EmployeeReportComponent implements OnInit {
   month: any;
   year: any;
   quarter: any;
-  update2: [2018,2019,2020,2021];
+  update2: [2018, 2019, 2020, 2021];
   listFilterResult: employeeReportModel[] = [];
   constructor(
     private reportService: ReportService,
     private exportService: ExcelService
-    ) {
-    }
-
-  
-  ngOnInit(): void {
+  ) {
   }
 
 
-  
+  ngOnInit(): void {
+    this.isyear = true;
+    this.ismonth = true;
+    this.isQuarter = true;
+    this.month = null;
+    this.quarter = null;
+    this.year = null;
+    this.key = "all";
+    this.arr_month = [];
+    this.arr_quarter = [];
+    this.arr_year = [];
+    var value = "";
+    var thamso = {
+      key: this.key,
+      param: value
+    };
+    this.fetcharraylist_employee(thamso);
+  }
 
-  fetcharraylist_employee(model: excelModel){
-    this.isLoading =  true;
+
+
+
+  fetcharraylist_employee(model: excelModel) {
+    this.isLoading = true;
     this.reportService.reportEmployee(model).subscribe(data => {
       this.arraylist_employee = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
-      this.filterResultTemplist = this.listFilterResult;    },
-    err => {
+      this.filterResultTemplist = this.listFilterResult;
+    },
+      err => {
         this.isLoading = false;
       })
   }
@@ -103,7 +120,7 @@ export class EmployeeReportComponent implements OnInit {
         // }
         this.arr_quarter = [];
         this.arr_month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        this.arr_year = [2018, 2019, 2020,2021];
+        this.arr_year = [2018, 2019, 2020, 2021];
         var thamso = {
           key: this.key,
           param: value
@@ -118,7 +135,7 @@ export class EmployeeReportComponent implements OnInit {
         this.key = "bcq";
         this.arr_month = [];
         this.arr_quarter = [1, 2, 3, 4];
-        this.arr_year = [2018, 2019, 2020,2021];
+        this.arr_year = [2018, 2019, 2020, 2021];
         var value = "";
         var thamso = {
           key: this.key,
@@ -135,7 +152,7 @@ export class EmployeeReportComponent implements OnInit {
         this.arr_month = [];
         this.arr_quarter = [];
         var value = "";
-        this.arr_year = [2018, 2019, 2020,2021];
+        this.arr_year = [2018, 2019, 2020, 2021];
         this.key = "bcn";
         value = this.year;
         var thamso = {

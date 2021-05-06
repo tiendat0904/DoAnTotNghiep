@@ -13,7 +13,7 @@
     </div>
     <div class='cart-main-button'>
         <div class="cart-button">
-            <button class="select-product">CHỌN TIẾP SẢN PHẨM KHÁC</button>
+            <button class="select-product" (click) = "selectcontinue();">CHỌN TIẾP SẢN PHẨM KHÁC</button>
         </div>
         <div>
             <button class="delete-cart" (click)="deletecart()">XÓA GIỎ HÀNG</button>
@@ -39,7 +39,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(item.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="delete-product-cart" (click)="deleteItem(item.product_id);"><i
+                    <button id="delete-product-cart" (click)="deleteItem(item.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>

@@ -18,8 +18,10 @@ export class ProductLaptopComponent implements OnInit {
   list_trademark_show: Array<trademarkModel> = [];
   list_product_laptop = [];
   list_product_laptop1 = [];
+  isCheckPrice : boolean;
   product_type_id: any;
   product_type_name: any;
+  price_new: any;
   constructor(private productService: ProductService, private route: ActivatedRoute, private trademarkService: TrademarkService) { }
 
   ngOnInit(): void {
@@ -42,6 +44,13 @@ export class ProductLaptopComponent implements OnInit {
         this.list_trademark = data.data;
         for (let item1 of this.list_trademark) {
           for (let item2 of this.list_product_laptop) {
+            if(item2.price_new === null){
+              item2.isCheckPrice = true;
+              item2.price_display = item2.price;
+            }else{
+              item2.isCheckPrice = false;
+              item2.price_display = item2.price_new;
+            }
             if (item1.trademark_id === item2.trademark_id) {
               this.list_trademark_selected.push(item1);
             }
@@ -53,7 +62,7 @@ export class ProductLaptopComponent implements OnInit {
             findTest.trademark_name === test.trademark_name
           ));
       })
-      // this.product_type_name = this.list_product_laptop1[0].product_type_name;
+      this.product_type_name = this.list_product_laptop1[0].product_type_name;
     });
 
 

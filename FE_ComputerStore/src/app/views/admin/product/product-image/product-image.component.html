@@ -13,15 +13,50 @@
                       <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" class="form-control" placeholder="Search&hellip;">
                    </div>
                 </div>
-                <button (click)="initModal({},'add')" type="button" class="btn btn-primary" style="margin-left: 17px;" ><i class="fa fa-plus" style="margin-right: 12px;"></i>Thêm mới</button>
+                <button (click)="initModal({},'add')" type="button" class="btn btn-primary" style="margin-left: 17px;margin-top: 8px;" ><i class="fa fa-plus" style="margin-right: 12px;"></i>Thêm mới</button>
                 <button
-                type="button"
-                [hidden]="isDelete"
-                (click)="delete_product_image()"
-                class="btn btn-danger"
-                >
-                <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
-                </button>
+              type="button"
+              [hidden]="isDelete"
+              (click)="open(mymodal1)"
+              class="btn btn-danger"
+              style="height: 35px; margin-top: 7px;"
+              >
+              <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
+              </button>
+              <ng-template #mymodal1 let-modal>
+               <div class="modal-header">
+                  <h4 class="modal-title" id="modal-basic-title">
+                     Xác nhận xóa thông tin
+                  </h4>
+                  <button
+                     type="button"
+                     class="close"
+                     aria-label="Close"
+                     (click)="modal.dismiss('Cross click')"
+                     >
+                  <span aria-hidden="true">x</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  Bạn có chắc chắn muốn xóa thông tin những nhãn hiệu này ?
+               </div>
+               <div class="modal-footer">
+                  <button
+                     class="btn btn-danger"
+                     style="width: 80px"
+                     (click)="delete_product_image()"
+                     >
+                  Có
+                  </button>
+                  <button
+                     class="btn btn-outline-dark"
+                     style="width: 80px"
+                     (click)="modal.dismiss('Cross click')"
+                     >
+                  Không
+                  </button>
+               </div>
+            </ng-template>
                 &nbsp;
                 &nbsp;
              </div>
@@ -108,7 +143,7 @@
                 </table>
              </div>
              <div class="col-12 justify-content-center">
-                <ngb-pagination [ellipses]="true" [rotate]="true" [boundaryLinks]="true" [(page)]="page"
+                <ngb-pagination [ellipses]="true"  [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
                 [pageSize]="pageSize"  [collectionSize]="listFilterResult.length"></ngb-pagination>
              </div>
           </div>

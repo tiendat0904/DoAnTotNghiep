@@ -25,7 +25,7 @@ export class BillReportComponent implements OnInit {
   filterResultTemplist: billReportModel[] = [];
   isSelected = true;
   page = 1;
-  label: any;
+  label = -1;
   label1: any;
   label2: any;
   pageSize = 5;
@@ -49,6 +49,22 @@ export class BillReportComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.isyear = true;
+    this.ismonth = true;
+    this.isQuarter = true;
+    this.month = null;
+    this.quarter = null;
+    this.year = null;
+    this.key = "all";
+    this.arr_month = [];
+    this.arr_quarter = [];
+    this.arr_year = [];
+    var value = "";
+    var thamso = {
+      key: this.key,
+      param: value
+    };
+    this.fetcharraylist_bill(thamso);
   }
 
   fetcharraylist_bill(model: excelModel) {
@@ -57,7 +73,8 @@ export class BillReportComponent implements OnInit {
       this.arraylist_bill = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
-      this.filterResultTemplist = this.listFilterResult;    },
+      this.filterResultTemplist = this.listFilterResult;
+    },
       err => {
         this.isLoading = false;
       })
@@ -67,8 +84,9 @@ export class BillReportComponent implements OnInit {
     this.exportService.exportExcel(this.listFilterResult, 'Hoadon');
   }
 
-  getColor(color){ (5)
-    switch(color){
+  getColor(color) {
+    (5)
+    switch (color) {
       case "SELECTING":
         return '#5bc0de';
       case "PENDING":
@@ -120,7 +138,7 @@ export class BillReportComponent implements OnInit {
         // }
         this.arr_quarter = [];
         this.arr_month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        this.arr_year = [2019, 2020,2021];
+        this.arr_year = [2019, 2020, 2021];
         var thamso = {
           key: this.key,
           param: value
@@ -135,7 +153,7 @@ export class BillReportComponent implements OnInit {
         this.key = "bcq";
         this.arr_month = [];
         this.arr_quarter = [1, 2, 3, 4];
-        this.arr_year = [2019, 2020,2021];
+        this.arr_year = [2019, 2020, 2021];
         var value = "";
         var thamso = {
           key: this.key,
@@ -152,7 +170,7 @@ export class BillReportComponent implements OnInit {
         this.arr_month = [];
         this.arr_quarter = [];
         var value = "";
-        this.arr_year = [2019, 2020,2021];
+        this.arr_year = [2019, 2020, 2021];
         this.key = "bcn";
         value = this.year;
         var thamso = {
@@ -162,6 +180,7 @@ export class BillReportComponent implements OnInit {
         this.fetcharraylist_bill(thamso);
         break;
       default:
+        this.fetcharraylist_bill(thamso);
         break;
     }
   }

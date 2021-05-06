@@ -85,21 +85,21 @@ export class UpdateCustomerComponent implements OnInit {
         this.isInfo = false;
         this.isEdit = false;
         this.isAdd = true;
-        this.title = `Thêm mới thông tin nhãn hiệu`;
+        this.title = `Thêm mới thông tin khách hàng`;
         // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
-        this.title = `Xem chi tiết thông tin nhãn hiệu`;
+        this.title = `Xem chi tiết thông tin khách hàng`;
         // this.update_ma_tai_khoan = this.model.customer_id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
-        this.title = `Chỉnh sửa thông tin nhãn hiệu`;
+        this.title = `Chỉnh sửa thông tin khách hàng`;
         // this.update_ma_tai_khoan = this.model.customer_id;
         break;
       default:
@@ -215,7 +215,7 @@ export class UpdateCustomerComponent implements OnInit {
     if (this.isEdit) {
       this.customerService.update(customer).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success("Chỉnh sửa thành công");
         this.modalReference.dismiss();
       },
       err => {
