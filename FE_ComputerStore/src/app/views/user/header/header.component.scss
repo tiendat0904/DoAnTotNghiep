@@ -46,18 +46,22 @@ a{
 }
 
 .header-main-search input{
-    background-color: #e5e5e5;
+    background-color: #f1ecec;
     width: 600px;
     height: 40px;
     border:  0.5px solid white;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 .header-main-search button{
     background-color: #ffee00ef;
     position: relative;
-    right: 10px;
-    height: 40px;
+    right: 15px;
+    height: 38.42px;
+    bottom: 0.126px;
     width: 50px;
+    border:  0.5px solid #ffee00ef;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
 }
 .header-i{
     height: 10px;
@@ -65,10 +69,7 @@ a{
     font-size: 20px;
 }
 
-.header-main-search button{
-    border:  0.5px solid #ffee00ef;
-    border-radius: 5px;
-}
+
 
 .header-item{
     display: grid;
@@ -85,30 +86,27 @@ a{
 #header-hide{
     background-color:rgb(255, 255, 255);
     border-radius: 10px;
-    display: inline-block;
-    transform: translate(127px,53px);
+    display: inline-grid;
+    transform: translate(146px,53px);
     position: absolute;
-    width: 384px;
+    width: 200px;
     max-height: 480px;
-    text-align: center;
     margin-right: 0px;
     left:0px;
     margin-left: 0px;
     transition: 0.6s;
 }
 
-#header-hide img{
-    width: 200px;
-    margin-top: 50px;
-    margin-bottom: 30px;
+#header-hide a{
+    border-top: 1px solid #ddd;
+    outline: none;
+    text-decoration: none;
+    color: black;
+    background-color: #f9f9f9;
+    height: 30px;
 }
 
-#header-hide button{
-    background-color: #ffd400;
-    border: 1px solid;
-    border-radius: 10px;
-    margin-bottom: 30px;
-}
+
 // #header-basket{
 //     position: relative;
 //     z-index: 1;

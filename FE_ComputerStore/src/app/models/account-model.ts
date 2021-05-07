@@ -1,7 +1,8 @@
 export interface accountModel{
     account_id? : number,
     email?: string,
-    password?: string,
+    password?:string,
+    confirm_password?: string,
     old_password?: string,
     new_password? : string,
     full_name?: string,

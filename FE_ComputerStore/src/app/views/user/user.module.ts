@@ -23,6 +23,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { OrderSucessComponent } from './order-sucess/order-sucess.component';
 import { SearchComponent } from './search/search.component';
 import { NewsComponent } from './news/news.component';
+import { AccountModule } from './account/account.module';
+
 // Angular
 
 @NgModule({
@@ -34,6 +36,7 @@ import { NewsComponent } from './news/news.component';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    AccountModule,
     NgbPaginationModule,
     Ng2SearchPipeModule,
     PipesModule
@@ -49,7 +52,8 @@ import { NewsComponent } from './news/news.component';
     ProfileComponent,
     OrderSucessComponent,
     SearchComponent,
-    NewsComponent
+    NewsComponent,
+
   ]
 })
 export class UserModule { }

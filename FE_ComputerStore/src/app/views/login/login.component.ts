@@ -65,6 +65,7 @@ export class LoginComponent {
         localStorage.setItem('account_id', res.data.account_id);
         localStorage.setItem('account_type_id', res.data.account_type_id);
         localStorage.setItem('full_name', res.data.full_name);
+        localStorage.setItem('email', res.data.email);
         this.account_id = res.data.account_id;
         this.toaster.success('Đăng nhập thành công');
         if (res.data.account_type_id == "3") {
@@ -155,11 +156,7 @@ export class LoginComponent {
                     }
                   }
                 });
-
               }
-              // }
-
-
             }
           }, err => {
           })
@@ -175,7 +172,7 @@ export class LoginComponent {
       }
     },
       err => {
-        this.toaster.error("tài khoản không tồn tại");
+        this.toaster.error(err.error.error);
       });
   }
 }

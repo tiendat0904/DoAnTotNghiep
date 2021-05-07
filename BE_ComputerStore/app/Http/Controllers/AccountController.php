@@ -51,9 +51,9 @@ class AccountController extends Controller
         if ($ac_type == self::NV || $ac_type == self::QT) {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id,self::created_at, self::email,self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, self::image)
-                ->where(self::table . '.' . self::account_type_id, '=', '2')
-                ->orWhere(self::table . '.' . self::account_type_id, '=', '1')
+                ->select(self::id,self::created_at, self::email,self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->where(self::table . '.' . self::account_type_id, '=', '1')
+                ->orWhere(self::table . '.' . self::account_type_id, '=', '2')
                 ->orWhere(self::table . '.' . self::account_type_id, '=', '3')
                 ->get();
             $code = 200;
@@ -61,7 +61,7 @@ class AccountController extends Controller
         } else {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id,self::created_at, self::email,self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, self::image)
+                ->select(self::id,self::created_at, self::email,self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
                 ->Where(self::table . '.' . self::account_type_id, '=', '3')
                 ->get();
             $code = 200;
@@ -144,7 +144,7 @@ class AccountController extends Controller
         if ($ac_type == self::NV || $ac_type == self::QT) {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id, self::email, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, self::image)
+                ->select(self::id,self::full_name, self::email, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value,AccountTypeController::table . '.' . AccountTypeController::description, self::image)
                 ->where(self::table . '.' . self::id, '=', $id)->first();
             if ($objs) {
                 return response()->json(['data' => $objs], 200);
@@ -325,10 +325,10 @@ class AccountController extends Controller
                 $token = $ac->createToken('ComputerStore')->accessToken;
                 return response()->json(['token' => $token, 'data' => $ac], 200);
             } else {
-                return response()->json(['error' => 'Password mismatch'], 400);
+                return response()->json(['error' => 'Sai tài khoản hoặc mật khẩu'], 400);
             }
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'Tài khoản không tồn tại'], 401);
         }
     }
 

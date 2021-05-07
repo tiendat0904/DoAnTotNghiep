@@ -111,8 +111,8 @@ export const routes: Routes = [
       //   loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
       // },
       {
-        path: 'profile',
-        component: ProfileComponent,
+        path: 'account',
+        loadChildren: () => import('./views/admin/account/account.module').then(m => m.AccountModule)
       },
       {
         path: 'customer',

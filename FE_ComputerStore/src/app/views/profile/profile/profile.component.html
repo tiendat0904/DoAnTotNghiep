@@ -1,92 +1,79 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<div style="background-color: #f4f4f4;">
+  <div class="row">
+    <div class="account-left">
+      <div class="account-customer">
+        <div style="text-align: center;">
+          <div>
+            <img [src]="picture" alt="">
+          </div>
+          <div id="profile-input" class="file btn btn-lg btn-primary">
+            Change Photo
+            <input type="file" (ngModel)="image" (change)="uploadImage($event)" name="file" />
+          </div>
+        </div>
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-9">
-		    <div class="card">
-		        <div class="card-body">
-		            <div class="row">
-		                <div class="col-md-12">
-		                    <h4>Your Profile</h4>
-		                    <hr>
-		                </div>
-		            </div>
-		            <div class="row">
-		                <div class="col-md-12">
-		                    <form [formGroup]="formGroup" (ngSubmit)="save()">
-                             <div class="form-group">
-                                <div class="profile-img">
-                                    <img [src]="urlPictureDefault"  alt="Ảnh đại diện"/>
-                                </div>
-                                <div [hidden]="" id="profile-input" class="file btn btn-lg btn-primary">
-                                        Change Photo
-                                        <input type="file" (change)="uploadImage($event)" name="file"/>
-                                </div>
-                            </div>
-                                <div class="form-group row">
-                                    <label for="lastname" class="col-4 col-form-label">Email</label> 
-                                    <div class="col-8">
-                                        <input id="email" name="email" placeholder="Last Name" [(ngModel)]="email" formControlName="email" class="form-control here" type="text" readonly>
-                                    </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="username" class="col-4 col-form-label">Họ tên</label> 
-                                <div class="col-8">
-                                  <input id="full_name" name="full_name" placeholder="full_name" [(ngModel)]="full_name" formControlName="full_name" class="form-control here"  type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="name" class="col-4 col-form-label">Địa chỉ</label> 
-                                <div class="col-8">
-                                  <input id="address" name="address" placeholder="Địa chỉ" [(ngModel)]="address" formControlName="address" class="form-control here" type="text">
-                                </div>
-                              </div>
-                              
-                              <div class="form-group row">
-                                <label for="text" class="col-4 col-form-label">Số điện thoại</label> 
-                                <div class="col-8">
-                                  <input id="phone_number" name="text" placeholder="Số điện thoại" [(ngModel)]="phone_number" formControlName="phone_number" class="form-control here"  type="text">
-                                </div>
-                              </div>
-        
-                              <div class="form-group row">
-                                <label for="email" class="col-4 col-form-label">Loại tài khoản</label> 
-                                <div class="col-8">
-                                  <input id="account_type_id" name="account_type_id" placeholder="Loại tài khoản" [(ngModel)]="account_type_id" formControlName="account_type_id" class="form-control here" readonly type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="newpass" class="col-4 col-form-label">Mật khẩu cũ</label> 
-                                <div class="col-8">
-                                  <input id="old_password" name="old_password"  [(ngModel)]="old_password" formControlName="old_password" placeholder="Mật khẩu cũ" class="form-control here" type="password">
-                                </div>
-                              </div> 
-                              <div class="form-group row">
-                                <label for="newpass" class="col-4 col-form-label">Mật khẩu mới</label> 
-                                <div class="col-8">
-                                  <input id="new_password" name="new_password"  [(ngModel)]="new_password" formControlName="new_password" placeholder="Mật khẩu mới" class="form-control here" type="password">
-                                </div>
-                              </div> 
-                              <div class="form-group row">
-                                <label for="newpass" class="col-4 col-form-label">Confirm mật khẩu</label> 
-                                <div class="col-8">
-                                  <input id="confirm_password" name="confirm_password"  [(ngModel)]="confirm_password" formControlName="confirm_password" placeholder="Confirm mật khẩu" class="form-control here" type="password">
-                                </div>
-                              </div> 
-                              <div class="form-group row">
-                                <div class="offset-4 col-8">
-                                  <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
-                                </div>
-                              </div>
-                            </form>
-		                </div>
-		            </div>
-		            
-		        </div>
-		    </div>
-		</div>
-	</div>
+        <div class="info">
+          <span>Tài khoản của</span>
+          <span style="font-size: 1.2rem;font-weight: 600;">{{name}}</span>
+        </div>
+      </div>
+      <div id="account-list-page">
+        <a href="/#/account/account-info" class="link active">
+          <i class="fas fa-user"></i>
+          <span>Thông tin tài khoản</span>
+        </a>
+        <a href="/#/account/order" class="link">
+          <i class="fas fa-list-ul"></i>
+          <span>Quản lý đơn hàng</span>
+        </a>
+        <a href="/#/account/change-password" class="link">
+          <i class="fas fa-lock"></i>
+          <span>Thay đổi mật khẩu</span>
+        </a>
+        <a href="" class="link" (click)="onLogout();">
+          <i class="fas fa-power-off"></i>
+          <span>Đăng xuất tài khoản</span>
+        </a>
+
+      </div>
+    </div>
+    <div class="account-right">
+      <span>
+        Thông tin tài khoản
+      </span>
+      <div class="customer-changepass">
+        <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
+          <div class="customer-changepass">
+            <div class="changepass-row form-group">
+              <div class="changepass-field">Họ tên</div>
+              <div class="changepass-value">
+                <input type="text" class="form-control" formControlName="full_name">
+              </div>
+            </div>
+            <div class="changepass-row form-group">
+              <div class="changepass-field">Email</div>
+              <div class="changepass-value">
+                <input type="text" class="form-control" formControlName="email">
+              </div>
+            </div>
+            <div class="changepass-row form-group">
+              <div class="changepass-field">Địa chỉ</div>
+              <div class="changepass-value">
+                <input type="text" class="form-control" formControlName="address">
+              </div>
+            </div>
+            <div class="changepass-row form-group">
+              <div class="changepass-field">Số điện thoại</div>
+              <div class="changepass-value">
+                <input type="text" class="form-control" formControlName="phone_number">
+              </div>
+            </div>
+          </div>
+          <div style="margin-left: 138px;">
+            <button type="submit" style="font-size: 17px;">Cập nhật</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

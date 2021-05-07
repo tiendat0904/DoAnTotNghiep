@@ -1,0 +1,36 @@
+<span>
+    Thông tin tài khoản
+</span>
+<div class = "customer-changepass">
+    <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
+        <div class = "customer-changepass">
+            <div class = "changepass-row form-group">
+                <div class = "changepass-field">Họ tên</div>
+                <div class ="changepass-value">
+                    <input type="text" class="form-control" formControlName="full_name">
+                </div>
+            </div>
+            <div class = "changepass-row form-group">
+                <div class = "changepass-field">Email</div>
+                <div class ="changepass-value">
+                    <input type="text" class="form-control" formControlName="email">
+                </div>
+            </div>
+            <div class = "changepass-row form-group">
+                <div class = "changepass-field">Địa chỉ</div>
+                <div class ="changepass-value" >
+                    <input type="text" class="form-control" formControlName="address">
+                </div>
+            </div>
+            <div class = "changepass-row form-group">
+                <div class = "changepass-field">Số điện thoại</div>
+                <div class ="changepass-value" >
+                    <input type="text" class="form-control" formControlName="phone_number">
+                </div>
+            </div>
+        </div>
+        <div style="margin-left: 150px;">
+            <button  type="submit" style="font-size: 17px;">Cập nhật</button>
+        </div>
+    </form>
+</div>

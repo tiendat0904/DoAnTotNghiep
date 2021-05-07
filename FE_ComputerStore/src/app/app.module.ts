@@ -77,6 +77,7 @@ import { UpdateProductPromotionComponent } from './views/admin/promotion-date/up
 import { ProductPromotionComponent } from './views/admin/promotion-date/product-promotion/product-promotion.component';
 import { CustomerComponent } from './views/admin/customer/customer/customer.component';
 import { UpdateCustomerComponent } from './views/admin/customer/update-customer/update-customer.component';
+import { AccountModule } from './views/admin/account/account.module';
 registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
@@ -93,6 +94,7 @@ registerLocaleData(localeFr, 'vi');
     HttpClientModule,
     CarouselModule,
     FormsModule,
+    AccountModule,
     UserModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),

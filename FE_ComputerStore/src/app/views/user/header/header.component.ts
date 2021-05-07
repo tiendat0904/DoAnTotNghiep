@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   billModel: billModel;
   searchedKeyword: string;
   check_product: boolean;
-  check_search:boolean;
+  check_search: boolean;
   // update_bill_id: any;
   constructor(
     private accountService: AccountService,
@@ -48,35 +48,54 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.check_product = true;
+
+
+    this.picture = this.urlPictureDefault;
+    this.name = "Đăng nhập";
+    this.url = "/#/login";
     $('#header-hide').hide();
-    $(document).ready(function () {
-      $('#header-basket').hover(
+      $('#header-account').hover(
         function () {
-          $('#header-hide').show();
+          $('#header-hide').hide();
         },
         function () {
           $('#header-hide').hide();
         }
       )
-      $('#header-hide').hover(
-        function () {
-          $('#header-hide').show();
-        },
-        function () {
-          $(this).hide();
-        }
-      )
-    })
-
-    this.picture = this.urlPictureDefault;
-    this.name = "Đăng nhập";
-    this.url = "/#/login";
     this.fetchgetInfo();
     if (localStorage.length !== 0) {
-      this.url = "/#/profile";
+      this.url = "/#/account/account-info";
+      $('#header-hide').hide();
+      $(document).ready(function () {
+        $('#header-account').hover(
+          function () {
+            $('#header-hide').show();
+          },
+          function () {
+            $('#header-hide').hide();
+          }
+        )
+        $('#header-hide').hover(
+          function () {
+            $('#header-hide').show();
+          },
+          function () {
+            $(this).hide();
+          }
+        )
+      })
     } else {
       this.url = "#/login";
       this.name = "Đăng nhập";
+      $('#header-hide').hide();
+      $('#header-account').hover(
+        function () {
+          $('#header-hide').hide();
+        },
+        function () {
+          $('#header-hide').hide();
+        }
+      )
     }
     if (this.name !== null) {
     }
@@ -84,32 +103,34 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
- }
 
-  public searchDetail(){
+
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
+  }
+
+  public searchDetail() {
     this.searchedKeyword = null;
     this.list_product_filter = null;
   }
 
-  public search(){
-    if(this.searchedKeyword.length === 0){
-       this.toastr.warning("Vui lòng nhập sản phẩm bạn muốn tìm kiếm");
-    }else{
-      localStorage.setItem("search",this.searchedKeyword);
-    this.searchedKeyword = null;
-    this.list_product_filter = null;
-    this.redirectTo('/search');
+  public search() {
+    if (this.searchedKeyword.length === 0) {
+      this.toastr.warning("Vui lòng nhập sản phẩm bạn muốn tìm kiếm");
+    } else {
+      localStorage.setItem("search", this.searchedKeyword);
+      this.searchedKeyword = null;
+      this.list_product_filter = null;
+      this.redirectTo('/search');
     }
   }
 
-  
+
 
   public filterByKeyword() {
     var filterResult = [];
-    this.productService.getAll().subscribe(data =>{
+    this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       if (this.searchedKeyword === null || this.searchedKeyword.length === 0) {
         this.check_search = true;
@@ -124,22 +145,18 @@ export class HeaderComponent implements OnInit {
             filterResult.push(item);
           }
         });
-        if(filterResult.length === 0){
+        if (filterResult.length === 0) {
           this.check_product = false;
           this.list_product_filter = null;
-        }else{
+        } else {
           this.check_product = true;
           this.list_product_filter = filterResult;
         }
       }
     })
-    
+
   }
 
-
-  addOrder() {
-    
-  }
 
   fetchgetInfo() {
     this.accountService.getInfo().subscribe(data => {
@@ -152,9 +169,22 @@ export class HeaderComponent implements OnInit {
     }, error => {
       this.url = "#/login";
       this.name = "Đăng nhập";
+      $('#header-hide').hide();
+      $('#header-account').hover(
+        function () {
+          $('#header-hide').hide();
+        },
+        function () {
+          $('#header-hide').hide();
+        }
+      )
     })
   }
 
-
+  onLogout() {
+    localStorage.removeItem('Token');
+    localStorage.clear();
+    this.router.navigate(['/']);
+  }
 
 }
