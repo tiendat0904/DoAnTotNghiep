@@ -1,0 +1,59 @@
+<div style="height: 790px;">
+    <div class="warranty-title">
+        <div style="margin-top: 20px;">
+            <h1>TRA CỨU THÔNG TIN BẢO HÀNH CỦA SẢN PHẨM</h1>
+        </div>
+        <input class ="warranty-search" type="text" [(ngModel)]="searchedWarranty" placeholder="Nhập mã bảo hành để tra cứu">
+        <button class ="warranty-success" (click)="warrantySearch();"><i class="fas fa-search" style="margin-right: 3px;"></i>Tra cứu</button>
+    </div>
+    
+    <div class="col-12" style="padding-left: 0; width: 1030px;margin-left: 145px;" [hidden]="isCheck1">
+        <table class="table table-striped table-hover table-bordered " style="background-color: white;">
+            <thead>
+                <tr>
+                    <th>Mã bảo hành</th>
+                    <th>Sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Ngày mua</th>
+                    <th>Bảo hành tới</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                </tr>
+                <tr *ngIf="billDetailModel">
+                    <td [innerHTML]="billDetailModel.bill_detail_id"></td>
+                    <td [innerHTML]="billDetailModel.product_name"></td>
+                    <td [innerHTML]="billDetailModel.price"></td>
+                    <td [innerHTML]="billDetailModel.created_at"></td>
+                    <td [innerHTML]="warrantyDate"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div [hidden]="isCheck" style="margin-left: 145px;color: #d00;">
+        <h3>Không có dữ liệu! Thông tin bảo hành không đúng hoặc không tồn tại. Quý khách có thể liên hệ tổng đài hỗ trợ bảo
+            hành 19001903 để được trợ giúp! </h3>
+    </div>
+    <div style="position: relative; top: 200px;">
+        <div>
+            <h2>DANH SÁCH CÁC ĐIỂM TIẾP NHẬN BẢO HÀNH</h2>
+            <div style="width:400px;border-top:solid 1px #ddd; margin:10px auto;"></div>
+        </div>
+        <div style="display: inline-block;width: 100%;padding-left: 165px;">
+            <div class="cac-diem-bao-hanh">
+               <div class="diem-bao-hanh">
+                  <span class="diem-bao-hanh-stt">01</span>
+                  <div class="diem-bao-hanh-dc"><i class="fas fa-map-marker-alt"></i> Số 10 ngõ 5 Nguyễn Khánh Toàn, Quận Cầu Giấy, Hà Nội</div>
+                  <div class="diem-bao-hanh-sdt"><i class="fas fa-phone fa-flip-horizontal"></i>0336181546</div>
+               </div>
+               <div class="diem-bao-hanh">
+                  <span class="diem-bao-hanh-stt">02</span>
+                  <div class="diem-bao-hanh-dc"><i class="fas fa-map-marker-alt"></i> Số  595/22 Cách Mạng Tháng 8, Phường 15, Quận 10, TP.HCM</div>
+                  <div class="diem-bao-hanh-sdt"><i class="fas fa-phone fa-flip-horizontal"></i> 0386123369</div>
+               </div>
+            </div>     
+         </div>
+    </div>
+    
+</div>

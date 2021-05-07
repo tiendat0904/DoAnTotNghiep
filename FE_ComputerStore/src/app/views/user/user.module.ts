@@ -24,6 +24,7 @@ import { OrderSucessComponent } from './order-sucess/order-sucess.component';
 import { SearchComponent } from './search/search.component';
 import { NewsComponent } from './news/news.component';
 import { AccountModule } from './account/account.module';
+import { WarrantySearchComponent } from './warranty-search/warranty-search.component';
 
 // Angular
 
@@ -53,6 +54,7 @@ import { AccountModule } from './account/account.module';
     OrderSucessComponent,
     SearchComponent,
     NewsComponent,
+    WarrantySearchComponent,
 
   ]
 })

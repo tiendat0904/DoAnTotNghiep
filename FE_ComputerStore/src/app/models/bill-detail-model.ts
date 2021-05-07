@@ -6,5 +6,7 @@ export interface billDetailModel{
     price? : number,
     image?:string,
     amount?: number,
+    warranty?:number,
+    order_status_id?: number,
     checked?: boolean
  }

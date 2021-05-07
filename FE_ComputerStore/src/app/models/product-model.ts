@@ -8,7 +8,8 @@ export interface productModel{
     description? : String,
     price?: number,
     price_new?: number,
-    price_display?:number;
+    price_display?:number,
+    warranty?: number,
     amount?: number,
     image?: string,
     checked?: boolean,

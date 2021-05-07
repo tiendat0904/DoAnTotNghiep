@@ -1,0 +1,83 @@
+.warranty-title{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.warranty-title h1{
+    font-size: 30px;
+    padding-top: 50px;
+    font-weight: 500;
+}
+
+.warranty-title input{
+    width: 400px;
+    line-height: 30px;
+    outline: none;
+}
+
+.warranty-title button{
+    line-height: 35px;
+    font-size: 15px;
+    border:0;
+    background-color: #d00;
+    color: #fff;
+    border-radius: 3px;
+    outline: none;
+    width: 100px;
+}
+
+h2{
+    font-size: 24px;
+    text-transform: uppercase;
+    text-align: center;
+
+}
+
+.diem-bao-hanh:first-child{
+    margin-right: 10px;
+}
+
+.diem-bao-hanh{
+    float: left;
+    width: 500px;
+    background-color: #fbfbfb;
+    border: 1px dashed #adadad;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    margin-top: 50px;
+    padding:20px;
+}
+
+.diem-bao-hanh-stt{
+    position: absolute;
+    background-color: #ed1b24;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    top:-25px;
+    left:230px;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.diem-bao-hanh-dc{
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.diem-bao-hanh-sdt{
+    display: inline-block;
+    background-color: #243a76;
+    color: #fff;
+    padding: 5px 15px;
+    margin: auto;
+    margin-top: 10px;
+    font-size: 16px;
+    border-radius: 9999px;
+
+}

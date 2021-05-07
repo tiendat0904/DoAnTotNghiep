@@ -10,6 +10,7 @@ import { NewsComponent } from './news/news.component';
 import { OrderSucessComponent } from './order-sucess/order-sucess.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
+import { WarrantySearchComponent } from './warranty-search/warranty-search.component';
 
 // import { DropdownsComponent } from './dropdowns.component';
 // import { BrandButtonsComponent } from './brand-buttons.component';
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path: 'product-type/:product_type_id',
         component: ProductLaptopComponent
+      },
+      {
+        path: 'warranty-search',
+        component: WarrantySearchComponent,
       },
       {
         path: 'account',

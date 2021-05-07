@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,30 +16,30 @@ export class OrderCustomerComponent implements OnInit {
   ischeck = false;
   ischeck1 = true;
   arraylist_bill_filter: billModel[] = [];
-  constructor(private billService:BillService,private toastr: ToastrService,private router: Router) { }
+  constructor(private billService: BillService, private toastr: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
-    if(localStorage.getItem("account_id")){
+    if (localStorage.getItem("account_id")) {
       this.billService.getAll().subscribe(data => {
         this.arraylist_bill = data.data;
-        this.arraylist_bill_filter = this.arraylist_bill.filter(function(bill){
+        this.arraylist_bill_filter = this.arraylist_bill.filter(function (bill) {
           return bill.customer_id === Number(localStorage.getItem("account_id"));
         })
-        if(this.arraylist_bill_filter.length === 0){
+        if (this.arraylist_bill_filter.length === 0) {
           this.ischeck = false;
           this.ischeck1 = true;
-        }else{
+        } else {
           this.ischeck = true;
           this.ischeck1 = false;
         }
-      },err =>{
-       
+      }, err => {
+
       })
-    }else{
+    } else {
       this.toastr.warning("Vui lòng đăng nhập để sử dụng dịch vụ");
       this.router.navigate(['/login']);
     }
-    
+
   }
 
 }

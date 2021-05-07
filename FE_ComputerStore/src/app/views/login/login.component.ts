@@ -90,6 +90,7 @@ export class LoginComponent {
                         this.billDetailModel = {
                           bill_id: update_bill_id,
                           product_id: item.product.product_id,
+                          warranty: item.product.warranty,
                           price: item.product.price_display,
                           amount: item.quantity,
                         }
@@ -124,6 +125,7 @@ export class LoginComponent {
                         this.billDetailModel = {
                           bill_id: data.data[0].bill_id,
                           product_id: item.product.product_id,
+                          warranty: item.product.warranty,
                           price: item.product.price_display,
                           amount: item.quantity,
                         }
@@ -147,6 +149,7 @@ export class LoginComponent {
                       this.billDetailModel = {
                         bill_id: data.data[0].bill_id,
                         product_id: item.product.product_id,
+                        warranty: item.product.warranty,
                         price: item.product.price_new,
                         amount: item.quantity,
                       }

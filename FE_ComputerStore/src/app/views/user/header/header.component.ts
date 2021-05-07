@@ -48,8 +48,18 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.check_product = true;
-
-
+    // var TopFixMenu = $(".header-bottom");
+    // // dùng sự kiện cuộn chuột để bắt thông tin đã cuộn được chiều dài là bao nhiêu.
+    //   $(window).scroll(function(){
+    //   // Nếu cuộn được hơn 150px rồi
+    //       if($(this).scrollTop()>100){
+    //     // Tiến hành show menu ra   
+    //       TopFixMenu.show();
+    //       }else{
+    //     // Ngược lại, nhỏ hơn 150px thì hide menu đi.
+    //           TopFixMenu.hide();
+    //       }}
+    //   )
     this.picture = this.urlPictureDefault;
     this.name = "Đăng nhập";
     this.url = "/#/login";
@@ -140,8 +150,9 @@ export class HeaderComponent implements OnInit {
         this.list_product_filter = this.list_product;
         var keyword = this.searchedKeyword.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
         this.list_product_filter.forEach(item => {
-          var name = item.product_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
-          if (name.includes(keyword)) {
+          var product_name = item.product_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+          var product_type_name = item.product_type_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+          if (product_name.includes(keyword) || product_type_name.includes(keyword)) {
             filterResult.push(item);
           }
         });

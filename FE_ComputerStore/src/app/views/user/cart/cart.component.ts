@@ -141,6 +141,7 @@ export class CartComponent implements OnInit {
             product_id: item.product.product_id,
             price: pricecheck,
             image: item.product.image,
+            warranty: item.product.warranty,
             amount: item.quantity,
             product_name: item.product.product_name,
           }

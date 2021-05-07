@@ -13,14 +13,14 @@
             <img src="{{product.image}}" alt="">
         </div>
         <div class='col-lg-5 product-description'>
-            <h3 style=" color: #000000ef; text-transform: uppercase;">{{product.product_name}}</h3>
+            <h3 style=" color: #000000ef; text-transform: uppercase;font-size: 22px;">{{product.product_name}}</h3>
             <hr style="width: 100%;" />
             <span>Lượt mua : 326</span>
             <p *ngFor="let description1 of descriptions"><i class="far fa-check-square"></i>{{[description1]}}</p>
             <div style="background-color: #ffee00ef;text-align: center; height: 65px;">
-                <div style="padding-top: 5px;">
+                <div style="padding-top: 10px;">
                     <h4 style="margin-bottom: 0;">MỚI 100%</h4>
-                    <h4>BẢO HÀNH 36 THÁNG</h4>
+                    <h4>BẢO HÀNH {{product.warranty}} THÁNG</h4>
                 </div>
             </div>
             <div class='product-price' style="align-self: flex-end">
@@ -69,7 +69,7 @@
     </div>
     <div class="product-bestseller">
         <div class="product-title-container" style="width: 340px; margin-bottom: 20px;" *ngIf="product">
-            <h3>Cùng thương hiệu {{product.trademark_name}}</h3>
+            <h3 style="font-size: 20px;">Cùng thương hiệu {{product.trademark_name}}</h3>
         </div>
         <div class="product-grid" style="display: flex;">
             <div class='product-item'
@@ -78,7 +78,7 @@
                     <div class='product-image'>
                         <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
                     </div>
-                    <div class='product-description1'>
+                    <div class='product-description1' style="text-align: center;padding-left: 6px;padding-right: 6px;">
                         <div class='product-title'>
                             <p><a href=""></a> {{[item.product_name]}}</p>
                         </div>

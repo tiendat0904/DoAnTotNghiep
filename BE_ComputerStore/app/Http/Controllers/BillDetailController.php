@@ -15,6 +15,7 @@ class BillDetailController extends Controller
     const product_id = 'product_id';
     const price = 'price';
     const amount = 'amount';
+    const warranty = 'warranty';
 
     /**
      * AccountController constructor.
@@ -90,6 +91,7 @@ class BillDetailController extends Controller
                             self::product_id => 'required',
                             self::price => 'required',
                             self::amount => 'required',
+                            self::warranty =>'required',
                         ]);
                         
                         if ($validator->fails()) {
@@ -220,7 +222,8 @@ class BillDetailController extends Controller
         //
         $objs = DB::table(self::table)
             ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
-            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
+            ->join(BillController::table, self::table . '.' . self::bill_id, '=', BillController::table . '.' . BillController::id)
+            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name,BillController::table . '.' . BillController::created_at,BillController::table . '.' . BillController::order_status_id)
             ->where(self::table . '.' . self::id, '=', $id)->first();
         if ($objs) {
             return response()->json(['data' => $objs], 200);
