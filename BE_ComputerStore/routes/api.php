@@ -50,6 +50,9 @@ Route::get('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::cl
 Route::put('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'update']);
 Route::post('/bills_detail/delete', [\App\Http\Controllers\BillDetailController::class, 'destroy']);
 
+Route::get('/voucher', [\App\Http\Controllers\VoucherController::class, 'index']);
+Route::get('/voucher/{id}', [\App\Http\Controllers\VoucherController::class, 'show']);
+Route::post('/voucher/delete', [\App\Http\Controllers\VoucherController::class, 'destroy']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('info', [AccountController::class, 'userInfo']);
@@ -61,6 +64,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/reports/report-coupons', [ReportController::class, 'reportCoupons']);
     Route::post('/reports/report-bills', [ReportController::class, 'reportBills']);
     Route::post('/reports/report-employees', [ReportController::class, 'reportEmployees']);
+
 
 
     // tài khoản
@@ -213,6 +217,12 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/coupons_detail/delete', [\App\Http\Controllers\CouponDetailController::class, 'destroy']);
 
+    // voucher
+    Route::post('/voucher', [\App\Http\Controllers\VoucherController::class, 'store']);
+
+    Route::put('/voucher/{id}', [\App\Http\Controllers\VoucherController::class, 'update']);
+
+    
 
     // Hóa đơn bán
     

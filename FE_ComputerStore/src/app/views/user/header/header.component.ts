@@ -48,34 +48,39 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.check_product = true;
-    // var TopFixMenu = $(".header-bottom");
-    // // dùng sự kiện cuộn chuột để bắt thông tin đã cuộn được chiều dài là bao nhiêu.
-    //   $(window).scroll(function(){
-    //   // Nếu cuộn được hơn 150px rồi
-    //       if($(this).scrollTop()>100){
-    //     // Tiến hành show menu ra   
-    //       TopFixMenu.show();
-    //       }else{
-    //     // Ngược lại, nhỏ hơn 150px thì hide menu đi.
-    //           TopFixMenu.hide();
-    //       }}
-    //   )
     this.picture = this.urlPictureDefault;
     this.name = "Đăng nhập";
     this.url = "/#/login";
+    var TopFixMenu = $(".header-main-center-scoll");
+    TopFixMenu.hide();
+    // dùng sự kiện cuộn chuột để bắt thông tin đã cuộn được chiều dài là bao nhiêu.
+    $(window).scroll(function () {
+      // Nếu cuộn được hơn 150px rồi
+      if ($(this).scrollTop() > 200) {
+        // Tiến hành show menu ra   
+        TopFixMenu.show();
+      } else {
+        // Ngược lại, nhỏ hơn 150px thì hide menu đi.
+        TopFixMenu.hide();
+      }
+    }
+    )
+   
+    $('#header-hide1').hide();
+    $('#header-account1').hover(
+      function () {
+        $('#header-hide1').hide();
+      }
+    )
     $('#header-hide').hide();
-      $('#header-account').hover(
-        function () {
-          $('#header-hide').hide();
-        },
-        function () {
-          $('#header-hide').hide();
-        }
-      )
+    $('#header-account').hover(
+      function () {
+        $('#header-hide').hide();
+      }
+    )
     this.fetchgetInfo();
     if (localStorage.length !== 0) {
       this.url = "/#/account/account-info";
-      $('#header-hide').hide();
       $(document).ready(function () {
         $('#header-account').hover(
           function () {
@@ -93,6 +98,23 @@ export class HeaderComponent implements OnInit {
             $(this).hide();
           }
         )
+
+        $('#header-account1').hover(
+          function () {
+            $('#header-hide1').show();
+          },
+          function () {
+            $('#header-hide1').hide();
+          }
+        )
+        $('#header-hide1').hover(
+          function () {
+            $('#header-hide1').show();
+          },
+          function () {
+            $(this).hide();
+          }
+        )
       })
     } else {
       this.url = "#/login";
@@ -101,9 +123,13 @@ export class HeaderComponent implements OnInit {
       $('#header-account').hover(
         function () {
           $('#header-hide').hide();
-        },
+        }
+      )
+
+      $('#header-hide1').hide();
+      $('#header-account1').hover(
         function () {
-          $('#header-hide').hide();
+          $('#header-hide1').hide();
         }
       )
     }
@@ -111,6 +137,7 @@ export class HeaderComponent implements OnInit {
     }
     if (this.name) {
     }
+
   }
 
 

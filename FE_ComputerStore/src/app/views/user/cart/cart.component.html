@@ -102,8 +102,14 @@
     </div>
     <div class="order-pay">
         <p>Mã giảm giá/quà tặng</p>
-        <div>
-            <input type="text">
+        <div style="display: flex;">
+            <div style="padding-right: 5px;">
+                <input type="text" (onclick) = "usevoucher();" [value] = "voucher">
+                <div style="background-color: #ccc2c2;" *ngFor = "let item of list_voucher">
+                    <p [hidden] = "checkVoucher"><span style="font-weight: normal;">Voucher :</span>{{item.vouhcer_level}}%</p>
+                </div>
+            </div>
+           
             <button style="border-radius: 3px;border:0px;height: 35px;background-color: #ffee00ef;width: 78px;">Áp
                 dụng</button>
         </div>

@@ -32,11 +32,11 @@ class ProductImageController extends Controller
     {
         //
         $objs = DB::table(self::table)
-        ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
-        ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
-        ->get();
-    $code = 200;
-    return response()->json(['data' => $objs], $code);
+            ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
+            ->get();
+        $code = 200;
+        return response()->json(['data' => $objs], $code);
     }
 
     /**
@@ -70,14 +70,93 @@ class ProductImageController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['error' => $validator->errors()->all()], 400);
                 }
+                // $objs = [];
+                // $images = $arr_value[self::image];
+                // if(count($images) > 0 ){
+                //     foreach ($images as $image) {
+                //         $objs[self::product_id] = $request->product_id;
+                //         $objs[self::image] = $image;
+                //         DB::table(self::table)->insert($objs);
+                //     }
+                //     return response()->json(['success' => "Thêm mới thành công"], 201);
+                // }else{
+                //     return response()->json(['error' => "Thêm mới thất bại. Không có dữ liệu"], 400);
+                // }
+               
+                // foreach ($objs as $obj) {
+                   
+                // }
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
-            $this->base->store($request);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            // try {
+            //     if ($listObj = $request->get(BaseController::listObj)) {
+            //         $count = count($listObj);
+            //         if ($count > 0) {
+            //             foreach ($listObj as $obj) {
+            //                 $validator = Validator::make($obj, [
+            //                     self::product_id => 'required',
+            //                     self::image => 'required',
+            //                 ]);
+            //                 if ($validator->fails()) {
+            //                     return response()->json(['error' => $validator->errors()->all()], 400);
+            //                 }
+            //             }
+            //         } else {
+            //             return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
+            //         }
+            //     } else {
+            //         $arr_value = $request->all();
+            //         if (count($arr_value) > 0) {
+            //             $validator = Validator::make($arr_value, [
+            //                 self::product_id => 'required',
+            //                 self::image => 'required',
+            //             ]);
+            //             if ($validator->fails()) {
+            //                 return response()->json(['error' => $validator->errors()->all()], 400);
+            //             }
+            //             $objs = [];
+            //             $images=$arr_value[self::image];
+            //             foreach($images as $image){
+            //                 $objs[self::product_id] = $request->product_id;
+            //                 $objs[self::image] = $image;
+            //             }
+            //             foreach($objs as $obj){
+            //                 DB::table($this->table)->insert($obj);
+            //             }
+            //         } else {
+            //             return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
+            //         }
+            //     }
+            // } catch (\Throwable $e) {
+            //     return response()->json(['error' => $e], 500);
+            // }
+
+            // $this->base->store($request);
+            // return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        //     $arr_value = $request->all();
+        //     if (count($arr_value) > 0) {
+        //         $validator = Validator::make($arr_value, [
+        //             self::product_id => 'required',
+        //             self::image => 'required',
+        //         ]);
+        //         if ($validator->fails()) {
+        //             return response()->json(['error' => $validator->errors()->all()], 400);
+        //         }
+        //     } else {
+        //         return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
+        //     }
+        //     $this->base->store($request);
+        //     return response()->json($this->base->getMessage(), $this->base->getStatus());
+        // } else {
+        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        // }
     }
 
     /**

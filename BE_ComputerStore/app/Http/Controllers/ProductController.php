@@ -17,6 +17,7 @@ class ProductController extends Controller
     const price = 'price';
     const amount = 'amount';
     const warranty = 'warranty';
+    // const image = 'image';
     const description = 'description';
 
     /**
@@ -74,17 +75,30 @@ class ProductController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+            // $arr_value = $request->all();
             $validator = Validator::make($request->all(), [
                 self::product_name => 'required',
                 self::trademark_id => 'required',
                 self::product_type_id => 'required',
                 self::warranty => 'required',
                 self::description => ' required',
+                // "image" => 'required',
             ]);
+
+            
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->all()], 400);
             }
             $this->base->store($request);
+            // $objs = [];
+            //     $images = $arr_value[self::image];
+            //     if(count($images) > 0 ){
+            //         foreach ($images as $image) {
+            //             $objs[self::id] = $request->product_id;
+            //             $objs[self::image] = $image;
+            //             DB::table(ProductImageController::table)->insert($objs);
+            //         }
+            //     }
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);

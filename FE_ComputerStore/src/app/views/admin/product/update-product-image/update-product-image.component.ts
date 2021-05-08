@@ -41,6 +41,7 @@ export class UpdateProductImageComponent implements OnInit {
   title = '';
   type: any;
   arrCheck = [];
+  uploads: any[];
   update_ma_tai_khoan:any;
   model: productImageModel;
   urlPictureDefault = avatarDefault;
@@ -121,10 +122,10 @@ export class UpdateProductImageComponent implements OnInit {
         product_id: [{value: this.model.product_id, disabled: this.isInfo}, [Validators.required]],
         image:'',
       }); 
-      if(this.model.image===""){
+      if(this.model.image.length === 0){
         this.urlPictureDefault = avatarDefault;
       }else{
-        this.urlPictureDefault = this.model.image;
+        // this.urlPictureDefault = this.model.image
       }    
     }
     
@@ -168,13 +169,13 @@ export class UpdateProductImageComponent implements OnInit {
     if (this.isEdit) {
       product = {
         product_id: this.formGroup.get('product_id')?.value,
-        image: this.urlPictureDefault,
+        image: this.uploads,
       };
      
     } else {
       product = {
         product_id: this.formGroup.get('product_id')?.value,
-        image: this.urlPictureDefault,
+        image: this.uploads,
       };
     }
     if (this.isAdd) {
@@ -208,28 +209,62 @@ export class UpdateProductImageComponent implements OnInit {
   }
 
   uploadImage(event) {
+    this.uploads = [];
     // tslint:disable-next-line:prefer-const
-    let file = event.target.files[0];
+    const filelist = event.target.files;
     // tslint:disable-next-line:prefer-const
-    let path = `computerstore/${file.name}`;
-    if (file.type.split('/')[0] !== 'image') {
-      return alert('Erreur, ce fichier n\'est pas une image');
-    } else {
-      // tslint:disable-next-line:prefer-const
-      let ref = this.store.ref(path);
-      // tslint:disable-next-line:prefer-const
-      let task = this.store.upload(path, file);
-      this.uploadPercent = task.percentageChanges();
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          this.downloadURL = ref.getDownloadURL();
-          this.downloadURL.subscribe(url => {
-          this.urlPictureDefault=url;
-          });
-        }
-        )
-      ).subscribe();
+    for(const file of filelist){
+      let path = `computerstore/${file.name}`;
+      if (file.type.split('/')[0] !== 'image') {
+        return alert('Erreur, ce fichier n\'est pas une image');
+      } else {
+        // tslint:disable-next-line:prefer-const
+        let ref = this.store.ref(path);
+        // tslint:disable-next-line:prefer-const
+        let task = this.store.upload(path, file);
+        this.uploadPercent = task.percentageChanges();
+        task.snapshotChanges().pipe(
+          finalize(() => {
+            this.downloadURL = ref.getDownloadURL();
+            this.downloadURL.subscribe(url => {
+            this.uploads.push(url);
+            });
+          }
+          )
+        ).subscribe();
     }
+    
+    }
+    
+    // // const filelist = event.target.files;
+    // const allPercentage: Observable<number>[] = [];
+
+    // for (const file of filelist) {
+
+    //   const path = `files/${file.name}`;
+    //   const ref = this.store.ref(path);
+    //   const task = this.store.upload(path, file);
+    //   const _percentage$ = task.percentageChanges();
+    //   allPercentage.push(_percentage$);
+
+    //   // create composed objects with different information. ADAPT THIS ACCORDING to YOUR NEED
+    //   const uploadTrack = {
+    //     fileName: file.name,
+    //     percentage: _percentage$
+    //   }
+
+    //   // push each upload into the array
+    //   this.uploads.push(uploadTrack);
+
+    //   // for every upload do whatever you want in firestore with the uploaded file
+    //   const _t = task.then((f) => {
+    //     return f.ref.getDownloadURL().then((url) => {
+    //       return this.afs.collection('files').add({
+    //         name: f.metadata.name,
+    //         url: url
+    //       });
+    //     })
+    //   })
   }
 
 }

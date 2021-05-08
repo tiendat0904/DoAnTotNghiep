@@ -8,11 +8,13 @@ import { billDetailModel } from '../../../models/bill-detail-model';
 import { billModel } from '../../../models/bill-model';
 import { ItemModel } from '../../../models/item-model';
 import { productModel } from '../../../models/product-model';
+import { voucherModel } from '../../../models/voucher-model';
 import { AccountService } from '../../../services/account/account.service';
 import { BillDetailService } from '../../../services/bill-detail/bill-detail.service';
 import { BillService } from '../../../services/bill/bill.service';
 import { CartService } from '../../../services/cart/cart.service';
 import { ProductService } from '../../../services/product/product.service';
+import { VoucherService } from '../../../services/voucher/voucher.service';
 
 @Component({
   selector: 'app-cart',
@@ -28,14 +30,17 @@ export class CartComponent implements OnInit {
   list_product_filter: Array<billDetailModel> = [];
   list_bill_detail: Array<billDetailModel> = [];
   list_bill_filter: Array<billModel> = [];
+  list_voucher: Array<billModel> = [];
   total = 0;
   billDetailModel: billDetailModel;
   itemModel: ItemModel;
   account: accountModel;
+  voucherModel: voucherModel;
   bill_id: any;
   bill_detail_id: any;
   billModel: any;
   account_id: any;
+  voucher:any;
   submitted = false;
   formGroup: FormGroup;
   update_customer_name: any;
@@ -50,7 +55,8 @@ export class CartComponent implements OnInit {
     private billDetailService: BillDetailService,
     private accountService: AccountService,
     private router: Router,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private voucherService:VoucherService) { }
 
   ngOnInit(): void {
     this.submitted = true;
@@ -199,6 +205,18 @@ export class CartComponent implements OnInit {
     } else {
       this.toastr.warning("Vui lòng đăng nhập trước khi đặt hàng !!")
     }
+  }
+
+  usevoucher(){
+    if(localStorage.getItem("account_id")){
+      this.voucherService.detail(localStorage.getItem("account_id")).subscribe(data=>{
+        
+        if(data.data !== undefined){
+          this.list_voucher = data.data;
+        }
+      })
+    }
+    
   }
 
   totalCart() {
