@@ -70,22 +70,19 @@ class ProductImageController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['error' => $validator->errors()->all()], 400);
                 }
-                // $objs = [];
-                // $images = $arr_value[self::image];
-                // if(count($images) > 0 ){
-                //     foreach ($images as $image) {
-                //         $objs[self::product_id] = $request->product_id;
-                //         $objs[self::image] = $image;
-                //         DB::table(self::table)->insert($objs);
-                //     }
-                //     return response()->json(['success' => "Thêm mới thành công"], 201);
-                // }else{
-                //     return response()->json(['error' => "Thêm mới thất bại. Không có dữ liệu"], 400);
-                // }
+                $objs = [];
+                $images = $arr_value[self::image];
+                if(count($images) > 0 ){
+                    foreach ($images as $image) {
+                        $objs[self::product_id] = $request->product_id;
+                        $objs[self::image] = $image;
+                        DB::table(self::table)->insert($objs);
+                    }
+                    return response()->json(['success' => "Thêm mới thành công"], 201);
+                }else{
+                    return response()->json(['error' => "Thêm mới thất bại. Không có dữ liệu"], 400);
+                }
                
-                // foreach ($objs as $obj) {
-                   
-                // }
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }

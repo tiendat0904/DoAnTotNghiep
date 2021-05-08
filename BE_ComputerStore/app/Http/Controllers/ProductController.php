@@ -75,31 +75,40 @@ class ProductController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            // $arr_value = $request->all();
+            $arr_value = $request->all();
             $validator = Validator::make($request->all(), [
                 self::product_name => 'required',
                 self::trademark_id => 'required',
                 self::product_type_id => 'required',
                 self::warranty => 'required',
                 self::description => ' required',
-                // "image" => 'required',
+                "image" => 'required',
             ]);
 
-            
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->all()], 400);
             }
-            $this->base->store($request);
-            // $objs = [];
-            //     $images = $arr_value[self::image];
-            //     if(count($images) > 0 ){
-            //         foreach ($images as $image) {
-            //             $objs[self::id] = $request->product_id;
-            //             $objs[self::image] = $image;
-            //             DB::table(ProductImageController::table)->insert($objs);
-            //         }
-            //     }
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            $arr_value1 = [];
+            $arr_value1[self::product_name] = $request->product_name;
+            $arr_value1[self::trademark_id] = $request->trademark_id;
+            $arr_value1[self::product_type_id] = $request->product_type_id;
+            $arr_value1[self::description] = $request->description;
+            $arr_value1[self::warranty] = $request->warranty;
+            DB::table(self::table)->insert($arr_value1);
+
+            $product_id = DB::table(self::table)->latest('product_id')->select(self::table . '.' . self::id)->first();
+            $objs = [];
+            $images = $arr_value['image'];
+            
+            if (count($images) > 0) {
+                foreach ($images as $image) {
+                    $objs[self::id] = $product_id->product_id;
+                    $objs['image'] = $image;
+                    
+                    DB::table(ProductImageController::table)->insert($objs);
+                }
+            }
+            return response()->json(['success' => "Thêm mới thành công", "data" =>  $arr_value1], 201);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
