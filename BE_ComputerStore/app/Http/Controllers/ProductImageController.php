@@ -177,6 +177,21 @@ class ProductImageController extends Controller
         }
     }
 
+
+    public function showbyproduct($id)
+    {
+        //
+        $obj = DB::table(self::table)
+        ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
+            ->where(ProductController::table . '.' . ProductController::id, '=', $id)
+            ->get();
+        if ($obj) {
+            return response()->json(['data' => $obj], 200);
+        } else {
+            return response()->json(['error' => 'Không tìm thấy'], 200);
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      *

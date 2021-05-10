@@ -36,6 +36,7 @@ class ProductController extends Controller
     public function index()
     {
         //
+
         date_default_timezone_set(BaseController::timezone);
         $date = date('Y-m-d');
         $objs = null;
@@ -45,6 +46,17 @@ class ProductController extends Controller
             if (count($objs) == 0) {
                 $objs = DB::table('products')->get();
             }
+            foreach ($objs as $obj) {
+                $obj_images = DB::table(ProductImageController::table)
+                    ->join(self::table, self::table . '.' . self::id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+                    ->select(ProductImageController::table . '.' . ProductImageController::image)
+                    ->where(self::table . '.' . self::id, '=', $obj->product_id)
+                    ->get();
+                foreach ($obj_images as $obj_image) {
+                    $obj->image[] =  $obj_image->image;
+                }
+            }
+
             $code = 200;
             return response()->json(['data' => $objs], $code);
         } catch (\Throwable $e) {
@@ -99,12 +111,12 @@ class ProductController extends Controller
             $product_id = DB::table(self::table)->latest('product_id')->select(self::table . '.' . self::id)->first();
             $objs = [];
             $images = $arr_value['image'];
-            
+
             if (count($images) > 0) {
                 foreach ($images as $image) {
                     $objs[self::id] = $product_id->product_id;
                     $objs['image'] = $image;
-                    
+
                     DB::table(ProductImageController::table)->insert($objs);
                 }
             }
@@ -123,11 +135,20 @@ class ProductController extends Controller
     public function show($id)
     {
         //
+        $objs = null;
         date_default_timezone_set(BaseController::timezone);
         $date = date('Y-m-d');
-        $obj = DB::select('call itemProduct(?,?)', array($date, $id));
-        if ($obj) {
-            return response()->json(['data' => $obj[0]], 200);
+        $objs = DB::select('call itemProduct(?,?)', array($date, $id));
+        $obj_images = DB::table(ProductImageController::table)
+            ->join(self::table, self::table . '.' . self::id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+            ->select(ProductImageController::table . '.' . ProductImageController::image)
+            ->where(self::table . '.' . self::id, '=', $objs[0]->product_id)
+            ->get();
+        foreach ($obj_images as $obj_image) {
+            $objs[0]->image[] =  $obj_image->image;
+        }
+        if ($objs) {
+            return response()->json(['data' => $objs[0]], 200);
         } else {
             return response()->json(['error' => 'Không tìm thấy'], 200);
         }

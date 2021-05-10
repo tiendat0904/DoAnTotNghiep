@@ -140,6 +140,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/product_images', [\App\Http\Controllers\ProductImageController::class, 'index']);
 
     Route::get('/product_images/{id}', [\App\Http\Controllers\ProductImageController::class, 'show']);
+    Route::get('/product_images_by_product/{id}', [\App\Http\Controllers\ProductImageController::class, 'showbyproduct']);
 
     Route::post('/product_images', [\App\Http\Controllers\ProductImageController::class, 'store']);
 
