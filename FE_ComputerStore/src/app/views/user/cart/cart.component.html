@@ -13,7 +13,7 @@
     </div>
     <div class='cart-main-button'>
         <div class="cart-button">
-            <button class="select-product" (click) = "selectcontinue();">CHỌN TIẾP SẢN PHẨM KHÁC</button>
+            <button class="select-product" (click)="selectcontinue();">CHỌN TIẾP SẢN PHẨM KHÁC</button>
         </div>
         <div>
             <button class="delete-cart" (click)="deletecart()">XÓA GIỎ HÀNG</button>
@@ -23,7 +23,7 @@
         <div *ngFor="let item of list_product">
             <div class='product-cart-detail'>
                 <div class='product-cart-image'>
-                    <a [routerLink] = "['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
                     <h5>{{item.product_name}}</h5>
@@ -56,7 +56,8 @@
         <h3>THÔNG TIN KHÁCH HÀNG</h3>
         <form [formGroup]="formGroup" (ngSubmit)="save()">
             <div>
-                <span style="margin-right: 76px;">Họ tên*</span><input type="text" [(ngModel)]="update_customer_name" formControlName="customer_name">
+                <span style="margin-right: 76px;">Họ tên*</span><input type="text" [(ngModel)]="update_customer_name"
+                    formControlName="customer_name">
                 <div *ngIf="submitted && formGroup.controls['customer_name'].errors?.required">
                     <div *ngIf="formGroup.controls['customer_name'].errors?.required" style="color: red">
                         * Họ tên không được để trống
@@ -65,7 +66,8 @@
             </div>
             <br>
             <div>
-                <span style="margin-right: 85px;">Email*</span><input type="text" [(ngModel)]="update_email" formControlName="email">
+                <span style="margin-right: 85px;">Email*</span><input type="text" [(ngModel)]="update_email"
+                    formControlName="email">
                 <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
                     <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
                         * Email không được để trống
@@ -74,7 +76,8 @@
             </div>
             <br>
             <div>
-                <span style="margin-right: 36px;">Số điện thoại*</span><input type="text" [(ngModel)]="update_phone_number" formControlName="phone_number">
+                <span style="margin-right: 36px;">Số điện thoại*</span><input type="text"
+                    [(ngModel)]="update_phone_number" formControlName="phone_number">
                 <div *ngIf="submitted && formGroup.controls['phone_number'].errors?.required">
                     <div *ngIf="formGroup.controls['phone_number'].errors?.required" style="color: red">
                         * Số điện thoại không được để trống
@@ -83,7 +86,8 @@
             </div>
             <br>
             <div>
-                <span style="margin-right: 76px;">Địa chỉ*</span><input type="text" [(ngModel)]="update_address" formControlName="address">
+                <span style="margin-right: 76px;">Địa chỉ*</span><input type="text" [(ngModel)]="update_address"
+                    formControlName="address">
                 <div *ngIf="submitted && formGroup.controls['address'].errors?.required">
                     <div *ngIf="formGroup.controls['address'].errors?.required" style="color: red">
                         * Địa chỉ không được để trống
@@ -96,28 +100,30 @@
     </div>
     <div class="order-type">
         <h3>HÌNH THỨC THANH TOÁN</h3>
-        <input type="radio" value="1" [(ngModel)]="selectedType" name="1" checked><span>Thanh toán tiền mặt khi nhận hàng</span>
+        <input type="radio" value="1" [(ngModel)]="selectedType" name="1" checked><span>Thanh toán tiền mặt khi nhận
+            hàng</span>
         <br>
-        <input type="radio" value="2" [(ngModel)]="selectedType" name="1"><span>Thanh toán qua chuyển khoản qua tài khoản ngân hàng</span>
+        <input type="radio" value="2" [(ngModel)]="selectedType" name="1"><span>Thanh toán qua chuyển khoản qua tài
+            khoản ngân hàng</span>
     </div>
     <div class="order-pay">
         <p>Mã giảm giá/quà tặng</p>
         <div style="display: flex;">
             <div style="padding-right: 5px;">
-                <input type="text" (onclick) = "usevoucher();" [value] = "voucher">
-                <div style="background-color: #ccc2c2;" *ngFor = "let item of list_voucher">
-                    <p [hidden] = "checkVoucher"><span style="font-weight: normal;">Voucher :</span>{{item.vouhcer_level}}%</p>
+                <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" autocomplete="off">
+                <div style="background-color: #ccc2c2;" *ngFor="let item of list_voucher_filter">
+                    <p><span style="font-weight: normal;">Voucher :</span>{{item.voucher_level}}%</p>
                 </div>
             </div>
-           
-            <button style="border-radius: 3px;border:0px;height: 35px;background-color: #ffee00ef;width: 78px;">Áp
+
+            <button style="border-radius: 3px;border:0px;height: 35px;background-color: #ffee00ef;width: 78px;" (click) = "useVouvher();">Áp
                 dụng</button>
         </div>
         <div>
             <span style="margin-right: 142px;">Tổng tiền</span><span>{{total | currency: 'VND'}}</span>
         </div>
         <div>
-            <span style="margin-right: 134px;">Thành tiền</span><span>{{total | currency: 'VND'}}</span>
+            <span style="margin-right: 134px;">Thành tiền</span><span>{{total_money | currency: 'VND'}}</span>
         </div>
         <div style="margin-top:10px">
             <button class="order-success" (click)="orderSuccess();">ĐẶT HÀNG</button>

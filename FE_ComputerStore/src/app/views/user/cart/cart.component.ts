@@ -26,12 +26,14 @@ export class CartComponent implements OnInit {
   list_item: Array<ItemModel> = [];
   list_product: Array<billDetailModel> = [];
   list_bill: Array<billModel> = [];
+  list_voucher: Array<voucherModel> = [];
+  list_voucher_filter: Array<voucherModel> = [];
   update_bill_id: any;
   list_product_filter: Array<billDetailModel> = [];
   list_bill_detail: Array<billDetailModel> = [];
   list_bill_filter: Array<billModel> = [];
-  list_voucher: Array<billModel> = [];
   total = 0;
+  total_money = 0;
   billDetailModel: billDetailModel;
   itemModel: ItemModel;
   account: accountModel;
@@ -42,12 +44,14 @@ export class CartComponent implements OnInit {
   account_id: any;
   voucher:any;
   submitted = false;
+  searchedKeyword: string;
   formGroup: FormGroup;
   update_customer_name: any;
   update_email: any;
   update_phone_number: any;
   update_address: any;
   selectedType: any;
+  checkVoucher:boolean;
   constructor(private cartService: CartService,
     private fb: FormBuilder,
     private productService: ProductService,
@@ -159,7 +163,47 @@ export class CartComponent implements OnInit {
   }
 
 
+  public filterByKeyword() {
+    var filterResult = [];
+    this.voucherService.detail(localStorage.getItem("account_id")).subscribe(data => {
+      this.list_voucher = data.data;
+      if (this.searchedKeyword === null || this.searchedKeyword.length === 0) {
+        // this.checkVoucher = false;
+        this.list_voucher_filter = null;
+      } else {
+        // this.checkVoucher = true;
+        this.list_voucher_filter = this.list_voucher;
+        var keyword = this.searchedKeyword.toString();
+        for(let item of this.list_voucher_filter){
+          var voucher_id = item.voucher_id.toString();
+          if (voucher_id===keyword ) {
+            filterResult.push(item);
+          }
+        }
+        if (filterResult.length === 0) {
+          // this.checkVoucher = true;
+          this.list_voucher_filter = null;
+        } else {
+          // this.checkVoucher = false;
+          this.list_voucher_filter = filterResult;
+        }
+      }
+    })
+
+  }
+
+  useVouvher(){
+    if(this.list_voucher_filter.length !== 0){
+      this.total_money = (this.total *  ((100 -  this.list_voucher_filter[0].voucher_level)/100));
+      localStorage.setItem("total_money",this.total_money.toString());
+    }else{
+      this.total_money = this.total;
+      localStorage.setItem("total_money",this.total_money.toString());
+    }
+   
+  }
   orderSuccess() {
+    
     console.log(this.selectedType);
     this.submitted = false;
     this.list_bill = [];
@@ -187,15 +231,35 @@ export class CartComponent implements OnInit {
             if (this.selectedType === 0) {
               this.toastr.warning("Vui lòng chọn hình thức thanh toán");
             } else {
-              bill = {
-                order_status_id: 2,
-                order_type_id: this.selectedType
+             
+              if(this.list_voucher_filter.length !== 0){
+                const modelDelete = {
+                  id: this.list_voucher_filter[0].voucher_id
+                };
+                this.voucherService.delete(modelDelete).subscribe(data=>{
+                })
+                bill = {
+                  order_status_id: 2,
+                  order_type_id: this.selectedType,
+                  into_money: this.total_money,
+                }
+                this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
+                  this.cartService.clearCart();
+                  this.toastr.success("Đặt hàng thành công");
+                  this.router.navigate(['/send-cart']);
+                })
+              }else{
+                bill = {
+                  order_status_id: 2,
+                  order_type_id: this.selectedType
+                }
+                this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
+                  this.cartService.clearCart();
+                  this.toastr.success("Đặt hàng thành công");
+                  this.router.navigate(['/send-cart']);
+                })
               }
-              this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
-                this.cartService.clearCart();
-                this.toastr.success("Đặt hàng thành công");
-                this.router.navigate(['/send-cart']);
-              })
+              
             }
 
           }
@@ -207,17 +271,6 @@ export class CartComponent implements OnInit {
     }
   }
 
-  usevoucher(){
-    if(localStorage.getItem("account_id")){
-      this.voucherService.detail(localStorage.getItem("account_id")).subscribe(data=>{
-        
-        if(data.data !== undefined){
-          this.list_voucher = data.data;
-        }
-      })
-    }
-    
-  }
 
   totalCart() {
     this.total = 0;
@@ -236,9 +289,10 @@ export class CartComponent implements OnInit {
             this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id)
             if (this.list_product !== null) {
               for (let i of this.list_product) {
-                this.total += i.amount * i.price;
+                this.total += i.amount * i.price; 
               }
-              localStorage.setItem("total", this.total.toString());
+              this.total_money = this.total;
+              localStorage.setItem("total_money",this.total_money.toString());
             }
             else {
             }
@@ -255,6 +309,7 @@ export class CartComponent implements OnInit {
         for (let i of this.list_product) {
           this.total += i.amount * i.price;
         }
+        this.total_money = this.total;
       }
       else {
         this.total = 0;

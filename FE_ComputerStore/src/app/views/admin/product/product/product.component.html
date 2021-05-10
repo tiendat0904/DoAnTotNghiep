@@ -73,7 +73,7 @@
                         <td [innerHTML]="e.product_name "></td>
                         <td [innerHTML]="e.trademark_name "></td>
                         <td [innerHTML]="e.product_type_name "></td>
-                        <td> <img [src]="e.image" alt="" style="width:60px;height:50px"> </td>
+                        <td> <img [src]="e.image[0]" alt="" style="width:60px;height:50px"> </td>
                         <td>
                            <ng-template #mymodal let-modal>
                               <div class="modal-header">

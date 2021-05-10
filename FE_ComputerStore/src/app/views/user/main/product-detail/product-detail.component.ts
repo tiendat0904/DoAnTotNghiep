@@ -9,7 +9,7 @@ import { BillDetailService } from '../../../../services/bill-detail/bill-detail.
 import { BillService } from '../../../../services/bill/bill.service';
 import { CartService } from '../../../../services/cart/cart.service';
 import { ProductService } from '../../../../services/product/product.service';
-
+declare var $: any;
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -30,6 +30,7 @@ export class ProductDetailComponent implements OnInit {
   check:any;
   trademark_name : any;
   account_id: any;
+  photos:any[];
   constructor(
     private route :ActivatedRoute,
     private productService : ProductService,
@@ -40,10 +41,14 @@ export class ProductDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
+
+    
     this.route.params.subscribe(params => {
       let product_id = Number.parseInt(params['product_id']);
       this.productService.detail(product_id).subscribe(data =>{
         this.product = data.data;
+        this.photos = data.data.image;
         if(this.product.amount === 0){
           this.check= "Liên hệ";
         }

@@ -34,6 +34,7 @@ export class ProductComponent implements OnInit {
   
   ngOnInit(): void {
     this.fetchlist_product();
+    
   }
 
 
@@ -44,6 +45,7 @@ export class ProductComponent implements OnInit {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.listFilterResult = data.data;
+      console.log(this.listFilterResult);
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
     },

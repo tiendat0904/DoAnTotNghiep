@@ -10,7 +10,12 @@
 <div class='container'>
     <div class='product-detail-main row' *ngIf="product">
         <div class='product-detail-image col-lg-4'>
-            <img src="{{product.image}}" alt="">
+            <mdb-carousel style="width: 85%;" class="carousel slide carousel-fade" [type]="'carousel-thumbnails'"
+                [animation]="'fade'">
+                <mdb-carousel-item *ngFor=" let photo of photos">
+                    <img style="height: 310px;" id = "img-item" class="d-block w-100" [src]="photo" alt="First slide">
+                </mdb-carousel-item>
+            </mdb-carousel>
         </div>
         <div class='col-lg-5 product-description'>
             <h3 style=" color: #000000ef; text-transform: uppercase;font-size: 22px;">{{product.product_name}}</h3>
@@ -25,9 +30,9 @@
             </div>
             <div class='product-price' style="align-self: flex-end">
                 <span>Giá bán : </span>
-            <span class='product-price-new'>{{product.price_display | currency: 'VND'}}</span>
-            <del class='product-price-old' [hidden]="product.isCheckPrice">{{product.price | currency: 'VND'
-            }}</del>
+                <span class='product-price-new'>{{product.price_display | currency: 'VND'}}</span>
+                <del class='product-price-old' [hidden]="product.isCheckPrice">{{product.price | currency: 'VND'
+                    }}</del>
                 <p [ngStyle]="{'color':check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{check}}</p>
             </div>
             <div class='product-button'>

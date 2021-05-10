@@ -4,7 +4,7 @@ export interface billDetailModel{
     product_id?: number,
     product_name?: String,
     price? : number,
-    image?:string,
+    image?:any[],
     amount?: number,
     warranty?:number,
     order_status_id?: number,

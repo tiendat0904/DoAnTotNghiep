@@ -23,7 +23,7 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
     private toastr: ToastrService) { }
   ngOnDestroy(): void {
     localStorage.removeItem("listProduct");
-    localStorage.removeItem("total");
+    localStorage.removeItem("total_money");
   }
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
     //   this.array_product.push(item);
     // }
     console.log(this.array_product);
-    this.total_money = localStorage.getItem("total");
+    this.total_money = localStorage.getItem("total_money");
   }
 
 

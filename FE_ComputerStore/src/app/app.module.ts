@@ -42,7 +42,7 @@ import {
 
 // Import routing module
 import { AppRoutingModule } from './app.routing';
-
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 // Import 3rd party components
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -60,14 +60,10 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.component';
 import { UpdateTrademarkComponent } from './views/admin/trademark/update-trademark/update-trademark/update-trademark.component';
-import { UpdateProductComponent } from './views/admin/product/update-product/update-product.component';
 import { PipesModule } from './pipe/pipes/pipes.module';
 import { DatePipe } from '@angular/common';
 import { UpdateNewsComponent } from './views/admin/news/update-news/update-news.component';
 import { NewsComponent } from './views/admin/news/news/news.component';
-import { UserComponent } from './views/user/user.component';
-import { MainComponent } from './views/user/main/main.component';
-import { ProductDetailComponent } from './views/user/main/product-detail/product-detail.component';
 import { UserModule } from './views/user/user.module';
 import { PromotionDateComponent } from './views/admin/promotion-date/promotion-date/promotion-date.component';
 import { UpdatePromotionDateComponent } from './views/admin/promotion-date/update-promotion-date/update-promotion-date.component';
@@ -114,7 +110,8 @@ registerLocaleData(localeFr, 'vi');
     AngularFireDatabaseModule,
     NgbPaginationModule,
     Ng2SearchPipeModule,
-    PipesModule
+    PipesModule,
+    MDBBootstrapModule.forRoot(),
   ],
   declarations: [
     AppComponent,

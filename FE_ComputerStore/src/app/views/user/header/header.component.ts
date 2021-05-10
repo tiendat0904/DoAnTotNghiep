@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit {
       }
     )
     this.fetchgetInfo();
-    if (localStorage.length !== 0) {
+    if (localStorage.getItem("account_id")) {
       this.url = "/#/account/account-info";
       $(document).ready(function () {
         $('#header-account').hover(

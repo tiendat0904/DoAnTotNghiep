@@ -125,7 +125,7 @@ export class UpdateProductImageComponent implements OnInit {
       if(this.model.image.length === 0){
         this.urlPictureDefault = avatarDefault;
       }else{
-        // this.urlPictureDefault = this.model.image
+        this.urlPictureDefault = this.model.image[0]
       }    
     }
     
@@ -236,35 +236,6 @@ export class UpdateProductImageComponent implements OnInit {
     
     }
     
-    // // const filelist = event.target.files;
-    // const allPercentage: Observable<number>[] = [];
-
-    // for (const file of filelist) {
-
-    //   const path = `files/${file.name}`;
-    //   const ref = this.store.ref(path);
-    //   const task = this.store.upload(path, file);
-    //   const _percentage$ = task.percentageChanges();
-    //   allPercentage.push(_percentage$);
-
-    //   // create composed objects with different information. ADAPT THIS ACCORDING to YOUR NEED
-    //   const uploadTrack = {
-    //     fileName: file.name,
-    //     percentage: _percentage$
-    //   }
-
-    //   // push each upload into the array
-    //   this.uploads.push(uploadTrack);
-
-    //   // for every upload do whatever you want in firestore with the uploaded file
-    //   const _t = task.then((f) => {
-    //     return f.ref.getDownloadURL().then((url) => {
-    //       return this.afs.collection('files').add({
-    //         name: f.metadata.name,
-    //         url: url
-    //       });
-    //     })
-    //   })
   }
 
 }

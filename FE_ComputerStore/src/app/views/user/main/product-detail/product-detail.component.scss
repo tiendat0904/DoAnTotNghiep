@@ -12,7 +12,7 @@
 hr{
     border : 1px solid #ffee00ef;
     background-color: #ffee00ef;
-    width: 95%;
+    width: 80.4rem;
     text-align: left;
 }
 
@@ -101,3 +101,35 @@ h4{
     border: 1px solid #ddd;
     max-width: 255px;
 }
+
+
+// .carousel-indicators{
+//     bottom: -70px;
+// }
+
+
+#img-item{
+    width: 300px;
+}
+
+::ng-deep .carousel-indicators{
+    bottom: -45px !important;
+}
+
+::ng-deep .carousel-indicators li {
+    width: 5rem !important;
+}
+
+.img-fluid{
+    border: 1px solid #ddd;
+}
+
+::ng-deep .carousel-control-prev-icon{
+    background-image:  url('https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2FUntitled-3.png?alt=media&token=f82dd668-b277-4033-8531-d2c0a0a0ab0b') !important;
+}
+
+::ng-deep .carousel-control-next-icon{
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2FUntitled-2.png?alt=media&token=549ec238-fbe3-4c99-9379-28c05b5a6185') !important;
+}
+
+

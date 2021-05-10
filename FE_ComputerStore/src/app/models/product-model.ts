@@ -11,7 +11,7 @@ export interface productModel{
     price_display?:number,
     warranty?: number,
     amount?: number,
-    image?: string,
+    image?: any[],
     checked?: boolean,
     check?:string,
     isCheckPrice ?: boolean

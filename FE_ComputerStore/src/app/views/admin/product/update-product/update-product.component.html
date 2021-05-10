@@ -104,6 +104,28 @@
             </div>
           </div>
         </div>
+
+        <div class="form-group">
+          <label>Hình ảnh</label>
+          <div class="profile-img">
+            <img [src]="urlPictureDefault" alt="Ảnh đại diện" />
+          </div>
+          <div [hidden]="isChangeImage"   id="profile-input" class="file btn btn-lg btn-primary">
+            Change Photo
+            <input type="file" formControlName="image" multiple=true (change)="uploadImage($event)" name="file" />
+          </div>
+          <div style="justify-content: center;margin-top: -12px;display: flex;">
+            <div *ngFor = "let item of uploads">
+              <img style="height: 50px;width: 50px;" [src]="item" alt="">
+            </div>
+            
+          </div>
+          <div *ngIf="submitted && formGroup.controls['image'].errors?.required">
+            <div *ngIf="formGroup.controls['image'].errors?.required" style="color: red">
+              * Hình ảnh sản phẩm không được để trống
+            </div>
+          </div>
+        </div>
   
        
         

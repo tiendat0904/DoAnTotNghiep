@@ -40,10 +40,12 @@ export class UpdateProductComponent implements OnInit {
   isEditimage=false;
   isInfo = false;
   submitted = false;
+  isChangeImage = false;
   isLoading=false;
   title = '';
   type: any;
   arrCheck = [];
+  uploads: any[];
   update_ma_tai_khoan:any;
   model: productModel;
   urlPictureDefault = avatarDefault;
@@ -95,6 +97,7 @@ export class UpdateProductComponent implements OnInit {
   updateFormType(type: any) {
     switch (type) {
       case 'add':
+        this.isChangeImage = false;
         this.isInfo = false;
         this.isEdit = false;
         this.isAdd = true;
@@ -102,6 +105,7 @@ export class UpdateProductComponent implements OnInit {
         // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
+        this.isChangeImage = true;
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
@@ -109,6 +113,7 @@ export class UpdateProductComponent implements OnInit {
         // this.update_ma_tai_khoan = this.model.product_id;
         break;
       case 'edit':
+        this.isChangeImage = true;
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
@@ -138,6 +143,7 @@ export class UpdateProductComponent implements OnInit {
         product_type_id: [ null,[Validators.required]],
         warranty: [ null,[Validators.required]],
         description:[ null,[Validators.required]],
+        image:[null,[Validators.required]]
         // so_dien_thoai: [ null, [Validators.required]],
         
       });
@@ -149,19 +155,18 @@ export class UpdateProductComponent implements OnInit {
         product_type_id :[{value: this.model.product_type_id, disabled: this.isInfo}, [Validators.required]],
         warranty: [{value: this.model.warranty, disabled: this.isInfo}, [Validators.required]],
         description:[{value: this.model.description, disabled: this.isInfo}, [Validators.required]],
-        // image: [{value: this.model.image, disabled: this.isInfo},[Validators.required]],
+        image: '',
         // dia_chi: [{value: this.model.supplier_address, disabled: this.isInfo}, [Validators.required]],
         // hot_line: [{value: this.model.hotline, disabled: this.isInfo}],
         // email: [{value: this.model.email, disabled: this.isInfo}],
         // so_dien_thoai: [{value: this.model., disabled: this.isInfo}, [Validators.required]],
       });
-      // if(this.model.image===""){
-      //   this.urlPictureDefault = avatarDefault;
-      // }
-      // else{
-      //   this.urlPictureDefault=this.model.image;
-
-      // }
+      if(this.model.image.length === 0){
+        this.urlPictureDefault = avatarDefault;
+      }else{
+        this.urlPictureDefault = this.model.image[0];
+        this.uploads =  this.model.image;
+      }  
       
     }
   }
@@ -223,9 +228,9 @@ export class UpdateProductComponent implements OnInit {
         trademark_id: this.formGroup.get('trademark_id')?.value,
         product_type_id: this.formGroup.get('product_type_id')?.value,
         warranty: this.formGroup.get('warranty')?.value,
-        description : this.formGroup.get('description')?.value
+        description : this.formGroup.get('description')?.value,
         // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
-        // image : this.urlPictureDefault,
+        image : this.uploads,
       };
     }
     if (this.isAdd) {
@@ -269,28 +274,34 @@ export class UpdateProductComponent implements OnInit {
   }
 
   uploadImage(event) {
+    this.uploads = [];
     // tslint:disable-next-line:prefer-const
-    let file = event.target.files[0];
+    const filelist = event.target.files;
     // tslint:disable-next-line:prefer-const
-    let path = `${file.name}`;
-    if (file.type.split('/')[0] !== 'image') {
-      return alert('Erreur, ce fichier n\'est pas une image');
-    } else {
-      // tslint:disable-next-line:prefer-const
-      let ref = this.store.ref(path);
-      // tslint:disable-next-line:prefer-const
-      let task = this.store.upload(path, file);
-      this.uploadPercent = task.percentageChanges();
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          this.downloadURL = ref.getDownloadURL();
-          this.downloadURL.subscribe(url => {
-          this.urlPictureDefault=url;
-          });
-        }
-        )
-      ).subscribe();
+    for(const file of filelist){
+      let path = `computerstore/${file.name}`;
+      if (file.type.split('/')[0] !== 'image') {
+        return alert('Erreur, ce fichier n\'est pas une image');
+      } else {
+        // tslint:disable-next-line:prefer-const
+        let ref = this.store.ref(path);
+        // tslint:disable-next-line:prefer-const
+        let task = this.store.upload(path, file);
+        this.uploadPercent = task.percentageChanges();
+        task.snapshotChanges().pipe(
+          finalize(() => {
+            this.downloadURL = ref.getDownloadURL();
+            this.downloadURL.subscribe(url => {
+            this.uploads.push(url);
+            this.urlPictureDefault= this.uploads[0];
+            });
+          }
+          )
+        ).subscribe();
     }
+    
+    }
+    
   }
 
 }

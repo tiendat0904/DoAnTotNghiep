@@ -25,6 +25,7 @@ import { SearchComponent } from './search/search.component';
 import { NewsComponent } from './news/news.component';
 import { AccountModule } from './account/account.module';
 import { WarrantySearchComponent } from './warranty-search/warranty-search.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 // Angular
 
@@ -40,7 +41,8 @@ import { WarrantySearchComponent } from './warranty-search/warranty-search.compo
     AccountModule,
     NgbPaginationModule,
     Ng2SearchPipeModule,
-    PipesModule
+    PipesModule,
+    MDBBootstrapModule.forRoot(),
   ],
   declarations: [
     UserComponent,
