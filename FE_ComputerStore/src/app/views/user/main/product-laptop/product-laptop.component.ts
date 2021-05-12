@@ -19,6 +19,7 @@ export class ProductLaptopComponent implements OnInit {
   list_product_laptop = [];
   list_product_laptop1 = [];
   isCheckPrice : boolean;
+  checkSelect:any;
   product_type_id: any;
   product_type_name: any;
   price_new: any;
@@ -70,6 +71,9 @@ export class ProductLaptopComponent implements OnInit {
   }
 
   public filterProducts(): void {
+    if(this.checkSelect !==0){
+      this.checkSelect =0;
+    }
     this.list_product_laptop = this.list_product_laptop1;
     let list_product_filter = this.list_product_laptop;
     const activeColors = this.list_trademark_show.filter(c => c.selected).map(c => c.trademark_id);
@@ -85,12 +89,16 @@ export class ProductLaptopComponent implements OnInit {
     }
   }
   changeStatus(event: any) {
+    for(let item of this.list_trademark_show){
+      item.selected = false;
+    }
+    this.list_product_laptop = this.list_product_laptop1;
     // this.isLoading = true;
     // let list = [];
     // tslint:disable-next-line: radix
     switch (parseInt(event)) {
       case 0:
-        this.list_product_laptop = [...this.list_product_laptop];
+        this.list_product_laptop = [...this.list_product_laptop1];
         // this.isLoading = false;
         break;
       case 1:

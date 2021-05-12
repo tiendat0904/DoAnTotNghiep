@@ -1,0 +1,53 @@
+<ng-template #content let-modal>
+    <div class="header-modal">
+        <h4>Chọn linh kiện</h4>
+        <input type="text" placeholder="Bạn cần tìm linh kiện gì ?" (keyup)="filterByKeyword()"
+            [(ngModel)]="searchedKeyword">
+        <span class="header-model-search"><i class="fas fa-search"></i></span>
+        <span class="header-model-close"><button (click)="modal.dismiss('Cross click')"><i
+                    class="fas fa-times"></i></button></span>
+    </div>
+    <div class="row">
+        <div class='col-lg-3' style="padding-left: 25px;">
+            <h5
+                style="font-weight: 600;line-height: 30px;padding-top: 15px;font-size: 18px;color: #243a76;margin-bottom: 0;">
+                LỌC SẢN
+                PHẨM</h5>
+            <hr />
+            <h4 style="font-weight: 600;margin-bottom: 5px;">Hãng sản xuất</h4>
+            <div *ngFor="let item of arraylist_trademark_filter">
+                <input type="checkbox" [(ngModel)]="item.selected" (ngModelChange)="filterProducts()"
+                    style="margin-right: 3px">{{item.trademark_name}}
+            </div>
+        </div>
+        <div class='col-lg-9' style="overflow: auto; height: 650px;max-width: 861px;">
+            <p [hidden]="check_product">Không tìm thấy sản phẩm phù hợp</p>
+            <div *ngFor="let item of arraylist_product_filter">
+                <div class='product-cart-detail'>
+                    <div class='product-cart-image'>
+                        <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                    </div>
+                    <div class="product-description-cart">
+                        <h5>{{item.product_name}}</h5>
+                        <p>Mã SP: {{item.product_id}}</p>
+                        <p>Bảo hành: {{item.warranty}} Tháng</p>
+                        <p>Kho hàng: <span
+                                [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</span>
+                        </p>
+                        <h4>{{item.price_display| currency: 'VND'}}</h4>
+                    </div>
+                    <div class='product-price-cart'  *ngIf="item.checkAmount; else elseBlock">
+                        <button id="add-build-pc" (click)="add(item);" style="outline: none;"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                    <ng-template #elseBlock>
+                        <div class='product-price-cart' >
+                            <div id="add-build-pc"  style="outline: none;text-align: center; background-color: #ec1b23;"><i
+                                    class="fas fa-ban"></i></div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

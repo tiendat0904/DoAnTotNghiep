@@ -14,5 +14,6 @@ export interface productModel{
     image?: any[],
     checked?: boolean,
     check?:string,
+    checkAmount?:boolean,
     isCheckPrice ?: boolean
  }

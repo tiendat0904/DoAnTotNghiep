@@ -27,6 +27,10 @@ export class BillDetailService {
     return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'bills_detail/'+id);
   }
 
+  getbybill(id: any): Observable<any>{
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'bills_detail_by_bill/'+id);
+  }
+
   delete(modelDelete: any): Observable<any>{
     return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'bills_detail/delete', modelDelete);
   }

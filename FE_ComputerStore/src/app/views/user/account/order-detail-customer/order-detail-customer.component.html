@@ -1,0 +1,70 @@
+<div *ngIf = "order" style="background-color: #fff;padding: 15px;">
+    <h2>Đơn hàng số #{{order.bill_id}}</h2>
+    <div>
+        <b>Thời gian đặt mua: </b>{{order.created_at}}
+    </div>
+    <br>
+    <div style="color: #f60;font-weight: bold;">Thông tin người mua</div>
+    <table *ngIf = "customer" class = "info-customer">
+        <tbody>
+            <tr>
+                <td>Họ và tên</td>
+                <td>: {{customer.full_name}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>: {{customer.email}}</td>
+            </tr>
+            <tr>
+                <td>Điện thoại</td>
+                <td>: {{customer.phone_number}}</td>
+            </tr>
+            <tr>
+                <td>Địa chỉ</td>
+                <td>: {{customer.address}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <div style="color: #f60;font-weight: bold">Thông tin đơn hàng</div>
+    <br>
+    <table class="table table-striped table-hover table-bordered ">
+        <thead>
+            <tr style="background-color: #eeeeee;">
+            <th>STT</th>
+            <th>Ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá bán</th>
+            <th>Số lượng</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            </tr>
+            <tr
+            *ngFor="
+            let e of arraylist_bill_detail  |  slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
+            let i = index
+            "
+            >
+            <td>{{ i + (page-1)*pageSize + 1 }}</td>
+            <td> <img [src]="e.image" alt="" style="width:40px;height:40px"> </td>
+            <td [innerHTML]="e.product_name"></td>
+            <td [innerHTML]="e.price  | currency: 'VND'"></td>
+            <td [innerHTML]="e.amount"></td>
+            </tr>
+            <tr>
+                <td colspan="4" align="right">Giá trị</td>
+                <td colspan="2">{{order.into_money | currency: 'VND'}}</td>
+            </tr>
+            <tr>
+                <td colspan="4"  align="right">Phí vận chuyển</td>
+                <td colspan="2">Chưa được cập nhật hoặc miễn phí</td>
+            </tr>
+            <tr>
+                <td colspan="4"  align="right">Tổng giá trị đơn hàng</td>
+                <td colspan="2">{{order.into_money | currency: 'VND'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

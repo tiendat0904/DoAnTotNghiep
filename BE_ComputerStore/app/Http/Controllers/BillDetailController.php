@@ -232,6 +232,22 @@ class BillDetailController extends Controller
         }
     }
 
+    public function showbybill($id)
+    {
+        //
+        $objs = DB::table(self::table)
+        ->join(ProductImageController::table, self::table . '.' . self::product_id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+            ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+            ->join(BillController::table, self::table . '.' . self::bill_id, '=', BillController::table . '.' . BillController::id)
+            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name,ProductImageController::table . '.' . ProductImageController::image,BillController::table . '.' . BillController::created_at,BillController::table . '.' . BillController::order_status_id)
+            ->where(self::table . '.' . self::bill_id, '=', $id)->get();
+        if ($objs) {
+            return response()->json(['data' => $objs], 200);
+        } else {
+            return response()->json(['message' => "Không tìm thấy"], 200);
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

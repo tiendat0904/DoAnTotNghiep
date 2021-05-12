@@ -7,127 +7,183 @@
     <hr />
     <div></div>
 </div>
-<div class='cart-main'>
-    <div style="margin-right: 20px;">
-        <h2>THÔNG TIN GIỎ HÀNG</h2>
-    </div>
-    <div class='cart-main-button'>
-        <div class="cart-button">
-            <button class="select-product" (click)="selectcontinue();">CHỌN TIẾP SẢN PHẨM KHÁC</button>
+<div *ngIf="checkCart; else elseNocart">
+    <div class='cart-main'>
+        <div style="margin-right: 20px;">
+            <h2>THÔNG TIN GIỎ HÀNG</h2>
         </div>
-        <div>
-            <button class="delete-cart" (click)="deletecart()">XÓA GIỎ HÀNG</button>
-        </div>
-    </div>
-    <div class='product-cart'>
-        <div *ngFor="let item of list_product">
-            <div class='product-cart-detail'>
-                <div class='product-cart-image'>
-                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-                </div>
-                <div class="product-description-cart">
-                    <h5>{{item.product_name}}</h5>
-                    <p>{{item.product_id}}</p>
-                    <p>Bảo hành: 12 Tháng</p>
-                </div>
-                <div class='product-price-cart'>
-                    <span>{{item.price | currency: 'VND'}}</span>
-                    <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(item.product_id);"><i
-                                class='fa fa-minus'></i></button>
-                        <input type="text" value={{item.amount}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(item.product_id);"><i
-                                class='fa fa-plus'></i></button>
+        <div class='cart-main-button'>
+            <div class="cart-button">
+                <button class="select-product" (click)="selectcontinue();">CHỌN TIẾP SẢN PHẨM KHÁC</button>
+            </div>
+            <div>
+                <button class="delete-cart" (click)="open(mymodel1)">XÓA GIỎ HÀNG</button>
+                <ng-template #mymodal1 let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
                     </div>
-                    <button id="delete-product-cart" (click)="deleteItem(item.product_id);" style="outline: none;"><i
-                            class="far fa-trash-alt"></i></button>
-                </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa giỏ hàng này?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px" (click)="deletecart();">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="total-cart">
-            <Span style="margin-left: 835px;">Tổng tiền đơn hàng : </Span><Span
-                style="font-weight: bold;color: red;">{{total | currency: 'VND'}}</Span>
+        <div class='product-cart'>
+            <div *ngFor="let item of list_product">
+                <div class='product-cart-detail'>
+                    <div class='product-cart-image'>
+                        <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                    </div>
+                    <div class="product-description-cart">
+                        <h5>{{item.product_name}}</h5>
+                        <p>{{item.product_id}}</p>
+                        <p>Bảo hành: 12 Tháng</p>
+                    </div>
+                    <div class='product-price-cart'>
+                        <span>{{item.price | currency: 'VND'}}</span>
+                        <div>
+                            <button type="button" style="outline: none;" (click)="minusQuantity(item.product_id);"><i
+                                    class='fa fa-minus'></i></button>
+                            <input type="text" value={{item.amount}} readonly>
+                            <button type="button" style="outline: none;" (click)="addQuantity(item.product_id);"><i
+                                    class='fa fa-plus'></i></button>
+                        </div>
+                        <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
+                                class="far fa-trash-alt"></i></button>
+                        <ng-template #mymodal let-modal>
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modal-basic-title">
+                                    Xác nhận xóa thông tin
+                                </h4>
+                                <button type="button" class="close" aria-label="Close"
+                                    (click)="modal.dismiss('Cross click')">
+                                    <span aria-hidden="true">x</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có chắc chắn muốn xóa sản phẩm {{ item.product_name }}?
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" style="width: 80px"
+                                    (click)="deleteItem(item.product_id);">
+                                    Có
+                                </button>
+                                <button class="btn btn-outline-dark" style="width: 80px"
+                                    (click)="modal.dismiss('Cross click')">
+                                    Không
+                                </button>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div class="total-cart">
+                <Span style="margin-left: 835px;">Tổng tiền đơn hàng : </Span><Span
+                    style="font-weight: bold;color: red;">{{total | currency: 'VND'}}</Span>
+            </div>
+        </div>
+    </div>
+
+    <div class="order-cart">
+        <div class="order-info-custommer">
+            <h3>THÔNG TIN KHÁCH HÀNG</h3>
+            <form [formGroup]="formGroup" (ngSubmit)="save()">
+                <div>
+                    <span style="margin-right: 76px;">Họ tên*</span><input type="text"
+                        [(ngModel)]="update_customer_name" formControlName="customer_name">
+                    <div *ngIf="submitted && formGroup.controls['customer_name'].errors?.required">
+                        <div *ngIf="formGroup.controls['customer_name'].errors?.required" style="color: red">
+                            * Họ tên không được để trống
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <span style="margin-right: 85px;">Email*</span><input type="text" [(ngModel)]="update_email"
+                        formControlName="email">
+                    <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
+                        <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
+                            * Email không được để trống
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <span style="margin-right: 36px;">Số điện thoại*</span><input type="text"
+                        [(ngModel)]="update_phone_number" formControlName="phone_number">
+                    <div *ngIf="submitted && formGroup.controls['phone_number'].errors?.required">
+                        <div *ngIf="formGroup.controls['phone_number'].errors?.required" style="color: red">
+                            * Số điện thoại không được để trống
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <span style="margin-right: 76px;">Địa chỉ*</span><input type="text" [(ngModel)]="update_address"
+                        formControlName="address">
+                    <div *ngIf="submitted && formGroup.controls['address'].errors?.required">
+                        <div *ngIf="formGroup.controls['address'].errors?.required" style="color: red">
+                            * Địa chỉ không được để trống
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </form>
+
+        </div>
+        <div class="order-type">
+            <h3>HÌNH THỨC THANH TOÁN</h3>
+            <input type="radio" value="1" [(ngModel)]="selectedType" name="1" checked><span>Thanh toán tiền mặt khi nhận
+                hàng</span>
+            <br>
+            <input type="radio" value="2" [(ngModel)]="selectedType" name="1"><span>Thanh toán qua chuyển khoản qua tài
+                khoản ngân hàng</span>
+        </div>
+        <div class="order-pay">
+            <p>Mã giảm giá/quà tặng</p>
+            <div style="display: flex;">
+                <div style="padding-right: 5px;">
+                    <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" autocomplete="off">
+                    <div style="background-color: #ccc2c2;" *ngFor="let item of list_voucher_filter">
+                        <p><span style="font-weight: normal;">Voucher :</span>{{item.voucher_level}}%</p>
+                    </div>
+                </div>
+
+                <button style="border-radius: 3px;border:0px;height: 35px;background-color: #ffee00ef;width: 78px;"
+                    (click)="useVouvher();">Áp
+                    dụng</button>
+            </div>
+            <div>
+                <span style="margin-right: 142px;">Tổng tiền</span><span>{{total | currency: 'VND'}}</span>
+            </div>
+            <div>
+                <span style="margin-right: 134px;">Thành tiền</span><span>{{total_money | currency: 'VND'}}</span>
+            </div>
+            <div style="margin-top:10px">
+                <button class="order-success" (click)="orderSuccess();">ĐẶT HÀNG</button>
+                <a href="/#/" class="order-continue">CHỌN THÊM SẢN PHẨM</a>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="order-cart">
-    <div class="order-info-custommer">
-        <h3>THÔNG TIN KHÁCH HÀNG</h3>
-        <form [formGroup]="formGroup" (ngSubmit)="save()">
-            <div>
-                <span style="margin-right: 76px;">Họ tên*</span><input type="text" [(ngModel)]="update_customer_name"
-                    formControlName="customer_name">
-                <div *ngIf="submitted && formGroup.controls['customer_name'].errors?.required">
-                    <div *ngIf="formGroup.controls['customer_name'].errors?.required" style="color: red">
-                        * Họ tên không được để trống
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div>
-                <span style="margin-right: 85px;">Email*</span><input type="text" [(ngModel)]="update_email"
-                    formControlName="email">
-                <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
-                    <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
-                        * Email không được để trống
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div>
-                <span style="margin-right: 36px;">Số điện thoại*</span><input type="text"
-                    [(ngModel)]="update_phone_number" formControlName="phone_number">
-                <div *ngIf="submitted && formGroup.controls['phone_number'].errors?.required">
-                    <div *ngIf="formGroup.controls['phone_number'].errors?.required" style="color: red">
-                        * Số điện thoại không được để trống
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div>
-                <span style="margin-right: 76px;">Địa chỉ*</span><input type="text" [(ngModel)]="update_address"
-                    formControlName="address">
-                <div *ngIf="submitted && formGroup.controls['address'].errors?.required">
-                    <div *ngIf="formGroup.controls['address'].errors?.required" style="color: red">
-                        * Địa chỉ không được để trống
-                    </div>
-                </div>
-            </div>
-            <br>
-        </form>
-
+<ng-template #elseNocart>
+    <div class="nocart">
+        <img src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/Drj57qu.png?alt=media&token=e549dac7-1d24-4211-9302-c45f1f42af84"
+            alt="">
+        <h4>Giỏ hàng chưa có sản phẩm nào</h4>
+        <a href="/#/">Mua sắm ngay</a>
     </div>
-    <div class="order-type">
-        <h3>HÌNH THỨC THANH TOÁN</h3>
-        <input type="radio" value="1" [(ngModel)]="selectedType" name="1" checked><span>Thanh toán tiền mặt khi nhận
-            hàng</span>
-        <br>
-        <input type="radio" value="2" [(ngModel)]="selectedType" name="1"><span>Thanh toán qua chuyển khoản qua tài
-            khoản ngân hàng</span>
-    </div>
-    <div class="order-pay">
-        <p>Mã giảm giá/quà tặng</p>
-        <div style="display: flex;">
-            <div style="padding-right: 5px;">
-                <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" autocomplete="off">
-                <div style="background-color: #ccc2c2;" *ngFor="let item of list_voucher_filter">
-                    <p><span style="font-weight: normal;">Voucher :</span>{{item.voucher_level}}%</p>
-                </div>
-            </div>
-
-            <button style="border-radius: 3px;border:0px;height: 35px;background-color: #ffee00ef;width: 78px;" (click) = "useVouvher();">Áp
-                dụng</button>
-        </div>
-        <div>
-            <span style="margin-right: 142px;">Tổng tiền</span><span>{{total | currency: 'VND'}}</span>
-        </div>
-        <div>
-            <span style="margin-right: 134px;">Thành tiền</span><span>{{total_money | currency: 'VND'}}</span>
-        </div>
-        <div style="margin-top:10px">
-            <button class="order-success" (click)="orderSuccess();">ĐẶT HÀNG</button>
-            <a href="/#/" class="order-continue">CHỌN THÊM SẢN PHẨM</a>
-        </div>
-    </div>
-</div>
+</ng-template>

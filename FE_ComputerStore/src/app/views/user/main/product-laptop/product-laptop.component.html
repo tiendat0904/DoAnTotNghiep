@@ -3,7 +3,7 @@
         <a href=""><i class="fas fa-home"></i></a>
         <p style="margin-top: 5px;margin-left: 5px;">></p>
         <p style="font-size: 20px;margin-left: 5px">{{product_type_name}}</p>
-        <select (change)="changeStatus($event.target.value)" class="custom-select col-md-4 col-lg-2 col-sm-12" style="position: relative;left: 919px;">
+        <select (change)="changeStatus($event.target.value)" class="custom-select col-md-4 col-lg-2 col-sm-12"[value]="checkSelect" style="position: relative;left: 919px;">
             <option value="0">Lọc sản phẩm</option>
             <option value="1">Sản phẩm mới về</option>
             <option value="2">Giá giảm dần</option>

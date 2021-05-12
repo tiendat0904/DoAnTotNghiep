@@ -42,11 +42,13 @@ Route::get('/product_type/{id}', [\App\Http\Controllers\ProductTypeController::c
 
 Route::get('/bills', [\App\Http\Controllers\BillController::class, 'index']);
 Route::post('/bills', [\App\Http\Controllers\BillController::class, 'store']);
+Route::get('/bills/{id}', [\App\Http\Controllers\BillController::class, 'show']);
 Route::put('/bills/{id}', [\App\Http\Controllers\BillController::class, 'update']);
 Route::post('/bills/delete', [\App\Http\Controllers\BillController::class, 'destroy']);
 
 Route::get('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'index']);
 Route::get('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'show']);
+Route::get('/bills_detail_by_bill/{id}', [\App\Http\Controllers\BillDetailController::class, 'showbybill']);
 Route::put('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'update']);
 Route::post('/bills_detail/delete', [\App\Http\Controllers\BillDetailController::class, 'destroy']);
 
@@ -228,7 +230,7 @@ Route::middleware('auth:api')->group(function () {
     // Hóa đơn bán
     
     
-    Route::get('/bills/{id}', [\App\Http\Controllers\BillController::class, 'show']);
+  
 
     Route::post('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'store']);
     //chi tiết hóa đơn bán

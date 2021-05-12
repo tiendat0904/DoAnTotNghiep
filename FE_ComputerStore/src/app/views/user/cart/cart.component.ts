@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { timeout } from 'rxjs/operators';
 import { accountModel } from '../../../models/account-model';
@@ -36,6 +37,7 @@ export class CartComponent implements OnInit {
   total_money = 0;
   billDetailModel: billDetailModel;
   itemModel: ItemModel;
+  checkCart = true;
   account: accountModel;
   voucherModel: voucherModel;
   bill_id: any;
@@ -52,6 +54,8 @@ export class CartComponent implements OnInit {
   update_address: any;
   selectedType: any;
   checkVoucher:boolean;
+  modalReference: any;
+  closeResult: string;
   constructor(private cartService: CartService,
     private fb: FormBuilder,
     private productService: ProductService,
@@ -60,7 +64,8 @@ export class CartComponent implements OnInit {
     private accountService: AccountService,
     private router: Router,
     private toastr: ToastrService,
-    private voucherService:VoucherService) { }
+    private voucherService:VoucherService,
+    private modalService: NgbModal,) { }
 
   ngOnInit(): void {
     this.submitted = true;
@@ -77,6 +82,30 @@ export class CartComponent implements OnInit {
 
   selectcontinue() {
     this.router.navigate(['/']);
+  }
+
+  open(content: any) {
+    this.modalReference = this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+    });
+    this.modalReference.result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason: any) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   loadListProductCart() {
@@ -160,6 +189,9 @@ export class CartComponent implements OnInit {
       }
     }
     setTimeout(() => this.totalCart(), 1000);
+    if(this.list_product === [] || this.list_product.length === 0){
+      this.checkCart = false;
+    }
   }
 
 
@@ -202,6 +234,8 @@ export class CartComponent implements OnInit {
     }
    
   }
+
+
   orderSuccess() {
     
     console.log(this.selectedType);
@@ -341,6 +375,7 @@ export class CartComponent implements OnInit {
       this.totalCart();
     }
     this.loadListProductCart();
+    this.modalReference.dismiss();
   }
 
   
@@ -367,7 +402,7 @@ export class CartComponent implements OnInit {
       this.cartService.deleteItem(item);
       this.loadListProductCart();
     }
-
+    this.modalReference.dismiss();
   }
 
   addQuantity(item) {

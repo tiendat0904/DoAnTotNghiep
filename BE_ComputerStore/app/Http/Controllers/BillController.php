@@ -116,9 +116,9 @@ class BillController extends Controller
     public function show($id)
     {
         //
-        $user = auth()->user();
-        $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        // $user = auth()->user();
+        // $ac_type = $user->account_type_id;
+        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $objs = DB::table(self::table)
                 ->leftJoin(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
                 ->leftJoin(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
@@ -135,9 +135,9 @@ class BillController extends Controller
             } else {
                 return response()->json(['error' => 'Không tìm thấy'], 200);
             }
-        } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        }
+        // } else {
+        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        // }
     }
 
     /**

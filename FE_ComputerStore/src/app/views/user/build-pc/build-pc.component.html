@@ -1,0 +1,565 @@
+<div class='product-detail-page'>
+    <div class='product-detail-icon'>
+        <a href=""><i class="fas fa-home"></i></a>
+        <p style="margin-top: 5px;margin-left: 5px;">></p>
+        <p style="font-size: 20px;margin-left: 5px;">Cấu hình PC</p>
+    </div>
+    <hr />
+</div>
+<div class="buildpc-header">
+    <div style="margin-right: 20px;">
+        <h2>XÂY DỰNG MÁY TÍNH HÀNG ĐẦU VIỆT NAM</h2>
+    </div>
+    <div class="button-reset">
+        <button (click) = "open(resetPC);">Làm mới <i class="fas fa-sync-alt"></i></button>
+        <ng-template #resetPC let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">
+                    Xác nhận xóa thông tin
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa cấu hình PC này ?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" style="width: 80px" (click) = "resetBuilPC();">
+                    Có
+                </button>
+                <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                    Không
+                </button>
+            </div>
+        </ng-template>
+    </div>
+    <div class="chi-phi-du-tinh">
+        <table style="width: 97.5%;">
+            <tbody style="float: right;width: 33%;">
+                <tr style="float: right;width: 85%;">
+                    <td>Chi phí dự tính</td>
+                    <td> <span class="js-config-summary"><span class="total-price-config">{{total_money | currency: 'VND'}}</span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="buildpc-main">
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>1.Bộ vi xử lý</span></div>
+            <div class= "select-item" [hidden] = "checkCPU">
+                <button (click)="initModal('CPU');"><span><i class="fa fa-plus"></i> Chọn bộ vi xử lý</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_cpu" [hidden] = "checkDisplayCPU">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_cpu.product.product_id]"><img src="{{product_cpu.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_cpu.product.product_name}}</h5>
+                    <p>Mã SP: {{product_cpu.product.product_id}}</p>
+                    <p>Bảo hành: {{product_cpu.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_cpu.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_cpu.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_cpu.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_cpu.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('CPU');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_cpu.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>2.Bo mạch chủ</span></div>
+            <div class= "select-item"[hidden] = "checkmain">
+                <button (click)="initModal('Main');"><span><i class="fa fa-plus"></i> Chọn Bo mạch chủ</span></button>
+            </div>
+            <div class='product-cart-detail'  *ngIf = "product_main"  [hidden] = "checkDisplayMain">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_main.product.product_id]"><img src="{{product_main.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_main.product.product_name}}</h5>
+                    <p>Mã SP: {{product_main.product.product_id}}</p>
+                    <p>Bảo hành: {{product_main.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_main.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_main.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_main.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_main.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('Main');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_main.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>3.RAM</span></div>
+            <div class= "select-item"  [hidden] = "checkram">
+                <button (click)="initModal('RAM');"><span><i class="fa fa-plus"></i> Chọn RAM</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_ram" [hidden] = "checkDisplayRAM">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_ram.product.product_id]"><img src="{{product_ram.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_ram.product.product_name}}</h5>
+                    <p>Mã SP: {{product_ram.product.product_id}}</p>
+                    <p>Bảo hành: {{product_ram.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_ram.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_ram.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_ram.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_ram.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('RAM');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_ram.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>4.HDD</span></div>
+            <div class= "select-item"  [hidden] = "checkhdd">
+                <button (click)="initModal('HDD');"><span><i class="fa fa-plus"></i> Chọn HDD</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_hdd" [hidden] = "checkDisplayHDD">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_hdd.product.product_id]"><img src="{{product_hdd.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_hdd.product.product_name}}</h5>
+                    <p>Mã SP: {{product_hdd.product.product_id}}</p>
+                    <p>Bảo hành: {{product_hdd.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_hdd.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_hdd.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_hdd.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_hdd.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('HDD');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_hdd.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>5.SSD</span></div>
+            <div class= "select-item"  [hidden] = "checkssd">
+                <button (click)="initModal('SSD');"><span><i class="fa fa-plus"></i> Chọn SSD</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_ssd" [hidden] = "checkDisplaySSD">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_ssd.product.product_id]"><img src="{{product_ssd.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_ssd.product.product_name}}</h5>
+                    <p>Mã SP: {{product_ssd.product.product_id}}</p>
+                    <p>Bảo hành: {{product_ssd.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_ssd.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_ssd.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_ssd.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_ssd.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('SSD');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_ssd.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>6.VGA</span></div>
+            <div class= "select-item" [hidden] = "checkvga">
+                <button (click)="initModal('VGA');"><span><i class="fa fa-plus"></i> Chọn VGA</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_vga"  [hidden] = "checkDisplayVGA">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_vga.product.product_id]"><img src="{{product_vga.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_vga.product.product_name}}</h5>
+                    <p>Mã SP: {{product_vga.product.product_id}}</p>
+                    <p>Bảo hành: {{product_vga.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_vga.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_vga.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_vga.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_vga.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart"  (click)="initModal('VGA');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_vga.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>7.Nguồn</span></div>
+            <div class= "select-item"  [hidden] = "checkpsu">
+                <button (click)="initModal('PSU');"><span><i class="fa fa-plus"></i> Chọn Nguồn</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_psu" [hidden] = "checkDisplayPSU">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_psu.product.product_id]"><img src="{{product_psu.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_psu.product.product_name}}</h5>
+                    <p>Mã SP: {{product_psu.product.product_id}}</p>
+                    <p>Bảo hành: {{product_psu.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_psu.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_psu.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_psu.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_psu.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('PSU');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_psu.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item"> 
+            <div class="span-title"><span>8.Vỏ case</span></div>
+            <div class= "select-item"   [hidden] = "checkcase">
+                <button (click)="initModal('CASE');"><span><i class="fa fa-plus"></i> Chọn Vỏ Case</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_case" [hidden] = "checkDisplayCASE">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_case.product.product_id]"><img src="{{product_case.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_case.product.product_name}}</h5>
+                    <p>Mã SP: {{product_case.product.product_id}}</p>
+                    <p>Bảo hành: {{product_case.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_case.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_case.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_case.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_case.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('CASE');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_case.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>9.Màn hình</span></div>
+            <div class= "select-item"  [hidden] = "checkmanhinh">
+                <button (click)="initModal('Màn hình');"><span><i class="fa fa-plus"></i> Chọn màn hình</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_manhinh" [hidden] = "checkDisplayManHinh">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_manhinh.product.product_id]"><img src="{{product_manhinh.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_manhinh.product.product_name}}</h5>
+                    <p>Mã SP: {{product_manhinh.product.product_id}}</p>
+                    <p>Bảo hành: {{product_manhinh.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_manhinh.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_manhinh.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_manhinh.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_manhinh.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('Màn hình');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_manhinh.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>10.Bàn phím</span></div>
+            <div class= "select-item"  [hidden] = "checkkeyboard">
+                <button (click)="initModal('Keyboard');"><span><i class="fa fa-plus"></i> Chọn bàn phím</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_keyboard" [hidden] = "checkDisplayKeyboard">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_keyboard.product.product_id]"><img src="{{product_keyboard.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_keyboard.product.product_name}}</h5>
+                    <p>Mã SP: {{product_keyboard.product.product_id}}</p>
+                    <p>Bảo hành: {{product_keyboard.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_keyboard.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_keyboard.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_keyboard.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_keyboard.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('Keyboard');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_keyboard.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>11.Chuột</span></div>
+            <div class= "select-item"  [hidden] = "checkmouse">
+                <button (click)="initModal('Mouse');"><span><i class="fa fa-plus"></i> Chọn chuột</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_mouse" [hidden] = "checkDisplayMouse">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_mouse.product.product_id]"><img src="{{product_mouse.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_mouse.product.product_name}}</h5>
+                    <p>Mã SP: {{product_mouse.product.product_id}}</p>
+                    <p>Bảo hành: {{product_mouse.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_mouse.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_mouse.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_mouse.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_mouse.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('Mouse');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_mouse.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>12.Tai nghe</span></div>
+            <div class= "select-item"  [hidden] = "checkheadphone">
+                <button (click)="initModal('Headphone');"><span><i class="fa fa-plus"></i> Chọn tai nghe</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_headphone" [hidden] = "checkDisplayHeadphone">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_headphone.product.product_id]"><img src="{{product_headphone.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_headphone.product.product_name}}</h5>
+                    <p>Mã SP: {{product_headphone.product.product_id}}</p>
+                    <p>Bảo hành: {{product_headphone.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_headphone.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_headphone.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_headphone.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_headphone.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('Headphone');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_headphone.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>13.Loa</span></div>
+            <div class= "select-item"  [hidden] = "checkloa">
+                <button (click)="initModal('Loa');"><span><i class="fa fa-plus"></i> Chọn Loa</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_loa" [hidden] = "checkDisplayLoa">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_loa.product.product_id]"><img src="{{product_loa.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_loa.product.product_name}}</h5>
+                    <p>Mã SP: {{product_loa.product.product_id}}</p>
+                    <p>Bảo hành: {{product_loa.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_loa.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_loa.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_loa.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_loa.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('Loa');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_loa.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>14.Ghế gaming</span></div>
+            <div class= "select-item"   [hidden] = "checkghe">
+                <button (click)="initModal('Ghế gaming');"><span><i class="fa fa-plus"></i> Chọn Ghế gaming</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_ghe" [hidden] = "checkDisplayGhe">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_ghe.product.product_id]"><img src="{{product_ghe.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_ghe.product.product_name}}</h5>
+                    <p>Mã SP: {{product_ghe.product.product_id}}</p>
+                    <p>Bảo hành: {{product_ghe.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_ghe.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_ghe.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_ghe.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_ghe.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('Ghế gaming');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_ghe.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>15.Quạt làm mát</span></div>
+            <div class= "select-item"  [hidden] = "checkfancase">
+                <button (click)="initModal('Fan Case');"><span><i class="fa fa-plus"></i> Chọn quạt làm mát</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_fancase" [hidden] = "checkDisplayFanCase">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_fancase.product.product_id]"><img src="{{product_fancase.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_fancase.product.product_name}}</h5>
+                    <p>Mã SP: {{product_fancase.product.product_id}}</p>
+                    <p>Bảo hành: {{product_fancase.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_fancase.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_fancase.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_fancase.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_fancase.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('Fan Case');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_fancase.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="buldpc-main-item" > 
+            <div class="span-title"><span>16.Tản nhiệt nước</span></div>
+            <div class= "select-item"  [hidden] = "checktannhiet">
+                <button (click)="initModal('Tản nhiệt nước');"><span><i class="fa fa-plus"></i> Chọn tản nhiệt nước</span></button>
+            </div>
+            <div class='product-cart-detail' *ngIf = "product_tannhiet" [hidden] = "checkDisplayTanNhiet">
+                <div class='product-cart-image'>
+                    <a [routerLink]="['/',product_tannhiet.product.product_id]"><img src="{{product_tannhiet.product.image}}" alt=""></a>
+                </div>
+                <div class="product-description-cart">
+                    <h5>{{product_tannhiet.product.product_name}}</h5>
+                    <p>Mã SP: {{product_tannhiet.product.product_id}}</p>
+                    <p>Bảo hành: {{product_tannhiet.product.warranty}} Tháng</p>
+                    <p>Kho hàng:</p>
+                </div>
+                <div class='product-price-cart'>
+                    <span>{{product_tannhiet.product.price_display | currency: 'VND'}}</span>
+                    <div>
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_tannhiet.product.product_id);"><i
+                                class='fa fa-minus'></i></button>
+                        <input type="text" value={{product_tannhiet.quantity}} readonly>
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_tannhiet.product.product_id);"><i
+                                class='fa fa-plus'></i></button>
+                    </div>
+                    <button id="change-product-cart" (click)="initModal('Tản nhiệt nước');" style="outline: none;"><i
+                        class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="deleteItem(product_tannhiet.product.product_id);" style="outline: none;"><i
+                            class="far fa-trash-alt"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chi-phi-du-tinh">
+        <table style="width: 97.5%;">
+            <tbody style="float: right;width: 33%;">
+                <tr style="float: right;width: 85%;">
+                    <td>Chi phí dự tính</td>
+                    <td> <span class="js-config-summary"><span class="total-price-config">{{total_money | currency: 'VND'}}</span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class ="action">
+        <button>LƯU CẤU HÌNH <i class="fas fa-save"></i></button>
+        <button (click) = "addToCart();">THÊM VÀO GIỎ HÀNG <i class="fas fa-shopping-cart"></i></button>
+    </div>
+</div>
+
+<app-select-item-build-pc (eventEmit)="ngOnInit()" ></app-select-item-build-pc>

@@ -23,7 +23,7 @@ export class OrderCustomerComponent implements OnInit {
       this.billService.getAll().subscribe(data => {
         this.arraylist_bill = data.data;
         this.arraylist_bill_filter = this.arraylist_bill.filter(function (bill) {
-          return bill.customer_id === Number(localStorage.getItem("account_id"));
+          return (bill.customer_id === Number(localStorage.getItem("account_id")) && bill.order_status_id !== 1);
         })
         if (this.arraylist_bill_filter.length === 0) {
           this.ischeck = false;

@@ -13,7 +13,8 @@
             <tr>
             </tr>
             <tr *ngFor="let e of arraylist_bill_filter">
-                <td [innerHTML]="e.bill_id"></td>
+                <td><a [routerLink]="['/account/order/',e.bill_id]" [innerHTML]="e.bill_id"></a></td>
+                <!-- <a href=""><td [innerHTML]="e.bill_id"></td></a> -->
                 <td [innerHTML]="e.into_money"></td>
                 <td [innerHTML]="e.created_at"></td>
                 <td [innerHTML]="e.order_status_description"></td>

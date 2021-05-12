@@ -2,8 +2,8 @@
   <div class='row main-slider'>
     <div class='main-slider-left col-lg-2'>
       <ul>
-        <a *ngFor="let item of list_product_type;"
-          [routerLink]="['/product-type/',item.product_type_id]">{{item.product_type_name}} - {{item.description}}</a>
+        <a *ngFor="let item of list_product_type | slice:0:14;"
+          [routerLink]="['/product-type/',item.product_type_id]">{{item.product_type_name}} {{item.description}}</a>
       </ul>
     </div>
     <div class='col-lg-7'>

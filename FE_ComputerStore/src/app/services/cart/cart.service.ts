@@ -16,6 +16,40 @@ export class CartService {
   subject = new Subject<any>();
   constructor() { }
 
+  addToCartByPC(item: ItemModel){
+    let local_storage;
+    let itemsInCart = []
+    this.items = item;
+    if(localStorage.getItem('cart')  == null){
+      local_storage =[];
+      itemsInCart.push(this.items);
+      localStorage.setItem('cart', JSON.stringify(itemsInCart));
+      this.subject.next('changed');
+    }
+    else
+    {
+      local_storage = JSON.parse(localStorage.getItem('cart'));
+      for(var i in local_storage)
+      {
+        if(this.items.product.product_id == local_storage[i].product.product_id)
+        {
+          local_storage[i].quantity += 1;
+          this.items=null;
+          break;  
+        }
+    }
+    if(this.items){
+      itemsInCart.push(this.items);
+    }
+    local_storage.forEach(function (item){
+      itemsInCart.push(item);
+    })
+    localStorage.setItem('cart', JSON.stringify(itemsInCart));
+    this.subject.next('changed');
+    }
+  }
+
+
   addToCart(product: productModel){
     let local_storage;
     let itemsInCart = []

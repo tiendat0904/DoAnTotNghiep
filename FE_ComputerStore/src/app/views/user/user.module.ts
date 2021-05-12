@@ -26,6 +26,8 @@ import { NewsComponent } from './news/news.component';
 import { AccountModule } from './account/account.module';
 import { WarrantySearchComponent } from './warranty-search/warranty-search.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { BuildPcComponent } from './build-pc/build-pc.component';
+import { SelectItemBuildPcComponent } from './build-pc/select-item-build-pc/select-item-build-pc.component';
 
 // Angular
 
@@ -57,6 +59,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     SearchComponent,
     NewsComponent,
     WarrantySearchComponent,
+    BuildPcComponent,
+    SelectItemBuildPcComponent,
 
   ]
 })

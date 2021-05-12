@@ -46,6 +46,7 @@ hr{
     color: white;
     font-size: 17px;
     margin-right: 10px;
+    outline: none;
 }
 .delete-cart{
     height: 45px;
@@ -53,6 +54,7 @@ hr{
     font-size: 17px;
     color: white;
     width: 170px;
+    outline: none;
 }
 
 .product-cart{
@@ -124,6 +126,7 @@ hr{
 .order-cart{
     display: flex;
     margin-top: 20px;
+    margin-left: 23px;
 }
 
 .order-info-custommer{
@@ -197,4 +200,37 @@ hr{
     padding: 5px;
     height: 40px;
     text-decoration: none;
+}
+
+.nocart{
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.nocart a{
+    display: inline-block;
+    height: 30px;
+    width: 120px;
+    text-decoration: none;
+    background-color: #1435c3;
+    color: #fff;
+    line-height: 27px;
+}
+
+
+.close{
+    outline: none;
+    height: 40px;
+}
+
+.close:hover{
+    span{
+        color: white;
+    }
+    background-color: red;
+}
+
+.close span {
+    position: relative;
+    bottom: 8px;
 }

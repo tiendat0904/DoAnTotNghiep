@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
 import { AccountComponent } from './account/account.component';
+import { BuildPcComponent } from './build-pc/build-pc.component';
 import { CartComponent } from './cart/cart.component';
 import { MainComponent } from './main/main.component';
 import { ProductDetailComponent } from './main/product-detail/product-detail.component';
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'product-type/:product_type_id',
         component: ProductLaptopComponent
+      },
+      {
+        path: 'build-pc',
+        component: BuildPcComponent
       },
       {
         path: 'warranty-search',
