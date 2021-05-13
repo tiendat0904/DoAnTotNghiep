@@ -27,6 +27,10 @@ export class BillService {
     return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'bills/'+id);
   }
 
+  getByAccount(id: any): Observable<any>{
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'billsbyaccount/'+id);
+  }
+
   delete(modelDelete: any): Observable<any>{
     return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'bills/delete', modelDelete);
   }

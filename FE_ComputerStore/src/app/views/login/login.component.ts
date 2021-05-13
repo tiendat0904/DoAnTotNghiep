@@ -6,10 +6,12 @@ import { accountModel } from '../../models/account-model';
 import { billDetailModel } from '../../models/bill-detail-model';
 import { billModel } from '../../models/bill-model';
 import { ItemModel } from '../../models/item-model';
+import { BuildPCModel } from '../../models/pc-model';
 import { AccountService } from '../../services/account/account.service';
 import { BillDetailService } from '../../services/bill-detail/bill-detail.service';
 import { BillService } from '../../services/bill/bill.service';
 import { CartService } from '../../services/cart/cart.service';
+import { PcService } from '../../services/pc/pc.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,10 +29,13 @@ export class LoginComponent {
   list_bill: Array<billModel> = [];
   list_item: Array<ItemModel> = [];
   update_bill_id: any;
+  array_buildpc = [];
+  array_buildpc_filter : Array<BuildPCModel> = [];
+  array_pc : [];
 
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router, private toaster: ToastrService,
-    private billService: BillService, private billDetailService: BillDetailService, private cartService: CartService) {
+    private billService: BillService, private billDetailService: BillDetailService, private cartService: CartService,private pcService: PcService) {
 
   }
   ngOnInit(): void {
@@ -69,6 +74,7 @@ export class LoginComponent {
         this.account_id = res.data.account_id;
         this.toaster.success('Đăng nhập thành công');
         if (res.data.account_type_id == "3") {
+          this.addBuildPC();
           let update_bill_id;
           this.check_bill = false;
           this.list_bill = [];
@@ -177,5 +183,21 @@ export class LoginComponent {
       err => {
         this.toaster.error(err.error.error);
       });
+  }
+
+  addBuildPC(){
+    let pcModel: BuildPCModel;
+    this.array_buildpc = this.pcService.getItems();
+    if(this.array_buildpc !== []){
+        for(let item of this.array_buildpc){
+          pcModel = {
+            customer_id: Number(localStorage.getItem("account_id")),
+            product_id: item.product.product_id,
+            price: item.product.price,
+            quantity: item.quantity,
+        }
+        this.pcService.create(pcModel).subscribe();
+      }
+    }
   }
 }

@@ -7,7 +7,7 @@
     <hr />
     <div></div>
 </div>
-<div *ngIf="checkCart; else elseNocart">
+<div >
     <div class='cart-main'>
         <div style="margin-right: 20px;">
             <h2>THÔNG TIN GIỎ HÀNG</h2>
@@ -17,7 +17,7 @@
                 <button class="select-product" (click)="selectcontinue();">CHỌN TIẾP SẢN PHẨM KHÁC</button>
             </div>
             <div>
-                <button class="delete-cart" (click)="open(mymodel1)">XÓA GIỎ HÀNG</button>
+                <button class="delete-cart" (click)="open(mymodal1)">XÓA GIỎ HÀNG</button>
                 <ng-template #mymodal1 let-modal>
                     <div class="modal-header">
                         <h4 class="modal-title" id="modal-basic-title">

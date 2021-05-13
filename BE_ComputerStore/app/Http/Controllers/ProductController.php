@@ -14,6 +14,7 @@ class ProductController extends Controller
     const product_name = 'product_name';
     const trademark_id = 'trademark_id';
     const product_type_id = 'product_type_id';
+    const product_type_name = 'product_type_name';
     const price = 'price';
     const amount = 'amount';
     const warranty = 'warranty';

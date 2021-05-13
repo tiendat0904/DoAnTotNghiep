@@ -14,8 +14,10 @@ class CreateBuildPcsTable extends Migration
     public function up()
     {
         Schema::create('build_pcs', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('build_pc_id');
+            $table->bigInteger('customer_id');
+            $table->bigInteger('product_id');
+            $table->integer('quantity');
         });
     }
 

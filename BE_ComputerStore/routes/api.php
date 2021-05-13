@@ -17,13 +17,13 @@ use App\Http\Controllers\ReportController;
 
 Route::post('register', [AccountController::class, 'register']);
 Route::post('login', [AccountController::class, 'login']);
-Route::put('/accounts', [AccountController::class, 'update']);
+
+
 
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/products/{id}', [\App\Http\Controllers\ProductController::class, 'show']);
 
 
-Route::get('/suppliers', [\App\Http\Controllers\SupplierController::class, 'index']);
 Route::get('/suppliers/{id}', [\App\Http\Controllers\SupplierController::class, 'show']);
 
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index']);
@@ -40,17 +40,7 @@ Route::put('/comments/{id}', [\App\Http\Controllers\CommnentController::class, '
 Route::get('/product_type', [\App\Http\Controllers\ProductTypeController::class, 'index']);
 Route::get('/product_type/{id}', [\App\Http\Controllers\ProductTypeController::class, 'show']);
 
-Route::get('/bills', [\App\Http\Controllers\BillController::class, 'index']);
-Route::post('/bills', [\App\Http\Controllers\BillController::class, 'store']);
-Route::get('/bills/{id}', [\App\Http\Controllers\BillController::class, 'show']);
-Route::put('/bills/{id}', [\App\Http\Controllers\BillController::class, 'update']);
-Route::post('/bills/delete', [\App\Http\Controllers\BillController::class, 'destroy']);
 
-Route::get('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'index']);
-Route::get('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'show']);
-Route::get('/bills_detail_by_bill/{id}', [\App\Http\Controllers\BillDetailController::class, 'showbybill']);
-Route::put('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'update']);
-Route::post('/bills_detail/delete', [\App\Http\Controllers\BillDetailController::class, 'destroy']);
 
 Route::get('/voucher', [\App\Http\Controllers\VoucherController::class, 'index']);
 Route::get('/voucher/{id}', [\App\Http\Controllers\VoucherController::class, 'show']);
@@ -59,7 +49,7 @@ Route::post('/voucher/delete', [\App\Http\Controllers\VoucherController::class, 
 Route::middleware('auth:api')->group(function () {
     Route::get('info', [AccountController::class, 'userInfo']);
     Route::post('logout', [AccountController::class, 'logout']);
-    
+
 
     //report
     Route::get('/reports/inventory-product', [ReportController::class, 'inventoryProduct']);
@@ -76,6 +66,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/accounts', [AccountController::class, 'store']);
 
+    Route::put('/accounts', [AccountController::class, 'update']);
+
     Route::post('/accounts/delete', [AccountController::class, 'destroy']);
 
 
@@ -90,9 +82,11 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/account_type/delete', [\App\Http\Controllers\AccountTypeController::class, 'destroy']);
 
-    
+
 
     //nhà cung cấp
+    Route::get('/suppliers', [\App\Http\Controllers\SupplierController::class, 'index']);
+
     Route::post('/suppliers', [\App\Http\Controllers\SupplierController::class, 'store']);
 
     Route::put('/suppliers/{id}', [\App\Http\Controllers\SupplierController::class, 'update']);
@@ -142,6 +136,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/product_images', [\App\Http\Controllers\ProductImageController::class, 'index']);
 
     Route::get('/product_images/{id}', [\App\Http\Controllers\ProductImageController::class, 'show']);
+
     Route::get('/product_images_by_product/{id}', [\App\Http\Controllers\ProductImageController::class, 'showbyproduct']);
 
     Route::post('/product_images', [\App\Http\Controllers\ProductImageController::class, 'store']);
@@ -225,13 +220,29 @@ Route::middleware('auth:api')->group(function () {
 
     Route::put('/voucher/{id}', [\App\Http\Controllers\VoucherController::class, 'update']);
 
-    
+
 
     // Hóa đơn bán
-    
-    
-  
+    Route::get('/bills', [\App\Http\Controllers\BillController::class, 'index']);
+    Route::post('/bills', [\App\Http\Controllers\BillController::class, 'store']);
+    Route::get('/bills/{id}', [\App\Http\Controllers\BillController::class, 'show']);
+    Route::get('/billsbyaccount/{id}', [\App\Http\Controllers\BillController::class, 'showbyaccount']);
+    Route::put('/bills/{id}', [\App\Http\Controllers\BillController::class, 'update']);
+    Route::post('/bills/delete', [\App\Http\Controllers\BillController::class, 'destroy']);
 
-    Route::post('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'store']);
+
     //chi tiết hóa đơn bán
+    Route::get('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'index']);
+    Route::get('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'show']);
+    Route::get('/bills_detail_by_bill/{id}', [\App\Http\Controllers\BillDetailController::class, 'showbybill']);
+    Route::post('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'store']);
+    Route::put('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'update']);
+    Route::post('/bills_detail/delete', [\App\Http\Controllers\BillDetailController::class, 'destroy']);
+
+    //Build cấu hình PC
+    Route::get('/build_pc', [\App\Http\Controllers\BuildPCController::class, 'index']);
+    Route::post('/build_pc', [\App\Http\Controllers\BuildPCController::class, 'store']);
+    Route::get('/build_pc/{id}', [\App\Http\Controllers\BuildPCController::class, 'show']);
+    Route::put('/build_pc/{id}', [\App\Http\Controllers\BuildPCController::class, 'update']);
+    Route::post('/build_pc/delete', [\App\Http\Controllers\BuildPCController::class, 'destroy']);
 });

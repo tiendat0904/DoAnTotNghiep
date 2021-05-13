@@ -39,10 +39,10 @@ class BillController extends Controller
      */
     public function index()
     {
-        //
-        // $user = auth()->user();
-        // $ac_type = $user->account_type_id;
-        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH) {
             $objs = null;
             $code = null;
             $objs = DB::table(self::table)
@@ -55,9 +55,9 @@ class BillController extends Controller
             $code = 200;
 
             return response()->json(['data' => $objs], $code);
-        // } else {
-        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        // }
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
     }
 
     /**
@@ -78,10 +78,10 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // $user = auth()->user();
-        // $ac_type = $user->account_type_id;
-        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH) {
             $validator = Validator::make($request->all(), [
                 self::customer_id => 'required'
             ]);
@@ -102,9 +102,9 @@ class BillController extends Controller
                 ->where(self::table . '.' .self::customer_id,"=", $arr_value[self::customer_id])
                 ->where(self::table . '.' .self::order_status_id,"=", $arr_value[self::order_status_id])->get();
             return response()->json(['success' => "Thêm mới thành công","data"=>$objs], 201);
-        // } else {
-        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        // }
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
     }
 
     /**
@@ -116,9 +116,9 @@ class BillController extends Controller
     public function show($id)
     {
         //
-        // $user = auth()->user();
-        // $ac_type = $user->account_type_id;
-        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH) {
             $objs = DB::table(self::table)
                 ->leftJoin(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
                 ->leftJoin(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
@@ -135,9 +135,36 @@ class BillController extends Controller
             } else {
                 return response()->json(['error' => 'Không tìm thấy'], 200);
             }
-        // } else {
-        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        // }
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
+    }
+
+    public function showbyaccount($id)
+    {
+        //
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH) {
+            $objs = DB::table(self::table)
+                ->leftJoin(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
+                ->leftJoin(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
+                ->select(self::table . '.*', 'emp.' . AccountConTroller::full_name . ' as employee_name', 'cus.' . AccountConTroller::full_name . ' as customer_name')
+                ->where(self::table . '.' . self::customer_id, '=', $id)->get();
+
+    //            $listBillDetail = DB::table(BillDetailController::table)
+    //                ->join(SanPhamController::table, BillDetailController::table . '.' . BillDetailController::ma_san_pham, '=', SanPhamController::table . '.' . SanPhamController::id)
+    //                ->select(BillDetailController::table . '.*', SanPhamController::table . '.' . SanPhamController::ten_san_pham)
+    //                ->where(BillDetailController::ma_hoa_don, '=', $id)
+    //                ->get();
+            if ($objs) {
+                return response()->json(['data' => $objs], 200);
+            } else {
+                return response()->json(['error' => 'Không tìm thấy'], 200);
+            }
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
     }
 
     /**
@@ -162,16 +189,16 @@ class BillController extends Controller
     {
         //
         // date_default_timezone_set(BaseController::timezone);
-        // $user = auth()->user();
-        // $ac_type = $user->account_type_id;
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
         // $ac_id = $user->account_id;
-        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT){
+        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH){
             $this->base->update($request, $id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-        // }else{
-        //     $this->base->update($request, $id);
-        //     return response()->json($this->base->getMessage(), $this->base->getStatus());
-        // }
+        }else{
+            $this->base->update($request, $id);
+            return response()->json($this->base->getMessage(), $this->base->getStatus());
+        }
         
 
         // $user = auth()->user();
@@ -197,9 +224,9 @@ class BillController extends Controller
     public function destroy(Request $request)
     {
         //
-        // $user = auth()->user();
-        // $ac_type = $user->account_type_id;
-        // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH) {
             try {
                 if ($listId = $request->get(BaseController::listId)) {
                     DB::table(BillDetailController::table)->where(BillDetailController::bill_id, $listId)
@@ -216,8 +243,8 @@ class BillController extends Controller
             }
             $this->base->destroy($request);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-        // } else {
-        //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-        // }
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
     }
 }

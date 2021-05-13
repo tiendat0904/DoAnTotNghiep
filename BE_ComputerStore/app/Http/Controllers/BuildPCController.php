@@ -6,27 +6,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class CouponDetailController extends Controller
+class BuildPCController extends Controller
 {
     private $base;
-    const table = 'coupon_detail';
-    const id = 'coupon_detail_id';
-    const coupon_id = 'coupon_id';
+    const table = 'build_pc';
+    const id = 'build_pc_id';
+    const customer_id = 'customer_id';
     const product_id = 'product_id';
-    const price = 'price';
-    const amount = 'amount';
+    const quantity = 'quantity';
 
     /**
-     * AccountController constructor.
+     * NhaCungCapController constructor.
      * @param $base
      */
-
     public function __construct()
     {
         $this->base = new BaseController(self::table, self::id);
     }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -37,15 +33,9 @@ class CouponDetailController extends Controller
         //
         $user = auth()->user();
         $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $objs = null;
-            $code = null;
-            $objs = DB::table(self::table)
-                ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
-                ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
-                ->get();
-            $code = 200;
-            return response()->json(['data' => $objs], $code);
+        if ($ac_type == AccountController::KH) {
+            $this->base->index();
+            return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
@@ -72,38 +62,22 @@ class CouponDetailController extends Controller
         //
         $user = auth()->user();
         $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        if ($ac_type == AccountController::KH) {
             $arr_value = $request->all();
             if (count($arr_value) > 0) {
                 $validator = Validator::make($arr_value, [
-                    self::coupon_id => 'required',
+                    self::customer_id => 'required',
                     self::product_id => 'required',
-                    self::price => 'required',
-                    self::amount => 'required',
+                    self::quantity => 'required',
                 ]);
                 if ($validator->fails()) {
                     return response()->json(['error' => $validator->errors()->all()], 400);
                 }
-                if ($arr_value[self::price] < 1) {
-                    return response()->json(['error' => 'Giá nhập phải lớn hơn 0'], 400);
-                }
-                if ($arr_value[self::amount] < 1) {
-                    return response()->json(['error' => 'Số lượng phải lớn hơn 0'], 400);
-                }
-
-                $obj = DB::table(self::table)
-                    ->select(self::table . '.*')
-                    ->where(self::product_id, '=', $arr_value[self::product_id])
-                    ->where(self::coupon_id, '=', $arr_value[self::coupon_id])
-                    ->get();
-                if (count($obj) > 0) {
-                    return response()->json(['error' => 'Thêm mới thất bại. Sản phẩm đã có trong phiếu nhập này'], 400);
-                }
-                DB::table(self::table)->insert($arr_value);
-                return response()->json(['success' => 'Thêm mới thành công'], 201);
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
+            $this->base->store($request);
+            return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
@@ -120,11 +94,13 @@ class CouponDetailController extends Controller
         //
         $user = auth()->user();
         $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        if ($ac_type == AccountController::KH) {
             $objs = DB::table(self::table)
-                ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
-                ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
-                ->where(self::table . '.' . self::id, '=', $id)->first();
+                ->Join(ProductImageController::table, self::table . '.' . self::product_id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+                ->Join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+                ->Join(ProductTypeController::table, ProductTypeController::table . '.' . ProductTypeController::id, '=', ProductController::table . '.' . ProductController::product_type_id)
+                ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name, ProductImageController::table . '.' . ProductImageController::image, ProductController::table . '.' . ProductController::warranty, ProductTypeController::table . '.' . ProductTypeController::product_type_name, ProductController::table . '.' . ProductController::product_type_id)
+                ->where(self::table . '.' . self::customer_id, '=', $id)->get();
             if ($objs) {
                 return response()->json(['data' => $objs], 200);
             } else {
@@ -158,7 +134,7 @@ class CouponDetailController extends Controller
         //
         $user = auth()->user();
         $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        if ($ac_type == AccountController::KH) {
             $this->base->update($request, $id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
@@ -174,10 +150,10 @@ class CouponDetailController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
+
         $user = auth()->user();
         $ac_type = $user->account_type_id;
-        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+        if ($ac_type == AccountController::KH) {
             $this->base->destroy($request);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {

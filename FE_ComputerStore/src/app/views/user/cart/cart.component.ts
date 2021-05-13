@@ -126,8 +126,11 @@ export class CartComponent implements OnInit {
           this.billDetailService.getAll().subscribe(data => {
             this.list_product_filter = data.data;
             this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id);
-            localStorage.setItem("listProduct", JSON.stringify(this.list_product));
-            this.bill_detail_id = this.list_product[0].bill_detail_id;
+            if(this.list_product.length !== 0){
+              localStorage.setItem("listProduct", JSON.stringify(this.list_product));
+              this.bill_detail_id = this.list_product[0].bill_detail_id;
+            }
+            
           })
           // for (let item of this.list_bill_filter){
           //   this.billDetailModel = {
@@ -189,9 +192,10 @@ export class CartComponent implements OnInit {
       }
     }
     setTimeout(() => this.totalCart(), 1000);
-    if(this.list_product === [] || this.list_product.length === 0){
-      this.checkCart = false;
-    }
+    console.log(this.list_product);
+    // if(this.list_product === [] || this.list_product.length === 0){
+    //   this.checkCart = false;
+    // }
   }
 
 
@@ -364,10 +368,8 @@ export class CartComponent implements OnInit {
           id: this.list_bill_filter[0].bill_id
         };
         this.billService.delete(modelDelete).subscribe(data => {
-          data.data.success;
+          this.toastr.success("Xóa giỏ hàng thành công");
         });
-        this.cartService.clearCart();
-        this.totalCart();
       })
 
     } else {
@@ -391,9 +393,8 @@ export class CartComponent implements OnInit {
             id: list_bill_detail_filter[0].bill_detail_id
           };
           this.billDetailService.delete(modelDelete).subscribe(data => {
+            this.loadListProductCart();
           })
-          this.cartService.deleteItem(item);
-          this.totalCart();
         }
       })
 
@@ -415,7 +416,7 @@ export class CartComponent implements OnInit {
     if (localStorage.getItem("account_id")) {
       this.billService.getAll().subscribe(data => {
         this.list_bill = data.data;
-        list_bill_filter = this.list_bill.filter(bill => bill.customer_id === account);
+        list_bill_filter = this.list_bill.filter(bill => bill.customer_id === account && bill.order_status_id === 1);
         this.billDetailService.getAll().subscribe(data => {
           this.list_bill_detail = data.data;
           list_bill_detail_filter = this.list_bill_detail.filter(function (bill_detail) {
@@ -449,7 +450,7 @@ export class CartComponent implements OnInit {
     if (localStorage.getItem("account_id")) {
       this.billService.getAll().subscribe(data => {
         this.list_bill = data.data;
-        list_bill_filter = this.list_bill.filter(bill => bill.customer_id === account);
+        list_bill_filter = this.list_bill.filter(bill => bill.customer_id === account && bill.order_status_id === 1);
         this.billDetailService.getAll().subscribe(data => {
           this.list_bill_detail = data.data;
           list_bill_detail_filter = this.list_bill_detail.filter(function (bill_detail) {

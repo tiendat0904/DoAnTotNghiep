@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { ItemModel } from '../../models/item-model';
+import { BuildPCModel } from '../../models/pc-model';
 import { productModel } from '../../models/product-model';
 
 @Injectable({
@@ -11,7 +14,31 @@ export class PcService {
   product: productModel;
   items: ItemModel;
   subject = new Subject<any>();
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
+
+  create(model: BuildPCModel): Observable<any>{
+    return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'build_pc', model);
+  }
+
+  getAll(): Observable<any>{
+    return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'build_pc');
+  }
+
+  update(id: any, model: BuildPCModel): Observable<any>{
+    return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'build_pc/' + id, model);
+  }
+
+  detail(id: any): Observable<any>{
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'build_pc/'+id);
+  }
+
+  getbybill(id: any): Observable<any>{
+    return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'build_pc/'+id);
+  }
+
+  delete(modelDelete: any): Observable<any>{
+    return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'build_pc/delete', modelDelete);
+  }
 
   addToCart(product: productModel){
     let local_storage;

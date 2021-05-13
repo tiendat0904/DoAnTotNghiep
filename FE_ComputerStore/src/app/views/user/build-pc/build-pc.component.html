@@ -54,26 +54,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_cpu" [hidden] = "checkDisplayCPU">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_cpu.product.product_id]"><img src="{{product_cpu.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_cpu.product_id]"><img src="{{product_cpu.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_cpu.product.product_name}}</h5>
-                    <p>Mã SP: {{product_cpu.product.product_id}}</p>
-                    <p>Bảo hành: {{product_cpu.product.warranty}} Tháng</p>
+                    <h5>{{product_cpu.product_name}}</h5>
+                    <p>Mã SP: {{product_cpu.product_id}}</p>
+                    <p>Bảo hành: {{product_cpu.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_cpu.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_cpu.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_cpu.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_cpu.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_cpu.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_cpu.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_cpu.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('CPU');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_cpu.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_cpu.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -85,26 +85,26 @@
             </div>
             <div class='product-cart-detail'  *ngIf = "product_main"  [hidden] = "checkDisplayMain">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_main.product.product_id]"><img src="{{product_main.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_main.product_id]"><img src="{{product_main.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_main.product.product_name}}</h5>
-                    <p>Mã SP: {{product_main.product.product_id}}</p>
-                    <p>Bảo hành: {{product_main.product.warranty}} Tháng</p>
+                    <h5>{{product_main.product_name}}</h5>
+                    <p>Mã SP: {{product_main.product_id}}</p>
+                    <p>Bảo hành: {{product_main.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_main.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_main.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_main.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_main.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_main.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_main.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_main.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Main');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_main.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_main.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -116,26 +116,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_ram" [hidden] = "checkDisplayRAM">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_ram.product.product_id]"><img src="{{product_ram.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_ram.product_id]"><img src="{{product_ram.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_ram.product.product_name}}</h5>
-                    <p>Mã SP: {{product_ram.product.product_id}}</p>
-                    <p>Bảo hành: {{product_ram.product.warranty}} Tháng</p>
+                    <h5>{{product_ram.product_name}}</h5>
+                    <p>Mã SP: {{product_ram.product_id}}</p>
+                    <p>Bảo hành: {{product_ram.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_ram.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_ram.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_ram.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_ram.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_ram.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_ram.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_ram.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('RAM');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_ram.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_ram.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -147,26 +147,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_hdd" [hidden] = "checkDisplayHDD">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_hdd.product.product_id]"><img src="{{product_hdd.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_hdd.product_id]"><img src="{{product_hdd.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_hdd.product.product_name}}</h5>
-                    <p>Mã SP: {{product_hdd.product.product_id}}</p>
-                    <p>Bảo hành: {{product_hdd.product.warranty}} Tháng</p>
+                    <h5>{{product_hdd.product_name}}</h5>
+                    <p>Mã SP: {{product_hdd.product_id}}</p>
+                    <p>Bảo hành: {{product_hdd.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_hdd.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_hdd.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_hdd.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_hdd.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_hdd.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_hdd.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_hdd.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('HDD');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_hdd.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_hdd.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -178,26 +178,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_ssd" [hidden] = "checkDisplaySSD">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_ssd.product.product_id]"><img src="{{product_ssd.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_ssd.product_id]"><img src="{{product_ssd.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_ssd.product.product_name}}</h5>
-                    <p>Mã SP: {{product_ssd.product.product_id}}</p>
-                    <p>Bảo hành: {{product_ssd.product.warranty}} Tháng</p>
+                    <h5>{{product_ssd.product_name}}</h5>
+                    <p>Mã SP: {{product_ssd.product_id}}</p>
+                    <p>Bảo hành: {{product_ssd.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_ssd.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_ssd.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_ssd.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_ssd.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_ssd.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_ssd.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_ssd.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('SSD');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_ssd.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_ssd.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -209,26 +209,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_vga"  [hidden] = "checkDisplayVGA">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_vga.product.product_id]"><img src="{{product_vga.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_vga.product_id]"><img src="{{product_vga.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_vga.product.product_name}}</h5>
-                    <p>Mã SP: {{product_vga.product.product_id}}</p>
-                    <p>Bảo hành: {{product_vga.product.warranty}} Tháng</p>
+                    <h5>{{product_vga.product_name}}</h5>
+                    <p>Mã SP: {{product_vga.product_id}}</p>
+                    <p>Bảo hành: {{product_vga.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_vga.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_vga.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_vga.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_vga.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_vga.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_vga.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_vga.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart"  (click)="initModal('VGA');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_vga.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_vga.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -240,26 +240,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_psu" [hidden] = "checkDisplayPSU">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_psu.product.product_id]"><img src="{{product_psu.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_psu.product_id]"><img src="{{product_psu.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_psu.product.product_name}}</h5>
-                    <p>Mã SP: {{product_psu.product.product_id}}</p>
-                    <p>Bảo hành: {{product_psu.product.warranty}} Tháng</p>
+                    <h5>{{product_psu.product_name}}</h5>
+                    <p>Mã SP: {{product_psu.product_id}}</p>
+                    <p>Bảo hành: {{product_psu.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_psu.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_psu.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_psu.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_psu.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_psu.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_psu.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_psu.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('PSU');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_psu.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_psu.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -271,26 +271,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_case" [hidden] = "checkDisplayCASE">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_case.product.product_id]"><img src="{{product_case.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_case.product_id]"><img src="{{product_case.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_case.product.product_name}}</h5>
-                    <p>Mã SP: {{product_case.product.product_id}}</p>
-                    <p>Bảo hành: {{product_case.product.warranty}} Tháng</p>
+                    <h5>{{product_case.product_name}}</h5>
+                    <p>Mã SP: {{product_case.product_id}}</p>
+                    <p>Bảo hành: {{product_case.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_case.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_case.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_case.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_case.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_case.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_case.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_case.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('CASE');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_case.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_case.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -302,26 +302,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_manhinh" [hidden] = "checkDisplayManHinh">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_manhinh.product.product_id]"><img src="{{product_manhinh.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_manhinh.product_id]"><img src="{{product_manhinh.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_manhinh.product.product_name}}</h5>
-                    <p>Mã SP: {{product_manhinh.product.product_id}}</p>
-                    <p>Bảo hành: {{product_manhinh.product.warranty}} Tháng</p>
+                    <h5>{{product_manhinh.product_name}}</h5>
+                    <p>Mã SP: {{product_manhinh.product_id}}</p>
+                    <p>Bảo hành: {{product_manhinh.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_manhinh.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_manhinh.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_manhinh.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_manhinh.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_manhinh.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_manhinh.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_manhinh.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Màn hình');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_manhinh.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_manhinh.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -333,26 +333,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_keyboard" [hidden] = "checkDisplayKeyboard">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_keyboard.product.product_id]"><img src="{{product_keyboard.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_keyboard.product_id]"><img src="{{product_keyboard.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_keyboard.product.product_name}}</h5>
-                    <p>Mã SP: {{product_keyboard.product.product_id}}</p>
-                    <p>Bảo hành: {{product_keyboard.product.warranty}} Tháng</p>
+                    <h5>{{product_keyboard.product_name}}</h5>
+                    <p>Mã SP: {{product_keyboard.product_id}}</p>
+                    <p>Bảo hành: {{product_keyboard.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_keyboard.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_keyboard.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_keyboard.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_keyboard.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_keyboard.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_keyboard.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_keyboard.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Keyboard');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_keyboard.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_keyboard.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -364,26 +364,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_mouse" [hidden] = "checkDisplayMouse">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_mouse.product.product_id]"><img src="{{product_mouse.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_mouse.product_id]"><img src="{{product_mouse.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_mouse.product.product_name}}</h5>
-                    <p>Mã SP: {{product_mouse.product.product_id}}</p>
-                    <p>Bảo hành: {{product_mouse.product.warranty}} Tháng</p>
+                    <h5>{{product_mouse.product_name}}</h5>
+                    <p>Mã SP: {{product_mouse.product_id}}</p>
+                    <p>Bảo hành: {{product_mouse.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_mouse.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_mouse.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_mouse.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_mouse.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_mouse.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_mouse.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_mouse.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Mouse');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_mouse.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_mouse.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -395,26 +395,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_headphone" [hidden] = "checkDisplayHeadphone">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_headphone.product.product_id]"><img src="{{product_headphone.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_headphone.product_id]"><img src="{{product_headphone.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_headphone.product.product_name}}</h5>
-                    <p>Mã SP: {{product_headphone.product.product_id}}</p>
-                    <p>Bảo hành: {{product_headphone.product.warranty}} Tháng</p>
+                    <h5>{{product_headphone.product_name}}</h5>
+                    <p>Mã SP: {{product_headphone.product_id}}</p>
+                    <p>Bảo hành: {{product_headphone.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_headphone.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_headphone.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_headphone.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_headphone.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_headphone.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_headphone.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_headphone.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Headphone');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_headphone.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_headphone.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -426,26 +426,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_loa" [hidden] = "checkDisplayLoa">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_loa.product.product_id]"><img src="{{product_loa.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_loa.product_id]"><img src="{{product_loa.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_loa.product.product_name}}</h5>
-                    <p>Mã SP: {{product_loa.product.product_id}}</p>
-                    <p>Bảo hành: {{product_loa.product.warranty}} Tháng</p>
+                    <h5>{{product_loa.product_name}}</h5>
+                    <p>Mã SP: {{product_loa.product_id}}</p>
+                    <p>Bảo hành: {{product_loa.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_loa.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_loa.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_loa.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_loa.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_loa.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_loa.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_loa.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Loa');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_loa.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_loa.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -457,26 +457,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_ghe" [hidden] = "checkDisplayGhe">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_ghe.product.product_id]"><img src="{{product_ghe.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_ghe.product_id]"><img src="{{product_ghe.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_ghe.product.product_name}}</h5>
-                    <p>Mã SP: {{product_ghe.product.product_id}}</p>
-                    <p>Bảo hành: {{product_ghe.product.warranty}} Tháng</p>
+                    <h5>{{product_ghe.product_name}}</h5>
+                    <p>Mã SP: {{product_ghe.product_id}}</p>
+                    <p>Bảo hành: {{product_ghe.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_ghe.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_ghe.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_ghe.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_ghe.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_ghe.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_ghe.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_ghe.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Ghế gaming');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_ghe.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_ghe.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -488,26 +488,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_fancase" [hidden] = "checkDisplayFanCase">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_fancase.product.product_id]"><img src="{{product_fancase.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_fancase.product_id]"><img src="{{product_fancase.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_fancase.product.product_name}}</h5>
-                    <p>Mã SP: {{product_fancase.product.product_id}}</p>
-                    <p>Bảo hành: {{product_fancase.product.warranty}} Tháng</p>
+                    <h5>{{product_fancase.product_name}}</h5>
+                    <p>Mã SP: {{product_fancase.product_id}}</p>
+                    <p>Bảo hành: {{product_fancase.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_fancase.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_fancase.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_fancase.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_fancase.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_fancase.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_fancase.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_fancase.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Fan Case');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_fancase.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_fancase.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -519,26 +519,26 @@
             </div>
             <div class='product-cart-detail' *ngIf = "product_tannhiet" [hidden] = "checkDisplayTanNhiet">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_tannhiet.product.product_id]"><img src="{{product_tannhiet.product.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_tannhiet.product_id]"><img src="{{product_tannhiet.image}}" alt=""></a>
                 </div>
                 <div class="product-description-cart">
-                    <h5>{{product_tannhiet.product.product_name}}</h5>
-                    <p>Mã SP: {{product_tannhiet.product.product_id}}</p>
-                    <p>Bảo hành: {{product_tannhiet.product.warranty}} Tháng</p>
+                    <h5>{{product_tannhiet.product_name}}</h5>
+                    <p>Mã SP: {{product_tannhiet.product_id}}</p>
+                    <p>Bảo hành: {{product_tannhiet.warranty}} Tháng</p>
                     <p>Kho hàng:</p>
                 </div>
                 <div class='product-price-cart'>
-                    <span>{{product_tannhiet.product.price_display | currency: 'VND'}}</span>
+                    <span>{{product_tannhiet.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_tannhiet.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="minusQuantity(product_tannhiet.product_id);"><i
                                 class='fa fa-minus'></i></button>
                         <input type="text" value={{product_tannhiet.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_tannhiet.product.product_id);"><i
+                        <button type="button" style="outline: none;" (click)="addQuantity(product_tannhiet.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Tản nhiệt nước');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_tannhiet.product.product_id);" style="outline: none;"><i
+                    <button id="delete-product-cart" (click)="deleteItem(product_tannhiet.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
             </div>
@@ -557,7 +557,7 @@
         </table>
     </div>
     <div class ="action">
-        <button>LƯU CẤU HÌNH <i class="fas fa-save"></i></button>
+        <button (click) = "saveBuildPC();">LƯU CẤU HÌNH <i class="fas fa-save"></i></button>
         <button (click) = "addToCart();">THÊM VÀO GIỎ HÀNG <i class="fas fa-shopping-cart"></i></button>
     </div>
 </div>

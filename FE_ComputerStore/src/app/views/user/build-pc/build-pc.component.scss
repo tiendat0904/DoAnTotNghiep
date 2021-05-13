@@ -129,6 +129,9 @@ hr{
     display: inline-flex;
     width: 85%;
 }
+.product-cart-image{
+    margin-left: 10px;
+}
 
 .product-cart-detail img{
     width: 100px;
@@ -138,6 +141,7 @@ hr{
 .product-description-cart{
     width: 550px;
     margin-top: 20px;
+    margin-left: 10px;
 }
 
 .product-description-cart p{
@@ -153,7 +157,7 @@ hr{
 
 .product-price-cart {
     display: flex;
-    width: 275.41px;
+    width: 262px;
     align-items: center;
     justify-content: flex-end;
     font-size: 17px;

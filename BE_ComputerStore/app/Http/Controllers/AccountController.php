@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Account;
 
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,7 @@ class AccountController extends Controller
         if ($ac_type == self::NV || $ac_type == self::QT) {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id,self::created_at, self::email,self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
                 ->where(self::table . '.' . self::account_type_id, '=', '1')
                 ->orWhere(self::table . '.' . self::account_type_id, '=', '2')
                 ->orWhere(self::table . '.' . self::account_type_id, '=', '3')
@@ -61,7 +62,7 @@ class AccountController extends Controller
         } else {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id,self::created_at, self::email,self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
                 ->Where(self::table . '.' . self::account_type_id, '=', '3')
                 ->get();
             $code = 200;
@@ -92,40 +93,40 @@ class AccountController extends Controller
         $account_type_id = $user->account_type_id;
         if ($account_type_id == self::NV || $account_type_id == self::QT) {
             date_default_timezone_set(BaseController::timezone);
-        $validator = Validator::make($request->all(), [
-            self::email => 'required|email',
-            self::password => 'required|min:8',
-            self::full_name => 'required',
-            self::address => 'required',
-            self::phone_number => 'required',
-            self::account_type_id => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->all()], 400);
-        }
-        $data = DB::table(self::table)->where(self::email, '=', $request->email)->get();
-        if (count($data) > 0) {
-            return response()->json(['error' => 'Username đã được đăng ký'], 400);
-        }
+            $validator = Validator::make($request->all(), [
+                self::email => 'required|email',
+                self::password => 'required|min:8',
+                self::full_name => 'required',
+                self::address => 'required',
+                self::phone_number => 'required',
+                self::account_type_id => 'required',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->all()], 400);
+            }
+            $data = DB::table(self::table)->where(self::email, '=', $request->email)->get();
+            if (count($data) > 0) {
+                return response()->json(['error' => 'Username đã được đăng ký'], 400);
+            }
 
-        $array = [];
-        $array[self::email] = $request->email;
-        $array[self::password] =  bcrypt($request->password);
-        $array[self::full_name] = $request->full_name;
-        $array[self::address] = $request->address;
-        $array[self::phone_number] = $request->phone_number;
-        if ($request->image != null) {
-            $array[self::image] = $request->image;
-        }
-        $array[self::account_type_id] = $request->account_type_id;
-        $array[self::created_at] = date('Y-m-d h:i:s');
-        DB::table(self::table)->insert($array);
+            $array = [];
+            $array[self::email] = $request->email;
+            $array[self::password] =  bcrypt($request->password);
+            $array[self::full_name] = $request->full_name;
+            $array[self::address] = $request->address;
+            $array[self::phone_number] = $request->phone_number;
+            if ($request->image != null) {
+                $array[self::image] = $request->image;
+            }
+            $array[self::account_type_id] = $request->account_type_id;
+            $array[self::created_at] = date('Y-m-d h:i:s');
+            DB::table(self::table)->insert($array);
 
-        $email = $request->email;
-        $ac = Account::where(self::email, $email)->first();
-        $token = $ac->createToken('ComputerStore')->accessToken;
-        return response()->json(['token' => $token, 'data' => $ac], 201);
-        }else {
+            $email = $request->email;
+            $ac = Account::where(self::email, $email)->first();
+            $token = $ac->createToken('ComputerStore')->accessToken;
+            return response()->json(['token' => $token, 'data' => $ac], 201);
+        } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
     }
@@ -144,7 +145,7 @@ class AccountController extends Controller
         if ($ac_type == self::NV || $ac_type == self::QT) {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id,self::full_name, self::email, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value,AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->select(self::id, self::full_name, self::email, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
                 ->where(self::table . '.' . self::id, '=', $id)->first();
             if ($objs) {
                 return response()->json(['data' => $objs], 200);
@@ -177,50 +178,56 @@ class AccountController extends Controller
     public function update(Request $request)
     {
         //
-        $validator = Validator::make($request->all(), [
-            self::email => 'required|email'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->all()], 400);
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == self::NV || $ac_type == self::QT || $ac_type == self::KH) {
+            $validator = Validator::make($request->all(), [
+                self::email => 'required|email'
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->all()], 400);
+            }
+            $ac = DB::table(self::table)->where(self::email, $request->email)->get();
+            if (count($ac) == 0) {
+                return response()->json(['error' => 'Email không chính xác'], 400);
+            }
+            $ac = $ac[0];
+            $array = [];
+            $array[self::email] = $request->email;
+            if ($request->full_name != null) {
+                $array[self::full_name] = $request->full_name;
+            }
+            if ($request->address != null) {
+                $array[self::address] = $request->address;
+            }
+            if ($request->phone_number != null) {
+                $array[self::phone_number] = $request->phone_number;
+            }
+            if ($request->image != null) {
+                $array[self::image] = $request->image;
+            }
+            if ($request->new_password != null && !Hash::check($request->old_password, $ac->password)) {
+                return response()->json(['error' => 'Chỉnh sửa thất bại. Mật khẩu cũ không chính xác'], 400);
+            } elseif ($request->new_password != null && $request->old_password != null && $request->new_password == $request->old_password) {
+                return response()->json(['error' => 'Chỉnh sửa thất bại. Mật khẩu mới phải khác mật khẩu cũ'], 400);
+            } elseif ($request->new_password != null && strlen($request->new_password) < 8) {
+                return response()->json(['error' => 'Chỉnh sửa thất bại. Mật khẩu mới phải nhiều hơn 8 ký tự'], 400);
+            } elseif ($request->new_password != null && $request->old_password != null && $request->new_password != $request->old_password && Hash::check($request->old_password, $ac->password)) {
+                $array[self::password] = bcrypt($request->new_password);
+            }
+            if (count($array) == 1) {
+                return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
+            }
+            DB::table(self::table)->where(self::email, $request->email)->update($array);
+            $ac = Account::where(self::email, $request->email)->first();
+            if ($request->new_password != null) {
+                $token = $ac->createToken('ComputerStore')->accessToken;
+                return response()->json(['token' => $token, 'data' => $ac], 200);
+            }
+            return response()->json(['data' => $ac], 200);
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
-        $ac = DB::table(self::table)->where(self::email, $request->email)->get();
-        if (count($ac) == 0) {
-            return response()->json(['error' => 'Email không chính xác'], 400);
-        }
-        $ac = $ac[0];
-        $array = [];
-        $array[self::email] = $request->email;
-        if ($request->full_name != null) {
-            $array[self::full_name] = $request->full_name;
-        }
-        if ($request->address != null) {
-            $array[self::address] = $request->address;
-        }
-        if ($request->phone_number != null) {
-            $array[self::phone_number] = $request->phone_number;
-        }
-        if ($request->image != null) {
-            $array[self::image] = $request->image;
-        }
-        if ($request->new_password != null && !Hash::check($request->old_password, $ac->password)) {
-            return response()->json(['error' => 'Chỉnh sửa thất bại. Mật khẩu cũ không chính xác'], 400);
-        } elseif ($request->new_password != null && $request->old_password != null && $request->new_password == $request->old_password) {
-            return response()->json(['error' => 'Chỉnh sửa thất bại. Mật khẩu mới phải khác mật khẩu cũ'], 400);
-        } elseif ($request->new_password != null && strlen($request->new_password) < 8) {
-            return response()->json(['error' => 'Chỉnh sửa thất bại. Mật khẩu mới phải nhiều hơn 8 ký tự'], 400);
-        } elseif ($request->new_password != null && $request->old_password != null && $request->new_password != $request->old_password && Hash::check($request->old_password, $ac->password)) {
-            $array[self::password] = bcrypt($request->new_password);
-        }
-        if (count($array) == 1) {
-            return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
-        }
-        DB::table(self::table)->where(self::email, $request->email)->update($array);
-        $ac = Account::where(self::email, $request->email)->first();
-        if ($request->new_password != null) {
-            $token = $ac->createToken('ComputerStore')->accessToken;
-            return response()->json(['token' => $token, 'data' => $ac], 200);
-        }
-        return response()->json(['data' => $ac], 200);
     }
 
     /**
@@ -235,12 +242,13 @@ class AccountController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == self::NV || $ac_type == self::QT) {
-           try {
+            try {
                 if ($listId = $request->get(BaseController::listId)) {
                     if (count($listId) > 0) {
-                        foreach ($listId as $id) { 
+                        foreach ($listId as $id) {
                             if (DB::table(self::table)->where(self::table . '.' . self::account_type_id, '=', '3')
-                                ->where(self::table . '.' . self::id, '=', $id)->get()) {
+                                ->where(self::table . '.' . self::id, '=', $id)->get()
+                            ) {
                                 return response()->json(['error' => 'Xóa thất bại. Không thể xóa tài khoản khách hàng'], 403);
                             }
                         }
@@ -250,7 +258,8 @@ class AccountController extends Controller
                 } else {
                     $id = $request->get(BaseController::key_id);
                     if (DB::table(self::table)->where(self::table . '.' . self::account_type_id, '=', '3')
-                        ->where(self::table . '.' . self::id, '=', $id)->get()) {
+                        ->where(self::table . '.' . self::id, '=', $id)->get()
+                    ) {
                         return response()->json(['error' => 'Xóa thất bại. Không thể xóa tài khoản khách hàng'], 403);
                     }
                 }

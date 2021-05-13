@@ -31,12 +31,18 @@ class ProductImageController extends Controller
     public function index()
     {
         //
-        $objs = DB::table(self::table)
-            ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
-            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
-            ->get();
-        $code = 200;
-        return response()->json(['data' => $objs], $code);
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+            $objs = DB::table(self::table)
+                ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+                ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
+                ->get();
+            $code = 200;
+            return response()->json(['data' => $objs], $code);
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
     }
 
     /**
@@ -72,17 +78,16 @@ class ProductImageController extends Controller
                 }
                 $objs = [];
                 $images = $arr_value[self::image];
-                if(count($images) > 0 ){
+                if (count($images) > 0) {
                     foreach ($images as $image) {
                         $objs[self::product_id] = $request->product_id;
                         $objs[self::image] = $image;
                         DB::table(self::table)->insert($objs);
                     }
                     return response()->json(['success' => "Thêm mới thành công"], 201);
-                }else{
+                } else {
                     return response()->json(['error' => "Thêm mới thất bại. Không có dữ liệu"], 400);
                 }
-               
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
@@ -182,7 +187,7 @@ class ProductImageController extends Controller
     {
         //
         $obj = DB::table(self::table)
-        ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+            ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
             ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name)
             ->where(ProductController::table . '.' . ProductController::id, '=', $id)
             ->get();
