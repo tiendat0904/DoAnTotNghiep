@@ -122,7 +122,7 @@ class BillController extends Controller
             $objs = DB::table(self::table)
                 ->leftJoin(AccountConTroller::table . ' as emp', self::table . '.' . self::employee_id, '=', 'emp.' . AccountConTroller::id)
                 ->leftJoin(AccountConTroller::table . ' as cus', self::table . '.' . self::customer_id, '=', 'cus.' . AccountConTroller::id)
-                ->select(self::table . '.*', 'emp.' . AccountConTroller::full_name . ' as employee_name', 'cus.' . AccountConTroller::full_name . ' as customer_name')
+                ->select(self::table . '.*', 'emp.' . AccountConTroller::full_name . ' as employee_name', 'cus.' . AccountConTroller::full_name . ' as customer_name','cus.' . AccountConTroller::address . ' as customer_address','cus.' . AccountConTroller::phone_number . ' as customer_phone_number')
                 ->where(self::table . '.' . self::id, '=', $id)->first();
 
     //            $listBillDetail = DB::table(BillDetailController::table)

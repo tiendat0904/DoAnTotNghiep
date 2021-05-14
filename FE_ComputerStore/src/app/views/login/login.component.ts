@@ -188,7 +188,7 @@ export class LoginComponent {
   addBuildPC(){
     let pcModel: BuildPCModel;
     this.array_buildpc = this.pcService.getItems();
-    if(this.array_buildpc !== []){
+    if(this.array_buildpc !== null){
         for(let item of this.array_buildpc){
           pcModel = {
             customer_id: Number(localStorage.getItem("account_id")),

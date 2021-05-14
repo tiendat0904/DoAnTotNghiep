@@ -10,4 +10,5 @@ export interface billModel{
     total_money?: number,
     into_money?: number,
     checked?: boolean,
+    check_order_status?: boolean;
  }

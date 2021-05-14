@@ -12,6 +12,8 @@ import { ViewOrderComponent } from './view-order/view-order.component';
 import { UpdateOrderDetailComponent } from './update-order-detail/update-order-detail.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
 import { UpdateOrderComponent } from './update-order/update-order.component';
+import { PrintOrderComponent } from './print-order/print-order.component';
+import {NgxPrintModule} from 'ngx-print';
 
 // Angular
 
@@ -24,6 +26,7 @@ import { UpdateOrderComponent } from './update-order/update-order.component';
     ReactiveFormsModule,
     NgbPaginationModule,
     Ng2SearchPipeModule,
+    NgxPrintModule,
     PipesModule
   ],
   declarations: [
@@ -32,6 +35,7 @@ import { UpdateOrderComponent } from './update-order/update-order.component';
     UpdateOrderDetailComponent,
     CreateOrderComponent,
     UpdateOrderComponent,
+    PrintOrderComponent,
   ]
 })
 export class OrderModule { }

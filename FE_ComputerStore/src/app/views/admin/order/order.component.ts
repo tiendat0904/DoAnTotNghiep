@@ -64,6 +64,13 @@ export class OrderComponent implements OnInit {
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
+      for(let item of this.filterResultTemplist){
+        if(item.order_status_id === 1 || item.order_status_id === 6){
+          item.check_order_status = false;
+        }else{
+          item.check_order_status = true;
+        }
+      }
     },
       err => {
         this.isLoading = false;

@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Toast, ToastrService } from 'ngx-toastr';
-import { timeout } from 'rxjs/operators';
+import {  ToastrService } from 'ngx-toastr';
 import { accountModel } from '../../../models/account-model';
 import { billDetailModel } from '../../../models/bill-detail-model';
 import { billModel } from '../../../models/bill-model';
@@ -16,6 +15,8 @@ import { BillService } from '../../../services/bill/bill.service';
 import { CartService } from '../../../services/cart/cart.service';
 import { ProductService } from '../../../services/product/product.service';
 import { VoucherService } from '../../../services/voucher/voucher.service';
+import  html2canvas from 'html2canvas';
+import * as htmlToImage from 'html-to-image';
 
 @Component({
   selector: 'app-cart',
@@ -24,6 +25,9 @@ import { VoucherService } from '../../../services/voucher/voucher.service';
 })
 export class CartComponent implements OnInit {
 
+  @ViewChild('screen') screen: ElementRef;
+  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('downloadLink') downloadLink: ElementRef;
   list_item: Array<ItemModel> = [];
   list_product: Array<billDetailModel> = [];
   list_bill: Array<billModel> = [];
@@ -38,6 +42,7 @@ export class CartComponent implements OnInit {
   billDetailModel: billDetailModel;
   itemModel: ItemModel;
   checkCart = true;
+  hidden:boolean;
   account: accountModel;
   voucherModel: voucherModel;
   bill_id: any;
@@ -68,6 +73,7 @@ export class CartComponent implements OnInit {
     private modalService: NgbModal,) { }
 
   ngOnInit(): void {
+    this.hidden =true;
     this.submitted = true;
     this.selectedType = 0;
     this.loadListProductCart();
@@ -77,6 +83,32 @@ export class CartComponent implements OnInit {
       phone_number: new FormControl(),
       address: new FormControl()
     });
+  }
+
+  CaptureData(){
+    //cach 1
+    var data = document.getElementById("product_cart_capture");
+			htmlToImage.toJpeg(data, { quality: 0.95 }).then(function(canvas) {
+                const link : any = document.createElement("a");
+                document.body.appendChild(link);
+                link.download = "html_image.png";
+                link.href = canvas;
+                link.click();
+            });
+    //cach 2
+    // html2canvas(document.getElementById("product_cart_capture")).then(canvas => {
+    //   this.canvas.nativeElement.src = canvas.toDataURL();
+    //   this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
+    //   this.downloadLink.nativeElement.download = 'marble-diagram.png';
+    //   this.downloadLink.nativeElement.click();
+    // });
+    //cach 3
+    // var data = document.getElementById("product_cart_capture");
+    // html2canvas(data).then(function(canvas){
+    //   var generatedImage = canvas.toDataURL("image/png").replace("image/png","image/octet-stream");
+    //   console.log(generatedImage);
+    //   window.location.href = generatedImage;
+    // })
   }
 
 
@@ -472,4 +504,6 @@ export class CartComponent implements OnInit {
       this.loadListProductCart();
     }
   }
+
+
 }

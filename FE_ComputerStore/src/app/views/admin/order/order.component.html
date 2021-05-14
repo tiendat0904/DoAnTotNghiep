@@ -62,7 +62,9 @@
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
                         <th>Tạo lúc</th>
+                        <td>Thao tác</td>
                         <th>Hành động</th>
+                        
                      </tr>
                   </thead>
                   <tbody>
@@ -115,6 +117,7 @@
                                  data-toggle="tooltip"><i class="fa fa-trash" aria-hidden="true"></i></button>
                            </div>
                         </td>
+                        <td><a *ngIf = "e.check_order_status" [routerLink] = "['print-order/',e.bill_id]" class ="in-order">In đơn hàng</a></td>
                      </tr>
                   </tbody>
                </table>

@@ -7,7 +7,7 @@
     <hr />
     <div></div>
 </div>
-<div >
+<div>
     <div class='cart-main'>
         <div style="margin-right: 20px;">
             <h2>THÔNG TIN GIỎ HÀNG</h2>
@@ -41,7 +41,7 @@
                 </ng-template>
             </div>
         </div>
-        <div class='product-cart'>
+        <div id="product_cart_capture">
             <div *ngFor="let item of list_product">
                 <div class='product-cart-detail'>
                     <div class='product-cart-image'>
@@ -50,7 +50,7 @@
                     <div class="product-description-cart">
                         <h5>{{item.product_name}}</h5>
                         <p>{{item.product_id}}</p>
-                        <p>Bảo hành: 12 Tháng</p>
+                        <p>Bảo hành: {{item.warranty}}</p>
                     </div>
                     <div class='product-price-cart'>
                         <span>{{item.price | currency: 'VND'}}</span>
