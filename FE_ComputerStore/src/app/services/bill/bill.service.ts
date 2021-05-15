@@ -15,8 +15,16 @@ export class BillService {
     return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'bills', model);
   }
 
+  createNotAccount(model: billModel): Observable<any>{
+    return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'bills_not_account', model);
+  }
+
   getAll(): Observable<any>{
     return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'bills');
+  }
+
+  getBill(): Observable<any>{
+    return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'getBill');
   }
 
   update(id: any, model: billModel): Observable<any>{

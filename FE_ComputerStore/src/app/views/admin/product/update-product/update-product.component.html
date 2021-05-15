@@ -118,7 +118,6 @@
             <div *ngFor = "let item of uploads">
               <img style="height: 50px;width: 50px;" [src]="item" alt="">
             </div>
-            
           </div>
           <div *ngIf="submitted && formGroup.controls['image'].errors?.required">
             <div *ngIf="formGroup.controls['image'].errors?.required" style="color: red">

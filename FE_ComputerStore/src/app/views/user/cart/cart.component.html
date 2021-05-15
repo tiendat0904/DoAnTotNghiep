@@ -7,7 +7,7 @@
     <hr />
     <div></div>
 </div>
-<div>
+<div *ngIf="checkCart; else elseNocart" >
     <div class='cart-main'>
         <div style="margin-right: 20px;">
             <h2>THÔNG TIN GIỎ HÀNG</h2>
@@ -103,20 +103,10 @@
             <form [formGroup]="formGroup" (ngSubmit)="save()">
                 <div>
                     <span style="margin-right: 76px;">Họ tên*</span><input type="text"
-                        [(ngModel)]="update_customer_name" formControlName="customer_name">
-                    <div *ngIf="submitted && formGroup.controls['customer_name'].errors?.required">
-                        <div *ngIf="formGroup.controls['customer_name'].errors?.required" style="color: red">
+                        [(ngModel)]="update_customer_name" formControlName="name">
+                    <div *ngIf="submitted && formGroup.controls['name'].errors?.required">
+                        <div *ngIf="formGroup.controls['name'].errors?.required" style="color: red">
                             * Họ tên không được để trống
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div>
-                    <span style="margin-right: 85px;">Email*</span><input type="text" [(ngModel)]="update_email"
-                        formControlName="email">
-                    <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
-                        <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
-                            * Email không được để trống
                         </div>
                     </div>
                 </div>
@@ -141,6 +131,15 @@
                     </div>
                 </div>
                 <br>
+                <div>
+                    <span style="margin-right: 93px;">Note</span><input type="text" [(ngModel)]="update_note"
+                        formControlName="note">
+                    <!-- <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
+                        <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
+                            * Email không được để trống
+                        </div>
+                    </div> -->
+                </div>
             </form>
 
         </div>

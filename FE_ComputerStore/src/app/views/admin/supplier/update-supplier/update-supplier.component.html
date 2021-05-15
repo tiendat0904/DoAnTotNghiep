@@ -42,10 +42,13 @@
       <div class="form-group">
         <label>Email</label>
         <input type="text" name="" class="form-control" formControlName="email" id="email" />
-        <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
+        <div *ngIf="submitted && formGroup.controls['email'].errors?.required || formGroup.controls['email'].errors?.pattern" >
           <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
             * Email không được để trống
           </div>
+          <div *ngIf="formGroup.controls['email'].errors?.pattern" style="color: red">
+            * Nhập đúng định dạng email
+         </div>
         </div>
       </div>
 

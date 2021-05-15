@@ -84,10 +84,11 @@ export class OrderComponent implements OnInit {
     } else {
       this.listFilterResult = this.filterResultTemplist;
       var keyword = this.searchedKeyword.toLowerCase();
+      console.log(this.listFilterResult);
       this.listFilterResult.forEach(item => {
-        var dc = item.employee_name.toString();
-        var hot_line = item.customer_name.toLowerCase();
-        if (hot_line.includes(keyword) || dc.includes(keyword)) {
+        // var dc = item.employee_name.toLowerCase();
+        var hot_line = item.name.toLowerCase();
+        if (hot_line.includes(keyword) ) {
           filterResult.push(item);
         }
       });

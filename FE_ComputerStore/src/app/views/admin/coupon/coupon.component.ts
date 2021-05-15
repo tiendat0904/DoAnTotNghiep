@@ -62,7 +62,8 @@ export class CouponComponent implements OnInit {
       this.listFilterResult.forEach(item => {
         var dc = item.employee_name.toString();
         var hot_line = item.supplier_name.toLowerCase();
-        if (hot_line.includes(keyword) || dc.includes(keyword)) {
+        var date = item.created_at.toString();
+        if (hot_line.includes(keyword) || dc.includes(keyword) || date.includes(keyword)) {
           filterResult.push(item);
         }
       });

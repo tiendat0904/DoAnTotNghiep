@@ -120,7 +120,6 @@ export class ProductDetailComponent implements OnInit {
                   bill_id: list_bill_filter[0].bill_id,
                   product_id: product_detail.product_id,
                   price: product_detail.price_display,
-                  warranty: product_detail.warranty,
                   amount: 1,
                 }
                 this.billDetailService.create(this.billDetailModel).subscribe(data => {
@@ -146,7 +145,6 @@ export class ProductDetailComponent implements OnInit {
                     bill_id: data.data[0].bill_id,
                     product_id: item.product.product_id,
                     price: item.product.price_display,
-                    warranty: product_detail.warranty,
                     amount: item.quantity,
                   }
                   this.billDetailService.create(this.billDetailModel).subscribe(data => {

@@ -76,8 +76,19 @@ class BuildPCController extends Controller
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
-            $this->base->store($request);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            $data = DB::table(self::table)
+            ->select(self::table . '.*')
+            ->where(self::product_id, '=', $arr_value[self::product_id])
+            ->where(self::customer_id, '=', $arr_value[self::customer_id])
+            ->get();
+            if(count($data)>0){
+
+            }
+            else{
+                $this->base->store($request);
+                return response()->json($this->base->getMessage(), $this->base->getStatus());
+            }
+            
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

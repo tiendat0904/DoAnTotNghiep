@@ -51,10 +51,11 @@ export class UpdateOrderComponent implements OnInit {
   isCheckhdn1 = false;
   bill_id: any;
   update_employee_id = null;
-  update_customer_id = null;
+  // update_customer_id = null;
   update_created_at = null;
   update_order_type_id = null;
   update_order_status_id = null;
+  update_name = null;
   constructor(
     private modalService: NgbModal,
     private billDetailService: BillDetailService,
@@ -95,12 +96,13 @@ export class UpdateOrderComponent implements OnInit {
         if (data.data.bill_id === undefined || data.data.bill_id === null) {
         }
         else {
-          this.update_customer_id = data.data.customer_id;
+          // this.update_customer_id = data.data.customer_id;
           this.update_total_money = data.data.total_money;
           this.update_into_money = data.data.into_money;
           this.update_created_at = data.data.created_at;
           this.update_order_type_id = data.data.order_type_id;
           this.update_order_status_id = data.data.order_status_id;
+          this.update_name = data.data.name;
         }
       }
 
@@ -109,7 +111,8 @@ export class UpdateOrderComponent implements OnInit {
     this.formGroup = this.fb.group({
       bill_id: [this.update_bill_id],
       employee_id: [this.update_employee_id],
-      customer_id: [this.update_customer_id],
+      // customer_id: [this.update_customer_id],
+      name : [this.update_name],
       created_at: [this.update_created_at],
       order_type_id:[this.update_order_type_id],
       order_status_id:[this.update_order_status_id],

@@ -25,7 +25,7 @@
                 Bạn có chắc chắn muốn xóa cấu hình PC này ?
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger" style="width: 80px" (click) = "resetBuilPC();">
+                <button class="btn btn-danger" style="width: 80px" (click) = "resetBuildPC();">
                     Có
                 </button>
                 <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
@@ -50,7 +50,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>1.Bộ vi xử lý</span></div>
             <div class= "select-item" [hidden] = "checkCPU">
-                <button (click)="initModal('CPU');"><span><i class="fa fa-plus"></i> Chọn bộ vi xử lý</span></button>
+                <button (click)="initModal('CPU','add');"><span><i class="fa fa-plus"></i> Chọn bộ vi xử lý</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_cpu" [hidden] = "checkDisplayCPU">
                 <div class='product-cart-image'>
@@ -71,7 +71,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_cpu.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('CPU');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('CPU','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_cpu.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -81,7 +81,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>2.Bo mạch chủ</span></div>
             <div class= "select-item"[hidden] = "checkmain">
-                <button (click)="initModal('Main');"><span><i class="fa fa-plus"></i> Chọn Bo mạch chủ</span></button>
+                <button (click)="initModal('Main','add');"><span><i class="fa fa-plus"></i> Chọn Bo mạch chủ</span></button>
             </div>
             <div class='product-cart-detail'  *ngIf = "product_main"  [hidden] = "checkDisplayMain">
                 <div class='product-cart-image'>
@@ -102,7 +102,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_main.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Main');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Main','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_main.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -112,7 +112,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>3.RAM</span></div>
             <div class= "select-item"  [hidden] = "checkram">
-                <button (click)="initModal('RAM');"><span><i class="fa fa-plus"></i> Chọn RAM</span></button>
+                <button (click)="initModal('RAM','add');"><span><i class="fa fa-plus"></i> Chọn RAM</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_ram" [hidden] = "checkDisplayRAM">
                 <div class='product-cart-image'>
@@ -133,7 +133,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_ram.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('RAM');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('RAM','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_ram.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -143,7 +143,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>4.HDD</span></div>
             <div class= "select-item"  [hidden] = "checkhdd">
-                <button (click)="initModal('HDD');"><span><i class="fa fa-plus"></i> Chọn HDD</span></button>
+                <button (click)="initModal('HDD','add');"><span><i class="fa fa-plus"></i> Chọn HDD</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_hdd" [hidden] = "checkDisplayHDD">
                 <div class='product-cart-image'>
@@ -164,7 +164,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_hdd.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('HDD');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('HDD','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_hdd.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -174,7 +174,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>5.SSD</span></div>
             <div class= "select-item"  [hidden] = "checkssd">
-                <button (click)="initModal('SSD');"><span><i class="fa fa-plus"></i> Chọn SSD</span></button>
+                <button (click)="initModal('SSD','add');"><span><i class="fa fa-plus"></i> Chọn SSD</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_ssd" [hidden] = "checkDisplaySSD">
                 <div class='product-cart-image'>
@@ -195,7 +195,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_ssd.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('SSD');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('SSD','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_ssd.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -205,7 +205,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>6.VGA</span></div>
             <div class= "select-item" [hidden] = "checkvga">
-                <button (click)="initModal('VGA');"><span><i class="fa fa-plus"></i> Chọn VGA</span></button>
+                <button (click)="initModal('VGA','add');"><span><i class="fa fa-plus"></i> Chọn VGA</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_vga"  [hidden] = "checkDisplayVGA">
                 <div class='product-cart-image'>
@@ -226,7 +226,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_vga.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart"  (click)="initModal('VGA');" style="outline: none;"><i
+                    <button id="change-product-cart"  (click)="initModal('VGA','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_vga.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -236,7 +236,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>7.Nguồn</span></div>
             <div class= "select-item"  [hidden] = "checkpsu">
-                <button (click)="initModal('PSU');"><span><i class="fa fa-plus"></i> Chọn Nguồn</span></button>
+                <button (click)="initModal('PSU','add');"><span><i class="fa fa-plus"></i> Chọn Nguồn</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_psu" [hidden] = "checkDisplayPSU">
                 <div class='product-cart-image'>
@@ -257,7 +257,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_psu.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('PSU');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('PSU',edit);" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_psu.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -267,7 +267,7 @@
         <div class="buldpc-main-item"> 
             <div class="span-title"><span>8.Vỏ case</span></div>
             <div class= "select-item"   [hidden] = "checkcase">
-                <button (click)="initModal('CASE');"><span><i class="fa fa-plus"></i> Chọn Vỏ Case</span></button>
+                <button (click)="initModal('CASE','add');"><span><i class="fa fa-plus"></i> Chọn Vỏ Case</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_case" [hidden] = "checkDisplayCASE">
                 <div class='product-cart-image'>
@@ -288,7 +288,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_case.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('CASE');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('CASE','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_case.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -298,7 +298,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>9.Màn hình</span></div>
             <div class= "select-item"  [hidden] = "checkmanhinh">
-                <button (click)="initModal('Màn hình');"><span><i class="fa fa-plus"></i> Chọn màn hình</span></button>
+                <button (click)="initModal('Màn hình','add');"><span><i class="fa fa-plus"></i> Chọn màn hình</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_manhinh" [hidden] = "checkDisplayManHinh">
                 <div class='product-cart-image'>
@@ -319,7 +319,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_manhinh.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Màn hình');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Màn hình','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_manhinh.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -329,7 +329,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>10.Bàn phím</span></div>
             <div class= "select-item"  [hidden] = "checkkeyboard">
-                <button (click)="initModal('Keyboard');"><span><i class="fa fa-plus"></i> Chọn bàn phím</span></button>
+                <button (click)="initModal('Keyboard','add');"><span><i class="fa fa-plus"></i> Chọn bàn phím</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_keyboard" [hidden] = "checkDisplayKeyboard">
                 <div class='product-cart-image'>
@@ -350,7 +350,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_keyboard.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Keyboard');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Keyboard','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_keyboard.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -360,7 +360,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>11.Chuột</span></div>
             <div class= "select-item"  [hidden] = "checkmouse">
-                <button (click)="initModal('Mouse');"><span><i class="fa fa-plus"></i> Chọn chuột</span></button>
+                <button (click)="initModal('Mouse','add');"><span><i class="fa fa-plus"></i> Chọn chuột</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_mouse" [hidden] = "checkDisplayMouse">
                 <div class='product-cart-image'>
@@ -381,7 +381,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_mouse.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Mouse');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Mouse','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_mouse.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -391,7 +391,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>12.Tai nghe</span></div>
             <div class= "select-item"  [hidden] = "checkheadphone">
-                <button (click)="initModal('Headphone');"><span><i class="fa fa-plus"></i> Chọn tai nghe</span></button>
+                <button (click)="initModal('Headphone','add');"><span><i class="fa fa-plus"></i> Chọn tai nghe</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_headphone" [hidden] = "checkDisplayHeadphone">
                 <div class='product-cart-image'>
@@ -412,7 +412,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_headphone.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Headphone');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Headphone','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_headphone.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -422,7 +422,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>13.Loa</span></div>
             <div class= "select-item"  [hidden] = "checkloa">
-                <button (click)="initModal('Loa');"><span><i class="fa fa-plus"></i> Chọn Loa</span></button>
+                <button (click)="initModal('Loa','add');"><span><i class="fa fa-plus"></i> Chọn Loa</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_loa" [hidden] = "checkDisplayLoa">
                 <div class='product-cart-image'>
@@ -443,7 +443,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_loa.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Loa');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Loa','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_loa.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -453,7 +453,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>14.Ghế gaming</span></div>
             <div class= "select-item"   [hidden] = "checkghe">
-                <button (click)="initModal('Ghế gaming');"><span><i class="fa fa-plus"></i> Chọn Ghế gaming</span></button>
+                <button (click)="initModal('Ghế gaming','add');"><span><i class="fa fa-plus"></i> Chọn Ghế gaming</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_ghe" [hidden] = "checkDisplayGhe">
                 <div class='product-cart-image'>
@@ -474,7 +474,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_ghe.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Ghế gaming');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Ghế gaming','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_ghe.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -484,7 +484,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>15.Quạt làm mát</span></div>
             <div class= "select-item"  [hidden] = "checkfancase">
-                <button (click)="initModal('Fan Case');"><span><i class="fa fa-plus"></i> Chọn quạt làm mát</span></button>
+                <button (click)="initModal('Fan Case','add');"><span><i class="fa fa-plus"></i> Chọn quạt làm mát</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_fancase" [hidden] = "checkDisplayFanCase">
                 <div class='product-cart-image'>
@@ -505,7 +505,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_fancase.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Fan Case');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Fan Case','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_fancase.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
@@ -515,7 +515,7 @@
         <div class="buldpc-main-item" > 
             <div class="span-title"><span>16.Tản nhiệt nước</span></div>
             <div class= "select-item"  [hidden] = "checktannhiet">
-                <button (click)="initModal('Tản nhiệt nước');"><span><i class="fa fa-plus"></i> Chọn tản nhiệt nước</span></button>
+                <button (click)="initModal('Tản nhiệt nước','add');"><span><i class="fa fa-plus"></i> Chọn tản nhiệt nước</span></button>
             </div>
             <div class='product-cart-detail' *ngIf = "product_tannhiet" [hidden] = "checkDisplayTanNhiet">
                 <div class='product-cart-image'>
@@ -536,7 +536,7 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_tannhiet.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Tản nhiệt nước');" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Tản nhiệt nước','edit');" style="outline: none;"><i
                         class="fas fa-edit edit" aria-hidden="true"></i></button>
                     <button id="delete-product-cart" (click)="deleteItem(product_tannhiet.product_id);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>

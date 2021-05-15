@@ -9,34 +9,31 @@
                <button type="button" [appExport]="listFilterResult" fileName="Nhanvien" class="btn btn-success">
                   Xuất báo cáo
                </button>
-               <div style="width: 500px;margin-left: 10px;">
-                  <select [(ngModel)]="label" (change)="changeStatus($event.target.value)"
-                     class="custom-select col-md-3 col-lg-4 col-sm-12">
-                     <option [selected]="isSelected" disabled>--</option>
-                     <option value="-1">Tất cả</option>
-                     <option value="0">Tháng</option>
-                     <option value="1">Quý</option>
-                     <option value="2">Năm</option>
-                  </select>
-               </div>
+               <select [(ngModel)]="label" (change)="changeStatus($event.target.value)"
+               class="custom-select col-md-3 col-lg-2 col-sm-12">
+               <option value="-1">Tất cả</option>
+               <option value="0">Tháng</option>
+               <option value="1">Quý</option>
+               <option value="2">Năm</option>
+            </select>
 
-               <select [hidden]="ismonth" (change)="changeStatus1($event.target.value)"
-                  class="custom-select col-md-3 col-lg-3 col-sm-12">
-                  <option [selected]="isSelected">--</option>
-                  <option *ngFor="let item of arr_month">{{item}}</option>
-               </select>
+            <select [hidden]="ismonth" (change)="changeStatus1($event.target.value)"
+               class="custom-select col-md-3 col-lg-2 col-sm-12">
+               <option [selected]="isSelected">--</option>
+               <option *ngFor="let item of arr_month">{{item}}</option>
+            </select>
 
-               <select [hidden]="isQuarter" (change)="changeStatus3($event.target.value)"
-                  class="custom-select col-md-3 col-lg-3 col-sm-12">
-                  <option [selected]="isSelected">--</option>
-                  <option *ngFor="let item of arr_quarter">{{item}}</option>
-               </select>
+            <select [hidden]="isQuarter" (change)="changeStatus3($event.target.value)"
+               class="custom-select col-md-3 col-lg-2 col-sm-12">
+               <option [selected]="isSelected">--</option>
+               <option *ngFor="let item of arr_quarter">{{item}}</option>
+            </select>
 
-               <select [hidden]="isyear" (change)="changeStatus2($event.target.value)"
-                  class="custom-select col-md-3 col-lg-3 col-sm-12">
-                  <option [selected]="isSelected">--</option>
-                  <option *ngFor="let item of arr_year">{{item}}</option>
-               </select>
+            <select [hidden]="isyear" (change)="changeStatus2($event.target.value)"
+               class="custom-select col-md-3 col-lg-2 col-sm-12">
+               <option [selected]="isSelected">--</option>
+               <option *ngFor="let item of arr_year">{{item}}</option>
+            </select>
             </div>
          </div>
          <div class="row">

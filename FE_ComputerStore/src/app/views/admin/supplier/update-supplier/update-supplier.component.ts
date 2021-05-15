@@ -109,7 +109,7 @@ export class UpdateSupplierComponent implements OnInit {
         ten: [ null, [Validators.required]],
         dia_chi: [ null, [Validators.required]],
         hot_line : [ null, [Validators.required]],
-        email: [ null, [Validators.required]],
+        email: [ null,[Validators.required, Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]],
         // so_dien_thoai: [ null, [Validators.required]],
         
       });
@@ -119,7 +119,7 @@ export class UpdateSupplierComponent implements OnInit {
         ten: [{value: this.model.supplier_name, disabled: this.isInfo}, [Validators.required]],
         dia_chi: [{value: this.model.supplier_address, disabled: this.isInfo}, [Validators.required]],
         hot_line: [{value: this.model.hotline, disabled: this.isInfo}, [Validators.required]],
-        email: [{value: this.model.email, disabled: this.isInfo}, [Validators.required]],
+        email: [{value: this.model.email, disabled: this.isInfo},[Validators.required, Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]],
         // so_dien_thoai: [{value: this.model., disabled: this.isInfo}, [Validators.required]],
       });
       // if(this.model.image===""){

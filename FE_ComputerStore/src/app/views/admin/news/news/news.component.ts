@@ -60,7 +60,6 @@ export class NewsComponent implements OnInit {
       this.listFilterResult.forEach(item => {
         var dc = item.title.toLowerCase();
         var hot_line = item.url.toLowerCase();
-
         if (dc.includes(keyword) || hot_line.includes(keyword) ) {
           filterResult.push(item);
         }

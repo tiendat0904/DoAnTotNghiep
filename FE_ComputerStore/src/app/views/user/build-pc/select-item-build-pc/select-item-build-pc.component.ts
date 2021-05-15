@@ -32,6 +32,7 @@ export class SelectItemBuildPcComponent implements OnInit {
   check_product: boolean;
   items: ItemModel;
   product_type: any;
+  type: any;
   constructor(private modalService: NgbModal,
     private toastr: ToastrService,
     private productService: ProductService,
@@ -43,6 +44,7 @@ export class SelectItemBuildPcComponent implements OnInit {
   }
 
   add(product: productModel) {
+    let checkProduct: boolean;
     let pcModel: BuildPCModel;
     if (localStorage.getItem("account_id")) {
       pcModel = {
@@ -56,117 +58,21 @@ export class SelectItemBuildPcComponent implements OnInit {
         if (this.array_pc.length !== 0) {
           for (let item of this.array_pc) {
             if (item.product_type_name === this.product_type) {
-              const modelDelete = {
-                id: item.product_id
-              };
-              // switch (item.product_type_name) {
-
-              // case "CPU":
-              this.pcService.delete(modelDelete).subscribe();
-              this.pcService.create(pcModel).subscribe();;
-              this.eventEmit.emit('success');
-              this.modalReference.dismiss();
-              //     break;
-              //   case "Main":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "RAM":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "HDD":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "SSD":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "VGA":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "PSU":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "CASE":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "Màn hình":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "Keyboard":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "Mouse":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "Headphone":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "Loa":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "Ghế gaming":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "Fan Case":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   case "Tản nhiệt nước":
-              //     this.pcService.delete(modelDelete).subscribe();
-              //     this.pcService.create(pcModel).subscribe();;
-              //     this.eventEmit.emit('success');
-              //     this.modalReference.dismiss();
-              //     break;
-              //   default:
-              //     break;
-              // }
-              // break;
-            } else {
-              this.pcService.create(pcModel).subscribe();;
-              this.eventEmit.emit('success');
-              this.modalReference.dismiss();
-              break;
+              if (this.type === 'edit') {
+                const modelDelete = {
+                  id: item.product_id
+                };
+                this.pcService.delete(modelDelete).subscribe();
+                this.pcService.create(pcModel).subscribe();;
+                this.eventEmit.emit('success');
+                this.modalReference.dismiss();
+              }
             }
+          }
+          if (this.type === 'add') {
+            this.pcService.create(pcModel).subscribe();;
+            this.eventEmit.emit('success');
+            this.modalReference.dismiss();
           }
         } else {
           this.pcService.create(pcModel).subscribe();;
@@ -181,113 +87,18 @@ export class SelectItemBuildPcComponent implements OnInit {
       if (this.pcService.getItems() && this.array_pc.length !== 0) {
         for (let item of this.array_pc) {
           if (item.product.product_type_name === this.product_type) {
-            // switch (item.product.product_type_name) {
-            //   case "CPU":
-            this.pcService.deleteItem(item.product.product_id);
-            this.pcService.addToCart(product);
-            this.eventEmit.emit('success');
-            this.modalReference.dismiss();
-            //     break;
-            //   case "Main":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "RAM":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "HDD":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "SSD":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "VGA":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "PSU":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "CASE":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "Màn hình":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "Keyboard":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "Mouse":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "Headphone":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "Loa":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "Ghế gaming":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "Fan Case":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   case "Tản nhiệt nước":
-            //     this.pcService.deleteItem(item.product.product_id);
-            //     this.pcService.addToCart(product);
-            //     this.eventEmit.emit('success');
-            //     this.modalReference.dismiss();
-            //     break;
-            //   default:
-            //     break;
-            // }
-            // break;
-          } else {
-            this.pcService.addToCart(product);
-            this.eventEmit.emit('success');
-            this.modalReference.dismiss();
-            break;
+            if (this.type === "edit") {
+              this.pcService.deleteItem(item.product.product_id);
+              this.pcService.addToCart(product);
+              this.eventEmit.emit('success');
+              this.modalReference.dismiss();
+            }
           }
+        }
+        if (this.type === "add") {
+          this.pcService.addToCart(product);
+          this.eventEmit.emit('success');
+          this.modalReference.dismiss();
         }
       } else {
         this.pcService.addToCart(product);
@@ -301,12 +112,14 @@ export class SelectItemBuildPcComponent implements OnInit {
   }
 
 
-  view(product_type: any) {
+  view(product_type: any, type: any) {
     this.product_type = product_type;
+    this.type = type;
+    console.log(this.type)
     this.arraylist_product_filter = [];
     this.arraylist_trademark_filter = [];
     this.arraylist_trademark_selected = [];
-    setTimeout(() => {                          
+    setTimeout(() => {
       this.open(this.childModal);
     }, 650);
 

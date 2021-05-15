@@ -45,7 +45,6 @@ export class ProductComponent implements OnInit {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.listFilterResult = data.data;
-      console.log(this.listFilterResult);
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
     },
@@ -63,7 +62,9 @@ export class ProductComponent implements OnInit {
       var keyword = this.searchedKeyword.toLowerCase();
       this.listFilterResult.forEach(item => {
         var name = item.product_name.toLowerCase();
-        if (name.includes(keyword)) {
+        var trademark = item.trademark_name.toLowerCase();
+        var product_type_name = item.product_type_name.toLowerCase();
+        if (name.includes(keyword) || trademark.includes(keyword) || product_type_name.includes(keyword)) {
           filterResult.push(item);
         }
       });

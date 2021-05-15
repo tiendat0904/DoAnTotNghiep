@@ -62,7 +62,7 @@ export class CustomerComponent implements OnInit {
       var keyword = this.searchedKeyword.toLowerCase();
       this.listFilterResult.forEach(item => {
         var dc = item.full_name.toLowerCase();
-        var hot_line = item.phone_number.toLowerCase();
+        var hot_line = item.phone_number.toString();
         var ten = item.email.toLowerCase();
         var ten1 = item.address.toLowerCase();
         if (hot_line.includes(keyword) || ten.includes(keyword) || dc.includes(keyword) || ten1.includes(keyword)) {

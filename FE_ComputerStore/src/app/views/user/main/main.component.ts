@@ -43,6 +43,7 @@ export class MainComponent implements OnInit {
   list_news: Array<newsModel> = [];
   list_product_type: Array<productTypeModel> = [];
   list_product: Array<productModel> = [];
+  list_product_new: Array<productModel> = [];
   list_product_psu: Array<productModel> = [];
   list_product_vga: Array<productModel> = [];
   list_product_computer_conponent: Array<productModel> = [];
@@ -67,6 +68,7 @@ export class MainComponent implements OnInit {
   //     window.location.reload();
   //     window.localStorage.setItem('refresh', "1");
   // }
+    this.fetchProductNew();
     this.fetchProductLaptop();
     this.fetchProductRam();
     this.fetchProductMain();
@@ -88,6 +90,27 @@ export class MainComponent implements OnInit {
     this.newService.getAll().subscribe(data => {
       this.list_news = data.data;
     },)
+  }
+
+  fetchProductNew(){
+    this.productService.getAll().subscribe(data =>{
+      this.list_product_new = data.data;
+      for(let item of this.list_product_new){
+        if(item.amount === 0){
+          item.check = "Liên hệ";   
+        }
+        else{
+          item.check = "Còn hàng";
+        }
+        if(item.price_new === null){
+          item.isCheckPrice = true;
+          item.price_display = item.price;
+        }else{
+          item.isCheckPrice = false;
+          item.price_display = item.price_new;
+        }
+      }
+    })
   }
 
   fetchProductPSU(){
@@ -231,6 +254,7 @@ export class MainComponent implements OnInit {
           item.isCheckPrice = false;
           item.price_display = item.price_new;
         }
+        
       }
     },)
   }

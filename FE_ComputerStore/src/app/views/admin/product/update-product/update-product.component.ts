@@ -87,6 +87,7 @@ export class UpdateProductComponent implements OnInit {
   }
 
   fetcharraylist_product(){
+    
     this.subscription=this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
     },
@@ -135,7 +136,7 @@ export class UpdateProductComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
-   
+    this.uploads = [];
     if (model.product_id === null || model.product_id === undefined) {
       this.formGroup = this.fb.group({
         product_name: [ null, [Validators.required]],

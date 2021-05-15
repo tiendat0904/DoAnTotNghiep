@@ -281,7 +281,7 @@ class ReportController extends Controller
             switch ($key) {
                 case 'all':
                     $objs = DB::table(AccountController::table)
-                        ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountController::address, AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
+                        ->select(AccountController::id, AccountController::email, AccountController::full_name,AccountController::table . '.' . AccountController::address, AccountController::table . '.' . AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
                         ->leftJoin(BillController::table, BillController::table . '.' . BillController::employee_id, '=', AccountController::table . '.' . AccountController::id)
                         ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
                         ->where(AccountController::table . '.' . AccountController::account_type_id, '=', '2')
@@ -291,7 +291,7 @@ class ReportController extends Controller
                     break;
                 case 'bct':
                     $objs = DB::table(AccountController::table)
-                        ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountController::address, AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
+                        ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountTypeController::table . '.' . AccountController::address, AccountController::table . '.' . AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
                         ->leftJoin(BillController::table, BillController::table . '.' . BillController::employee_id, '=', AccountController::table . '.' . AccountController::id)
                         ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
                         ->where(AccountController::table . '.' . AccountController::account_type_id, '=', '2')
@@ -305,7 +305,7 @@ class ReportController extends Controller
                     switch ($params[0]) {
                         case '1':
                             $objs = DB::table(AccountController::table)
-                                ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountController::address, AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
+                                ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountTypeController::table . '.' . AccountController::address, AccountController::table . '.' . AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
                                 ->leftJoin(BillController::table, BillController::table . '.' . BillController::employee_id, '=', AccountController::table . '.' . AccountController::id)
                                 ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
                                 ->where(AccountController::table . '.' . AccountController::account_type_id, '=', '2')
@@ -318,7 +318,7 @@ class ReportController extends Controller
                             break;
                         case '2':
                             $objs = DB::table(AccountController::table)
-                                ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountController::address, AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
+                                ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountTypeController::table . '.' . AccountController::address, AccountController::table . '.' . AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
                                 ->leftJoin(BillController::table, BillController::table . '.' . BillController::employee_id, '=', AccountController::table . '.' . AccountController::id)
                                 ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
                                 ->where(AccountController::table . '.' . AccountController::account_type_id, '=', '2')
@@ -331,7 +331,7 @@ class ReportController extends Controller
                             break;
                         case '3':
                             $objs = DB::table(AccountController::table)
-                                ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountController::address, AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
+                                ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountTypeController::table . '.' . AccountController::address, AccountController::table . '.' . AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
                                 ->leftJoin(BillController::table, BillController::table . '.' . BillController::employee_id, '=', AccountController::table . '.' . AccountController::id)
                                 ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
                                 ->where(AccountController::table . '.' . AccountController::account_type_id, '=', '2')
@@ -344,7 +344,7 @@ class ReportController extends Controller
                             break;
                         case '4':
                             $objs = DB::table(AccountController::table)
-                                ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountController::address, AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
+                                ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountTypeController::table . '.' . AccountController::address, AccountController::table . '.' . AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
                                 ->leftJoin(BillController::table, BillController::table . '.' . BillController::employee_id, '=', AccountController::table . '.' . AccountController::id)
                                 ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
                                 ->where(AccountController::table . '.' . AccountController::account_type_id, '=', '2')
@@ -359,7 +359,7 @@ class ReportController extends Controller
                     break;
                 case 'bcn':
                     $objs = DB::table(AccountController::table)
-                        ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountController::address, AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
+                        ->select(AccountController::id, AccountController::email, AccountController::full_name, AccountTypeController::table . '.' . AccountController::address, AccountController::table . '.' . AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
                         ->leftJoin(BillController::table, BillController::table . '.' . BillController::employee_id, '=', AccountController::table . '.' . AccountController::id)
                         ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
                         ->where(AccountController::table . '.' . AccountController::account_type_id, '=', '2')
@@ -370,7 +370,7 @@ class ReportController extends Controller
                     break;
                 default:
                     $objs = DB::table(AccountController::table)
-                        ->select(AccountController::table . '.' . AccountController::id, AccountController::email, AccountController::full_name, AccountController::address, AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
+                        ->select(AccountController::table . '.' . AccountController::id, AccountController::email, AccountController::full_name, AccountTypeController::table . '.' . AccountController::address, AccountController::table . '.' . AccountController::phone_number, AccountController::image, AccountTypeController::table . '.' . AccountTypeController::description . ' as account_type_description', BillController::table . '.' . BillController::created_at, DB::raw('SUM(total_money) as total_money1'))
                         ->leftJoin(BillController::table, BillController::table . '.' . BillController::employee_id, '=', AccountController::table . '.' . AccountController::id)
                         ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
                         ->where(AccountController::table . '.' . AccountController::account_type_id, '=', '2')

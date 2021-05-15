@@ -126,8 +126,8 @@ export class BuildPcComponent implements OnInit {
   }
 
 
-  initModal(product_type: any): void {
-    this.view.view(product_type);
+  initModal(product_type: any,type:any): void {
+    this.view.view(product_type,type);
   }
 
   addToCart() {
@@ -146,7 +146,6 @@ export class BuildPcComponent implements OnInit {
                   this.billDetailModel = {
                     bill_id: data.data[0].bill_id,
                     product_id: item.product_id,
-                    warranty: item.warranty,
                     price: item.price,
                     amount: item.quantity,
                   }
@@ -159,7 +158,6 @@ export class BuildPcComponent implements OnInit {
                 this.billDetailModel = {
                   bill_id: this.array_bill_filter[0].bill_id,
                   product_id: item.product_id,
-                  warranty: item.warranty,
                   price: item.price,
                   amount: item.quantity,
                 }
@@ -448,7 +446,8 @@ export class BuildPcComponent implements OnInit {
     } else {
       let pricecheck: any;
       this.array_pc = this.pcService.getItems();
-      if(this.array_pc !== []){
+      console.log(this.array_pc);
+      if(this.array_pc !== [] && this.array_pc !== null){
         for (let item of this.array_pc) {
           if (item.product.price_new === null) {
             pricecheck = item.product.price;
@@ -458,7 +457,6 @@ export class BuildPcComponent implements OnInit {
           this.buildPCModel = {
             product_id: item.product.product_id,
             product_name: item.product.product_name,
-            warranty: item.product.warranty,
             image: item.product.image,
             price: pricecheck,
             quantity: item.quantity,

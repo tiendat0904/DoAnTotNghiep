@@ -21,6 +21,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   search: string;
   product_type_id: any;
   product_type_name: any;
+  page = 1;
+  pageSize = 16;
   constructor(private productService: ProductService, private route: ActivatedRoute, private trademarkService: TrademarkService) { }
 
   ngOnInit(): void {
@@ -46,6 +48,21 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (filterResult.length === 0) {
         } else {
           this.list_product_laptop = this.list_product_laptop1 = filterResult;
+        }
+        for(let item of this.list_product_laptop){
+          if(item.amount === 0){
+            item.check = "Liên hệ";   
+          }
+          else{
+            item.check = "Còn hàng";
+          }
+          if(item.price_new === null){
+            item.isCheckPrice = true;
+            item.price_display = item.price;
+          }else{
+            item.isCheckPrice = false;
+            item.price_display = item.price_new;
+          }
         }
         this.trademarkService.getAll().subscribe(data => {
           this.list_trademark = data.data;

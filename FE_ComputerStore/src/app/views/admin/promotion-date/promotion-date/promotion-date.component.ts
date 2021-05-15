@@ -59,14 +59,12 @@ export class PromotionDateComponent implements OnInit {
     } else {
       this.listFilterResult = this.filterResultTemplist;
       var keyword = this.searchedKeyword.toLowerCase();
-      // this.listFilterResult.forEach(item => {
-      //   var dc = item.promotion_date_address.toLowerCase();
-      //   var hot_line = item.hotline.toLowerCase();
-      //   var ten = item.promotion_date_name.toLowerCase();
-      //   if (hot_line.includes(keyword) || ten.includes(keyword)) {
-      //     filterResult.push(item);
-      //   }
-      // });
+      this.listFilterResult.forEach(item => {
+        var date = item.date.toString();
+        if (date.includes(keyword) ) {
+          filterResult.push(item);
+        }
+      });
       this.listFilterResult = filterResult;
     }
   }

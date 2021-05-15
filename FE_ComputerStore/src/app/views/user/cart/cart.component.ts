@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {  ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { accountModel } from '../../../models/account-model';
 import { billDetailModel } from '../../../models/bill-detail-model';
 import { billModel } from '../../../models/bill-model';
@@ -15,7 +15,7 @@ import { BillService } from '../../../services/bill/bill.service';
 import { CartService } from '../../../services/cart/cart.service';
 import { ProductService } from '../../../services/product/product.service';
 import { VoucherService } from '../../../services/voucher/voucher.service';
-import  html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas';
 import * as htmlToImage from 'html-to-image';
 
 @Component({
@@ -41,15 +41,15 @@ export class CartComponent implements OnInit {
   total_money = 0;
   billDetailModel: billDetailModel;
   itemModel: ItemModel;
-  checkCart = true;
-  hidden:boolean;
+  checkCart :boolean;
+  hidden: boolean;
   account: accountModel;
   voucherModel: voucherModel;
   bill_id: any;
   bill_detail_id: any;
   billModel: any;
   account_id: any;
-  voucher:any;
+  voucher: any;
   submitted = false;
   searchedKeyword: string;
   formGroup: FormGroup;
@@ -58,7 +58,7 @@ export class CartComponent implements OnInit {
   update_phone_number: any;
   update_address: any;
   selectedType: any;
-  checkVoucher:boolean;
+  checkVoucher: boolean;
   modalReference: any;
   closeResult: string;
   constructor(private cartService: CartService,
@@ -69,32 +69,32 @@ export class CartComponent implements OnInit {
     private accountService: AccountService,
     private router: Router,
     private toastr: ToastrService,
-    private voucherService:VoucherService,
+    private voucherService: VoucherService,
     private modalService: NgbModal,) { }
 
   ngOnInit(): void {
-    this.hidden =true;
+    this.hidden = true;
     this.submitted = true;
     this.selectedType = 0;
     this.loadListProductCart();
     this.formGroup = new FormGroup({
-      customer_name: new FormControl(),
-      email: new FormControl(),
+      name: new FormControl(),
+      note: new FormControl(),
       phone_number: new FormControl(),
       address: new FormControl()
     });
   }
 
-  CaptureData(){
+  CaptureData() {
     //cach 1
     var data = document.getElementById("product_cart_capture");
-			htmlToImage.toJpeg(data, { quality: 0.95 }).then(function(canvas) {
-                const link : any = document.createElement("a");
-                document.body.appendChild(link);
-                link.download = "html_image.png";
-                link.href = canvas;
-                link.click();
-            });
+    htmlToImage.toJpeg(data, { quality: 0.95 }).then(function (canvas) {
+      const link: any = document.createElement("a");
+      document.body.appendChild(link);
+      link.download = "html_image.png";
+      link.href = canvas;
+      link.click();
+    });
     //cach 2
     // html2canvas(document.getElementById("product_cart_capture")).then(canvas => {
     //   this.canvas.nativeElement.src = canvas.toDataURL();
@@ -141,6 +141,12 @@ export class CartComponent implements OnInit {
   }
 
   loadListProductCart() {
+    this.formGroup = this.fb.group({
+      name: [null, [Validators.required]],
+      address: [null, [Validators.required]],
+      phone_number: [null, [Validators.required]],
+      note: [null],
+    });
     this.list_product = [];
     this.list_bill = [];
     this.update_bill_id = localStorage.getItem("bill_id");
@@ -157,12 +163,13 @@ export class CartComponent implements OnInit {
         if (this.list_bill_filter.length !== 0) {
           this.billDetailService.getAll().subscribe(data => {
             this.list_product_filter = data.data;
-            this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id);
-            if(this.list_product.length !== 0){
-              localStorage.setItem("listProduct", JSON.stringify(this.list_product));
-              this.bill_detail_id = this.list_product[0].bill_detail_id;
+            if(this.list_product_filter !== []){     
+              this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id);
+              if (this.list_product.length !== 0) {
+                localStorage.setItem("listProduct", JSON.stringify(this.list_product));
+                this.bill_detail_id = this.list_product[0].bill_detail_id;
+              }
             }
-            
           })
           // for (let item of this.list_bill_filter){
           //   this.billDetailModel = {
@@ -188,12 +195,11 @@ export class CartComponent implements OnInit {
       })
       this.accountService.getInfo().subscribe(data => {
         this.update_customer_name = data.data.full_name;
-        this.update_email = data.data.email;
         this.update_phone_number = data.data.phone_number;
         this.update_address = data.data.address;
         this.formGroup = this.fb.group({
-          customer_name: [this.update_customer_name],
-          email: [this.update_email],
+          name: [this.update_customer_name],
+          note: [],
           phone_number: [this.update_phone_number],
           address: [this.update_address],
         });
@@ -220,11 +226,15 @@ export class CartComponent implements OnInit {
             product_name: item.product.product_name,
           }
           this.list_product.push(this.billDetailModel);
+          // localStorage.setItem("listProduct", JSON.stringify(this.list_product));
         }
       }
     }
-    setTimeout(() => this.totalCart(), 1000);
     console.log(this.list_product);
+    
+
+    setTimeout(() => this.totalCart(), 1000);
+
     // if(this.list_product === [] || this.list_product.length === 0){
     //   this.checkCart = false;
     // }
@@ -242,9 +252,9 @@ export class CartComponent implements OnInit {
         // this.checkVoucher = true;
         this.list_voucher_filter = this.list_voucher;
         var keyword = this.searchedKeyword.toString();
-        for(let item of this.list_voucher_filter){
+        for (let item of this.list_voucher_filter) {
           var voucher_id = item.voucher_id.toString();
-          if (voucher_id===keyword ) {
+          if (voucher_id === keyword) {
             filterResult.push(item);
           }
         }
@@ -260,21 +270,20 @@ export class CartComponent implements OnInit {
 
   }
 
-  useVouvher(){
-    if(this.list_voucher_filter.length !== 0){
-      this.total_money = (this.total *  ((100 -  this.list_voucher_filter[0].voucher_level)/100));
-      localStorage.setItem("total_money",this.total_money.toString());
-    }else{
+  useVouvher() {
+    if (this.list_voucher_filter.length !== 0) {
+      this.total_money = (this.total * ((100 - this.list_voucher_filter[0].voucher_level) / 100));
+      // localStorage.setItem("total_money", this.total_money.toString());
+    } else {
       this.total_money = this.total;
-      localStorage.setItem("total_money",this.total_money.toString());
+      // localStorage.setItem("total_money", this.total_money.toString());
     }
-   
+
   }
 
 
   orderSuccess() {
-    
-    console.log(this.selectedType);
+
     this.submitted = false;
     this.list_bill = [];
     this.list_bill_filter = [];
@@ -282,62 +291,112 @@ export class CartComponent implements OnInit {
     let bill: billModel;
     let account_id = Number(localStorage.getItem("account_id"));
     if (localStorage.getItem("account_id")) {
-      account = {
-        email: this.formGroup.get('email')?.value,
-        full_name: this.formGroup.get('customer_name')?.value,
-        phone_number: this.formGroup.get('phone_number')?.value,
-        address: this.formGroup.get('address')?.value,
-      }
-      this.accountService.update(account).subscribe(data => {
-        this.billService.getAll().subscribe(data => {
-          this.list_bill = data.data;
-          this.list_bill_filter = this.list_bill.filter(function (laptop) {
-            return (laptop.customer_id === account_id && laptop.order_status_id === 1);
-          });
-          if (this.list_bill_filter.length === 0) {
-            this.toastr.warning("Giỏ hàng trống, vui lòng thêm sản phẩm vào giỏ hàng");
-          }
-          else {
-            if (this.selectedType === 0) {
-              this.toastr.warning("Vui lòng chọn hình thức thanh toán");
-            } else {
-             
-              if(this.list_voucher_filter.length !== 0){
-                const modelDelete = {
-                  id: this.list_voucher_filter[0].voucher_id
-                };
-                this.voucherService.delete(modelDelete).subscribe(data=>{
-                })
-                bill = {
-                  order_status_id: 2,
-                  order_type_id: this.selectedType,
-                  into_money: this.total_money,
-                }
-                this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
-                  this.cartService.clearCart();
-                  this.toastr.success("Đặt hàng thành công");
-                  this.router.navigate(['/send-cart']);
-                })
-              }else{
-                bill = {
-                  order_status_id: 2,
-                  order_type_id: this.selectedType
-                }
-                this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
-                  this.cartService.clearCart();
-                  this.toastr.success("Đặt hàng thành công");
-                  this.router.navigate(['/send-cart']);
-                })
+      // account = {
+      //   email: this.formGroup.get('email')?.value,
+      //   full_name: this.formGroup.get('customer_name')?.value,
+      //   phone_number: this.formGroup.get('phone_number')?.value,
+      //   address: this.formGroup.get('address')?.value,
+      // }
+      // this.accountService.update(account).subscribe(data => {
+      this.billService.getAll().subscribe(data => {
+        this.list_bill = data.data;
+        this.list_bill_filter = this.list_bill.filter(function (laptop) {
+          return (laptop.customer_id === account_id && laptop.order_status_id === 1);
+        });
+        if (this.list_bill_filter.length === 0) {
+          this.toastr.warning("Giỏ hàng trống, vui lòng thêm sản phẩm vào giỏ hàng");
+        }
+        else {
+          if (this.selectedType === 0) {
+            this.toastr.warning("Vui lòng chọn hình thức thanh toán");
+          } else {
+
+            if (this.list_voucher_filter.length !== 0) {
+              const modelDelete = {
+                id: this.list_voucher_filter[0].voucher_id
+              };
+              this.voucherService.delete(modelDelete).subscribe(data => {
+              })
+              bill = {
+                order_status_id: 2,
+                phone_number: this.formGroup.get('phone_number')?.value,
+                address: this.formGroup.get('address')?.value,
+                note: this.formGroup.get('note')?.value,
+                name: this.formGroup.get('name')?.value,
+                order_type_id: this.selectedType,
+                into_money: this.total_money,
               }
-              
+              this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
+                this.cartService.clearCart();
+                this.toastr.success("Đặt hàng thành công");
+                this.router.navigate(['/send-cart']);
+              })
+            } else {
+              bill = {
+                order_status_id: 2,
+                order_type_id: this.selectedType,
+                phone_number: this.formGroup.get('phone_number')?.value,
+                address: this.formGroup.get('address')?.value,
+                note: this.formGroup.get('note')?.value,
+                name: this.formGroup.get('name')?.value,
+              }
+              this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
+                this.cartService.clearCart();
+                this.toastr.success("Đặt hàng thành công");
+                this.router.navigate(['/send-cart']);
+              })
             }
 
           }
-        })
+
+        }
       })
+      // })
 
     } else {
-      this.toastr.warning("Vui lòng đăng nhập trước khi đặt hàng !!")
+      if (this.formGroup.get('phone_number')?.value !== undefined && this.formGroup.get('address')?.value !== null && this.formGroup.get('name')?.value !== null
+        && this.formGroup.get('phone_number')?.value !== "" && this.formGroup.get('address')?.value !== "" && this.formGroup.get('name')?.value !== "") {
+        if (this.selectedType === 0) {
+          this.toastr.warning("Vui lòng chọn hình thức thanh toán");
+        } else {
+          bill = {
+            phone_number: this.formGroup.get('phone_number')?.value,
+            address: this.formGroup.get('address')?.value,
+            note: this.formGroup.get('note')?.value,
+            name: this.formGroup.get('name')?.value,
+            order_type_id: this.selectedType
+          }
+          this.billService.createNotAccount(bill).subscribe(data => {
+
+            if (this.list_product !== []) {
+              for (let item of this.list_product) {
+                this.billDetailModel = {
+                  bill_id: data.data.bill_id,
+                  product_id: item.product_id,
+                  amount: item.amount,
+                  price: item.price,
+                }
+              }
+              this.billDetailService.createNoAccount(this.billDetailModel).subscribe(data => {
+                this.cartService.clearCart();
+                this.toastr.success("Đặt hàng thành công");
+                this.router.navigate(['/send-cart']);
+              })
+            }
+
+          })
+        }
+
+      } else {
+        this.toastr.error("Vui lòng nhập đầy đủ thông tin khách hàng");
+        return;
+      }
+      // if (this.formGroup.invalid) {
+      //   this.toastr.error('Vui lòng điền đầy đủ thông tin khách hàng.');
+      //   return;
+      // }
+      // console.log(this.list_product);
+
     }
   }
 
@@ -357,12 +416,19 @@ export class CartComponent implements OnInit {
           this.billDetailService.getAll().subscribe(data => {
             this.list_product_filter = data.data;
             this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id)
+            if(this.list_product.length === 0){
+              this.checkCart = false;
+            }else{
+              this.checkCart = true;
+            }
+            console.log(this.checkCart);
             if (this.list_product !== null) {
               for (let i of this.list_product) {
-                this.total += i.amount * i.price; 
+                this.total += i.amount * i.price;
               }
               this.total_money = this.total;
-              localStorage.setItem("total_money",this.total_money.toString());
+              
+              // localStorage.setItem("total_money", this.total_money.toString());
             }
             else {
             }
@@ -380,6 +446,7 @@ export class CartComponent implements OnInit {
           this.total += i.amount * i.price;
         }
         this.total_money = this.total;
+        // localStorage.setItem("total_money", this.total_money.toString());
       }
       else {
         this.total = 0;
@@ -401,6 +468,7 @@ export class CartComponent implements OnInit {
         };
         this.billService.delete(modelDelete).subscribe(data => {
           this.toastr.success("Xóa giỏ hàng thành công");
+          this.cartService.clearCart();
         });
       })
 
@@ -408,11 +476,15 @@ export class CartComponent implements OnInit {
       this.cartService.clearCart();
       this.totalCart();
     }
-    this.loadListProductCart();
-    this.modalReference.dismiss();
+    setTimeout( () => {
+      this.loadListProductCart();
+      this.modalReference.dismiss();
+    }, 1000);
+    this.checkCart = false;
+    
   }
 
-  
+
   deleteItem(item) {
     this.list_bill_detail = [];
     if (localStorage.getItem("account_id")) {

@@ -122,10 +122,11 @@ export class UpdateProductImageComponent implements OnInit {
         product_id: [{value: this.model.product_id, disabled: this.isInfo}, [Validators.required]],
         image:'',
       }); 
+      console.log(this.model.image);
       if(this.model.image.length === 0){
         this.urlPictureDefault = avatarDefault;
       }else{
-        this.urlPictureDefault = this.model.image[0]
+        this.urlPictureDefault = this.model.image
       }    
     }
     
@@ -168,7 +169,7 @@ export class UpdateProductImageComponent implements OnInit {
     }
     if (this.isEdit) {
       product = {
-        product_id: this.formGroup.get('product_id')?.value,
+        product_id: this.model.product_id,
         image: this.uploads,
       };
      
@@ -191,9 +192,9 @@ export class UpdateProductImageComponent implements OnInit {
       );
     }
     if (this.isEdit) {
-      this.productImageService.update(product.product_id, product).subscribe(res => {
+      this.productImageService.update( product).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        // this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
       err => {
@@ -228,6 +229,7 @@ export class UpdateProductImageComponent implements OnInit {
             this.downloadURL = ref.getDownloadURL();
             this.downloadURL.subscribe(url => {
             this.uploads.push(url);
+            this.urlPictureDefault = this.uploads[0];
             });
           }
           )

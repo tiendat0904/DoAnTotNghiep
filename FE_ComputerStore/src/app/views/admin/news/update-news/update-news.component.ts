@@ -98,7 +98,7 @@ export class UpdateNewsComponent implements OnInit {
         news_content: [ null, [Validators.required]],
         highlight: [ null],
         thumbnail: [ null,[Validators.required] ],
-        url : [ null,[Validators.required] ],
+        url : [ null,[Validators.required,Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)] ],
         created_at: [ this.datePipe.transform(Date.now(),"yyyy/MM/dd")],
         
       });
@@ -109,7 +109,7 @@ export class UpdateNewsComponent implements OnInit {
         news_content: [{value: this.model.news_content, disabled: this.isInfo}, [Validators.required]],
         highlight: [{value: this.model.highlight, disabled: this.isInfo}],
         thumbnail: '',
-        url : [{value: this.model.url, disabled: this.isInfo},[Validators.required]],
+        url : [{value: this.model.url, disabled: this.isInfo},[Validators.required,Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]],
         created_at: [{value: this.model.created_at, disabled: this.isInfo}],
       });
       if(this.model.thumbnail===""){

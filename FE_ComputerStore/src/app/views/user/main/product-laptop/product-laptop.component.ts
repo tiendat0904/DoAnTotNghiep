@@ -23,6 +23,8 @@ export class ProductLaptopComponent implements OnInit {
   product_type_id: any;
   product_type_name: any;
   price_new: any;
+  page = 1;
+  pageSize = 16;
   constructor(private productService: ProductService, private route: ActivatedRoute, private trademarkService: TrademarkService) { }
 
   ngOnInit(): void {

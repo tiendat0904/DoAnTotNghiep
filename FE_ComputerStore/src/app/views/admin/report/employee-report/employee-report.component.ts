@@ -71,15 +71,39 @@ export class EmployeeReportComponent implements OnInit {
 
   fetcharraylist_employee(model: excelModel) {
     this.isLoading = true;
-    this.reportService.reportEmployee(model).subscribe(data => {
-      this.arraylist_employee = data.data;
-      this.listFilterResult = data.data;
-      this.listFilterResult.forEach((x) => (x.checked = false));
-      this.filterResultTemplist = this.listFilterResult;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    if(model.key == "bcq"){
+      if(model.param ==="" || model.param === "NaN/"+this.year){
+        this.listFilterResult = [];
+      }else{
+        this.reportService.reportEmployee(model).subscribe(data => {
+      
+          if(data.data !== null){
+            this.arraylist_employee = data.data;
+            this.listFilterResult = data.data;
+            this.listFilterResult.forEach((x) => (x.checked = false));
+            this.filterResultTemplist = this.listFilterResult;
+          }
+         
+        },
+          err => {
+            this.isLoading = false;
+          })
+      }
+    }else{
+      this.reportService.reportEmployee(model).subscribe(data => {
+      
+        if(data.data !== null){
+          this.arraylist_employee = data.data;
+          this.listFilterResult = data.data;
+          this.listFilterResult.forEach((x) => (x.checked = false));
+          this.filterResultTemplist = this.listFilterResult;
+        }
+       
+      },
+        err => {
+          this.isLoading = false;
+        })
+    }
   }
 
   export() {

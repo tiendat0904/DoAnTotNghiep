@@ -15,6 +15,10 @@ export class BillDetailService {
     return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'bills_detail', model);
   }
 
+  createNoAccount(model: billDetailModel): Observable<any>{
+    return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'bills_detail_not_account', model);
+  }
+
   getAll(): Observable<any>{
     return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'bills_detail');
   }

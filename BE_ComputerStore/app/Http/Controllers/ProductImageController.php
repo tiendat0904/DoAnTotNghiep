@@ -215,14 +215,31 @@ class ProductImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $this->base->update($request, $id);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            $arr_value = $request->all();
+            $validator = Validator::make($request->all(), [
+                self::product_id => 'required'
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->all()], 400);
+            }
+
+            $objs = [];
+                $images = $arr_value[self::image];
+                if (count($images) > 0) {
+                    foreach ($images as $image) {
+                        $objs[self::product_id] = $request->product_id;
+                        $objs[self::image] = $image;
+                        DB::table(self::table)->insert($objs);
+                    }
+                }
+
+            
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

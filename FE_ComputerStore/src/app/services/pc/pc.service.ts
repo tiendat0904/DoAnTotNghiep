@@ -47,7 +47,7 @@ export class PcService {
       product: product,
       quantity: 1,
     }
-    if(localStorage.getItem('PC')  == null){
+    if(localStorage.getItem('PC')  == null || JSON.parse(localStorage.getItem('PC'))  == []){
       local_storage =[];
       itemsInCart.push(this.items);
       localStorage.setItem('PC', JSON.stringify(itemsInCart));

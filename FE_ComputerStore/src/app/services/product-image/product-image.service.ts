@@ -19,8 +19,8 @@ export class ProductImageService {
     return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'product_images');
   }
 
-  update(id: any, model: productImageModel): Observable<any>{
-    return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'product_images/' + id, model);
+  update( model: productImageModel): Observable<any>{
+    return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'product_images/', model);
   }
 
   detail(id: any): Observable<any>{

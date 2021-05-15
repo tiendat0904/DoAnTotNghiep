@@ -25,10 +25,11 @@
           <div class="form-group">
             <label for="news_content">Nội dung</label>
             <input type="text" name="" class="form-control" formControlName="news_content" id="news_content" />
-            <div *ngIf="submitted && formGroup.controls['news_content'].errors?.required">
+            <div *ngIf="submitted && formGroup.controls['news_content'].errors?.required ">
               <div *ngIf="formGroup.controls['news_content'].errors?.required" style="color: red">
                 * nội dung không được để trống
               </div>
+             
             </div>
           </div>
         </div>
@@ -48,9 +49,12 @@
             <label for="url">URL</label>
             <input type="text" name="" class="form-control" formControlName="url" id="url" />
           </div>
-          <div *ngIf="submitted && formGroup.controls['url'].errors?.required">
+          <div *ngIf="submitted && formGroup.controls['url'].errors?.required || formGroup.controls['url'].errors?.pattern">
             <div *ngIf="formGroup.controls['url'].errors?.required" style="color: red">
               * Url không được để trống
+            </div>
+            <div *ngIf="formGroup.controls['url'].errors?.pattern" style="color: red">
+              * Nhập đúng định dạng url
             </div>
           </div>
         </div>

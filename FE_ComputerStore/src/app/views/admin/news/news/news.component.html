@@ -112,13 +112,13 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            Bạn có chắc chắn muốn xóa thông tin của {{ e.tieu_de }} ?
+                            Bạn có chắc chắn muốn xóa thông tin tin tức {{ e.title }} ?
                         </div>
                         <div class="modal-footer">
                             <button
                             class="btn btn-danger"
                             style="width: 80px"
-                            (click)="delete_news(e.id)"
+                            (click)="delete_news(e.news_id)"
                             >
                             Có
                             </button>

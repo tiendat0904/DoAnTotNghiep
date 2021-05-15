@@ -40,7 +40,11 @@ Route::put('/comments/{id}', [\App\Http\Controllers\CommnentController::class, '
 Route::get('/product_type', [\App\Http\Controllers\ProductTypeController::class, 'index']);
 Route::get('/product_type/{id}', [\App\Http\Controllers\ProductTypeController::class, 'show']);
 
-
+Route::get('/getBill', [\App\Http\Controllers\BillController::class, 'getBill']);
+Route::post('/bills_not_account', [\App\Http\Controllers\BillController::class, 'storenotaccount']);
+Route::get('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'show']);
+Route::post('/bills_detail_not_account', [\App\Http\Controllers\BillDetailController::class, 'storenotaccount']);
+Route::get('/bills_detail_by_bill/{id}', [\App\Http\Controllers\BillDetailController::class, 'showbybill']);
 
 Route::get('/voucher', [\App\Http\Controllers\VoucherController::class, 'index']);
 Route::get('/voucher/{id}', [\App\Http\Controllers\VoucherController::class, 'show']);
@@ -141,7 +145,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/product_images', [\App\Http\Controllers\ProductImageController::class, 'store']);
 
-    Route::put('/product_images/{id}', [\App\Http\Controllers\ProductImageController::class, 'update']);
+    Route::put('/product_images', [\App\Http\Controllers\ProductImageController::class, 'update']);
 
     Route::post('/product_images/delete', [\App\Http\Controllers\ProductImageController::class, 'destroy']);
 
@@ -232,9 +236,7 @@ Route::middleware('auth:api')->group(function () {
 
 
     //chi tiết hóa đơn bán
-    Route::get('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'index']);
-    Route::get('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'show']);
-    Route::get('/bills_detail_by_bill/{id}', [\App\Http\Controllers\BillDetailController::class, 'showbybill']);
+    Route::get('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'index']); 
     Route::post('/bills_detail', [\App\Http\Controllers\BillDetailController::class, 'store']);
     Route::put('/bills_detail/{id}', [\App\Http\Controllers\BillDetailController::class, 'update']);
     Route::post('/bills_detail/delete', [\App\Http\Controllers\BillDetailController::class, 'destroy']);

@@ -30,12 +30,13 @@ export class LoginComponent {
   list_item: Array<ItemModel> = [];
   update_bill_id: any;
   array_buildpc = [];
-  array_buildpc_filter : Array<BuildPCModel> = [];
-  array_pc : [];
+  array_buildpc_filter: Array<BuildPCModel> = [];
+  array_pc: [];
+  array_pc_customer: Array<BuildPCModel> = [];
 
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router, private toaster: ToastrService,
-    private billService: BillService, private billDetailService: BillDetailService, private cartService: CartService,private pcService: PcService) {
+    private billService: BillService, private billDetailService: BillDetailService, private cartService: CartService, private pcService: PcService) {
 
   }
   ngOnInit(): void {
@@ -96,7 +97,6 @@ export class LoginComponent {
                         this.billDetailModel = {
                           bill_id: update_bill_id,
                           product_id: item.product.product_id,
-                          warranty: item.product.warranty,
                           price: item.product.price_display,
                           amount: item.quantity,
                         }
@@ -131,7 +131,6 @@ export class LoginComponent {
                         this.billDetailModel = {
                           bill_id: data.data[0].bill_id,
                           product_id: item.product.product_id,
-                          warranty: item.product.warranty,
                           price: item.product.price_display,
                           amount: item.quantity,
                         }
@@ -155,7 +154,6 @@ export class LoginComponent {
                       this.billDetailModel = {
                         bill_id: data.data[0].bill_id,
                         product_id: item.product.product_id,
-                        warranty: item.product.warranty,
                         price: item.product.price_new,
                         amount: item.quantity,
                       }
@@ -185,19 +183,44 @@ export class LoginComponent {
       });
   }
 
-  addBuildPC(){
+  addBuildPC() {
+    let build_pc_delete = [];
     let pcModel: BuildPCModel;
     this.array_buildpc = this.pcService.getItems();
-    if(this.array_buildpc !== null){
-        for(let item of this.array_buildpc){
-          pcModel = {
-            customer_id: Number(localStorage.getItem("account_id")),
-            product_id: item.product.product_id,
-            price: item.product.price,
-            quantity: item.quantity,
+    if (this.array_buildpc !== null) {
+      this.pcService.detail(Number(localStorage.getItem("account_id"))).subscribe(data => {
+        this.array_pc_customer = data.data;
+        if (this.array_pc_customer !== []) {
+          for (let item of this.array_pc_customer) {
+            build_pc_delete.push(item.build_pc_id);
+          }
+          const modelDelete = {
+            listId: build_pc_delete
+          };
+          this.pcService.delete(modelDelete).subscribe(data =>{
+            for (let item of this.array_buildpc) {
+              pcModel = {
+                customer_id: Number(localStorage.getItem("account_id")),
+                product_id: item.product.product_id,
+                price: item.product.price,
+                quantity: item.quantity,
+              }
+              this.pcService.create(pcModel).subscribe();
+            }
+          })
+        }else{
+          for (let item of this.array_buildpc) {
+            pcModel = {
+              customer_id: Number(localStorage.getItem("account_id")),
+              product_id: item.product.product_id,
+              price: item.product.price,
+              quantity: item.quantity,
+            }
+            this.pcService.create(pcModel).subscribe();
+          }
         }
-        this.pcService.create(pcModel).subscribe();
-      }
+      })
     }
   }
+
 }
