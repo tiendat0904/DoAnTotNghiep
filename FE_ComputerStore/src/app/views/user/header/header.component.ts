@@ -169,6 +169,13 @@ export class HeaderComponent implements OnInit {
     var filterResult = [];
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
+      for(let item of this.list_product){
+        if (item.price_new === null) {
+          item.price_display = item.price;
+        } else {
+          item.price_display = item.price_new;
+        }
+      }
       if (this.searchedKeyword === null || this.searchedKeyword.length === 0) {
         this.check_search = true;
         this.list_product_filter = null;

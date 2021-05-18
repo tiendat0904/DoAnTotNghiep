@@ -1,20 +1,23 @@
 .header-top{
-    background-color: #ffee00ef;
+    background-color: #243a76;
     color:black;
     height: 45px;
 }
 
 .header-toolbar{
     width: 100%;
-    padding-left: 413px;
+    padding-left: 558px;
     padding-top: 10px;
     max-width: 1420px;
 }
 
+.span-header{
+    font-size: 15px;
+}
 
 span{
-    font-size: 18px;
-    color: black;
+    font-size: 17px;
+    color: #fff;
 }
 
 a{
@@ -35,7 +38,7 @@ a{
 }
 
 .header-main-center-scoll{
-    background-color: #ffee00ef;
+    background-color: #243a76;
     position: fixed;
     top: 0;
     width: 100%;
@@ -67,13 +70,13 @@ a{
     border-radius: 10px;
 }
 .header-main-search button{
-    background-color: #ffee00ef;
+    background-color: #f78d1c;
     position: relative;
     right: 15px;
     height: 38.42px;
-    bottom: 0.126px;
+    bottom: -0.2px;
     width: 50px;
-    border:  0.5px solid #ffee00ef;
+    border:  0.5px solid #f78d1c;
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -201,7 +204,7 @@ a{
 // }
 
 .header-bottom{
-    background-color: #ffee00ef;
+    background-color: #243a76;
     height: 50px;
 }
 
@@ -209,7 +212,7 @@ a{
     position: relative;
     top: 30%;
     margin-right: 9.6px;
-    margin-left: 80px;
+    margin-left: 88.5px;
 }
 
 
