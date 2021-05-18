@@ -7,6 +7,7 @@ export interface billModel{
     order_status_id?: number,
     order_type_id? : number,
     created_at?: Date,
+    email?: string,
     name?:string,
     address?:string,
     phone_number?:string,

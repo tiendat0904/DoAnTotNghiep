@@ -139,7 +139,20 @@ hr{
     color: red;
 }
 
+
+.product-checked{
+    display: -webkit-inline-box;
+}
 .product-checked p{
     text-align: inherit;
     margin-left: 0px;
+}
+
+.product-checked button{
+    outline: none;
+    border: 0;
+    background-color: #fff;
+    font-size: 20px;
+    position: relative;
+    bottom: 5px;
 }

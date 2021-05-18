@@ -38,11 +38,16 @@
                 <p><a href=""></a> {{[item.product_name]}}</p>
               </div>
             </div>
-            <div class='product-price' style="align-self: flex-end; margin-left: 15px;">
-              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
-              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+            <div style="align-self: flex-end; margin-left: 15px;">
+              <div class='product-price'>
+                <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+                <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+              </div>
+               <div class='product-checked'>
+                <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+              </div>
             </div>
-            <div class='product-'></div>
           </div>
         </div>
       </div>

@@ -21,6 +21,7 @@ class CreateBillsTable extends Migration
             $table->bigInteger('order_type_id')->default(null);
             $table->string('note');
             $table->string('name');
+            $table->string('email');
             $table->string('address');
             $table->string('phone_number', 10)->default('');
             $table->date('created_at')->default(now());

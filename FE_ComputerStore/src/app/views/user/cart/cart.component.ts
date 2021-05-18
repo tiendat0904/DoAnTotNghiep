@@ -15,8 +15,9 @@ import { BillService } from '../../../services/bill/bill.service';
 import { CartService } from '../../../services/cart/cart.service';
 import { ProductService } from '../../../services/product/product.service';
 import { VoucherService } from '../../../services/voucher/voucher.service';
-import html2canvas from 'html2canvas';
 import * as htmlToImage from 'html-to-image';
+import { MailService } from '../../../services/mail/mail.service';
+import { mailModel } from '../../../models/mail-model';
 
 @Component({
   selector: 'app-cart',
@@ -25,9 +26,6 @@ import * as htmlToImage from 'html-to-image';
 })
 export class CartComponent implements OnInit {
 
-  @ViewChild('screen') screen: ElementRef;
-  @ViewChild('canvas') canvas: ElementRef;
-  @ViewChild('downloadLink') downloadLink: ElementRef;
   list_item: Array<ItemModel> = [];
   list_product: Array<billDetailModel> = [];
   list_bill: Array<billModel> = [];
@@ -39,6 +37,7 @@ export class CartComponent implements OnInit {
   list_bill_filter: Array<billModel> = [];
   total = 0;
   total_money = 0;
+  mailModel:mailModel;
   billDetailModel: billDetailModel;
   itemModel: ItemModel;
   checkCart :boolean;
@@ -70,7 +69,8 @@ export class CartComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private voucherService: VoucherService,
-    private modalService: NgbModal,) { }
+    private modalService: NgbModal,
+    private mailService:MailService) { }
 
   ngOnInit(): void {
     this.hidden = true;
@@ -79,6 +79,7 @@ export class CartComponent implements OnInit {
     this.loadListProductCart();
     this.formGroup = new FormGroup({
       name: new FormControl(),
+      email:new FormControl(),
       note: new FormControl(),
       phone_number: new FormControl(),
       address: new FormControl()
@@ -141,12 +142,6 @@ export class CartComponent implements OnInit {
   }
 
   loadListProductCart() {
-    this.formGroup = this.fb.group({
-      name: [null, [Validators.required]],
-      address: [null, [Validators.required]],
-      phone_number: [null, [Validators.required]],
-      note: [null],
-    });
     this.list_product = [];
     this.list_bill = [];
     this.update_bill_id = localStorage.getItem("bill_id");
@@ -166,7 +161,7 @@ export class CartComponent implements OnInit {
             if(this.list_product_filter !== []){     
               this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id);
               if (this.list_product.length !== 0) {
-                localStorage.setItem("listProduct", JSON.stringify(this.list_product));
+                // localStorage.setItem("listProduct", JSON.stringify(this.list_product));
                 this.bill_detail_id = this.list_product[0].bill_detail_id;
               }
             }
@@ -195,10 +190,12 @@ export class CartComponent implements OnInit {
       })
       this.accountService.getInfo().subscribe(data => {
         this.update_customer_name = data.data.full_name;
+        this.update_email = data.data.email;
         this.update_phone_number = data.data.phone_number;
         this.update_address = data.data.address;
         this.formGroup = this.fb.group({
           name: [this.update_customer_name],
+          email:[this.update_email],
           note: [],
           phone_number: [this.update_phone_number],
           address: [this.update_address],
@@ -230,8 +227,7 @@ export class CartComponent implements OnInit {
         }
       }
     }
-    console.log(this.list_product);
-    
+    // console.log(this.list_product);
 
     setTimeout(() => this.totalCart(), 1000);
 
@@ -283,7 +279,7 @@ export class CartComponent implements OnInit {
 
 
   orderSuccess() {
-
+    // console.log(this.formGroup);
     this.submitted = false;
     this.list_bill = [];
     this.list_bill_filter = [];
@@ -322,6 +318,7 @@ export class CartComponent implements OnInit {
                 phone_number: this.formGroup.get('phone_number')?.value,
                 address: this.formGroup.get('address')?.value,
                 note: this.formGroup.get('note')?.value,
+                email: this.formGroup.get('email')?.value,
                 name: this.formGroup.get('name')?.value,
                 order_type_id: this.selectedType,
                 into_money: this.total_money,
@@ -329,12 +326,24 @@ export class CartComponent implements OnInit {
               this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
                 this.cartService.clearCart();
                 this.toastr.success("Đặt hàng thành công");
+                this.mailModel = {
+                  name: this.formGroup.get('name')?.value,
+                  email:this.formGroup.get('email')?.value,
+                  phone_number: this.formGroup.get('phone_number')?.value,
+                  address: this.formGroup.get('address')?.value,
+                  note: this.formGroup.get('note')?.value,
+                  total_money:this.total_money,
+                  listProduct:this.list_product,
+                }
+                this.mailService.senEmail(this.mailModel).subscribe();
                 this.router.navigate(['/send-cart']);
+               
               })
             } else {
               bill = {
                 order_status_id: 2,
                 order_type_id: this.selectedType,
+                email:this.formGroup.get('email')?.value,
                 phone_number: this.formGroup.get('phone_number')?.value,
                 address: this.formGroup.get('address')?.value,
                 note: this.formGroup.get('note')?.value,
@@ -343,25 +352,33 @@ export class CartComponent implements OnInit {
               this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
                 this.cartService.clearCart();
                 this.toastr.success("Đặt hàng thành công");
+                this.mailModel = {
+                  name: this.formGroup.get('name')?.value,
+                  email:this.formGroup.get('email')?.value,
+                  phone_number: this.formGroup.get('phone_number')?.value,
+                  address: this.formGroup.get('address')?.value,
+                  note: this.formGroup.get('note')?.value,
+                  total_money:this.total_money,
+                  listProduct:this.list_product,
+                }
+                this.mailService.senEmail(this.mailModel).subscribe();
                 this.router.navigate(['/send-cart']);
               })
             }
 
           }
-
         }
       })
-      // })
-
     } else {
-      if (this.formGroup.get('phone_number')?.value !== undefined && this.formGroup.get('address')?.value !== null && this.formGroup.get('name')?.value !== null
-        && this.formGroup.get('phone_number')?.value !== "" && this.formGroup.get('address')?.value !== "" && this.formGroup.get('name')?.value !== "") {
+      if (this.formGroup.get('phone_number')?.value !== undefined && this.formGroup.get('address')?.value !== null && this.formGroup.get('name')?.value !== null && this.formGroup.get("email")?.value !== null
+        && this.formGroup.get('phone_number')?.value !== "" && this.formGroup.get('address')?.value !== "" && this.formGroup.get('name')?.value !== "" && this.formGroup.get('email')?.value !== "") {
         if (this.selectedType === 0) {
           this.toastr.warning("Vui lòng chọn hình thức thanh toán");
         } else {
           bill = {
             phone_number: this.formGroup.get('phone_number')?.value,
             address: this.formGroup.get('address')?.value,
+            email: this.formGroup.get("email")?.value,
             note: this.formGroup.get('note')?.value,
             name: this.formGroup.get('name')?.value,
             order_type_id: this.selectedType
@@ -380,6 +397,16 @@ export class CartComponent implements OnInit {
               this.billDetailService.createNoAccount(this.billDetailModel).subscribe(data => {
                 this.cartService.clearCart();
                 this.toastr.success("Đặt hàng thành công");
+                this.mailModel = {
+                  name: this.formGroup.get('name')?.value,
+                  email:this.formGroup.get('email')?.value,
+                  phone_number: this.formGroup.get('phone_number')?.value,
+                  address: this.formGroup.get('address')?.value,
+                  note: this.formGroup.get('note')?.value,
+                  total_money:this.total_money,
+                  listProduct:this.list_product,
+                }
+                this.mailService.senEmail(this.mailModel).subscribe();
                 this.router.navigate(['/send-cart']);
               })
             }
@@ -416,12 +443,12 @@ export class CartComponent implements OnInit {
           this.billDetailService.getAll().subscribe(data => {
             this.list_product_filter = data.data;
             this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id)
+            // console.log(this.list_product);
             if(this.list_product.length === 0){
               this.checkCart = false;
             }else{
               this.checkCart = true;
             }
-            console.log(this.checkCart);
             if (this.list_product !== null) {
               for (let i of this.list_product) {
                 this.total += i.amount * i.price;
@@ -437,10 +464,16 @@ export class CartComponent implements OnInit {
             })
         }
       })
+      // console.log(this.formGroup);
     }
     else {
       this.total = 0;
       this.list_item = this.cartService.getItems();
+      if(this.list_product.length === 0){
+        this.checkCart = false;
+      }else{
+        this.checkCart = true;
+      }
       if (this.list_product !== null) {
         for (let i of this.list_product) {
           this.total += i.amount * i.price;

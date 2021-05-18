@@ -18,7 +18,7 @@ use App\Http\Controllers\ReportController;
 Route::post('register', [AccountController::class, 'register']);
 Route::post('login', [AccountController::class, 'login']);
 
-
+Route::post('/sendemail', [\App\Http\Controllers\MailController::class, 'sendMail']);
 
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/products/{id}', [\App\Http\Controllers\ProductController::class, 'show']);

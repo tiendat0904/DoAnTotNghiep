@@ -50,7 +50,7 @@ export class ProductDetailComponent implements OnInit {
         this.product = data.data;
         this.photos = data.data.image;
         if(this.product.amount === 0){
-          this.check= "Liên hệ";
+          this.check= "Liên hệ : 18001008";
         }
         else{
           this.check = "Còn hàng";

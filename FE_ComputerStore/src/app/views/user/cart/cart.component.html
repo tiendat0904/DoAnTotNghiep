@@ -112,6 +112,16 @@
                 </div>
                 <br>
                 <div>
+                    <span style="margin-right: 91px;">Email</span><input type="text"
+                        [(ngModel)]="update_email" formControlName="email">
+                    <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
+                        <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
+                            * Email không được để trống
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div>
                     <span style="margin-right: 36px;">Số điện thoại*</span><input type="text"
                         [(ngModel)]="update_phone_number" formControlName="phone_number">
                     <div *ngIf="submitted && formGroup.controls['phone_number'].errors?.required">

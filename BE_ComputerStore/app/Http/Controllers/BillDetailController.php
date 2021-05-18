@@ -41,8 +41,9 @@ class BillDetailController extends Controller
             $code = null;
             $objs = DB::table(self::table)
                 ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
-                ->join(ProductImageController::table, self::table . '.' . self::product_id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+                ->leftjoin(ProductImageController::table, self::table . '.' . self::product_id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
                 ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name, ProductImageController::table . '.' . ProductImageController::image,ProductController::table . '.' . ProductController::warranty)
+                ->groupBy(self::bill_id,self::product_id)
                 ->get();
             $code = 200;
             return response()->json(['data' => $objs], $code);
@@ -404,7 +405,7 @@ class BillDetailController extends Controller
                 ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
                 ->join(BillController::table, self::table . '.' . self::bill_id, '=', BillController::table . '.' . BillController::id)
                 ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name,ProductController::table . '.' . ProductController::warranty, ProductImageController::table . '.' . ProductImageController::image, BillController::table . '.' . BillController::created_at, BillController::table . '.' . BillController::order_status_id)
-                ->where(self::table . '.' . self::bill_id, '=', $id)->get();
+                ->where(self::table . '.' . self::bill_id, '=', $id)->groupBy(self::bill_id,self::product_id)->get();
             if ($objs) {
                 return response()->json(['data' => $objs], 200);
             } else {

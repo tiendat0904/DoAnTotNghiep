@@ -19,6 +19,7 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
   array_product: Array<productModel> = [];
   array_product_filter:any;
   update_address: any;
+  update_email:any;
   total_money: any;
   constructor( private accountService: AccountService,
     private router: Router,
@@ -44,9 +45,9 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
         this.update_note = data.data.note;
         this.update_phone_number = data.data.phone_number;
         this.update_address = data.data.address;
+        this.update_email = data.data.email;
         this.billDetailService.getbybill(data.data.bill_id).subscribe(data =>{
           this.array_product = data.data;
-          console.log(this.array_product);
         });
         this.total_money = data.data.into_money;
       })

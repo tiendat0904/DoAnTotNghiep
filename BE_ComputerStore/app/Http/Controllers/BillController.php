@@ -18,6 +18,7 @@ class BillController extends Controller
     const customer_id = 'customer_id';
     const order_type_id = 'order_type_id';
     const name = 'name';
+    const email = 'email';
     const address = 'address';
     const phone_number = 'phone_number';
     const note = 'note';
@@ -121,6 +122,9 @@ class BillController extends Controller
             if ($request->name) {
                 $arr_value[self::name] = $request->name;
             }
+            if ($request->email) {
+                $arr_value[self::email] = $request->email;
+            }
             if ($request->address) {
                 $arr_value[self::address] = $request->address;
             }
@@ -199,6 +203,9 @@ class BillController extends Controller
         }
         if ($request->name) {
             $arr_value[self::name] = $request->name;
+        }
+        if ($request->email) {
+            $arr_value[self::email] = $request->email;
         }
         if ($request->address) {
             $arr_value[self::address] = $request->address;

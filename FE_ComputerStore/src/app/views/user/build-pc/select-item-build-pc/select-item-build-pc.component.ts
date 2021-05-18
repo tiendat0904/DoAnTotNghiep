@@ -134,7 +134,7 @@ export class SelectItemBuildPcComponent implements OnInit {
           for (let item2 of this.arraylist_product_filter) {
             item2.checkAmount = true;
             if (item2.amount === 0) {
-              item2.check = "Liên hệ";
+              item2.check = "Liên hệ : 18001008";
               item2.checkAmount = false;
             }
             else {
