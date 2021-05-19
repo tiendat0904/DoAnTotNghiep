@@ -80,7 +80,7 @@ export class CreateCouponComponent implements OnInit {
       coupon_id: [this.update_coupon_id],
       employee_id: [null, [Validators.required]],
       supplier_id: [null, [Validators.required]],
-      created_at: [this.datePipe.transform(Date.now(), "yyyy/MM/dd")],
+      created_at: [this.datePipe.transform(Date.now(), "dd/MM/yyyy")],
       total_money: [this.update_total_money],
     });
   }

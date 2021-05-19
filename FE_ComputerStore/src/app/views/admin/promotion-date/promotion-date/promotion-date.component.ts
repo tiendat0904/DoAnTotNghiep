@@ -36,9 +36,6 @@ export class PromotionDateComponent implements OnInit {
     this.fetchlist_promotion_date();
   }
 
-
-  
-
   fetchlist_promotion_date() {
     this.isLoading = true;
     this.promotionDateService.getAll().subscribe(data => {

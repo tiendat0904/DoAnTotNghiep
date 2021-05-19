@@ -20,6 +20,17 @@ class MailController extends Controller
             $messages->to($user['to']);
             $messages->subject('Đơn hàng của bạn');
         });
-        return response()->json(['data' =>$arrayProduct], 200);
+        return "Email send success";
+    }
+
+    public function sendCode(Request $request){
+        $details = ['email'=>$request->email,'code'=>$request->code];
+        $user['to']=$request->email;
+        Mail::send('email/sendcode',$details,function($messages) use ($user){
+            $messages->from('tiendatcomputerstore@gmail.com');
+            $messages->to($user['to']);
+            $messages->subject('Cài lại mật khẩu');
+        });
+        return response()->json(['success' => "Đã gửi mã xác nhận vào email của bạn"], 201);
     }
 }

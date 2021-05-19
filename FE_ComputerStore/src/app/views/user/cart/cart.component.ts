@@ -335,7 +335,7 @@ export class CartComponent implements OnInit {
                   total_money:this.total_money,
                   listProduct:this.list_product,
                 }
-                this.mailService.senEmail(this.mailModel).subscribe();
+                this.mailService.sendEmail(this.mailModel).subscribe();
                 this.router.navigate(['/send-cart']);
                
               })
@@ -361,7 +361,7 @@ export class CartComponent implements OnInit {
                   total_money:this.total_money,
                   listProduct:this.list_product,
                 }
-                this.mailService.senEmail(this.mailModel).subscribe();
+                this.mailService.sendEmail(this.mailModel).subscribe();
                 this.router.navigate(['/send-cart']);
               })
             }
@@ -406,7 +406,7 @@ export class CartComponent implements OnInit {
                   total_money:this.total_money,
                   listProduct:this.list_product,
                 }
-                this.mailService.senEmail(this.mailModel).subscribe();
+                this.mailService.sendEmail(this.mailModel).subscribe();
                 this.router.navigate(['/send-cart']);
               })
             }

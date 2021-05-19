@@ -19,6 +19,7 @@ Route::post('register', [AccountController::class, 'register']);
 Route::post('login', [AccountController::class, 'login']);
 
 Route::post('/sendemail', [\App\Http\Controllers\MailController::class, 'sendMail']);
+Route::post('/sendcode', [\App\Http\Controllers\MailController::class, 'sendCode']);
 
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/products/{id}', [\App\Http\Controllers\ProductController::class, 'show']);
@@ -28,6 +29,7 @@ Route::get('/suppliers/{id}', [\App\Http\Controllers\SupplierController::class, 
 
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index']);
 
+Route::put('/reset-password', [AccountController::class, 'resetPassword']);
 
 Route::get('/brands', [\App\Http\Controllers\TrademarkController::class, 'index']);
 Route::get('/brands/{id}', [\App\Http\Controllers\TrademarkController::class, 'show']);

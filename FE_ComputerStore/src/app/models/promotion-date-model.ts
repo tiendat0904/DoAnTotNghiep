@@ -3,4 +3,5 @@ export interface promotionDateModel{
     date? : Date,
     checked? : boolean,
     promotion_level: number;
+    listProduct:any[];
  }

@@ -74,6 +74,8 @@ import { ProductPromotionComponent } from './views/admin/promotion-date/product-
 import { CustomerComponent } from './views/admin/customer/customer/customer.component';
 import { UpdateCustomerComponent } from './views/admin/customer/update-customer/update-customer.component';
 import { AccountModule } from './views/admin/account/account.module';
+import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './views/forgot-password/reset-password/reset-password.component';
 registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
@@ -133,7 +135,9 @@ registerLocaleData(localeFr, 'vi');
     UpdatePromotionDateComponent,
     UpdateProductPromotionComponent,
     CustomerComponent,
-    UpdateCustomerComponent
+    UpdateCustomerComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
     // MainComponent,
     // ProductDetailComponent
    

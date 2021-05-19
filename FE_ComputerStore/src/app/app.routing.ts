@@ -13,6 +13,8 @@ import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
+import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './views/forgot-password/reset-password/reset-password.component';
 import { LoginComponent } from './views/login/login.component';
 import { ProfileComponent } from './views/profile/profile/profile.component';
 import { RegisterComponent } from './views/register/register.component';
@@ -33,6 +35,20 @@ export const routes: Routes = [
     component: RegisterComponent,
     data: {
       title: 'Register Page'
+    }
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    data: {
+      title: 'Forgot Page'
+    }
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    data: {
+      title: 'Reset Page'
     }
   },
   {

@@ -99,7 +99,7 @@ export class UpdateNewsComponent implements OnInit {
         highlight: [ null],
         thumbnail: [ null,[Validators.required] ],
         url : [ null,[Validators.required,Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)] ],
-        created_at: [ this.datePipe.transform(Date.now(),"yyyy/MM/dd")],
+        created_at: [ this.datePipe.transform(Date.now(),"dd/MM/yyyy")],
         
       });
       this.urlPictureDefault = avatarDefault;

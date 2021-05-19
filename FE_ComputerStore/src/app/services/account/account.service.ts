@@ -37,6 +37,10 @@ export class AccountService {
     return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'accounts', model);
   }
 
+  resetPassword(model: accountModel): Observable<any>{
+    return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'reset-password', model);
+  }
+
   detail(id: any): Observable<any>{
     return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'accounts/'+id);
   }

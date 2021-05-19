@@ -74,7 +74,7 @@ export class CreateOrderComponent implements OnInit {
         bill_id: [this.update_bill_id],
         employee_id: [ null,[Validators.required]],
         customer_id:[ null,[Validators.required]],
-        created_at: [this.datePipe.transform(Date.now(),"yyyy/MM/dd")],
+        created_at: [this.datePipe.transform(Date.now(),"dd/MM/yyyy")],
         total_money:[this.update_total_money],
         into_money:[this.update_into_money],
       });

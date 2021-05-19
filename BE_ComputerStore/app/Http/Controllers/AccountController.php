@@ -230,6 +230,20 @@ class AccountController extends Controller
         }
     }
 
+
+    public function resetPassword(Request $request){
+        $array = [];
+        $array[self::email] = $request->email;
+        $array[self::password] = bcrypt($request->new_password);
+        DB::table(self::table)->where(self::email, $request->email)->update($array);
+            $ac = Account::where(self::email, $request->email)->first();
+            if ($request->new_password != null) {
+                $token = $ac->createToken('ComputerStore')->accessToken;
+                return response()->json(['token' => $token, 'data' => $ac], 200);
+            }
+            return response()->json(['data' => $ac], 200);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

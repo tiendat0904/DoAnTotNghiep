@@ -62,6 +62,7 @@ class PromotionDateController extends Controller
     public function store(Request $request)
     {
         //
+        // return response()->json(['data' => $request->listProduct], 201);
         date_default_timezone_set(BaseController::timezone);
         $date = date('d-m-Y');
         $user = auth()->user();
@@ -91,14 +92,14 @@ class PromotionDateController extends Controller
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
-
+            $products = [];
+            $products = $request->listProduct;
             DB::table(self::table)->insert([self::date => $arr_value[self::date]]);
-            $products = DB::table(ProductController::table)->get();
             $ma_ngay_km = DB::table(self::table)->select(self::id)
                 ->whereDate(self::date, '=', $ngay)->first();
             foreach ($products as $product) {
                 DB::table(ProductPromotionController::table)
-                    ->insert([ProductPromotionController::product_id => $product->product_id,
+                    ->insert([ProductPromotionController::product_id => $product['product_id'],
                         ProductPromotionController::promotion_date_id => $ma_ngay_km->promotion_date_id,
                         ProductPromotionController::promotion_level => $arr_value['promotion_level']]);
             }
