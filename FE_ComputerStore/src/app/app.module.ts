@@ -76,6 +76,7 @@ import { UpdateCustomerComponent } from './views/admin/customer/update-customer/
 import { AccountModule } from './views/admin/account/account.module';
 import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './views/forgot-password/reset-password/reset-password.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
@@ -115,6 +116,7 @@ registerLocaleData(localeFr, 'vi');
     Ng2SearchPipeModule,
     PipesModule,
     MDBBootstrapModule.forRoot(),
+    MatProgressSpinnerModule,
   ],
   declarations: [
     AppComponent,

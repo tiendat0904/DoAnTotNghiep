@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { promotionDateModel } from '../../../../models/promotion-date-model';
 import { PromotionDateService } from '../../../../services/promotion-date/promotion-date.service';
 import { UpdatePromotionDateComponent } from '../update-promotion-date/update-promotion-date.component';
@@ -27,7 +28,8 @@ export class PromotionDateComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private promotionDateService: PromotionDateService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public loaderService:LoaderService 
     ) {
     }
 

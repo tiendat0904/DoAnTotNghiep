@@ -1,3 +1,10 @@
+.loader-container{
+    position: absolute;
+    height: 100%;
+    width: 87%;
+    opacity: 1;
+    z-index: 99999;
+}
 .product-detail-icon{
     display: flex;
     padding: 15px;

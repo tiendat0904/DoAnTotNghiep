@@ -1,3 +1,6 @@
+<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
+   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
+ </div>
 <div class="container">
   <div class="table-responsive">
      <div class="table-wrapper">

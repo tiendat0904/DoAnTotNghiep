@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { accountModel } from '../../../../models/account-model';
 import { AccountService } from '../../../../services/account/account.service';
 import { UpdateCustomerComponent } from '../update-customer/update-customer.component';
@@ -27,7 +28,8 @@ export class CustomerComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private customerService: AccountService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public loaderService:LoaderService 
     ) {
     }
 

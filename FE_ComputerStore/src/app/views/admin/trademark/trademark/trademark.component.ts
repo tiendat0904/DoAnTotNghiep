@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { trademarkModel } from '../../../../models/trademark-model';
 import { TrademarkService } from '../../../../services/trademark/trademark.service';
 import { UpdateTrademarkComponent } from '../update-trademark/update-trademark/update-trademark.component';
@@ -27,7 +28,8 @@ export class TrademarkComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private trademarkService: TrademarkService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public loaderService:LoaderService 
     ) {
     }
 

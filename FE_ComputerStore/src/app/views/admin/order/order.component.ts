@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../loader/loader.service';
 import { billModel } from '../../../models/bill-model';
 import { BillService } from '../../../services/bill/bill.service';
 
@@ -27,7 +28,8 @@ export class OrderComponent implements OnInit {
     private modalService: NgbModal,
     private orderService: BillService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    public loaderService:LoaderService 
   ) {
   }
 

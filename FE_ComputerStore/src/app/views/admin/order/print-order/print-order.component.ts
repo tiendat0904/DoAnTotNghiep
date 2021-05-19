@@ -7,6 +7,7 @@ import { BillDetailService } from '../../../../services/bill-detail/bill-detail.
 import { BillService } from '../../../../services/bill/bill.service';
 import * as htmlToImage from 'html-to-image';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 
 @Component({
   selector: 'app-print-order',
@@ -26,7 +27,8 @@ export class PrintOrderComponent implements OnInit {
     private billDetailService: BillDetailService, 
     private customerService: AccountService, 
     private router: Router,
-    private toastr: ToastrService,) { }
+    private toastr: ToastrService,
+    public loaderService:LoaderService ) { }
 
 
   ngOnInit(): void {

@@ -8,7 +8,9 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { CommonModule } from '@angular/common';
 import { PipesModule } from '../../../pipe/pipes/pipes.module';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from '../../../loader/interceptor.service';
 @NgModule({
   imports: [
     FormsModule,
@@ -17,8 +19,13 @@ import { PipesModule } from '../../../pipe/pipes/pipes.module';
     DashboardRoutingModule,
     ChartsModule,
     BsDropdownModule,
+    MatProgressSpinnerModule,
+    
     
     ButtonsModule.forRoot()
+  ],
+  providers:[
+    {provide:HTTP_INTERCEPTORS,useClass: InterceptorService,multi:true}
   ],
   declarations: [ DashboardComponent ]
 })

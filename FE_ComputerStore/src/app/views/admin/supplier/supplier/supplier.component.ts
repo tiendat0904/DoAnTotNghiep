@@ -4,6 +4,7 @@ import { supplierModel } from '../../../../models/supplier-model';
 import { SupplierService } from '../../../../services/supplier/supplier.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateSupplierComponent } from '../update-supplier/update-supplier.component';
+import { LoaderService } from '../../../../loader/loader.service';
 
 @Component({
   selector: 'app-supplier',
@@ -27,7 +28,8 @@ export class SupplierComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private supplierService: SupplierService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public loaderService:LoaderService 
     ) {
     }
 

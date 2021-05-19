@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../loader/loader.service';
 import { billDetailModel } from '../../../models/bill-detail-model';
 import { billModel } from '../../../models/bill-model';
 import { ItemModel } from '../../../models/item-model';
@@ -93,7 +94,8 @@ export class BuildPcComponent implements OnInit {
     private toastr: ToastrService, private modalService: NgbModal,
     private productService: ProductService,
     private billService: BillService,
-    private billDetailService: BillDetailService
+    private billDetailService: BillDetailService,
+    public loaderService:LoaderService
   ) { }
 
   ngOnInit(): void {

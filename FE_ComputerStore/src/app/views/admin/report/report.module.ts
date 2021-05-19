@@ -16,7 +16,9 @@ import { DirectiveModule } from '../../../directives/directive/directive.module'
 import { BillReportComponent } from './bill-report/bill-report.component';
 import { CouponReportComponent } from './coupon-report/coupon-report.component';
 import { EmployeeReportComponent } from './employee-report/employee-report.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from '../../../loader/interceptor.service';
 // Angular
 
 @NgModule({
@@ -29,7 +31,8 @@ import { EmployeeReportComponent } from './employee-report/employee-report.compo
     NgbPaginationModule,
     Ng2SearchPipeModule,
     PipesModule,
-    DirectiveModule
+    DirectiveModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
       ReportComponent,
@@ -37,6 +40,10 @@ import { EmployeeReportComponent } from './employee-report/employee-report.compo
       BillReportComponent,
       CouponReportComponent,
       EmployeeReportComponent,
+  ]
+  ,
+  providers:[
+    {provide:HTTP_INTERCEPTORS,useClass: InterceptorService,multi:true}
   ]
 })
 export class ReportModule { }

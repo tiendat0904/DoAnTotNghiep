@@ -28,6 +28,9 @@ import { WarrantySearchComponent } from './warranty-search/warranty-search.compo
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BuildPcComponent } from './build-pc/build-pc.component';
 import { SelectItemBuildPcComponent } from './build-pc/select-item-build-pc/select-item-build-pc.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from '../../loader/interceptor.service';
 
 // Angular
 
@@ -45,6 +48,7 @@ import { SelectItemBuildPcComponent } from './build-pc/select-item-build-pc/sele
     Ng2SearchPipeModule,
     PipesModule,
     MDBBootstrapModule.forRoot(),
+    MatProgressSpinnerModule
   ],
   declarations: [
     UserComponent,
@@ -62,6 +66,9 @@ import { SelectItemBuildPcComponent } from './build-pc/select-item-build-pc/sele
     BuildPcComponent,
     SelectItemBuildPcComponent,
 
+  ],
+  providers:[
+    {provide:HTTP_INTERCEPTORS,useClass: InterceptorService,multi:true}
   ]
 })
 export class UserModule { }

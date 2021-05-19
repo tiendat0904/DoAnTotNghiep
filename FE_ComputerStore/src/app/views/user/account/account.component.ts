@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { avatarDefault } from '../../../../environments/environment';
+import { LoaderService } from '../../../loader/loader.service';
 import { accountModel } from '../../../models/account-model';
 import { AccountService } from '../../../services/account/account.service';
 
@@ -21,7 +22,7 @@ export class AccountComponent implements OnInit {
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
   urlPictureDefault = avatarDefault;
-  constructor(private accountService:AccountService,private store: AngularFireStorage,private toastr: ToastrService, private router: Router,) { }
+  constructor(private accountService:AccountService,private store: AngularFireStorage,private toastr: ToastrService, private router: Router,public loaderService:LoaderService) { }
 
   ngOnInit(): void {
     $('.link').click(function(){

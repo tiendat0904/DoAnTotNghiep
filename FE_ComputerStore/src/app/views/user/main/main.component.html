@@ -1,3 +1,6 @@
+<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
+  <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
+</div>
 <div class='container'>
   <div class='row main-slider'>
     <div class='main-slider-left col-lg-2'>
@@ -66,16 +69,16 @@
     </div>
   </div>
   <div class="product-bestseller">
-    <div class ="product-tilte">
+    <div class="product-tilte">
       <div class="product-title-container" style="width: 321px;">
         <h3>SẢN PHẨM MỚI RA MẮT</h3>
       </div>
       <!-- <div style="width: 74.4%;text-align: right;margin-top: 10px;">
         <a href="">Xem thêm <i class="fas fa-angle-right"></i></a>
       </div> -->
-      
+
     </div>
-    <hr/>
+    <hr />
     <div class="product-grid">
       <div class='product-item' *ngFor="let item of (list_product_new | slice:list_product_new.length - 5);">
         <div class='product-item-detail' style="display: grid;height: 100%;">
@@ -94,7 +97,8 @@
             </div>
             <div class='product-checked'>
               <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
+                    class="icon-basket"></i></button></div>
             </div>
           </div>
         </div>
@@ -102,7 +106,7 @@
     </div>
   </div>
   <div class="product-bestseller">
-    <div class ="product-tilte">
+    <div class="product-tilte">
       <div class="product-title-container" style="width: 394px;">
         <h3>LAPTOP - MÁY TÍNH SÁCH TAY</h3>
       </div>
@@ -110,7 +114,7 @@
         <a [routerLink]="['product-type/','3']">Xem thêm <i class="fas fa-angle-right"></i></a>
       </div>
     </div>
-    <hr/>
+    <hr />
     <div class="product-grid">
       <div class='product-item' *ngFor="let item of (list_product_laptop | slice:list_product_laptop.length - 5)">
         <div class='product-item-detail' style="display: grid;height: 100%;">
@@ -127,9 +131,10 @@
               <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
               <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-             <div class='product-checked'>
+            <div class='product-checked'>
               <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
+                    class="icon-basket"></i></button></div>
             </div>
           </div>
         </div>
@@ -137,7 +142,7 @@
     </div>
   </div>
   <div class="product-bestseller">
-    <div class ="product-tilte">
+    <div class="product-tilte">
       <div class="product-title-container" style="width: 295px;">
         <h3>MAIN - BO MẠCH CHỦ</h3>
       </div>
@@ -145,8 +150,8 @@
         <a [routerLink]="['product-type/','9']">Xem thêm <i class="fas fa-angle-right"></i></a>
       </div>
     </div>
-    <hr/>
-    
+    <hr />
+
     <div class="product-grid">
       <div class='product-item' *ngFor="let item of (list_product_main | slice:list_product_main.length - 5) ">
         <div class='product-item-detail' style="display: grid;height: 100%;">
@@ -163,9 +168,10 @@
               <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
               <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-             <div class='product-checked'>
+            <div class='product-checked'>
               <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
+                    class="icon-basket"></i></button></div>
             </div>
           </div>
         </div>
@@ -173,7 +179,7 @@
     </div>
   </div>
   <div class="product-bestseller">
-    <div class ="product-tilte">
+    <div class="product-tilte">
       <div class="product-title-container" style="width: 298px;">
         <h3>RAM - BỘ NHỚ TRONG</h3>
       </div>
@@ -181,7 +187,7 @@
         <a [routerLink]="['product-type/','1']">Xem thêm <i class="fas fa-angle-right"></i></a>
       </div>
     </div>
-    <hr/>
+    <hr />
     <div class="product-grid">
       <div class='product-item' *ngFor="let item of (list_product_ram | slice:list_product_ram.length - 5)">
         <div class='product-item-detail' style="display: grid;height: 100%;">
@@ -198,9 +204,10 @@
               <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
               <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-             <div class='product-checked'>
+            <div class='product-checked'>
               <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
+                    class="icon-basket"></i></button></div>
             </div>
           </div>
         </div>
@@ -208,7 +215,7 @@
     </div>
   </div>
   <div class="product-bestseller">
-    <div class ="product-tilte">
+    <div class="product-tilte">
       <div class="product-title-container" style="width: 249px;">
         <h3>VGA - Card đồ họa</h3>
       </div>
@@ -216,7 +223,7 @@
         <a [routerLink]="['product-type/','10']">Xem thêm <i class="fas fa-angle-right"></i></a>
       </div>
     </div>
-    <hr/>
+    <hr />
     <div class="product-grid">
       <div class='product-item' *ngFor="let item of (list_product_vga | slice:list_product_vga.length - 5)">
         <div class='product-item-detail' style="display: grid;height: 100%;">
@@ -233,9 +240,10 @@
               <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
               <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-             <div class='product-checked'>
+            <div class='product-checked'>
               <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
+                    class="icon-basket"></i></button></div>
             </div>
           </div>
         </div>
@@ -243,7 +251,7 @@
     </div>
   </div>
   <div class="product-bestseller">
-    <div class ="product-tilte">
+    <div class="product-tilte">
       <div class="product-title-container" style="width: 286px;">
         <h3>PSU - Nguồn máy tính</h3>
       </div>
@@ -251,7 +259,7 @@
         <a [routerLink]="['product-type/','11']">Xem thêm <i class="fas fa-angle-right"></i></a>
       </div>
     </div>
-    <hr/>
+    <hr />
     <div class="product-grid">
       <div class='product-item' *ngFor="let item of (list_product_psu | slice:list_product_psu.length - 5)">
         <div class='product-item-detail' style="display: grid;height: 100%;">
@@ -268,9 +276,10 @@
               <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
               <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-             <div class='product-checked'>
+            <div class='product-checked'>
               <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
+                    class="icon-basket"></i></button></div>
             </div>
           </div>
         </div>
@@ -278,7 +287,7 @@
     </div>
   </div>
   <div class="product-bestseller">
-    <div class ="product-tilte">
+    <div class="product-tilte">
       <div class="product-title-container" style="width: 225px;">
         <h3>CPU - Bộ vi xử lý</h3>
       </div>
@@ -286,7 +295,7 @@
         <a [routerLink]="['product-type/','8']">Xem thêm <i class="fas fa-angle-right"></i></a>
       </div>
     </div>
-    <hr/>
+    <hr />
     <div class="product-grid">
       <div class='product-item' *ngFor="let item of (list_product_cpu | slice:list_product_cpu.length - 5)">
         <div class='product-item-detail' style="display: grid;height: 100%;">
@@ -303,9 +312,10 @@
               <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
               <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-             <div class='product-checked'>
+            <div class='product-checked'>
               <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
+                    class="icon-basket"></i></button></div>
             </div>
           </div>
         </div>
@@ -313,7 +323,7 @@
     </div>
   </div>
   <div class="product-bestseller" style="padding-bottom: 20px;">
-    <div class ="product-tilte">
+    <div class="product-tilte">
       <div class="product-title-container" style="width: 243px;">
         <h3>Linh kiện máy lính</h3>
       </div>
@@ -321,7 +331,7 @@
         <a href="">Xem thêm <i class="fas fa-angle-right"></i></a>
       </div> -->
     </div>
-    <hr/>
+    <hr />
     <div class="product-grid">
       <div class='product-item'
         *ngFor="let item of (list_product_computer_conponent | slice:list_product_computer_conponent.length - 5);">
@@ -339,9 +349,10 @@
               <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
               <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
             </div>
-             <div class='product-checked'>
+            <div class='product-checked'>
               <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
+                    class="icon-basket"></i></button></div>
             </div>
           </div>
         </div>

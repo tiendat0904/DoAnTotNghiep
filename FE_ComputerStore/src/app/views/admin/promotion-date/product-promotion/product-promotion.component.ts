@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { productPromotionDModel } from '../../../../models/product-promotion-model';
 import { ProductPromotionService } from '../../../../services/product-promotion/product-promotion.service';
 import { UpdateProductPromotionComponent } from '../update-product-promotion/update-product-promotion.component';
@@ -27,7 +28,8 @@ export class ProductPromotionComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private productPromotionService: ProductPromotionService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public loaderService:LoaderService 
     ) {
     }
 

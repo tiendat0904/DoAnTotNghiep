@@ -1,3 +1,6 @@
+<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
+    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
+  </div>
 <div class = 'product-detail-page'>
     <div class = 'product-detail-icon' >
         <a href=""><i class="fas fa-home"></i></a>

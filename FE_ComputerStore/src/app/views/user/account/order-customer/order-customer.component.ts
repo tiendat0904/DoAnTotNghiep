@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { billModel } from '../../../../models/bill-model';
 import { BillService } from '../../../../services/bill/bill.service';
 
@@ -16,7 +17,7 @@ export class OrderCustomerComponent implements OnInit {
   ischeck = false;
   ischeck1 = true;
   arraylist_bill_filter: billModel[] = [];
-  constructor(private billService: BillService, private toastr: ToastrService, private router: Router) { }
+  constructor(private billService: BillService, private toastr: ToastrService, private router: Router,public loaderService:LoaderService) { }
 
   ngOnInit(): void {
     if (localStorage.getItem("account_id")) {

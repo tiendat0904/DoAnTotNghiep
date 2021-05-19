@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { accountModel } from '../../../../models/account-model';
 import { billDetailModel } from '../../../../models/bill-detail-model';
 import { billModel } from '../../../../models/bill-model';
@@ -67,7 +68,8 @@ export class UpdateOrderComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private billService: BillService,
     private orderTypeService: OrderTypeService,
-    private orderStatusService: OrderStatusService
+    private orderStatusService: OrderStatusService,
+    public loaderService:LoaderService 
   ) {
     // this.billService.getAll().subscribe(data => {
     //   this.arraylist_bill = data.data;

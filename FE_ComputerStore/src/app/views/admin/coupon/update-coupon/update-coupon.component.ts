@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { accountModel } from '../../../../models/account-model';
 import { couponDetailModel } from '../../../../models/coupon-detail-model';
 import { couponModel } from '../../../../models/coupon-model';
@@ -57,6 +58,7 @@ export class UpdateCouponComponent implements OnInit {
     private supplierService: SupplierService,
     private actRoute: ActivatedRoute,
     private couponService: CouponService,
+    public loaderService:LoaderService 
 
     ) {
       this.couponService.getAll().subscribe(data => {

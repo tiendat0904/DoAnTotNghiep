@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
-
-// Dropdowns Component
 
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +16,7 @@ import { ViewCouponComponent } from './view-coupon/view-coupon.component';
 import { UpdateCouponDetailComponent } from './update-coupon-detail/update-coupon-detail.component';
 import { CreateCouponComponent } from './create-coupon/create-coupon.component';
 import { UpdateCouponComponent } from './update-coupon/update-coupon.component';
+import { InterceptorService } from '../../../loader/interceptor.service';
 
 // Angular
 
@@ -28,7 +29,8 @@ import { UpdateCouponComponent } from './update-coupon/update-coupon.component';
     ReactiveFormsModule,
     NgbPaginationModule,
     Ng2SearchPipeModule,
-    PipesModule
+    PipesModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     CouponComponent,
@@ -36,6 +38,10 @@ import { UpdateCouponComponent } from './update-coupon/update-coupon.component';
     UpdateCouponDetailComponent,
     CreateCouponComponent,
     UpdateCouponComponent,
+  ]
+  ,
+  providers:[
+    {provide:HTTP_INTERCEPTORS,useClass: InterceptorService,multi:true}
   ]
 })
 export class CouponModule { }

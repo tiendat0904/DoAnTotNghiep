@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { newsModel } from '../../../../models/news-model';
 import { NewsService } from '../../../../services/news/news.service';
 import { UpdateNewsComponent } from '../update-news/update-news.component';
@@ -27,7 +28,8 @@ export class NewsComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
      private newsService: NewsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public loaderService:LoaderService 
     ) {
     }
 

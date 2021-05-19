@@ -14,6 +14,9 @@ import { CreateOrderComponent } from './create-order/create-order.component';
 import { UpdateOrderComponent } from './update-order/update-order.component';
 import { PrintOrderComponent } from './print-order/print-order.component';
 import {NgxPrintModule} from 'ngx-print';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from '../../../loader/interceptor.service';
 
 // Angular
 
@@ -27,7 +30,7 @@ import {NgxPrintModule} from 'ngx-print';
     NgbPaginationModule,
     Ng2SearchPipeModule,
     NgxPrintModule,
-    PipesModule
+    PipesModule,MatProgressSpinnerModule
   ],
   declarations: [
     OrderComponent,
@@ -36,6 +39,10 @@ import {NgxPrintModule} from 'ngx-print';
     CreateOrderComponent,
     UpdateOrderComponent,
     PrintOrderComponent,
+  ]
+  ,
+  providers:[
+    {provide:HTTP_INTERCEPTORS,useClass: InterceptorService,multi:true}
   ]
 })
 export class OrderModule { }

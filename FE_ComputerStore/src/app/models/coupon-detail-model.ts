@@ -1,3 +1,5 @@
+import { couponModel } from "./coupon-model";
+
 export interface couponDetailModel{
     coupon_detail_id?: bigint,
     coupon_id?: bigint,
@@ -5,5 +7,6 @@ export interface couponDetailModel{
     product_name?: string,
     price?: number,
     amount?: number,
-    checked?: boolean
+    checked?: boolean,
+    coupon?:couponModel
  }

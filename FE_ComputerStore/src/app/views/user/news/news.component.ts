@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from '../../../loader/loader.service';
 import { newsModel } from '../../../models/news-model';
 import { NewsService } from '../../../services/news/news.service';
 
@@ -12,7 +13,7 @@ export class NewsComponent implements OnInit {
   list_news: Array<newsModel> = [];
   page = 1;
   pageSize = 8;
-  constructor(private newService: NewsService) { }
+  constructor(private newService: NewsService,public loaderService:LoaderService) { }
 
   ngOnInit(): void {
     this.newService.getAll().subscribe(data =>{

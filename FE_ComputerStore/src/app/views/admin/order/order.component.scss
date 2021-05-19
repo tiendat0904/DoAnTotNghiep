@@ -6,7 +6,14 @@
     color: white;
     border-radius: 20px;
 }
-
+.loader-container{
+    position: absolute;
+    height: 100%;
+    width: 87%;
+    background: #fff;
+    opacity: 0.8;
+    z-index: 99999;
+}
 .close{
     outline: none;
     height: 40px;

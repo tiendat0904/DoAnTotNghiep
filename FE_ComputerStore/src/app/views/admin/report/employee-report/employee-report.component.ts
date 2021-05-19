@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { employeeReportModel } from '../../../../models/employee-report-model';
 import { excelModel } from '../../../../models/excel-model';
 import { ExcelService } from '../../../../services/excel/excel.service';
@@ -42,7 +43,8 @@ export class EmployeeReportComponent implements OnInit {
   listFilterResult: employeeReportModel[] = [];
   constructor(
     private reportService: ReportService,
-    private exportService: ExcelService
+    private exportService: ExcelService,
+    public loaderService:LoaderService 
   ) {
   }
 

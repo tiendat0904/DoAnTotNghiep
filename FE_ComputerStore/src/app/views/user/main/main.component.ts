@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../loader/loader.service';
 import { billDetailModel } from '../../../models/bill-detail-model';
 import { billModel } from '../../../models/bill-model';
 import { ItemModel } from '../../../models/item-model';
@@ -70,7 +71,8 @@ export class MainComponent implements OnInit {
     private cartService: CartService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
-    private billService:BillService
+    private billService:BillService,
+    public loaderService:LoaderService
                           ) { }
  
   ngOnInit(): void {

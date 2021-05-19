@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { ItemModel } from '../../../../models/item-model';
 import { BuildPCModel } from '../../../../models/pc-model';
 import { productModel } from '../../../../models/product-model';
@@ -119,6 +120,7 @@ export class SelectItemBuildPcComponent implements OnInit {
     this.arraylist_product_filter = [];
     this.arraylist_trademark_filter = [];
     this.arraylist_trademark_selected = [];
+      
     setTimeout(() => {
       this.open(this.childModal);
     }, 650);

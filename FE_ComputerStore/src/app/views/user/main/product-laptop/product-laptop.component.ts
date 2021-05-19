@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { billDetailModel } from '../../../../models/bill-detail-model';
 import { billModel } from '../../../../models/bill-model';
 import { ItemModel } from '../../../../models/item-model';
@@ -24,7 +25,7 @@ export class ProductLaptopComponent implements OnInit {
   list_trademark_selected: Array<trademarkModel> = [];
   list_trademark_show: Array<trademarkModel> = [];
   list_product_laptop = [];
-  list_product_laptop1 = [];
+  list_product_laptop1 :  Array<productModel> = [];;
   isCheckPrice: boolean;
   checkSelect: any;
   product_type_id: any;
@@ -36,24 +37,32 @@ export class ProductLaptopComponent implements OnInit {
     private cartService: CartService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
-    private billService:BillService) { }
+    private billService:BillService,public loaderService:LoaderService) { }
+    
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.product_type_id = Number.parseInt(params['product_type_id']);
       this.fetchProduct();
     });
+    setTimeout(() => {
+      {
+        
+      }
+    }, 500);
 
+    
   }
 
   fetchProduct() {
     this.productService.getAll().subscribe(data => {
       let product_type = this.product_type_id;
       this.list_product = data.data;
-      this.product_type_name = data.data[0].product_type_name;
+      console.log(product_type);
       this.list_product_laptop1 = this.list_product_laptop = this.list_product.filter(function (laptop) {
-        return (laptop.product_type_id === product_type);
+        return (laptop.product_type_id.toString() === product_type.toString());
       });
+     this.product_type_name = this.list_product_laptop1[0].product_type_name;
       this.trademarkService.getAll().subscribe(data => {
         this.list_trademark = data.data;
         for (let item1 of this.list_trademark) {
@@ -85,7 +94,7 @@ export class ProductLaptopComponent implements OnInit {
             findTest.trademark_name === test.trademark_name
           ));
       })
-      this.product_type_name = this.list_product_laptop1[0].product_type_name;
+      
     });
   }
 

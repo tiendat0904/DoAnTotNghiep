@@ -1,3 +1,7 @@
+<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
+    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
+  </div>
+
 <div class = "order-sucess">
     <h2>Cảm ơn quý khách đã đặt hàng</h2>
     <p>Đơn hàng của quý khách đã được gửi thành công. Bộ phận chăm sóc khách hàng của website sẽ Liên hệ : 18001008 lại với quý khách thông qua đơn hàng để có hướng dẫn thêm.</p>

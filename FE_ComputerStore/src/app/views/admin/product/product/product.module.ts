@@ -14,7 +14,9 @@ import { PipesModule } from '../../../../pipe/pipes/pipes.module';
 import { UpdateProductComponent } from '../update-product/update-product.component';
 import { ProductImageComponent } from '../product-image/product-image.component';
 import { UpdateProductImageComponent } from '../update-product-image/update-product-image.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from '../../../../loader/interceptor.service';
 // Angular
 
 @NgModule({
@@ -26,13 +28,18 @@ import { UpdateProductImageComponent } from '../update-product-image/update-prod
     ReactiveFormsModule,
     NgbPaginationModule,
     Ng2SearchPipeModule,
-    PipesModule
+    PipesModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     ProductComponent,
     UpdateProductComponent,
     ProductImageComponent,
     UpdateProductImageComponent,
+  ]
+  ,
+  providers:[
+    {provide:HTTP_INTERCEPTORS,useClass: InterceptorService,multi:true}
   ]
 })
 export class ProductModule { }

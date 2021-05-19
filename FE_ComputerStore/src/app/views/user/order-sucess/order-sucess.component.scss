@@ -1,3 +1,12 @@
+.loader-container{
+    position: absolute;
+    height: 80%;
+    width: 93%;
+    opacity: 0.8;
+    background-color: #f4f4f4;
+    z-index: 99999;
+}
+
 .order-sucess{
     background-color: #f4f4f4;
 }
@@ -14,6 +23,7 @@
 .order-sucess-h1{
     background-color: #243a76;
     height: 65px;
+    color: #fff;
 }
 
 .order-sucess-detail h3{

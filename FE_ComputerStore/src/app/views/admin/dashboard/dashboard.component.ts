@@ -10,6 +10,7 @@ import { ProductService } from '../../../services/product/product.service';
 import { productModel } from '../../../models/product-model';
 import { trademarkModel } from '../../../models/trademark-model';
 import { TrademarkService } from '../../../services/trademark/trademark.service';
+import { LoaderService } from '../../../loader/loader.service';
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -35,7 +36,7 @@ export class DashboardComponent implements OnInit {
     private billService:BillService,
     private customerService :AccountService,
     private productService: ProductService,
-    private trademarkService: TrademarkService ){}
+    private trademarkService: TrademarkService,public loaderService:LoaderService ){}
   
 
   ngOnInit(): void {

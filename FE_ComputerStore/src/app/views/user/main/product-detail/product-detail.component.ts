@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { billDetailModel } from '../../../../models/bill-detail-model';
 import { billModel } from '../../../../models/bill-model';
 import { ItemModel } from '../../../../models/item-model';
@@ -38,6 +39,7 @@ export class ProductDetailComponent implements OnInit {
     private billService: BillService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
+    public loaderService:LoaderService
   ) { }
 
   ngOnInit(): void {

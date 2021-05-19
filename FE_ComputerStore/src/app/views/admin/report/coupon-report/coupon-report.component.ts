@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { couponReportModel } from '../../../../models/coupon-report-model';
 import { excelModel } from '../../../../models/excel-model';
 import { ExcelService } from '../../../../services/excel/excel.service';
@@ -44,7 +45,8 @@ export class CouponReportComponent implements OnInit {
     private modalService: NgbModal,
     private reportService: ReportService,
     private toastr: ToastrService,
-    private exportService: ExcelService
+    private exportService: ExcelService,
+    public loaderService:LoaderService 
   ) {
   }
 

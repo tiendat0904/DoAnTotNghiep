@@ -18,6 +18,7 @@ import { VoucherService } from '../../../services/voucher/voucher.service';
 import * as htmlToImage from 'html-to-image';
 import { MailService } from '../../../services/mail/mail.service';
 import { mailModel } from '../../../models/mail-model';
+import { LoaderService } from '../../../loader/loader.service';
 
 @Component({
   selector: 'app-cart',
@@ -41,7 +42,6 @@ export class CartComponent implements OnInit {
   billDetailModel: billDetailModel;
   itemModel: ItemModel;
   checkCart :boolean;
-  hidden: boolean;
   account: accountModel;
   voucherModel: voucherModel;
   bill_id: any;
@@ -70,20 +70,27 @@ export class CartComponent implements OnInit {
     private toastr: ToastrService,
     private voucherService: VoucherService,
     private modalService: NgbModal,
-    private mailService:MailService) { }
+    private mailService:MailService,
+    public loaderService:LoaderService) { }
 
   ngOnInit(): void {
-    this.hidden = true;
-    this.submitted = true;
-    this.selectedType = 0;
-    this.loadListProductCart();
-    this.formGroup = new FormGroup({
-      name: new FormControl(),
-      email:new FormControl(),
-      note: new FormControl(),
-      phone_number: new FormControl(),
-      address: new FormControl()
-    });
+        this.submitted = true;
+        this.selectedType = 0;
+        this.loadListProductCart();
+        this.formGroup = new FormGroup({
+          name: new FormControl(),
+          email:new FormControl(),
+          note: new FormControl(),
+          phone_number: new FormControl(),
+          address: new FormControl()
+        });
+    setTimeout(() => {
+      {
+        
+      }
+    }, 100);
+
+    
   }
 
   CaptureData() {
@@ -96,20 +103,6 @@ export class CartComponent implements OnInit {
       link.href = canvas;
       link.click();
     });
-    //cach 2
-    // html2canvas(document.getElementById("product_cart_capture")).then(canvas => {
-    //   this.canvas.nativeElement.src = canvas.toDataURL();
-    //   this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
-    //   this.downloadLink.nativeElement.download = 'marble-diagram.png';
-    //   this.downloadLink.nativeElement.click();
-    // });
-    //cach 3
-    // var data = document.getElementById("product_cart_capture");
-    // html2canvas(data).then(function(canvas){
-    //   var generatedImage = canvas.toDataURL("image/png").replace("image/png","image/octet-stream");
-    //   console.log(generatedImage);
-    //   window.location.href = generatedImage;
-    // })
   }
 
 
@@ -228,8 +221,8 @@ export class CartComponent implements OnInit {
       }
     }
     // console.log(this.list_product);
-
-    setTimeout(() => this.totalCart(), 1000);
+    this.totalCart();
+    // setTimeout(() => , 1000);
 
     // if(this.list_product === [] || this.list_product.length === 0){
     //   this.checkCart = false;
@@ -457,11 +450,7 @@ export class CartComponent implements OnInit {
               
               // localStorage.setItem("total_money", this.total_money.toString());
             }
-            else {
-            }
-          },
-            err => {
-            })
+          })
         }
       })
       // console.log(this.formGroup);

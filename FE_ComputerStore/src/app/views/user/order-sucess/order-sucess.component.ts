@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../loader/loader.service';
 import { productModel } from '../../../models/product-model';
 import { AccountService } from '../../../services/account/account.service';
 import { BillDetailService } from '../../../services/bill-detail/bill-detail.service';
@@ -25,7 +26,7 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
     private router: Router,
     private billService:BillService,
     private toastr: ToastrService,
-    private billDetailService:BillDetailService) { }
+    private billDetailService:BillDetailService,public loaderService:LoaderService) { }
   ngOnDestroy(): void {
     // localStorage.removeItem("listProduct");
     // localStorage.removeItem("total_money");

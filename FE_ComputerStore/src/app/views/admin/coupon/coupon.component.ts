@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../loader/loader.service';
 import { couponModel } from '../../../models/coupon-model';
 import { CouponService } from '../../../services/coupon/coupon.service';
 
@@ -27,7 +28,8 @@ export class CouponComponent implements OnInit {
     private modalService: NgbModal,
     private couponService: CouponService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    public loaderService:LoaderService 
     ) {
     }
 

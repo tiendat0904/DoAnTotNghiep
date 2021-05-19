@@ -1,3 +1,6 @@
+<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
+  <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
+</div>
 <div class='product-detail-page'>
   <div class='product-detail-icon'>
     <a href=""><i class="fas fa-home"></i></a>
@@ -45,7 +48,7 @@
               </div>
                <div class='product-checked'>
                 <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                <div style="padding-left: 120px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                <div style="padding-left: 140px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
               </div>
             </div>
           </div>
