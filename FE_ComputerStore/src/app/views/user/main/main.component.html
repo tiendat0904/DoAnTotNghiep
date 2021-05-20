@@ -1,5 +1,5 @@
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-  <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+  <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
 </div>
 <div class='container'>
   <div class='row main-slider'>
@@ -79,30 +79,59 @@
 
     </div>
     <hr />
-    <div class="product-grid">
-      <div class='product-item' *ngFor="let item of (list_product_new | slice:list_product_new.length - 5);">
-        <div class='product-item-detail' style="display: grid;height: 100%;">
-          <div class='product-image'>
-            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-          </div>
-          <div class='product-description'>
-            <div class='product-title'>
-              <p><a href=""></a> {{[item.product_name]}}</p>
+    <div>
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of (list_product_new | slice:list_product_new.length-10)">
+          <ng-template carouselSlide [id]="item.product_id" style="display: flex; height: 100%;">
+            <div class='product-item' style="width: 100%;">
+              <a class="product-item-info">
+                <div class='product-item-detail'>
+                  <div class='product-image'>
+                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                  </div>
+                  <div class='product-description'>
+                    <div class='product-title'>
+                      <a [routerLink]="['/',item.product_id]"
+                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                    </div>
+                  </div>
+                  <div style="align-self: flex-end; margin-left: 15px;">
+                    <div class='product-price'>
+                      <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                        }}</del>
+                      <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                    </div>
+                    <div class='product-checked'>
+                      <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                          (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a [routerLink]="['/',item.product_id]">
+                <div class="product-item-detail-hover">
+                  <div style="height: 240px;overflow:hidden;border:0.5px solid #243a76;">
+                    <div
+                      style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                      <h3 style="font-weight: 500;">Chi tiết</h3>
+                    </div>
+                    <div style="padding-left: 10px;padding-right:5px">
+                      <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                      <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                        <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                      </div>
+                      <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
             </div>
-          </div>
-          <div style="align-self: flex-end; margin-left: 15px;">
-            <div class='product-price'>
-              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
-              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
-            </div>
-            <div class='product-checked'>
-              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
-                    class="icon-basket"></i></button></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
     </div>
   </div>
   <div class="product-bestseller">
@@ -115,30 +144,59 @@
       </div>
     </div>
     <hr />
-    <div class="product-grid">
-      <div class='product-item' *ngFor="let item of (list_product_laptop | slice:list_product_laptop.length - 5)">
-        <div class='product-item-detail' style="display: grid;height: 100%;">
-          <div class='product-image'>
-            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-          </div>
-          <div class='product-description'>
-            <div class='product-title'>
-              <p><a href=""></a> {{[item.product_name]}}</p>
+    <div>
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of list_product_laptop">
+          <ng-template carouselSlide [id]="item.product_id" style="display: flex; height: 100%;">
+            <div class='product-item' style="width: 100%;">
+              <a class="product-item-info">
+                <div class='product-item-detail'>
+                  <div class='product-image'>
+                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                  </div>
+                  <div class='product-description'>
+                    <div class='product-title'>
+                      <a [routerLink]="['/',item.product_id]"
+                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                    </div>
+                  </div>
+                  <div style="align-self: flex-end; margin-left: 15px;">
+                    <div class='product-price'>
+                      <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                        }}</del>
+                      <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                    </div>
+                    <div class='product-checked'>
+                      <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                          (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a [routerLink]="['/',item.product_id]">
+                <div class="product-item-detail-hover">
+                  <div style="height: 240px;overflow:hidden;border:0.5px solid #243a76;">
+                    <div
+                      style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                      <h3 style="font-weight: 500;">Chi tiết</h3>
+                    </div>
+                    <div style="padding-left: 10px;padding-right:5px">
+                      <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                      <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                        <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                      </div>
+                      <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
             </div>
-          </div>
-          <div style="align-self: flex-end; margin-left: 15px;">
-            <div class='product-price'>
-              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
-              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
-            </div>
-            <div class='product-checked'>
-              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
-                    class="icon-basket"></i></button></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
     </div>
   </div>
   <div class="product-bestseller">
@@ -151,31 +209,59 @@
       </div>
     </div>
     <hr />
+    <div>
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of list_product_main">
+          <ng-template carouselSlide [id]="item.product_id" style="display: flex; height: 100%;">
+            <div class='product-item' style="width: 100%;">
+              <a class="product-item-info">
+                <div class='product-item-detail'>
+                  <div class='product-image'>
+                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                  </div>
+                  <div class='product-description'>
+                    <div class='product-title'>
+                      <a [routerLink]="['/',item.product_id]"
+                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                    </div>
+                  </div>
+                  <div style="align-self: flex-end; margin-left: 15px;">
+                    <div class='product-price'>
+                      <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                        }}</del>
+                      <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                    </div>
+                    <div class='product-checked'>
+                      <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                          (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a [routerLink]="['/',item.product_id]">
+                <div class="product-item-detail-hover">
+                  <div style="height: 240px;overflow:hidden;border:0.5px solid #243a76;">
+                    <div
+                      style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                      <h3 style="font-weight: 500;">Chi tiết</h3>
+                    </div>
+                    <div style="padding-left: 10px;padding-right:5px">
+                      <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                      <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                        <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                      </div>
+                      <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                    </div>
+                  </div>
 
-    <div class="product-grid">
-      <div class='product-item' *ngFor="let item of (list_product_main | slice:list_product_main.length - 5) ">
-        <div class='product-item-detail' style="display: grid;height: 100%;">
-          <div class='product-image'>
-            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-          </div>
-          <div class='product-description'>
-            <div class='product-title'>
-              <p><a href=""></a> {{[item.product_name]}}</p>
+                </div>
+              </a>
             </div>
-          </div>
-          <div style="align-self: flex-end; margin-left: 15px;">
-            <div class='product-price'>
-              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
-              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
-            </div>
-            <div class='product-checked'>
-              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
-                    class="icon-basket"></i></button></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
     </div>
   </div>
   <div class="product-bestseller">
@@ -188,30 +274,59 @@
       </div>
     </div>
     <hr />
-    <div class="product-grid">
-      <div class='product-item' *ngFor="let item of (list_product_ram | slice:list_product_ram.length - 5)">
-        <div class='product-item-detail' style="display: grid;height: 100%;">
-          <div class='product-image'>
-            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-          </div>
-          <div class='product-description'>
-            <div class='product-title'>
-              <p><a href=""></a> {{[item.product_name]}}</p>
+    <div>
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of list_product_ram">
+          <ng-template carouselSlide [id]="item.product_id" style="display: flex; height: 100%;">
+            <div class='product-item' style="width: 100%;">
+              <a class="product-item-info">
+                <div class='product-item-detail'>
+                  <div class='product-image'>
+                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                  </div>
+                  <div class='product-description'>
+                    <div class='product-title'>
+                      <a [routerLink]="['/',item.product_id]"
+                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                    </div>
+                  </div>
+                  <div style="align-self: flex-end; margin-left: 15px;">
+                    <div class='product-price'>
+                      <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                        }}</del>
+                      <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                    </div>
+                    <div class='product-checked'>
+                      <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                          (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a [routerLink]="['/',item.product_id]">
+                <div class="product-item-detail-hover">
+                  <div style="height: 240px;overflow:hidden;border:0.5px solid #243a76;">
+                    <div
+                      style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                      <h3 style="font-weight: 500;">Chi tiết</h3>
+                    </div>
+                    <div style="padding-left: 10px;padding-right:5px">
+                      <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                      <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                        <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                      </div>
+                      <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
             </div>
-          </div>
-          <div style="align-self: flex-end; margin-left: 15px;">
-            <div class='product-price'>
-              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
-              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
-            </div>
-            <div class='product-checked'>
-              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
-                    class="icon-basket"></i></button></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
     </div>
   </div>
   <div class="product-bestseller">
@@ -224,30 +339,59 @@
       </div>
     </div>
     <hr />
-    <div class="product-grid">
-      <div class='product-item' *ngFor="let item of (list_product_vga | slice:list_product_vga.length - 5)">
-        <div class='product-item-detail' style="display: grid;height: 100%;">
-          <div class='product-image'>
-            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-          </div>
-          <div class='product-description'>
-            <div class='product-title'>
-              <p><a href=""></a> {{[item.product_name]}}</p>
+    <div>
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of list_product_vga">
+          <ng-template carouselSlide [id]="item.product_id" style="display: flex; height: 100%;">
+            <div class='product-item' style="width: 100%;">
+              <a class="product-item-info">
+                <div class='product-item-detail'>
+                  <div class='product-image'>
+                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                  </div>
+                  <div class='product-description'>
+                    <div class='product-title'>
+                      <a [routerLink]="['/',item.product_id]"
+                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                    </div>
+                  </div>
+                  <div style="align-self: flex-end; margin-left: 15px;">
+                    <div class='product-price'>
+                      <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                        }}</del>
+                      <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                    </div>
+                    <div class='product-checked'>
+                      <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                          (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a [routerLink]="['/',item.product_id]">
+                <div class="product-item-detail-hover">
+                  <div style="height: 240px;overflow:hidden;border:0.5px solid #243a76;">
+                    <div
+                      style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                      <h3 style="font-weight: 500;">Chi tiết</h3>
+                    </div>
+                    <div style="padding-left: 10px;padding-right:5px">
+                      <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                      <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                        <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                      </div>
+                      <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
             </div>
-          </div>
-          <div style="align-self: flex-end; margin-left: 15px;">
-            <div class='product-price'>
-              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
-              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
-            </div>
-            <div class='product-checked'>
-              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
-                    class="icon-basket"></i></button></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
     </div>
   </div>
   <div class="product-bestseller">
@@ -260,30 +404,59 @@
       </div>
     </div>
     <hr />
-    <div class="product-grid">
-      <div class='product-item' *ngFor="let item of (list_product_psu | slice:list_product_psu.length - 5)">
-        <div class='product-item-detail' style="display: grid;height: 100%;">
-          <div class='product-image'>
-            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-          </div>
-          <div class='product-description'>
-            <div class='product-title'>
-              <p><a href=""></a> {{[item.product_name]}}</p>
+    <div>
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of list_product_psu">
+          <ng-template carouselSlide [id]="item.product_id" style="display: flex; height: 100%;">
+            <div class='product-item' style="width: 100%;">
+              <a class="product-item-info">
+                <div class='product-item-detail'>
+                  <div class='product-image'>
+                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                  </div>
+                  <div class='product-description'>
+                    <div class='product-title'>
+                      <a [routerLink]="['/',item.product_id]"
+                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                    </div>
+                  </div>
+                  <div style="align-self: flex-end; margin-left: 15px;">
+                    <div class='product-price'>
+                      <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                        }}</del>
+                      <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                    </div>
+                    <div class='product-checked'>
+                      <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                          (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a [routerLink]="['/',item.product_id]">
+                <div class="product-item-detail-hover">
+                  <div style="height: 240px;overflow:hidden;border:0.5px solid #243a76;">
+                    <div
+                      style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                      <h3 style="font-weight: 500;">Chi tiết</h3>
+                    </div>
+                    <div style="padding-left: 10px;padding-right:5px">
+                      <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                      <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                        <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                      </div>
+                      <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
             </div>
-          </div>
-          <div style="align-self: flex-end; margin-left: 15px;">
-            <div class='product-price'>
-              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
-              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
-            </div>
-            <div class='product-checked'>
-              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
-                    class="icon-basket"></i></button></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
     </div>
   </div>
   <div class="product-bestseller">
@@ -296,30 +469,59 @@
       </div>
     </div>
     <hr />
-    <div class="product-grid">
-      <div class='product-item' *ngFor="let item of (list_product_cpu | slice:list_product_cpu.length - 5)">
-        <div class='product-item-detail' style="display: grid;height: 100%;">
-          <div class='product-image'>
-            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-          </div>
-          <div class='product-description'>
-            <div class='product-title'>
-              <p><a href=""></a> {{[item.product_name]}}</p>
+    <div>
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of list_product_cpu">
+          <ng-template carouselSlide [id]="item.product_id" style="display: flex; height: 100%;">
+            <div class='product-item' style="width: 100%;">
+              <a class="product-item-info">
+                <div class='product-item-detail'>
+                  <div class='product-image'>
+                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                  </div>
+                  <div class='product-description'>
+                    <div class='product-title'>
+                      <a [routerLink]="['/',item.product_id]"
+                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                    </div>
+                  </div>
+                  <div style="align-self: flex-end; margin-left: 15px;">
+                    <div class='product-price'>
+                      <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                        }}</del>
+                      <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                    </div>
+                    <div class='product-checked'>
+                      <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                          (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a [routerLink]="['/',item.product_id]">
+                <div class="product-item-detail-hover">
+                  <div style="height: 240px;overflow:hidden;border:0.5px solid #243a76;">
+                    <div
+                      style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                      <h3 style="font-weight: 500;">Chi tiết</h3>
+                    </div>
+                    <div style="padding-left: 10px;padding-right:5px">
+                      <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                      <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                        <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                      </div>
+                      <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
             </div>
-          </div>
-          <div style="align-self: flex-end; margin-left: 15px;">
-            <div class='product-price'>
-              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
-              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
-            </div>
-            <div class='product-checked'>
-              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
-                    class="icon-basket"></i></button></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
     </div>
   </div>
   <div class="product-bestseller" style="padding-bottom: 20px;">
@@ -332,47 +534,59 @@
       </div> -->
     </div>
     <hr />
-    <div class="product-grid">
-      <div class='product-item'
-        *ngFor="let item of (list_product_computer_conponent | slice:list_product_computer_conponent.length - 5);">
-        <div class='product-item-detail' style="display: grid;height: 100%;">
-          <div class='product-image'>
-            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
-          </div>
-          <div class='product-description'>
-            <div class='product-title'>
-              <p><a href=""></a> {{[item.product_name]}}</p>
+    <div>
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of list_product_computer_conponent">
+          <ng-template carouselSlide [id]="item.product_id" style="display: flex; height: 100%;">
+            <div class='product-item' style="width: 100%;">
+              <a class="product-item-info">
+                <div class='product-item-detail'>
+                  <div class='product-image'>
+                    <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                  </div>
+                  <div class='product-description'>
+                    <div class='product-title'>
+                      <a [routerLink]="['/',item.product_id]"
+                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                    </div>
+                  </div>
+                  <div style="align-self: flex-end; margin-left: 15px;">
+                    <div class='product-price'>
+                      <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                        }}</del>
+                      <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                    </div>
+                    <div class='product-checked'>
+                      <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                          (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a [routerLink]="['/',item.product_id]">
+                <div class="product-item-detail-hover">
+                  <div style="height: 240px;overflow:hidden;border:0.5px solid #243a76;">
+                    <div
+                      style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                      <h3 style="font-weight: 500;">Chi tiết</h3>
+                    </div>
+                    <div style="padding-left: 10px;padding-right:5px">
+                      <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                      <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                        <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                      </div>
+                      <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
             </div>
-          </div>
-          <div style="align-self: flex-end; margin-left: 15px;">
-            <div class='product-price'>
-              <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
-              <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
-            </div>
-            <div class='product-checked'>
-              <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-              <div style="padding-left: 140px;" [hidden]="item.checkAmount"><button (click)="addProductToCart(item);"><i
-                    class="icon-basket"></i></button></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
     </div>
   </div>
-  <!-- <div class = "product-bestseller">
-      <div class = "product-title-container" style="width: 204px;">
-        <h3>Tin công nghệ</h3>
-      </div>
-      <div class = 'product-news'>
-        <owl-carousel-o [options]="customOptions">
-          <ng-container *ngFor="let news of list_news">
-            <ng-template carouselSlide [id] = "news.news_id"  style="display: flex; height: 100%;">
-              <img [src]="news.thumbnail" alt="" style="height: 300px; width: 300px;">
-              <h5>{{news.title}}</h5>
-              <p style="align-self: flex-end; margin-left: 15px;">{{news.highlight}}</p>
-            </ng-template>  
-          </ng-container>
-        </owl-carousel-o>
-      </div>
-    </div> -->
 </div>

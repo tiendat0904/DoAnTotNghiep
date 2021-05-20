@@ -1,3 +1,6 @@
+<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
+  <mat-progress-spinner mode="indeterminate" style="top: 50%; left: 50%;" ></mat-progress-spinner>
+</div>
 <div class='product-detail-page'>
   <div class='product-detail-icon'>
     <a href=""><i class="fas fa-home"></i></a>
@@ -35,7 +38,7 @@
             </div>
             <div class='product-description'>
               <div class='product-title'>
-                <p><a href=""></a> {{[item.product_name]}}</p>
+                <a [routerLink]="['/',item.product_id]" style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
               </div>
             </div>
             <div style="align-self: flex-end; margin-left: 15px;">
@@ -45,10 +48,27 @@
               </div>
                <div class='product-checked'>
                 <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                <div style="padding-left: 140px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                <div style="padding-left: 135px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
               </div>
             </div>
           </div>
+          <a [routerLink]="['/',item.product_id]">
+            <div class ="product-item-detail-hover">
+              <div style="height: 240px;overflow:hidden;border:0.5px solid #234a76">
+                <div style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                  <h3 style="font-weight: 500;">Chi tiết</h3>
+                </div>
+                <div style="padding-left: 10px;padding-right:5px">
+                  <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                  <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                    <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                  </div>
+                  <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                </div>
+              </div>
+             
+            </div>
+          </a>
         </div>
       </div>
       <div class="col-12 justify-content-center">

@@ -1,8 +1,10 @@
 .loader-container{
     position: absolute;
     height: 100%;
-    width: 87%;
-    opacity: 1;
+    width: 100%;
+    background-color: #fff;
+    margin-left: -100px;
+    opacity: 0.85;
     z-index: 99999;
 }
 .product-detail-icon{

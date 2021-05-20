@@ -3,7 +3,7 @@
     height: 100%;
     width: 87%;
     background: #fff;
-    opacity: 1;
+    opacity: 0.8;
     z-index: 99999;
 }
 
@@ -123,20 +123,28 @@ hr{
     border-right: 50px solid #00000000;
 }
 
-.product-news h5,p{
-    margin-right: 15px;
-    margin-left: 15px;
-    text-align: center;
-}
+// .product-news h5,p{
+//     margin-right: 15px;
+//     margin-left: 15px;
+//     text-align: center;
+// }
 
 
 .product-grid{
     display: flex;
+    width: 100%;
+  
 }
 
 .product-item{
     border: 1px solid #ddd;
-    width: 261px;
+    width: 20%;
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 400px;
 }
 
 .product-description{
@@ -164,4 +172,66 @@ hr{
     font-size: 20px;
     position: relative;
     bottom: 5px;
+}
+
+.product-item-detail{
+    display: grid;
+    height: 100%;
+}
+
+.product-item-detail-hover{
+    position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        height: 250px;
+        width: 100%;
+        transition: .5s ease;
+        background-color:#fff;
+        z-index: 98;
+}
+
+.product-item-info{
+    color: #333;
+}
+
+.product-item-detail-hover p{
+    margin: 0;
+    color: #333;
+}
+
+.product-item a:hover  .product-item-detail-hover{
+    opacity: 1;
+    z-index: 99;
+    cursor: pointer;
+    
+}
+
+::ng-deep .owl-nav{
+    height: 0;
+    position: relative ;
+    bottom: 230px;
+}
+::ng-deep .owl-item{
+    height: 400px !important;
+}
+::ng-deep .owl-prev{
+    
+    position: relative;
+    background: none !important;
+    color: #d6d6d6 !important;
+    font-size: 30px !important;
+    right: 615px;
+
+}
+
+::ng-deep .owl-next{
+    position: relative;
+    background: none !important;
+    color: #d6d6d6 !important;
+    font-size: 30px !important;
+    left: 625px;
+
 }

@@ -58,7 +58,6 @@ export class ProductLaptopComponent implements OnInit {
     this.productService.getAll().subscribe(data => {
       let product_type = this.product_type_id;
       this.list_product = data.data;
-      console.log(product_type);
       this.list_product_laptop1 = this.list_product_laptop = this.list_product.filter(function (laptop) {
         return (laptop.product_type_id.toString() === product_type.toString());
       });
@@ -67,6 +66,7 @@ export class ProductLaptopComponent implements OnInit {
         this.list_trademark = data.data;
         for (let item1 of this.list_trademark) {
           for (let item2 of this.list_product_laptop) {
+            item2.descriptions = item2.description.split("\n");
             item2.checkAmount = true;
             if (item2.amount === 0) {
               item2.check = "Liên hệ : 18001008";

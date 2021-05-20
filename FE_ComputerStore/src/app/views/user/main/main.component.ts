@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../../loader/loader.service';
 import { billDetailModel } from '../../../models/bill-detail-model';
@@ -22,30 +23,31 @@ declare var $: any;
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  customOptions: any = {
+  customOptions: OwlOptions = {
     loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: true,
-    navSpeed: 700,
-    navText: ['', ''],
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 600,
+    navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
     responsive: {
       0: {
-        items: 1
+        items: 1 
       },
       400: {
         items: 2
       },
-      740: {
+      760: {
         items: 3
       },
-      940: {
-        items: 4
+      1000: {
+        items: 5
       }
     },
     nav: true
   }
+
 
 
   list_news: Array<newsModel> = [];
@@ -124,6 +126,7 @@ export class MainComponent implements OnInit {
     this.productService.getAll().subscribe(data =>{
       this.list_product_new = data.data;
       for(let item of this.list_product_new){
+        item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
           item.check = "Liên hệ : 18001008";
@@ -151,6 +154,7 @@ export class MainComponent implements OnInit {
         return laptop.product_type_name === "PSU";
       });
       for(let item of this.list_product_psu){
+        item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         item.checkAmount = true;
         if (item.amount === 0) {
@@ -179,6 +183,7 @@ export class MainComponent implements OnInit {
         return laptop.product_type_name === "Laptop";
       });
       for(let item of this.list_product_laptop){
+        item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
           item.check = "Liên hệ : 18001008";
@@ -207,6 +212,7 @@ export class MainComponent implements OnInit {
        
       });
       for(let item of this.list_product_computer_conponent){
+        item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
           item.check = "Liên hệ : 18001008";
@@ -234,6 +240,7 @@ export class MainComponent implements OnInit {
         return laptop.product_type_name === "CPU";
       });
       for(let item of this.list_product_cpu){
+        item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
           item.check = "Liên hệ : 18001008";
@@ -261,6 +268,7 @@ export class MainComponent implements OnInit {
         return laptop.product_type_name === "VGA";
       });
       for(let item of this.list_product_vga){
+        item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
           item.check = "Liên hệ : 18001008";
@@ -288,6 +296,7 @@ export class MainComponent implements OnInit {
         return laptop.product_type_name === "Main";
       });
       for(let item of this.list_product_main){
+        item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
           item.check = "Liên hệ : 18001008";
@@ -384,6 +393,7 @@ export class MainComponent implements OnInit {
         return laptop.product_type_name === "RAM";
       });
       for(let item of this.list_product_ram){
+        item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
           item.check = "Liên hệ : 18001008";

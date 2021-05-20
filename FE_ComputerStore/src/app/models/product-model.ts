@@ -6,6 +6,7 @@ export interface productModel{
     product_type_name?: String,
     product_type_id?: bigint,
     description? : String,
+    descriptions?:any[];
     price?: number,
     price_new?: number,
     price_display?:number,

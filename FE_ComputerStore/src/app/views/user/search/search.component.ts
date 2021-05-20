@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../loader/loader.service';
 import { billDetailModel } from '../../../models/bill-detail-model';
 import { billModel } from '../../../models/bill-model';
 import { ItemModel } from '../../../models/item-model';
@@ -34,7 +35,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
-    private billService:BillService) { }
+    private billService:BillService,public loaderService:LoaderService) { }
 
   ngOnInit(): void {
     this.search = localStorage.getItem("search");
@@ -61,6 +62,7 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.list_product_laptop = this.list_product_laptop1 = filterResult;
         }
         for(let item of this.list_product_laptop){
+          item.descriptions = item.description.split("\n");
           item.checkAmount = true;
           if (item.amount === 0) {
             item.check = "Liên hệ : 18001008";

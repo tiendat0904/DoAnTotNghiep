@@ -1,3 +1,13 @@
+.loader-container{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    opacity: 0.85;
+    margin-left: -100px;
+    z-index: 99999;
+}
+
 .product-detail-icon{
     display: flex;
     padding: 15px;
@@ -19,11 +29,17 @@ hr{
 .product-grid{
     display: flex;
     padding-bottom: 30px;
+    width: 100%;
 }
 
 .product-item{
     border: 1px solid #ddd;
-    max-width: 255px;
+    width: 25%;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .product-price-new{
@@ -48,3 +64,28 @@ hr{
     bottom: 5px;
 }
 
+
+.product-item-detail-hover{
+    position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        height: 250px;
+        width: 100%;
+        transition: .5s ease;
+        background-color:#fff;
+        z-index: 98;
+}
+
+.product-item-detail-hover p{
+    margin: 0;
+    color: #333;
+}
+
+.product-item a:hover  .product-item-detail-hover{
+    opacity: 1;
+    z-index: 99;
+    cursor: pointer;
+}
