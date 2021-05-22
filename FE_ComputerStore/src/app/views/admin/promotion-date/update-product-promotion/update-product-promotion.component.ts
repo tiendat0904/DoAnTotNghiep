@@ -24,7 +24,6 @@ export class UpdateProductPromotionComponent implements OnInit {
   @Output() eventEmit: EventEmitter<any> = new EventEmitter<any>();
   arraylist_product: Array<productModel> = [];
   arraylist_promotion_date: Array<productPromotionDModel> = [];
-  checkButton = false;
   closeResult: String;
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
@@ -35,60 +34,49 @@ export class UpdateProductPromotionComponent implements OnInit {
   image: string = null;
   isEdit = false;
   avatarUrl;
-  isEditimage=false;
+  isEditimage = false;
   isInfo = false;
   submitted = false;
-  isLoading=false;
   title = '';
   type: any;
   arrCheck = [];
-  update_ma_tai_khoan:any;
+  update_ma_tai_khoan: any;
   model: productPromotionDModel;
   urlPictureDefault = avatarDefault;
- 
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
     private productPromotionService: ProductPromotionService,
     private productService: ProductService,
-    private promotionDateService:PromotionDateService) {
-    }
+    private promotionDateService: PromotionDateService) {
+  }
 
   ngOnInit(): void {
     this.submitted = false;
-    this.fetcharraylist_product();
-    this.fetcharraylist_product_promotion();
-    this.fetcharraylist_promotion_date();
-    
+    this.fetchListProduct();
+    this.fetchListProductPromotion();
+    this.fetchListPromotionDate();
   }
 
-  fetcharraylist_product(){
+  fetchListProduct() {
     this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
 
-  fetcharraylist_product_promotion(){
-    this.subscription=this.productPromotionService.getAll().subscribe(data => {
+  fetchListProductPromotion() {
+    this.subscription = this.productPromotionService.getAll().subscribe(data => {
       this.arraylist_product_promotion = data.data;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
 
-  fetcharraylist_promotion_date(){
+  fetchListPromotionDate() {
     this.arraylist_promotion_date = [];
-    this.subscription=this.promotionDateService.getAll().subscribe(data => {
+    this.subscription = this.promotionDateService.getAll().subscribe(data => {
       this.arraylist_promotion_date = data.data;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
   updateFormType(type: any) {
     switch (type) {
@@ -97,21 +85,18 @@ export class UpdateProductPromotionComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = true;
         this.title = `Thêm mới thông tin khuyến mãi sản phẩm`;
-        // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
         this.title = `Xem chi tiết thông tin khuyến mãi sản phẩm`;
-        // this.update_ma_tai_khoan = this.model.promotion_date_id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin khuyến mãi sản phẩm`;
-        // this.update_ma_tai_khoan = this.model.promotion_date_id;
         break;
       default:
         this.isInfo = false;
@@ -128,25 +113,21 @@ export class UpdateProductPromotionComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
-   
     if (model.promotion_date_id === null || model.promotion_date_id === undefined) {
       this.formGroup = this.fb.group({
-        product_id :[ null, [Validators.required]],
-        promotion_date_id: [ null, [Validators.required]],
-        promotion_level: [ null, [Validators.required]],
-        
+        product_id: [null, [Validators.required]],
+        promotion_date_id: [null, [Validators.required]],
+        promotion_level: [null, [Validators.required]],
       });
       this.urlPictureDefault = avatarDefault;
     } else {
       this.formGroup = this.fb.group({
-        product_id :[{value: this.model.product_id, disabled: this.isInfo}, [Validators.required]],
-        promotion_date_id: [{value: this.model.promotion_date_id, disabled: this.isInfo}, [Validators.required]],
-        promotion_level: [{value: this.model.promotion_level, disabled: this.isInfo}, [Validators.required]],
-       
-      });     
+        product_id: [{ value: this.model.product_id, disabled: this.isInfo }, [Validators.required]],
+        promotion_date_id: [{ value: this.model.promotion_date_id, disabled: this.isInfo }, [Validators.required]],
+        promotion_level: [{ value: this.model.promotion_level, disabled: this.isInfo }, [Validators.required]],
+      });
     }
   }
-
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -185,38 +166,27 @@ export class UpdateProductPromotionComponent implements OnInit {
     if (this.isEdit) {
       promotion_date = {
         product_promotion_id: this.model.product_promotion_id,
-        product_id :this.formGroup.get('product_id')?.value,
+        product_id: this.formGroup.get('product_id')?.value,
         promotion_date_id: this.formGroup.get('promotion_date_id')?.value,
-        promotion_level:this.formGroup.get('promotion_level')?.value,
+        promotion_level: this.formGroup.get('promotion_level')?.value,
       };
-     
+
     } else {
       promotion_date = {
-        product_id :this.formGroup.get('product_id')?.value,
+        product_id: this.formGroup.get('product_id')?.value,
         promotion_date_id: this.formGroup.get('promotion_date_id')?.value,
-        promotion_level:this.formGroup.get('promotion_level')?.value,
+        promotion_level: this.formGroup.get('promotion_level')?.value,
       };
     }
     if (this.isAdd) {
-      
-      for (let i = 0; i < this.arrCheck.length; i++) {
-        if (this.arrCheck[i].promotion_date_id === promotion_date.promotion_date_id) {
-          check = true;
-          break;
-        }
-      }
-      if (check === true) {
-        this.toastr.error('Mã nhà cung cấp đã tồn tại');
-        return;
-      }
       this.productPromotionService.create(promotion_date).subscribe(res => {
         this.closeModalReloadData();
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
     if (this.isEdit) {
@@ -225,9 +195,9 @@ export class UpdateProductPromotionComponent implements OnInit {
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
   }

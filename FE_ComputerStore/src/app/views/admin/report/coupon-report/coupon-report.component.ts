@@ -15,15 +15,15 @@ import { ReportService } from '../../../../services/report.service';
 export class CouponReportComponent implements OnInit {
 
   arraylist_coupon: Array<couponReportModel> = [];
+  filterResultTemplist: couponReportModel[] = [];
+  listFilterResult: couponReportModel[] = [];
   model: excelModel;
   modalReference: any;
   ismonth = true;
   isQuarter = true;
   isyear = true;
   closeResult: string;
-  isLoading = false;
   searchedKeyword: string;
-  filterResultTemplist: couponReportModel[] = [];
   isSelected = true;
   page = 1;
   label = -1;
@@ -39,17 +39,15 @@ export class CouponReportComponent implements OnInit {
   key: string;
   month: any;
   year: any;
+  Revenue = 0.00;
   quarter: any;
-  listFilterResult: couponReportModel[] = [];
+
   constructor(
-    private modalService: NgbModal,
     private reportService: ReportService,
     private toastr: ToastrService,
     private exportService: ExcelService,
-    public loaderService:LoaderService 
-  ) {
-  }
-
+    public loaderService: LoaderService
+  ) { }
 
   ngOnInit(): void {
     this.isyear = true;
@@ -67,48 +65,40 @@ export class CouponReportComponent implements OnInit {
       key: this.key,
       param: value
     };
-    this.fetcharraylist_coupon(thamso);
+    this.fetchListCoupon(thamso);
   }
 
-
-
-
-  fetcharraylist_coupon(model: excelModel) {
-    this.isLoading = true;
-    if(model.key == "bcq"){
-      if(model.param ==="" || model.param === "NaN/"+this.year){
+  fetchListCoupon(model: excelModel) {
+    if (model.key == "bcq") {
+      if (model.param === "" || model.param === "NaN/" + this.year) {
         this.listFilterResult = [];
-      }else{
+      } else {
         this.reportService.reportCoupon(model).subscribe(data => {
-      
-          if(data.data !== null){
+
+          if (data.data !== null) {
             this.arraylist_coupon = data.data;
             this.listFilterResult = data.data;
+            for (let item of this.listFilterResult) {
+              this.Revenue += item.total_money;
+            }
             this.listFilterResult.forEach((x) => (x.checked = false));
             this.filterResultTemplist = this.listFilterResult;
           }
-         
-        },
-          err => {
-            this.isLoading = false;
-          })
+        })
       }
-    }else{
+    } else {
       this.reportService.reportCoupon(model).subscribe(data => {
-      
-        if(data.data !== null){
+        if (data.data !== null) {
           this.arraylist_coupon = data.data;
           this.listFilterResult = data.data;
+          for (let item of this.listFilterResult) {
+            this.Revenue += item.total_money;
+          }
           this.listFilterResult.forEach((x) => (x.checked = false));
           this.filterResultTemplist = this.listFilterResult;
         }
-       
-      },
-        err => {
-          this.isLoading = false;
-        })
+      })
     }
-    
   }
 
   export() {
@@ -116,8 +106,6 @@ export class CouponReportComponent implements OnInit {
   }
 
   changeStatus(event: any) {
-    this.isLoading = true;
-    // var thamso: excelModel;
     switch (parseInt(event)) {
       case -1:
         this.isyear = true;
@@ -135,7 +123,7 @@ export class CouponReportComponent implements OnInit {
           key: this.key,
           param: value
         };
-        this.fetcharraylist_coupon(thamso);
+        this.fetchListCoupon(thamso);
         break;
       case 0:
         this.ismonth = false;
@@ -144,9 +132,6 @@ export class CouponReportComponent implements OnInit {
         this.quarter = null;
         this.key = "bct";
         var value = "";
-        // if (this.month != null || this.month != undefined) {
-        //   value += this.month + "/" + this.year;
-        // }
         this.arr_quarter = [];
         this.arr_month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         this.arr_year = [2018, 2019, 2020, 2021];
@@ -154,7 +139,7 @@ export class CouponReportComponent implements OnInit {
           key: this.key,
           param: value
         };
-        this.fetcharraylist_coupon(thamso);
+        this.fetchListCoupon(thamso);
         break;
       case 1:
         this.ismonth = true;
@@ -170,7 +155,7 @@ export class CouponReportComponent implements OnInit {
           key: this.key,
           param: value
         };
-        this.fetcharraylist_coupon(thamso);
+        this.fetchListCoupon(thamso);
         break;
       case 2:
         this.isyear = false;
@@ -188,7 +173,7 @@ export class CouponReportComponent implements OnInit {
           key: this.key,
           param: value
         };
-        this.fetcharraylist_coupon(thamso);
+        this.fetchListCoupon(thamso);
         break;
       default:
         break;
@@ -196,8 +181,6 @@ export class CouponReportComponent implements OnInit {
   }
 
   changeStatus2(event: any) {
-    this.isLoading = true;
-    // let thamso: excelModel;
     this.year = parseInt(event);
     let value = "";
     if (this.key == "bct") {
@@ -211,12 +194,10 @@ export class CouponReportComponent implements OnInit {
       key: this.key,
       param: value
     };
-    this.fetcharraylist_coupon(thamso);
+    this.fetchListCoupon(thamso);
   }
 
   changeStatus3(event: any) {
-    this.isLoading = true;
-    // let thamso: excelModel;
     this.quarter = parseInt(event);
     this.month = null;
     let value = this.quarter + "/" + this.year;
@@ -224,12 +205,10 @@ export class CouponReportComponent implements OnInit {
       key: this.key,
       param: value
     };
-    this.fetcharraylist_coupon(thamso);
+    this.fetchListCoupon(thamso);
   }
 
   changeStatus1(event: any) {
-    this.isLoading = true;
-    let list = [];
     let thamso: excelModel;
     let value = "";
     this.month = parseInt(event);
@@ -239,7 +218,7 @@ export class CouponReportComponent implements OnInit {
       key: this.key,
       param: value
     };
-    this.fetcharraylist_coupon(thamso);
+    this.fetchListCoupon(thamso);
   }
 
 }

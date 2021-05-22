@@ -20,9 +20,9 @@ export class UpdateCustomerComponent implements OnInit {
 
   @ViewChild('content') public childModal!: ModalDirective;
   @Input() arraylist_customer: Array<accountModel>;
-  list_customer: Array<accountModel> = [];
   @Output() eventEmit: EventEmitter<any> = new EventEmitter<any>();
-  checkButton = false;
+  // list_customer: Array<accountModel> = [];
+  arrCheck = [];
   closeResult: String;
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
@@ -33,16 +33,13 @@ export class UpdateCustomerComponent implements OnInit {
   image: string = null;
   isEdit = false;
   avatarUrl;
-  isEditimage=false;
   isInfo = false;
   submitted = false;
-  isLoading=false;
   title = '';
   type: any;
-  arrCheck = [];
   model: accountModel;
   urlPictureDefault = avatarDefault;
- 
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -50,34 +47,36 @@ export class UpdateCustomerComponent implements OnInit {
     private datepipe: DatePipe,
     private customerService: AccountService,
     private store: AngularFireStorage) {
-    }
+  }
 
   ngOnInit(): void {
     this.submitted = false;
-    this.fetcharraylist_customer();
+    this.fetchListCustomer();
     this.formGroup = new FormGroup({
       full_name: new FormControl(),
-      email :new FormControl(),
-      address:new FormControl(),
+      email: new FormControl(),
+      address: new FormControl(),
       phone_number: new FormControl(),
       created_at: new FormControl(),
-
-      // image : new FormControl()
     });
-    
+
   }
 
-  fetcharraylist_customer(){
-    this.subscription=this.customerService.getAll().subscribe(data => {
-      this.list_customer = data.data;
-      this.arraylist_customer = this.list_customer.filter(function (customer) {
-        return customer.value === "KH";
-      });
+  fetchListCustomer() {
+    this.customerService.getAccountByCustomer().subscribe(data => {
+      this.arraylist_customer = data.data;
       this.avatarUrl = data.data.image;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
+    // this.subscription=this.customerService.getAll().subscribe(data => {
+    //   this.list_customer = data.data;
+    //   this.arraylist_customer = this.list_customer.filter(function (customer) {
+    //     return customer.value === "KH";
+    //   });
+    //   this.avatarUrl = data.data.image;
+    // },
+    // err => {
+    //     this.isLoading = false;
+    //   })
   }
   updateFormType(type: any) {
     switch (type) {
@@ -86,21 +85,18 @@ export class UpdateCustomerComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = true;
         this.title = `Thêm mới thông tin khách hàng`;
-        // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
         this.title = `Xem chi tiết thông tin khách hàng`;
-        // this.update_ma_tai_khoan = this.model.customer_id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin khách hàng`;
-        // this.update_ma_tai_khoan = this.model.customer_id;
         break;
       default:
         this.isInfo = false;
@@ -117,37 +113,31 @@ export class UpdateCustomerComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
-   
     if (model.account_id === null || model.account_id === undefined) {
       this.formGroup = this.fb.group({
-        full_name: [ null, [Validators.required]],      
-        email: [ null, [Validators.required]], 
-        address: [ null, [Validators.required]],
-        phone_number: [ null, [Validators.required]],
-        created_at:[this.datepipe.transform(Date.now(),'shortDate')],
-
+        full_name: [null, [Validators.required]],
+        email: [null, [Validators.required]],
+        address: [null, [Validators.required]],
+        phone_number: [null, [Validators.required]],
+        created_at: [this.datepipe.transform(Date.now(), 'shortDate')],
       });
       this.urlPictureDefault = avatarDefault;
     } else {
       this.formGroup = this.fb.group({
-        full_name: [{value: this.model.full_name, disabled: this.isInfo}, [Validators.required]],
-        email: [{value: this.model.email, disabled: this.isInfo}, [Validators.required]],
-        address: [{value: this.model.address, disabled: this.isInfo}, [Validators.required]],
-        phone_number: [{value: this.model.phone_number, disabled: this.isInfo}, [Validators.required]],
-        created_at: [{value: this.model.created_at, disabled: this.isInfo}, [Validators.required]],
-        
+        full_name: [{ value: this.model.full_name, disabled: this.isInfo }, [Validators.required]],
+        email: [{ value: this.model.email, disabled: this.isInfo }, [Validators.required]],
+        address: [{ value: this.model.address, disabled: this.isInfo }, [Validators.required]],
+        phone_number: [{ value: this.model.phone_number, disabled: this.isInfo }, [Validators.required]],
+        created_at: [{ value: this.model.created_at, disabled: this.isInfo }, [Validators.required]],
       });
-      if(this.model.image=== null){
+      if (this.model.image === null) {
         this.urlPictureDefault = avatarDefault;
       }
-      else{
-        this.urlPictureDefault=this.model.image;
-
+      else {
+        this.urlPictureDefault = this.model.image;
       }
-      
     }
   }
-
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -185,20 +175,19 @@ export class UpdateCustomerComponent implements OnInit {
     }
     if (this.isEdit) {
       customer = {
-        full_name: this.formGroup.get('full_name')?.value,      
-        email: this.formGroup.get('email')?.value, 
-        address: this.formGroup.get('address')?.value, 
-        phone_number:this.formGroup.get('phone_number')?.value, 
-        image : this.urlPictureDefault,
+        full_name: this.formGroup.get('full_name')?.value,
+        email: this.formGroup.get('email')?.value,
+        address: this.formGroup.get('address')?.value,
+        phone_number: this.formGroup.get('phone_number')?.value,
+        image: this.urlPictureDefault,
       };
-     
     } else {
       customer = {
-        full_name: this.formGroup.get('full_name')?.value,      
-        email: this.formGroup.get('email')?.value, 
-        address: this.formGroup.get('address')?.value, 
-        phone_number:this.formGroup.get('phone_number')?.value, 
-        image : this.urlPictureDefault,
+        full_name: this.formGroup.get('full_name')?.value,
+        email: this.formGroup.get('email')?.value,
+        address: this.formGroup.get('address')?.value,
+        phone_number: this.formGroup.get('phone_number')?.value,
+        image: this.urlPictureDefault,
       };
     }
     if (this.isAdd) {
@@ -207,9 +196,9 @@ export class UpdateCustomerComponent implements OnInit {
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
     if (this.isEdit) {
@@ -218,9 +207,9 @@ export class UpdateCustomerComponent implements OnInit {
         this.toastr.success("Chỉnh sửa thành công");
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
   }
@@ -231,23 +220,19 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   uploadImage(event) {
-    // tslint:disable-next-line:prefer-const
     let file = event.target.files[0];
-    // tslint:disable-next-line:prefer-const
     let path = `${file.name}`;
     if (file.type.split('/')[0] !== 'image') {
       return alert('Erreur, ce fichier n\'est pas une image');
     } else {
-      // tslint:disable-next-line:prefer-const
       let ref = this.store.ref(path);
-      // tslint:disable-next-line:prefer-const
       let task = this.store.upload(path, file);
       this.uploadPercent = task.percentageChanges();
       task.snapshotChanges().pipe(
         finalize(() => {
           this.downloadURL = ref.getDownloadURL();
           this.downloadURL.subscribe(url => {
-          this.urlPictureDefault=url;
+            this.urlPictureDefault = url;
           });
         }
         )

@@ -15,16 +15,15 @@ import { ReportService } from '../../../../services/report.service';
 export class BillReportComponent implements OnInit {
 
   arraylist_bill: Array<billReportModel> = [];
+  filterResultTemplist: billReportModel[] = [];
+  listFilterResult: billReportModel[] = [];
   model: excelModel;
   modalReference: any;
   ismonth = true;
   isQuarter = true;
   isyear = true;
   closeResult: string;
-  isLoading = false;
   searchedKeyword: string;
-  filterResultTemplist: billReportModel[] = [];
-  isSelected = true;
   page = 1;
   label = -1;
   label1: any;
@@ -37,18 +36,17 @@ export class BillReportComponent implements OnInit {
   arr_month: any;
   key: string;
   month: any;
+  Revenue = 0.00;
   year: any;
   quarter: any;
-  listFilterResult: billReportModel[] = [];
+
   constructor(
     private modalService: NgbModal,
     private reportService: ReportService,
     private toastr: ToastrService,
     private exportService: ExcelService,
-    public loaderService:LoaderService 
-  ) {
-  }
-
+    public loaderService: LoaderService
+  ) { }
 
   ngOnInit(): void {
     this.isyear = true;
@@ -66,45 +64,41 @@ export class BillReportComponent implements OnInit {
       key: this.key,
       param: value
     };
-    this.fetcharraylist_bill(thamso);
+    console.log(thamso);
+    this.fetchListBill(thamso);
   }
 
-  fetcharraylist_bill(model: excelModel) {
-    this.isLoading = true;
-    if(model.key == "bcq"){
-      if(model.param ==="" || model.param === "NaN/"+this.year){
+  fetchListBill(model: excelModel) {
+    this.Revenue = 0;
+    if (model.key == "bcq") {
+      if (model.param === "" || model.param === "NaN/" + this.year) {
         this.listFilterResult = [];
-      }else{
+      } else {
         this.reportService.reportBill(model).subscribe(data => {
-      
-          if(data.data !== null){
+          if (data.data !== null) {
             this.arraylist_bill = data.data;
             this.listFilterResult = data.data;
+            for (let item of this.listFilterResult) {
+              this.Revenue += item.into_money;
+            }
             this.listFilterResult.forEach((x) => (x.checked = false));
             this.filterResultTemplist = this.listFilterResult;
           }
-         
-        },
-          err => {
-            this.isLoading = false;
-          })
+        })
       }
-    }else{
+    } else {
       this.reportService.reportBill(model).subscribe(data => {
-      
-        if(data.data !== null){
+        if (data.data !== null) {
           this.arraylist_bill = data.data;
           this.listFilterResult = data.data;
+          for (let item of this.listFilterResult) {
+            this.Revenue += item.into_money;
+          }
           this.listFilterResult.forEach((x) => (x.checked = false));
           this.filterResultTemplist = this.listFilterResult;
         }
-       
-      },
-        err => {
-          this.isLoading = false;
-        })
+      })
     }
-    
   }
 
   export() {
@@ -132,8 +126,6 @@ export class BillReportComponent implements OnInit {
   }
 
   changeStatus(event: any) {
-    this.isLoading = true;
-    // var thamso: excelModel;
     switch (parseInt(event)) {
       case -1:
         this.isyear = true;
@@ -151,7 +143,7 @@ export class BillReportComponent implements OnInit {
           key: this.key,
           param: value
         };
-        this.fetcharraylist_bill(thamso);
+        this.fetchListBill(thamso);
         break;
       case 0:
         this.ismonth = false;
@@ -160,9 +152,6 @@ export class BillReportComponent implements OnInit {
         this.quarter = null;
         this.key = "bct";
         var value = "";
-        // if (this.month != null || this.month != undefined) {
-        //   value += this.month + "/" + this.year;
-        // }
         this.arr_quarter = [];
         this.arr_month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         this.arr_year = [2019, 2020, 2021];
@@ -170,8 +159,7 @@ export class BillReportComponent implements OnInit {
           key: this.key,
           param: value
         };
-        console.log(thamso);
-        this.fetcharraylist_bill(thamso);
+        this.fetchListBill(thamso);
         break;
       case 1:
         this.ismonth = true;
@@ -187,8 +175,7 @@ export class BillReportComponent implements OnInit {
           key: this.key,
           param: value
         };
-        console.log(thamso);
-        this.fetcharraylist_bill(thamso);
+        this.fetchListBill(thamso);
         break;
       case 2:
         this.isyear = false;
@@ -206,17 +193,15 @@ export class BillReportComponent implements OnInit {
           key: this.key,
           param: value
         };
-        this.fetcharraylist_bill(thamso);
+        this.fetchListBill(thamso);
         break;
       default:
-        this.fetcharraylist_bill(thamso);
+        this.fetchListBill(thamso);
         break;
     }
   }
 
   changeStatus2(event: any) {
-    this.isLoading = true;
-    // let thamso: excelModel;
     this.year = parseInt(event);
     let value = "";
     if (this.key == "bct") {
@@ -230,27 +215,23 @@ export class BillReportComponent implements OnInit {
       key: this.key,
       param: value
     };
-    console.log(thamso);
-    this.fetcharraylist_bill(thamso);
+    this.fetchListBill(thamso);
   }
 
   changeStatus3(event: any) {
-    this.isLoading = true;
     let thamso: excelModel;
     let value = "";
     this.quarter = parseInt(event);
     this.month = null;
     value += this.quarter + "/" + this.year;
-   thamso = {
+    thamso = {
       key: this.key,
       param: value
     };
-    console.log(thamso);
-    this.fetcharraylist_bill(thamso);
+    this.fetchListBill(thamso);
   }
 
   changeStatus1(event: any) {
-    this.isLoading = true;
     let thamso: excelModel;
     let value = "";
     this.month = parseInt(event);
@@ -260,7 +241,6 @@ export class BillReportComponent implements OnInit {
       key: this.key,
       param: value
     };
-    console.log(thamso);
-    this.fetcharraylist_bill(thamso);
+    this.fetchListBill(thamso);
   }
 }

@@ -70,6 +70,50 @@ class AccountController extends Controller
         }
     }
 
+
+    public function getAccountByCustomer()
+    {
+        //
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == self::NV || $ac_type == self::QT) {
+            $objs = DB::table(self::table)
+                ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->Where(self::table . '.' . self::account_type_id, '=', '3')
+                ->get();
+            $code = 200;
+            return response()->json(['data' => $objs], $code);
+        } else {
+            $objs = DB::table(self::table)
+                ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->Where(self::table . '.' . self::account_type_id, '=', '3')
+                ->get();
+            $code = 200;
+            return response()->json(['data' => $objs], $code);
+        }
+    }
+
+    public function getAccountByEmployee()
+    {
+        //
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == self::NV || $ac_type == self::QT) {
+            $objs = DB::table(self::table)
+                ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->Where(self::table . '.' . self::account_type_id, '=', '1')
+                ->orWhere(self::table . '.' . self::account_type_id, '=', '2')
+                ->get();
+            $code = 200;
+            return response()->json(['data' => $objs], $code);
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

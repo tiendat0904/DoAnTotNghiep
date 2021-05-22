@@ -15,43 +15,36 @@ export class ProductImageComponent implements OnInit {
 
   @ViewChild(UpdateProductImageComponent) view!: UpdateProductImageComponent;
   arraylist_product_image: Array<productImageModel> = [];
+  listFilterResult: productImageModel[] = [];
+  filterResultTemplist: productImageModel[] = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
   isLoading = false;
   isSelected = true;
   searchedKeyword: string;
-  listFilterResult: productImageModel[] = [];
   page = 1;
   pageSize = 5;
-  filterResultTemplist: productImageModel[] = [];
+
   constructor(
     private modalService: NgbModal,
     private productImageService: ProductImageService,
     private toastr: ToastrService,
-    public loaderService:LoaderService
-    ) {
-    }
+    public loaderService: LoaderService
+  ) { }
 
-  
   ngOnInit(): void {
-    this.fetchlist_product_image();
+    this.fetchListProductImage();
   }
 
-
-  
-
-  fetchlist_product_image() {
+  fetchListProductImage() {
     this.isLoading = true;
     this.productImageService.getAll().subscribe(data => {
       this.arraylist_product_image = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
@@ -71,7 +64,6 @@ export class ProductImageComponent implements OnInit {
     }
   }
 
-  
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -117,8 +109,8 @@ export class ProductImageComponent implements OnInit {
     }
   }
 
-  delete_product_image(item: any = null) {
-    let selectedproduct_image= [];
+  deleteProductImage(item: any = null) {
+    let selectedproduct_image = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedproduct_image.push(item);
       this.delete(selectedproduct_image);
@@ -134,32 +126,8 @@ export class ProductImageComponent implements OnInit {
     this.delete(selectedproduct_image);
   }
 
-  initModal(model: any,type = null): void {
+  initModal(model: any, type = null): void {
     this.view.view(model, type);
-  }
-
-  changeStatus(event: any) {
-    this.isLoading = true;
-    let list = [];
-    // tslint:disable-next-line: radix
-    switch (parseInt(event)) {
-      case -1:
-        this.listFilterResult = [...this.arraylist_product_image];
-        this.isLoading = false;
-        break;
-      case 1:
-        list = [...this.arraylist_product_image];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
-        this.isLoading = false;
-        break;
-      case 0:
-        list = [...this.arraylist_product_image];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
-        this.isLoading = false;
-        break;
-      default:
-        break;
-    }
   }
 
   public delete(listid: any) {
@@ -183,8 +151,7 @@ export class ProductImageComponent implements OnInit {
 
     this.productImageService.delete(modelDelete).subscribe(
       (result) => {
-        // status: 200
-        this.ngOnInit();
+        this.fetchListProductImage();
         this.changeModel();
         if (result.error) {
           this.toastr.error(result.error);
@@ -195,5 +162,4 @@ export class ProductImageComponent implements OnInit {
       },
     );
   }
-
 }

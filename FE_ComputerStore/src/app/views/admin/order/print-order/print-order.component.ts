@@ -16,36 +16,32 @@ import { LoaderService } from '../../../../loader/loader.service';
 })
 export class PrintOrderComponent implements OnInit {
 
+  arraylist_bill_detail: BillDetailService[] = [];
   order_id: any;
   order: billModel;
   customer: accountModel;
   page = 1;
   pageSize = 5;
-  arraylist_bill_detail: BillDetailService[] = [];
-  constructor(private route: ActivatedRoute,
-    private billService: BillService, 
-    private billDetailService: BillDetailService, 
-    private customerService: AccountService, 
-    private router: Router,
-    private toastr: ToastrService,
-    public loaderService:LoaderService ) { }
 
+  constructor(private route: ActivatedRoute,
+    private billService: BillService,
+    private billDetailService: BillDetailService,
+    private router: Router,
+    public loaderService: LoaderService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.order_id = Number.parseInt(params['bill_id']);
       this.getOrder();
     });
-
   }
 
-  CaptureData(created_at:any,bill_id:any) {
-    //cach 1
+  CaptureData(created_at: any, bill_id: any) {
     var data = document.getElementById("captureData");
     htmlToImage.toJpeg(data, { quality: 0.95 }).then(function (canvas) {
       const link: any = document.createElement("a");
       document.body.appendChild(link);
-      link.download = "Bill"+created_at+bill_id+".png";
+      link.download = "Bill" + created_at + bill_id + ".png";
       link.href = canvas;
       link.click();
       this.toastr.success("Tải đơn hàng thành công");
@@ -64,14 +60,9 @@ export class PrintOrderComponent implements OnInit {
     this.billService.detail(this.order_id).subscribe(data => {
       this.order = data.data;
     })
-
     this.billDetailService.getbybill(this.order_id).subscribe(data => {
       this.arraylist_bill_detail = data.data;
     })
-
-    // this.customerService.getInfo().subscribe(data => {
-    //   this.customer = data.data;
-    // })
   }
 
 }

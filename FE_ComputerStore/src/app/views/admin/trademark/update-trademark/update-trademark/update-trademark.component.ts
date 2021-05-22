@@ -20,7 +20,7 @@ export class UpdateTrademarkComponent implements OnInit {
   @ViewChild('content') public childModal!: ModalDirective;
   @Input() arraylist_trademark: Array<trademarkModel>;
   @Output() eventEmit: EventEmitter<any> = new EventEmitter<any>();
-  checkButton = false;
+  arrCheck = [];
   closeResult: String;
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
@@ -31,44 +31,38 @@ export class UpdateTrademarkComponent implements OnInit {
   image: string = null;
   isEdit = false;
   avatarUrl;
-  isEditimage=false;
+  isEditimage = false;
   isInfo = false;
   submitted = false;
-  isLoading=false;
   title = '';
   type: any;
-  arrCheck = [];
-  update_ma_tai_khoan:any;
   model: trademarkModel;
   urlPictureDefault = avatarDefault;
- 
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
     private trademardService: TrademarkService,
-    private store: AngularFireStorage) {
-    }
+    private store: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.submitted = false;
-    this.fetcharraylist_trademark();
+    this.fetcharrayListTrademark();
     this.formGroup = new FormGroup({
       trademark_name: new FormControl(),
-      image : new FormControl()
+      image: new FormControl()
     });
-    
+
   }
 
-  fetcharraylist_trademark(){
-    this.subscription=this.trademardService.getAll().subscribe(data => {
+  fetcharrayListTrademark() {
+    this.subscription = this.trademardService.getAll().subscribe(data => {
       this.arraylist_trademark = data.data;
       this.avatarUrl = data.data.image;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
+
   updateFormType(type: any) {
     switch (type) {
       case 'add':
@@ -76,21 +70,18 @@ export class UpdateTrademarkComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = true;
         this.title = `Thêm mới thông tin nhãn hiệu`;
-        // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
         this.title = `Xem chi tiết thông tin nhãn hiệu`;
-        // this.update_ma_tai_khoan = this.model.trademark_id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin nhãn hiệu`;
-        // this.update_ma_tai_khoan = this.model.trademark_id;
         break;
       default:
         this.isInfo = false;
@@ -107,32 +98,28 @@ export class UpdateTrademarkComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
-   
+
     if (model.trademark_id === null || model.trademark_id === undefined) {
       this.formGroup = this.fb.group({
-        trademark_name: [ null, [Validators.required]],
-        image :[ null, [Validators.required]],
-        // so_dien_thoai: [ null, [Validators.required]],
-        
+        trademark_name: [null, [Validators.required]],
+        image: [null, [Validators.required]],
+
       });
       this.urlPictureDefault = avatarDefault;
     } else {
       this.formGroup = this.fb.group({
-        trademark_name: [{value: this.model.trademark_name, disabled: this.isInfo}, [Validators.required]],
+        trademark_name: [{ value: this.model.trademark_name, disabled: this.isInfo }, [Validators.required]],
         image: '',
-        
+
       });
-      if(this.model.image===""){
+      if (this.model.image === "") {
         this.urlPictureDefault = avatarDefault;
       }
-      else{
-        this.urlPictureDefault=this.model.image;
-
+      else {
+        this.urlPictureDefault = this.model.image;
       }
-      
     }
   }
-
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -172,14 +159,13 @@ export class UpdateTrademarkComponent implements OnInit {
       trademark = {
         trademark_id: this.model.trademark_id,
         trademark_name: this.formGroup.get('trademark_name')?.value,
-        image : this.urlPictureDefault,
+        image: this.urlPictureDefault,
       };
-     
     } else {
       trademark = {
         trademark_id: this.model.trademark_id,
         trademark_name: this.formGroup.get('trademark_name')?.value,
-        image : this.urlPictureDefault,
+        image: this.urlPictureDefault,
       };
     }
     if (this.isAdd) {
@@ -188,9 +174,9 @@ export class UpdateTrademarkComponent implements OnInit {
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
     if (this.isEdit) {
@@ -199,9 +185,9 @@ export class UpdateTrademarkComponent implements OnInit {
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
   }
@@ -212,23 +198,19 @@ export class UpdateTrademarkComponent implements OnInit {
   }
 
   uploadImage(event) {
-    // tslint:disable-next-line:prefer-const
     let file = event.target.files[0];
-    // tslint:disable-next-line:prefer-const
     let path = `${file.name}`;
     if (file.type.split('/')[0] !== 'image') {
       return alert('Erreur, ce fichier n\'est pas une image');
     } else {
-      // tslint:disable-next-line:prefer-const
       let ref = this.store.ref(path);
-      // tslint:disable-next-line:prefer-const
       let task = this.store.upload(path, file);
       this.uploadPercent = task.percentageChanges();
       task.snapshotChanges().pipe(
         finalize(() => {
           this.downloadURL = ref.getDownloadURL();
           this.downloadURL.subscribe(url => {
-          this.urlPictureDefault=url;
+            this.urlPictureDefault = url;
           });
         }
         )

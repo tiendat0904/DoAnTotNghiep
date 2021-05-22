@@ -1,167 +1,179 @@
-<div class = "row" style = "margin: 0 auto; display: flex;">
-    <div class = "col-sm-3" style="background-color:rgb(240, 240, 240);">
-       <h2 style="font-size:30px;">Xem chi tiết hóa đơn</h2>
-       <form [formGroup]="formGroup" (ngSubmit)="save()">
-       <div class="row">
-          <div class="col-md-12">
-             <div class="form-group">
-                <label for="bill_id">Mã hóa đơn</label>
-                <input
-                type="text"
-                name=""
-                class="form-control"
-                formControlName="bill_id"
-                id="bill_id"
-                [(ngModel)]='update_bill_id'
-                readonly
-                />
-             </div>
-          </div>
-          <div class="col-md-12">
-            <div class="form-group">
-               <label for="employee_id">Nhân viên</label>
-               <input
-               type="text"
-               name=""
-               class="form-control"
-               formControlName="employee_id"
-               id="employee_id"
-                [(ngModel)] = "update_employee_id"
-               readonly
-               />
-           </div>
-          </div>
-       </div>
-       <div class="row">
-          <div class="col-md-12">
-             <div class="form-group">
-                   <label for="customer_id">Khách hàng</label>
-                   <input
-                   type="text"
-                   name=""
-                   class="form-control"
-                   formControlName="customer_id"
-                   id="customer_id"
-                    [(ngModel)] = "update_customer_id"
-                   readonly
-                   />
-               </div>
-          </div>
-          <div class="col-md-12">
-               <div class="form-group">
-                   <label for="created_at">Ngày nhập kho</label>
-                   <input
-                   type="text"
-                   name=""
-                   class="form-control"
-                   formControlName="created_at"
-                   id="created_at"
-                    [(ngModel)] = "update_created_at"
-                   readonly
-                   />
-               </div>
-           </div>
-       </div>
-       <div class="row">
-          <div class="col-md-12">
-               <div class="form-group">
-                   <label for="total_money">Tổng tiền(VNĐ)</label>
-                   <input
-                   type="number"
-                   name=""
-                   class="form-control"
-                   [(ngModel)] = "update_total_money"
-                   formControlName="total_money"
-                   id="total_money"
-                   readonly
-                   />
-               </div>
-           </div>
-           <div class="col-md-12">
-            <div class="form-group">
-                <label for="into_money">Thành tiền(VNĐ)</label>
-                <input
-                type="number"
-                name=""
-                class="form-control"
-                [(ngModel)] = "update_into_money"
-                formControlName="into_money"
-                id="into_money"
-                readonly
-                />
-            </div>
-        </div>
-       </div>
-       <div class="form-group" align="center">
-         
-          <button
-          type="button"
-             (click)="getNavigation('danhsachhoadonnhap', '')"
-             class="btn btn-danger"
-             style="width: 100px"
-             >
-          Thoát
-          </button>
-       </div>
-       </form>
-    </div>
-    <div class = "col-sm-8" style="background-color:rgb(240, 240, 240);margin:30px">
-       <div class="container" >
-          <div class="table-responsive">
-             <div class="table-wrapper" style="min-width :700px">
-                <div class="table-title">
-                   <div class="row">
-                      <div class="col-sm-8">
-                         <h2 style="font-size:30px;">Chi tiết hóa đơn </h2>
-                      </div>
-                      <div class="col-sm-4">
-                         <div class="search-box">
-                            <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" class="form-control" placeholder="Search&hellip;">
-                         </div>
-                      </div>
-                      
-                      
-                      
-                      
-                   </div>
-                </div>
-                <div class="row">
-                   <div class="col-12">
-                      <table class="table table-striped table-hover table-bordered ">
-                         <thead>
-                            <tr>
-                               <th>STT</th>
-                               <th>Tên sản phẩm</th>
-                               <th>Số lượng(cái)</th>
-                               <th>Giá nhập(VNĐ)</th>
-                            </tr>
-                         </thead>
-                         <tbody>
-                           
-                            <tr
-                               *ngFor="
-                               let e of listFilterResult  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
-                               let i = index
-                               "
-                               >
-                               
-                               <td>{{ i + (page-1)*pageSize + 1 }}</td>
-                               <td [innerHTML]="e.product_name"></td>
-                               <td [innerHTML]="e.amount"></td>
-                               <td [innerHTML]="e.price | currency:'VND'"></td>
-                                                               
-                            </tr>
-                         </tbody>
-                      </table>
-                   </div>
-                   <div class="col-12 ngb">
-                      <ngb-pagination [ellipses]="true"  [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
-                      [pageSize]="pageSize" style="display:'flex'; margin:'0 auto';" [collectionSize]="listFilterResult.length"></ngb-pagination>
-                   </div>
-                </div>
-             </div>
-          </div>
-       </div>
-    </div>
+<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
+   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
  </div>
+
+<div class="row" style="margin: 0 auto; display: flex;padding: 60px 0;">
+   <div class="col-sm-3" style="background-color:#fff;margin-right: 20px;">
+      <h2 style="font-size:30px;margin-top: 15px;"> Chỉnh sửa hóa đơn</h2>
+      <form [formGroup]="formGroup" (ngSubmit)="save()">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label>Tên nhân viên</label>
+                  <select [(ngModel)]="update_employee_id" class="form-control" name="" formControlName="employee_id"
+                     id="" readonly>
+                     <option [selected]="isSelected" selected hidden disabled> --vui lòng chọn nhân viên--</option>
+                     <option *ngFor="let e of arraylist_employee_filter" value="{{e.account_id}}">{{e.full_name}}
+                     </option>
+                  </select>
+               </div>
+            </div>
+         </div>
+
+         <div class="row">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label for="name">Tên khách hàng</label>
+                  <input type="text" name="" class="form-control" [(ngModel)]="update_name "
+                     formControlName="name" id="name" readonly />
+               </div>
+            </div>
+         </div>
+
+         <!-- <div class="row">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label>Tên khách hàng</label>
+                  <select [(ngModel)]="update_customer_id" class="form-control" name="" formControlName="customer_id"
+                     id="">
+                     <option [selected]="isSelected" selected hidden disabled> --vui lòng chọn khách hàng--</option>
+                     <option *ngFor="let e of arraylist_customer_filter" value="{{e.account_id}}">{{e.full_name}}
+                     </option>
+                  </select>
+                  <div *ngIf="submitted && formGroup.controls['customer_id'].errors?.required">
+                     <div *ngIf="formGroup.controls['customer_id'].errors?.required" style="color: red">
+                        * Tên khách hàng không được để trống
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div> -->
+
+         <div class="row">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label>Phương thức thanh toán</label>
+                  <select [(ngModel)]="update_order_type_id" class="form-control" name=""
+                     formControlName="order_type_id" id="" readonly>
+                     <option *ngFor="let e of arraylist_order_type" value="{{e.order_type_id}}">{{e.description}}
+                     </option>
+                  </select>
+                  <div *ngIf="submitted && formGroup.controls['order_type_id'].errors?.required">
+                     <div *ngIf="formGroup.controls['order_type_id'].errors?.required" style="color: red">
+                        * Phương thức thanh toán không được để trống
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label>Trạng thái đơn hàng</label>
+                  <select [(ngModel)]="update_order_status_id" class="form-control" name=""
+                     formControlName="order_status_id" id="" readonly>
+                     <option *ngFor="let e of arraylist_order_status" value="{{e.order_status_id}}">{{e.description}}
+                     </option>
+                  </select>
+                  <div *ngIf="submitted && formGroup.controls['order_status_id'].errors?.required">
+                     <div *ngIf="formGroup.controls['order_status_id'].errors?.required" style="color: red">
+                        * Trạng thái đơn hàng không được để trống
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label for="created_at">Lập lúc</label>
+                  <input type="text" name="" class="form-control" [(ngModel)]="update_created_at "
+                     formControlName="created_at" id="created_at" readonly />
+               </div>
+            </div>
+         </div>
+
+         <div class="row">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label for="total_money">Tổng tiền(VNĐ)</label>
+                  <input type="text" name="" class="form-control" [ngModel]="update_total_money | currency: 'VND'"
+                     (ngModelChange)="update_total_money=$event" formControlName="total_money" id="total_money"
+                     readonly />
+               </div>
+            </div>
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label for="into_money">Thành tiền(VNĐ)</label>
+                  <input type="text" name="" class="form-control" [ngModel]="update_into_money | currency: 'VND'"
+                     (ngModelChange)="update_into_money=$event" formControlName="into_money" id="into_money" readonly />
+               </div>
+            </div>
+         </div>
+         <div class="form-group" align="center">
+            <button type="button" (click)="getNavigation('admin/order', '')" class="btn btn-danger"
+               style="width: 100px">
+               Thoát
+            </button>
+         </div>
+      </form>
+   </div>
+   <div class="col-sm-8" style="background-color:#fff">
+
+      <div class="container">
+         <div class="table-responsive">
+            <div class="table-wrapper" style="min-width : 700px">
+               <div class="table-title">
+                  <div class="row">
+                     <div class="col-sm-8">
+                        <h2 style="font-size:30px;">Chi tiết hóa đơn</h2>
+                     </div>
+                     <div class="col-sm-4">
+                        <div class="search-box">
+                           <i class="material-icons">&#xE8B6;</i>
+                           <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword"
+                              class="form-control" placeholder="Search&hellip;">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-12">
+                     <table class="table table-striped table-hover table-bordered ">
+                        <thead>
+                           <tr>
+                              <th>STT</th>
+                              <th>Tên sản phẩm</th>
+                              <th>Số lượng(cái)</th>
+                              <th>Giá nhập(VNĐ)</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                           </tr>
+                           <tr *ngFor="
+                                    let e of listFilterResult  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
+                                    let i = index
+                                    ">
+                              <td>{{ i + (page-1)*pageSize + 1 }}</td>
+                              <td [innerHTML]="e.product_name"></td>
+                              <td [innerHTML]="e.amount"></td>
+                              <td [innerHTML]="e.price | currency:'VND'"></td>
+
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="col-12 justify-content-center">
+                     <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true"
+                        [(page)]="page" [pageSize]="pageSize" style="display:'flex'; margin:'0 auto';"
+                        [collectionSize]="listFilterResult.length"></ngb-pagination>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<app-update-order-detail [mess_bill1]="update_bill_id" [arraylist_bill_detail]="arraylist_bill_detail"
+   (eventEmit)="ngOnInit()"></app-update-order-detail>

@@ -37,19 +37,19 @@ export class UpdateProductComponent implements OnInit {
   image: string = null;
   isEdit = false;
   avatarUrl;
-  isEditimage=false;
+  isEditimage = false;
   isInfo = false;
   submitted = false;
   isChangeImage = false;
-  isLoading=false;
+  isLoading = false;
   title = '';
   type: any;
   arrCheck = [];
   uploads: any[];
-  update_ma_tai_khoan:any;
+  update_ma_tai_khoan: any;
   model: productModel;
   urlPictureDefault = avatarDefault;
- 
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -58,42 +58,32 @@ export class UpdateProductComponent implements OnInit {
     private trademarkService: TrademarkService,
     private productTypeService: ProductTypeService,
     private store: AngularFireStorage) {
-    }
+  }
 
   ngOnInit(): void {
     this.submitted = false;
-    this.fetcharraylist_product();
-    this.fetcharraylist_product_type();
-    this.fetcharraylist_trademark();
-    
+    this.fetchListProduct();
+    this.fetchListProductType();
+    this.fetchListTrademark();
   }
 
-  fetcharraylist_trademark(){
-    this.subscription=this.trademarkService.getAll().subscribe(data => {
+  fetchListTrademark() {
+    this.subscription = this.trademarkService.getAll().subscribe(data => {
       this.arraylist_trademark = data.data;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
 
-  fetcharraylist_product_type(){
-    this.subscription=this.productTypeService.getAll().subscribe(data => {
+  fetchListProductType() {
+    this.subscription = this.productTypeService.getAll().subscribe(data => {
       this.arraylist_product_type = data.data;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
 
-  fetcharraylist_product(){
-    
-    this.subscription=this.productService.getAll().subscribe(data => {
+  fetchListProduct() {
+
+    this.subscription = this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
   updateFormType(type: any) {
     switch (type) {
@@ -103,7 +93,6 @@ export class UpdateProductComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = true;
         this.title = `Thêm mới thông tin sản phẩm`;
-        // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
         this.isChangeImage = true;
@@ -111,7 +100,6 @@ export class UpdateProductComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = false;
         this.title = `Xem chi tiết thông tin sản phẩm`;
-        // this.update_ma_tai_khoan = this.model.product_id;
         break;
       case 'edit':
         this.isChangeImage = true;
@@ -119,7 +107,6 @@ export class UpdateProductComponent implements OnInit {
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin sản phẩm`;
-        // this.update_ma_tai_khoan = this.model.product_id;
         break;
       default:
         this.isInfo = false;
@@ -139,39 +126,31 @@ export class UpdateProductComponent implements OnInit {
     this.uploads = [];
     if (model.product_id === null || model.product_id === undefined) {
       this.formGroup = this.fb.group({
-        product_name: [ null, [Validators.required]],
-        trademark_id: [ null,[Validators.required]],
-        product_type_id: [ null,[Validators.required]],
-        warranty: [ null,[Validators.required]],
-        description:[ null,[Validators.required]],
-        image:[null,[Validators.required]]
-        // so_dien_thoai: [ null, [Validators.required]],
-        
+        product_name: [null, [Validators.required]],
+        trademark_id: [null, [Validators.required]],
+        product_type_id: [null, [Validators.required]],
+        warranty: [null, [Validators.required]],
+        description: [null, [Validators.required]],
+        image: [null, [Validators.required]]
       });
       this.urlPictureDefault = avatarDefault;
     } else {
       this.formGroup = this.fb.group({
-        product_name: [{value: this.model.product_name, disabled: this.isInfo}, [Validators.required]],
-        trademark_id :[{value: this.model.trademark_id, disabled: this.isInfo}, [Validators.required]],
-        product_type_id :[{value: this.model.product_type_id, disabled: this.isInfo}, [Validators.required]],
-        warranty: [{value: this.model.warranty, disabled: this.isInfo}, [Validators.required]],
-        description:[{value: this.model.description, disabled: this.isInfo}, [Validators.required]],
+        product_name: [{ value: this.model.product_name, disabled: this.isInfo }, [Validators.required]],
+        trademark_id: [{ value: this.model.trademark_id, disabled: this.isInfo }, [Validators.required]],
+        product_type_id: [{ value: this.model.product_type_id, disabled: this.isInfo }, [Validators.required]],
+        warranty: [{ value: this.model.warranty, disabled: this.isInfo }, [Validators.required]],
+        description: [{ value: this.model.description, disabled: this.isInfo }, [Validators.required]],
         image: '',
-        // dia_chi: [{value: this.model.supplier_address, disabled: this.isInfo}, [Validators.required]],
-        // hot_line: [{value: this.model.hotline, disabled: this.isInfo}],
-        // email: [{value: this.model.email, disabled: this.isInfo}],
-        // so_dien_thoai: [{value: this.model., disabled: this.isInfo}, [Validators.required]],
       });
-      if(this.model.image.length === 0){
+      if (this.model.image.length === 0) {
         this.urlPictureDefault = avatarDefault;
-      }else{
+      } else {
         this.urlPictureDefault = this.model.image[0];
-        this.uploads =  this.model.image;
-      }  
-      
+        this.uploads = this.model.image;
+      }
     }
   }
-
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -214,14 +193,9 @@ export class UpdateProductComponent implements OnInit {
         trademark_id: this.formGroup.get('trademark_id')?.value,
         product_type_id: this.formGroup.get('product_type_id')?.value,
         warranty: this.formGroup.get('warranty')?.value,
-        description : this.formGroup.get('description')?.value
-        // supplier_address: this.formGroup.get('dia_chi')?.value,
-        // hotline: this.formGroup.get('hot_line')?.value,
-        // email: this.formGroup.get('email')?.value,
-        // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
-        // image : this.urlPictureDefault,
+        description: this.formGroup.get('description')?.value
       };
-     
+
     } else {
       product = {
         product_id: this.model.product_id,
@@ -229,31 +203,19 @@ export class UpdateProductComponent implements OnInit {
         trademark_id: this.formGroup.get('trademark_id')?.value,
         product_type_id: this.formGroup.get('product_type_id')?.value,
         warranty: this.formGroup.get('warranty')?.value,
-        description : this.formGroup.get('description')?.value,
-        // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
-        image : this.uploads,
+        description: this.formGroup.get('description')?.value,
+        image: this.uploads,
       };
     }
     if (this.isAdd) {
-      
-      // for (let i = 0; i < this.arrCheck.length; i++) {
-      //   if (this.arrCheck[i].product_id === product.product_id) {
-      //     check = true;
-      //     break;
-      //   }
-      // }
-      // if (check === true) {
-      //   this.toastr.error('Mã sản phẩm đã tồn tại');
-      //   return;
-      // }
       this.productService.create(product).subscribe(res => {
         this.closeModalReloadData();
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
     if (this.isEdit) {
@@ -262,9 +224,9 @@ export class UpdateProductComponent implements OnInit {
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
   }
@@ -276,33 +238,26 @@ export class UpdateProductComponent implements OnInit {
 
   uploadImage(event) {
     this.uploads = [];
-    // tslint:disable-next-line:prefer-const
     const filelist = event.target.files;
-    // tslint:disable-next-line:prefer-const
-    for(const file of filelist){
+    for (const file of filelist) {
       let path = `computerstore/${file.name}`;
       if (file.type.split('/')[0] !== 'image') {
         return alert('Erreur, ce fichier n\'est pas une image');
       } else {
-        // tslint:disable-next-line:prefer-const
         let ref = this.store.ref(path);
-        // tslint:disable-next-line:prefer-const
         let task = this.store.upload(path, file);
         this.uploadPercent = task.percentageChanges();
         task.snapshotChanges().pipe(
           finalize(() => {
             this.downloadURL = ref.getDownloadURL();
             this.downloadURL.subscribe(url => {
-            this.uploads.push(url);
-            this.urlPictureDefault= this.uploads[0];
+              this.uploads.push(url);
+              this.urlPictureDefault = this.uploads[0];
             });
           }
           )
         ).subscribe();
+      }
     }
-    
-    }
-    
   }
-
 }

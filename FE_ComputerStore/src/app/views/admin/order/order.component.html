@@ -1,7 +1,6 @@
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
- </div>
-
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
+</div>
 <div class="container">
    <div class="table-responsive">
       <div class="table-wrapper">
@@ -31,7 +30,7 @@
                      Bạn có chắc chắn muốn xóa những thông tin này ?
                   </div>
                   <div class="modal-footer">
-                     <button class="btn btn-danger" style="width: 80px" (click)="delete_order()">
+                     <button class="btn btn-danger" style="width: 80px" (click)="deleteOrder()">
                         Có
                      </button>
                      <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
@@ -39,10 +38,7 @@
                      </button>
                   </div>
                </ng-template>
-               <button type="button" [hidden]="isDelete" style="height: 35px; margin-top: 7px;margin-left: 15px;" (click)="open(mymodal1)" class="btn btn-danger">
-                  <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
-               </button>
-               <select (change)="changeStatus($event.target.value)" class="custom-select col-md-4 col-lg-4 col-sm-12">
+               <select (change)="changeStatus($event.target.value)" style="margin-left: 15px;" class="custom-select col-md-4 col-lg-2 col-sm-12">
                   <option value="0">Tất cả</option>
                   <option value="1">SELECTING</option>
                   <option value="2">PENDING</option>
@@ -51,6 +47,10 @@
                   <option value="5">DONE</option>
                   <option value="6">CANCEL</option>
                </select>
+               <button type="button" [hidden]="isDelete" style="height: 35px;margin-left: 5px;"
+                  (click)="open(mymodal1)" class="btn btn-danger">
+                  <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
+               </button>
             </div>
          </div>
          <div class="row">
@@ -68,7 +68,6 @@
                         <th>Tạo lúc</th>
                         <td>Thao tác</td>
                         <th>Hành động</th>
-                        
                      </tr>
                   </thead>
                   <tbody>
@@ -104,7 +103,7 @@
                                  Bạn có chắc chắn muốn xóa thông tin phiếu nhập này không ?
                               </div>
                               <div class="modal-footer">
-                                 <button class="btn btn-danger" style="width: 80px" (click)="delete_order(e.bill_id)">
+                                 <button class="btn btn-danger" style="width: 80px" (click)="deleteOrder(e.bill_id)">
                                     Có
                                  </button>
                                  <button class="btn btn-outline-dark" style="width: 80px"
@@ -114,14 +113,15 @@
                               </div>
                            </ng-template>
                            <div class="row justify-content-center">
-                              <!-- <button (click)="getNavigation('admin/order/view/', e.bill_id)"  class="btn btn-info" title="View" ><i class="fa fa-info-circle" aria-hidden="true"></i></button>          -->
+                              <button (click)="getNavigation('admin/order/view/', e.bill_id)"  class="btn btn-info" title="View" ><i class="fa fa-info-circle" aria-hidden="true"></i></button>         
                               <button (click)="getNavigation('admin/order/update/', e.bill_id)" class="btn btn-warning"
                                  title="Edit"><i class="fas fa-edit edit" aria-hidden="true"></i></button>
                               <button class="btn btn-danger" (click)="open(mymodal)" title="Delete"
                                  data-toggle="tooltip"><i class="fa fa-trash" aria-hidden="true"></i></button>
                            </div>
                         </td>
-                        <td><a *ngIf = "e.check_order_status" [routerLink] = "['print-order/',e.bill_id]" class ="in-order">In đơn hàng</a></td>
+                        <td><a *ngIf="e.check_order_status" [routerLink]="['print-order/',e.bill_id]"
+                              class="in-order">In đơn hàng</a></td>
                      </tr>
                   </tbody>
                </table>

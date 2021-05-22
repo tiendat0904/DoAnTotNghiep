@@ -99,9 +99,11 @@ class PromotionDateController extends Controller
                 ->whereDate(self::date, '=', $ngay)->first();
             foreach ($products as $product) {
                 DB::table(ProductPromotionController::table)
-                    ->insert([ProductPromotionController::product_id => $product['product_id'],
+                    ->insert([
+                        ProductPromotionController::product_id => $product['product_id'],
                         ProductPromotionController::promotion_date_id => $ma_ngay_km->promotion_date_id,
-                        ProductPromotionController::promotion_level => $arr_value['promotion_level']]);
+                        ProductPromotionController::promotion_level => $arr_value['promotion_level']
+                    ]);
             }
             return response()->json(['success' => "Thêm mới thành công"], 201);
         } else {
@@ -121,8 +123,33 @@ class PromotionDateController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $this->base->show($id);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            $objs = DB::table(self::table)
+                ->join(ProductPromotionController::table, self::table . '.' . self::id, '=', ProductPromotionController::table . '.' . ProductPromotionController::promotion_date_id)
+                ->select(self::table . '.*', ProductPromotionController::table . '.' . ProductPromotionController::promotion_level, ProductPromotionController::table . '.' . ProductPromotionController::product_id)
+                ->where(self::table . '.' . self::id, '=', $id)
+                ->get();
+            foreach ($objs as $obj) {
+                $obj_products = DB::table(ProductController::table)
+                    ->join(ProductPromotionController::table, ProductPromotionController::table . '.' . ProductPromotionController::product_id, '=', ProductController::table . '.' . ProductController::id)
+                    ->join(ProductTypeController::table, ProductTypeController::table . '.' . ProductTypeController::id, '=', ProductController::table . '.' . ProductController::product_type_id)
+                    ->join(TrademarkController::table, TrademarkController::table . '.' . TrademarkController::id, '=', ProductController::table . '.' . ProductController::trademark_id)
+                    ->select(ProductController::table . '.*',ProductTypeController::table . '.' . ProductTypeController::product_type_name,TrademarkController::table . '.' . TrademarkController::trademark_name)
+                    ->where(ProductController::table . '.' . ProductController::id, '=', $obj->product_id)
+                    ->get();
+                foreach ($obj_products as $obj_product) {
+                    $obj_images = DB::table(ProductImageController::table)
+                    ->join(ProductController::table, ProductController::table . '.' . ProductController::id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+                    ->select(ProductImageController::table . '.' . ProductImageController::image)
+                    ->where(ProductController::table . '.' . ProductController::id, '=', $obj->product_id)
+                    ->get();
+                foreach ($obj_images as $obj_image) {
+                    $obj_product->image[] =  $obj_image->image;
+                }
+                    $obj->listProduct[] =  $obj_product;
+                }
+            }
+            $code = 200;
+            return response()->json(['data' => $objs], $code);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

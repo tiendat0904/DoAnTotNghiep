@@ -1,7 +1,6 @@
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
- </div>
-
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
+</div>
 <div class="container">
    <div class="table-responsive">
       <div class="table-wrapper">
@@ -10,34 +9,32 @@
                <div class="col-sm-12">
                   <h2 style="font-size:30px;">Báo cáo nhân viên</h2>
                </div>
-               <button type="button" [appExport]="listFilterResult" fileName="Nhanvien" class="btn btn-success">
+               <button type="button" [appExport]="listFilterResult" fileName="Nhanvien" class="btn btn-success"
+                  style="margin-left: 17px;">
                   Xuất báo cáo
                </button>
                <select [(ngModel)]="label" (change)="changeStatus($event.target.value)"
-               class="custom-select col-md-3 col-lg-2 col-sm-12">
-               <option value="-1">Tất cả</option>
-               <option value="0">Tháng</option>
-               <option value="1">Quý</option>
-               <option value="2">Năm</option>
-            </select>
-
-            <select [hidden]="ismonth" (change)="changeStatus1($event.target.value)"
-               class="custom-select col-md-3 col-lg-2 col-sm-12">
-               <option [selected]="isSelected">--</option>
-               <option *ngFor="let item of arr_month">{{item}}</option>
-            </select>
-
-            <select [hidden]="isQuarter" (change)="changeStatus3($event.target.value)"
-               class="custom-select col-md-3 col-lg-2 col-sm-12">
-               <option [selected]="isSelected">--</option>
-               <option *ngFor="let item of arr_quarter">{{item}}</option>
-            </select>
-
-            <select [hidden]="isyear" (change)="changeStatus2($event.target.value)"
-               class="custom-select col-md-3 col-lg-2 col-sm-12">
-               <option [selected]="isSelected">--</option>
-               <option *ngFor="let item of arr_year">{{item}}</option>
-            </select>
+                  class="custom-select col-md-3 col-lg-2 col-sm-12">
+                  <option value="-1">Tất cả</option>
+                  <option value="0">Tháng</option>
+                  <option value="1">Quý</option>
+                  <option value="2">Năm</option>
+               </select>
+               <select [hidden]="ismonth" (change)="changeStatus1($event.target.value)"
+                  class="custom-select col-md-3 col-lg-2 col-sm-12">
+                  <option [selected]="isSelected">--</option>
+                  <option *ngFor="let item of arr_month">{{item}}</option>
+               </select>
+               <select [hidden]="isQuarter" (change)="changeStatus3($event.target.value)"
+                  class="custom-select col-md-3 col-lg-2 col-sm-12">
+                  <option [selected]="isSelected">--</option>
+                  <option *ngFor="let item of arr_quarter">{{item}}</option>
+               </select>
+               <select [hidden]="isyear" (change)="changeStatus2($event.target.value)"
+                  class="custom-select col-md-3 col-lg-2 col-sm-12">
+                  <option [selected]="isSelected">--</option>
+                  <option *ngFor="let item of arr_year">{{item}}</option>
+               </select>
             </div>
          </div>
          <div class="row">
@@ -61,7 +58,6 @@
                         let e of listFilterResult | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
                         let i = index
                         ">
-
                         <td>{{ i + (page-1)*pageSize + 1 }}</td>
                         <td [innerHTML]="e.email"></td>
                         <td [innerHTML]="e.full_name"></td>

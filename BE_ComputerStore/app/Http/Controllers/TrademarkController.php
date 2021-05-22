@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -65,6 +66,13 @@ class TrademarkController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['error' => $validator->errors()->all()], 400);
                 }
+                $data = DB::table(self::table)
+                    ->select(self::table . '.*')
+                    ->where(self::trademark_name, '=', $request->trademark_name)
+                    ->get();
+                if (count($data) > 0) {
+                    return response()->json(['error' => 'Tên nhãn hiệu đã tồn tại vui lòng kiểm tra lại!!!'], 400);
+                }
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
@@ -117,7 +125,6 @@ class TrademarkController extends Controller
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
-        
     }
 
     /**

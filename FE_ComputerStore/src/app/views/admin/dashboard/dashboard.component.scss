@@ -7,13 +7,17 @@
     z-index: 99999;
 }
 
-
 .header{
     display: flex;
     background-color: white;
     width: 310px;
     height: 90px;
     border-radius: 5px;
+}
+
+.canvas{
+    height: 400px !important;
+    width: 1235px !important;
 }
 
 .header-icon{

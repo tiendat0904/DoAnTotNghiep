@@ -15,43 +15,35 @@ export class ProductPromotionComponent implements OnInit {
 
   @ViewChild(UpdateProductPromotionComponent) view!: UpdateProductPromotionComponent;
   list_product_promotion: Array<productPromotionDModel> = [];
+  listFilterResult: productPromotionDModel[] = [];
+  filterResultTemplist: productPromotionDModel[] = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  isLoading = false;
-  isSelected = true;
   searchedKeyword: string;
-  listFilterResult: productPromotionDModel[] = [];
   page = 1;
   pageSize = 5;
-  filterResultTemplist: productPromotionDModel[] = [];
+
   constructor(
     private modalService: NgbModal,
     private productPromotionService: ProductPromotionService,
     private toastr: ToastrService,
-    public loaderService:LoaderService 
-    ) {
-    }
-
-  
-  ngOnInit(): void {
-    this.fetchlist_product_promotion();
+    public loaderService: LoaderService
+  ) {
   }
 
 
-  
+  ngOnInit(): void {
+    this.fetchListProductPromotion();
+  }
 
-  fetchlist_product_promotion() {
-    this.isLoading = true;
+  fetchListProductPromotion() {
     this.productPromotionService.getAll().subscribe(data => {
       this.list_product_promotion = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
@@ -72,7 +64,6 @@ export class ProductPromotionComponent implements OnInit {
     }
   }
 
-  
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -112,14 +103,13 @@ export class ProductPromotionComponent implements OnInit {
       .map((p) => p.product_promotion_id);
     if (selectedHometowns.length > 0) {
       this.isDelete = false;
-
     } else {
       this.isDelete = true;
     }
   }
 
-  delete_product_promotion(item: any = null) {
-    let selectedproduct_promotion= [];
+  deleteProductPromotion(item: any = null) {
+    let selectedproduct_promotion = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedproduct_promotion.push(item);
       this.delete(selectedproduct_promotion);
@@ -135,32 +125,8 @@ export class ProductPromotionComponent implements OnInit {
     this.delete(selectedproduct_promotion);
   }
 
-  initModal(model: any,type = null): void {
+  initModal(model: any, type = null): void {
     this.view.view(model, type);
-  }
-
-  changeStatus(event: any) {
-    this.isLoading = true;
-    let list = [];
-    // tslint:disable-next-line: radix
-    switch (parseInt(event)) {
-      case -1:
-        this.listFilterResult = [...this.list_product_promotion];
-        this.isLoading = false;
-        break;
-      case 1:
-        list = [...this.list_product_promotion];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
-        this.isLoading = false;
-        break;
-      case 0:
-        list = [...this.list_product_promotion];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
-        this.isLoading = false;
-        break;
-      default:
-        break;
-    }
   }
 
   public delete(listid: any) {
@@ -181,10 +147,8 @@ export class ProductPromotionComponent implements OnInit {
     }
     this.searchedKeyword = null;
     this.filterResultTemplist = this.listFilterResult;
-
     this.productPromotionService.delete(modelDelete).subscribe(
       (result) => {
-        // status: 200
         this.ngOnInit();
         this.changeModel();
         if (result.error) {

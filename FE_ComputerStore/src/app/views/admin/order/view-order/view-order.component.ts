@@ -3,12 +3,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from '../../../../loader/loader.service';
 import { accountModel } from '../../../../models/account-model';
 import { billDetailModel } from '../../../../models/bill-detail-model';
 import { billModel } from '../../../../models/bill-model';
+import { orderStatusModel } from '../../../../models/order-status-model';
+import { orderTypeModel } from '../../../../models/order-type-model';
 import { AccountService } from '../../../../services/account/account.service';
 import { BillDetailService } from '../../../../services/bill-detail/bill-detail.service';
 import { BillService } from '../../../../services/bill/bill.service';
+import { OrderStatusService } from '../../../../services/order-status/order-status.service';
+import { OrderTypeService } from '../../../../services/order-type/order-type.service';
 import { UpdateOrderDetailComponent } from '../update-order-detail/update-order-detail.component';
 
 @Component({
@@ -25,16 +30,19 @@ export class ViewOrderComponent implements OnInit {
   arraylist_bill: Array<billModel> = [];
   arraylist_employee: Array<accountModel> = [];
   arraylist_employee_filter: Array<accountModel> = [];
+  arraylist_order_type: Array<orderTypeModel> = [];
+  arraylist_order_status: Array<orderStatusModel> = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
   isLoading = false;
   isSelected = true;
   update_total_money = 0.00;
+  update_into_money = 0.00;
   submitted = false;
   formGroup: FormGroup;
   searchedKeyword: string;
-  update_bill_id: bigint;
+  update_bill_id: any;
   listFilterResult: billDetailModel[] = [];
   listFilterResult1: Array<billDetailModel> = [];
   page = 1;
@@ -43,10 +51,12 @@ export class ViewOrderComponent implements OnInit {
   isCheckhdn = true;
   isCheckhdn1 = false;
   bill_id: any;
-  update_employee_id= null;
-  update_customer_id= null;
-  update_into_money = 0.00;
-  update_created_at : any;
+  update_employee_id = null;
+  // update_customer_id = null;
+  update_created_at = null;
+  update_order_type_id = null;
+  update_order_status_id = null;
+  update_name = null;
   constructor(
     private modalService: NgbModal,
     private billDetailService: BillDetailService,
@@ -56,50 +66,87 @@ export class ViewOrderComponent implements OnInit {
     private employeeService: AccountService,
     private customerService: AccountService,
     private actRoute: ActivatedRoute,
-    private billService: BillService
-    ) {
-      this.billService.getAll().subscribe(data => {
-        this.arraylist_bill = data.data;
-      },)
-      
-     
-      
-    }
+    private billService: BillService,
+    private orderTypeService: OrderTypeService,
+    private orderStatusService: OrderStatusService,
+    public loaderService:LoaderService 
+  ) {
+    // this.billService.getAll().subscribe(data => {
+    //   this.arraylist_bill = data.data;
+    //   // this.update_bill_id = this.arraylist_bill.length+1;
+    // },)
 
-  
+
+
+
+  }
+
+
   ngOnInit(): void {
+
     this.submitted = false;
+    this.fetcharraylistOrderStatus();
+    this.fetcharraylistOrderType();
     this.fetcharraylist_employee();
     this.fetcharraylist_customer();
     this.update_bill_id = this.actRoute.snapshot.params['id'];
+    this.update_employee_id = localStorage.getItem("account_id");
     this.billService.detail(this.update_bill_id).subscribe(data => {
       this.arraylist_bill = data.data;
-      if(data.data === undefined){
-      }else{
-        if(data.data.bill_id === undefined || data.data.bill_id === null){
+      if (data.data === undefined) {
+      } else {
+        if (data.data.bill_id === undefined || data.data.bill_id === null) {
         }
-        else{
-          
-          this.update_customer_id = data.data.customer_name;
-          this.update_employee_id = data.data.employee_name;
+        else {
+          // this.update_customer_id = data.data.customer_id;
           this.update_total_money = data.data.total_money;
           this.update_into_money = data.data.into_money;
           this.update_created_at = data.data.created_at;
+          this.update_order_type_id = data.data.order_type_id;
+          this.update_order_status_id = data.data.order_status_id;
+          this.update_name = data.data.name;
         }
       }
-      
-      
-    },)
-    
+
+    })
+
     this.formGroup = this.fb.group({
       bill_id: [this.update_bill_id],
-      employee_id: [this.update_employee_id ],
-      customer_id:[this.update_customer_id ],
+      employee_id: [this.update_employee_id],
+      // customer_id: [this.update_customer_id],
+      name : [this.update_name],
       created_at: [this.update_created_at],
-      total_money:[this.update_total_money ],
-      into_money:[this.update_into_money ],
+      order_type_id:[this.update_order_type_id],
+      order_status_id:[this.update_order_status_id],
+      into_money: [this.update_into_money],
+      total_money: [this.update_total_money],
     });
     this.fetcharraylist_bill_detail();
+    
+  }
+
+  fetcharraylist_employee(){
+    this.arraylist_employee=[];
+    this.isLoading =  true;
+    this.employeeService.getAll().subscribe(data => {
+      this.arraylist_employee = data.data;
+      this.arraylist_employee_filter = this.arraylist_employee.filter(employee => employee.value==="NV" || employee.value==="AD");
+    },
+    err => {
+        this.isLoading = false;
+      })
+  }
+
+  fetcharraylist_customer(){
+    this.arraylist_customer=[];
+    this.isLoading =  true;
+    this.employeeService.getAll().subscribe(data => {
+      this.arraylist_customer = data.data;
+      this.arraylist_customer_filter = this.arraylist_customer.filter(employee => employee.value==="KH");
+    },
+    err => {
+        this.isLoading = false;
+      })
   }
 
   save() {
@@ -111,77 +158,71 @@ export class ViewOrderComponent implements OnInit {
       return;
     }
     bill = {
-      employee_id: this.formGroup.get('employee_id')?.value,
-      customer_id: this.formGroup.get('customer_id')?.value,
-     
+      employee_id:this.formGroup.get('employee_id')?.value,
+      order_status_id: this.formGroup.get('order_status_id')?.value,
+      order_type_id: this.formGroup.get('order_type_id')?.value,
     };
 
-    this.billService.create(bill).subscribe(res => {
-      this.toastr.success(res.success);    
+    this.billService.update(this.update_bill_id, bill).subscribe(res => {
+      this.toastr.success("Cập nhật đơn hàng thành công");
       this.isCheckhdn = false;
       this.isCheckhdn1 = true;
-      
-    },
-    err => {
-      this.toastr.error(err.error.error);
-    }
-    );
-  } 
 
-  fetcharraylist_bill(){
-    this.arraylist_bill=[];
-    this.isLoading =  true;
+    },
+      err => {
+        this.toastr.error(err.error.error);
+      }
+    );
+  }
+
+  fetcharraylist_bill() {
+    this.arraylist_bill = [];
+    this.isLoading = true;
     this.billService.getAll().subscribe(data => {
       this.arraylist_bill = data.data;
+      //this.update_bill_id = this.arraylist_bill.length+1;
     },
-    err => {
+      err => {
         this.isLoading = false;
       })
   }
 
-  fetcharraylist_employee(){
-    this.arraylist_employee=[];
-    this.isLoading =  true;
-    this.employeeService.getAll().subscribe(data => {
-      this.arraylist_employee = data.data;
-      this.arraylist_employee_filter = this.arraylist_employee.filter(function (employee) {
-        return employee.value === "NV";
-      });
+  fetcharraylistOrderStatus() {
+    this.arraylist_order_status = [];
+    this.isLoading = true;
+    this.orderStatusService.getAll().subscribe(data => {
+      this.arraylist_order_status = data.data;
     },
-    err => {
+      err => {
         this.isLoading = false;
       })
   }
 
-  fetcharraylist_customer(){
-    this.arraylist_customer=[];
-    this.isLoading =  true;
-    this.customerService.getAll().subscribe(data => {
-      this.arraylist_customer = data.data;
-      this.arraylist_customer_filter = this.arraylist_customer.filter(function (customer) {
-        return customer.value === "KH";
-      });
+  fetcharraylistOrderType() {
+    this.arraylist_order_type = [];
+    this.isLoading = true;
+    this.orderTypeService.getAll().subscribe(data => {
+      this.arraylist_order_type = data.data;
     },
-    err => {
+      err => {
         this.isLoading = false;
       })
   }
-  
 
-  fetcharraylist_bill_detail() { 
-    this.listFilterResult=[];
-    this.listFilterResult1 =[];
+
+  fetcharraylist_bill_detail() {
+    this.listFilterResult = [];
+    this.listFilterResult1 = [];
     this.isLoading = true;
     this.billDetailService.getAll().subscribe(data => {
       this.arraylist_bill_detail = data.data;
-      for(let item of this.arraylist_bill_detail){
-        if(item.bill_id==this.update_bill_id){
-            this.listFilterResult.push(item);
-            this.listFilterResult1.push(item);
+      for (let item of this.arraylist_bill_detail) {
+        if (item.bill_id == this.update_bill_id) {
+          this.listFilterResult.push(item);
+          this.listFilterResult1.push(item);
         }
       }
       this.listFilterResult.forEach((x) => (x.checked = false));
-      
       this.filterResultTemplist = this.listFilterResult;
     },
       err => {
@@ -197,9 +238,9 @@ export class ViewOrderComponent implements OnInit {
       this.listFilterResult = this.filterResultTemplist;
       var keyword = this.searchedKeyword.toLowerCase();
       this.listFilterResult.forEach(item => {
-        var dc = item.price.toString();
+        var dc = item.amount.toString();
         var hot_line = item.product_name.toLowerCase();
-        var ten = item.amount.toString();
+        var ten = item.price.toString();
         if (hot_line.includes(keyword) || ten.includes(keyword) || dc.includes(keyword)) {
           filterResult.push(item);
         }
@@ -208,7 +249,7 @@ export class ViewOrderComponent implements OnInit {
     }
   }
 
-  
+
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -254,32 +295,32 @@ export class ViewOrderComponent implements OnInit {
     }
   }
 
-  getNavigation(link, id){
-    if(id === ''){
-        this.router.navigate([link]);
+  getNavigation(link, id) {
+    if (id === '') {
+      this.router.navigate([link]);
     } else {
-        this.router.navigate([link + '/' + id]);
+      this.router.navigate([link + '/' + id]);
     }
   }
 
-  xoabillDetail(item: any = null) {
-    let selectedbillDetail= [];
+  delete_bill_detail(item: any = null) {
+    let selectedthongtincd = [];
     if (item !== null && item !== undefined && item !== '') {
-      selectedbillDetail.push(item);
-      this.delete(selectedbillDetail);
+      selectedthongtincd.push(item);
+      this.delete(selectedthongtincd);
       return;
     }
-    selectedbillDetail = this.listFilterResult
-      .filter((billDetail) => billDetail.checked)
-      .map((p) => p.product_id);
-    if (selectedbillDetail.length === 0) {
+    selectedthongtincd = this.listFilterResult
+      .filter((thongtincd) => thongtincd.checked)
+      .map((p) => p.bill_id);
+    if (selectedthongtincd.length === 0) {
       this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
       return;
     }
-    this.delete(selectedbillDetail);
+    this.delete(selectedthongtincd);
   }
 
-  initModal(model: any,type = null): void {
+  initModal(model: any, type = null): void {
     this.view.view(model, type);
   }
 
@@ -325,7 +366,6 @@ export class ViewOrderComponent implements OnInit {
     }
     this.searchedKeyword = null;
     this.filterResultTemplist = this.listFilterResult;
-
     this.billDetailService.delete(modelDelete).subscribe(
       (result) => {
         // status: 200

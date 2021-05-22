@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductImageComponent } from '../product-image/product-image.component';
-
-// import { DropdownsComponent } from './dropdowns.component';
-// import { BrandButtonsComponent } from './brand-buttons.component';
 import { ProductComponent } from './product.component';
 
 const routes: Routes = [
@@ -39,4 +36,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ProductRoutingModule {}
+export class ProductRoutingModule { }

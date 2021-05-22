@@ -18,6 +18,8 @@ use App\Http\Controllers\ReportController;
 Route::post('register', [AccountController::class, 'register']);
 Route::post('login', [AccountController::class, 'login']);
 
+
+
 Route::post('/sendemail', [\App\Http\Controllers\MailController::class, 'sendMail']);
 Route::post('/sendcode', [\App\Http\Controllers\MailController::class, 'sendCode']);
 
@@ -67,6 +69,10 @@ Route::middleware('auth:api')->group(function () {
 
     // tài khoản
     Route::get('/accounts', [AccountController::class, 'index']);
+
+    Route::get('/getaccountbycustomer', [\App\Http\Controllers\AccountController::class, 'getAccountByCustomer']);
+
+    Route::get('/getaccountbyemployee', [\App\Http\Controllers\AccountController::class, 'getAccountByEmployee']);
 
     Route::get('/accounts/{id}', [AccountController::class, 'show']);
 

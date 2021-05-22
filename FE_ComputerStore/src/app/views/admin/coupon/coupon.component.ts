@@ -29,29 +29,21 @@ export class CouponComponent implements OnInit {
     private couponService: CouponService,
     private toastr: ToastrService,
     private router: Router,
-    public loaderService:LoaderService 
-    ) {
-    }
+    public loaderService: LoaderService
+  ) { }
 
-  
+
   ngOnInit(): void {
-    this.fetcharraylist_coupon();
+    this.fetchListCoupon();
   }
 
-
-  
-
-  fetcharraylist_coupon() {
-    this.isLoading = true;
+  fetchListCoupon() {
     this.couponService.getAll().subscribe(data => {
       this.arraylist_coupon = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
@@ -73,7 +65,6 @@ export class CouponComponent implements OnInit {
     }
   }
 
-  
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -119,8 +110,8 @@ export class CouponComponent implements OnInit {
     }
   }
 
-  deletecoupon(item: any = null) {
-    let selectedcoupon= [];
+  deleteCoupon(item: any = null) {
+    let selectedcoupon = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedcoupon.push(item);
       this.delete(selectedcoupon);
@@ -140,35 +131,11 @@ export class CouponComponent implements OnInit {
   //   this.view.view(model, type);
   // }
 
-  changeStatus(event: any) {
-    this.isLoading = true;
-    let list = [];
-    // tslint:disable-next-line: radix
-    switch (parseInt(event)) {
-      case -1:
-        this.listFilterResult = [...this.arraylist_coupon];
-        this.isLoading = false;
-        break;
-      case 1:
-        list = [...this.arraylist_coupon];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
-        this.isLoading = false;
-        break;
-      case 0:
-        list = [...this.arraylist_coupon];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
-        this.isLoading = false;
-        break;
-      default:
-        break;
-    }
-  }
-
-  getNavigation(link, id){
-    if(id === ''){
-        this.router.navigate([link]);
+  getNavigation(link, id) {
+    if (id === '') {
+      this.router.navigate([link]);
     } else {
-        this.router.navigate([link + '/' + id]);
+      this.router.navigate([link + '/' + id]);
     }
   }
 
@@ -190,11 +157,9 @@ export class CouponComponent implements OnInit {
     }
     this.searchedKeyword = null;
     this.filterResultTemplist = this.listFilterResult;
-
     this.couponService.delete(modelDelete).subscribe(
       (result) => {
-        // status: 200
-        this.ngOnInit();
+        this.fetchListCoupon();
         this.changeModel();
         if (result.error) {
           this.toastr.error(result.error);
@@ -205,5 +170,4 @@ export class CouponComponent implements OnInit {
       },
     );
   }
-
 }

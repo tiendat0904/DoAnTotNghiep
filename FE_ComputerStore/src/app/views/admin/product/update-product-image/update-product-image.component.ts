@@ -34,43 +34,37 @@ export class UpdateProductImageComponent implements OnInit {
   image: string = null;
   isEdit = false;
   avatarUrl;
-  isEditimage=false;
+  isEditimage = false;
   isInfo = false;
   submitted = false;
-  isLoading=false;
+  isLoading = false;
   title = '';
   type: any;
   arrCheck = [];
   uploads: any[];
-  update_ma_tai_khoan:any;
+  update_ma_tai_khoan: any;
   model: productImageModel;
   urlPictureDefault = avatarDefault;
- 
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
     private productService: ProductService,
     private productImageService: ProductImageService,
-    private store: AngularFireStorage) {
-    }
+    private store: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.submitted = false;
-    this.fetcharraylist_product();
-    
+    this.fetchListProductImage();
   }
 
-
-
-  fetcharraylist_product(){
-    this.subscription=this.productService.getAll().subscribe(data => {
+  fetchListProductImage() {
+    this.subscription = this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
+
   updateFormType(type: any) {
     switch (type) {
       case 'add':
@@ -78,21 +72,18 @@ export class UpdateProductImageComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = true;
         this.title = `Thêm mới thông tin hình ảnh sản phẩm`;
-        // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
         this.title = `Xem chi tiết thông tin hình ảnh sản phẩm`;
-        // this.update_ma_tai_khoan = this.model.product_id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin hình ảnh sản phẩm`;
-        // this.update_ma_tai_khoan = this.model.product_id;
         break;
       default:
         this.isInfo = false;
@@ -109,29 +100,27 @@ export class UpdateProductImageComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
-   
+
     if (model.product_id === null || model.product_id === undefined) {
       this.formGroup = this.fb.group({
-        product_id: [ null, [Validators.required]],
-        image:[ null, [Validators.required]],
-        
+        product_id: [null, [Validators.required]],
+        image: [null, [Validators.required]],
       });
       this.urlPictureDefault = avatarDefault;
     } else {
       this.formGroup = this.fb.group({
-        product_id: [{value: this.model.product_id, disabled: this.isInfo}, [Validators.required]],
-        image:'',
-      }); 
+        product_id: [{ value: this.model.product_id, disabled: this.isInfo }, [Validators.required]],
+        image: '',
+      });
       console.log(this.model.image);
-      if(this.model.image.length === 0){
+      if (this.model.image.length === 0) {
         this.urlPictureDefault = avatarDefault;
-      }else{
+      } else {
         this.urlPictureDefault = this.model.image
-      }    
+      }
     }
-    
-  }
 
+  }
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -172,7 +161,6 @@ export class UpdateProductImageComponent implements OnInit {
         product_id: this.model.product_id,
         image: this.uploads,
       };
-     
     } else {
       product = {
         product_id: this.formGroup.get('product_id')?.value,
@@ -180,26 +168,25 @@ export class UpdateProductImageComponent implements OnInit {
       };
     }
     if (this.isAdd) {
-      
       this.productImageService.create(product).subscribe(res => {
         this.closeModalReloadData();
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
     if (this.isEdit) {
-      this.productImageService.update( product).subscribe(res => {
+      this.productImageService.update(product).subscribe(res => {
         this.closeModalReloadData();
         // this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
   }
@@ -211,33 +198,29 @@ export class UpdateProductImageComponent implements OnInit {
 
   uploadImage(event) {
     this.uploads = [];
-    // tslint:disable-next-line:prefer-const
     const filelist = event.target.files;
-    // tslint:disable-next-line:prefer-const
-    for(const file of filelist){
+    for (const file of filelist) {
       let path = `computerstore/${file.name}`;
       if (file.type.split('/')[0] !== 'image') {
         return alert('Erreur, ce fichier n\'est pas une image');
       } else {
-        // tslint:disable-next-line:prefer-const
         let ref = this.store.ref(path);
-        // tslint:disable-next-line:prefer-const
         let task = this.store.upload(path, file);
         this.uploadPercent = task.percentageChanges();
         task.snapshotChanges().pipe(
           finalize(() => {
             this.downloadURL = ref.getDownloadURL();
             this.downloadURL.subscribe(url => {
-            this.uploads.push(url);
-            this.urlPictureDefault = this.uploads[0];
+              this.uploads.push(url);
+              this.urlPictureDefault = this.uploads[0];
             });
           }
           )
         ).subscribe();
+      }
+
     }
-    
-    }
-    
+
   }
 
 }

@@ -1,5 +1,5 @@
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-  <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+  <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
 </div>
 <div class="animated fadeIn">
   <div class="row" style="margin-top: 10px; width: 1265px;">
@@ -17,7 +17,6 @@
         </div>
       </div>
     </div>
-    <!--/.col-->
     <div class="col-sm-6 col-lg-3 header-main">
       <div class="header">
         <div class="header-icon" style="background-color: rgb(255 150 0);">
@@ -32,7 +31,6 @@
         </div>
       </div>
     </div>
-    <!--/.col-->
     <div class="col-sm-6 col-lg-3 header-main">
       <div class="header">
         <div class="header-icon" style="background-color: #337ab7;">
@@ -47,7 +45,6 @@
         </div>
       </div>
     </div>
-    <!--/.col-->
     <div class="col-sm-6 col-lg-3 header-main">
       <div class="header">
         <div class="header-icon" style="background-color: #d9534f;">
@@ -62,59 +59,47 @@
         </div>
       </div>
     </div>
-    <!--/.col-->
   </div>
   <div style="background-color: white;margin-top: 10px;">
     <h2 style="margin-left: 30px;padding-top: 10px;">Đơn hàng trong vòng 15 ngày gần nhất</h2>
-     <div class="chart-wrapper">
-      <canvas baseChart 
-      style="margin-left: 10px;"
-      height="350"
-      width="1100"
-      [datasets]="barChartData"
-      [labels]="barChartLabels"
-      [colors]="chartColors"
-      [options]="barChartOptions"
-      [plugins]="barChartPlugins"
-      [legend]="barChartLegend"
-      [chartType]="barChartType">
+    <div class="chart-wrapper">
+      <canvas baseChart class="canvas" [datasets]="barChartData" [labels]="barChartLabels" [colors]="chartColors"
+        [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
       </canvas>
-     </div>
+    </div>
   </div>
   <div style="background-color: white;margin-top: 10px;">
     <h2 style="margin-left: 30px;padding-top: 10px;">Khách hàng gần đây</h2>
     <div class="row">
       <div class="col-12">
-         <table class="table table-striped table-hover table-bordered" style="width: 90%;margin-left: 35px;">
-            <thead>
-               <tr>
-                  <th>STT</th>
-                  <th>Email</th>
-                  <th>Họ Tên</th>
-                  <th>Số điện thoại</th>
-                  <th>Địa chỉ</th>
-                  <th>Tạo lúc</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-               </tr>
-               <tr
-                  *ngFor="
+        <table class="table table-striped table-hover table-bordered" style="width: 95%;margin-left: 35px;">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Email</th>
+              <th>Họ Tên</th>
+              <th>Số điện thoại</th>
+              <th>Địa chỉ</th>
+              <th style="width: 155px;">Tạo lúc</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            </tr>
+            <tr *ngFor="
                   let e of array_customer  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
                   let i = index
-                  "
-                  >
-                  <td>{{ i + (page-1)*pageSize + 1 }}</td>
-                  <td [innerHTML]="e.email"></td>
-                  <td [innerHTML]="e.full_name"></td>   
-                  <td [innerHTML]="e.phone_number"></td>   
-                  <td [innerHTML]="e.address"></td>   
-                  <td [innerHTML]="e.created_at"></td>   
-               </tr>
-            </tbody>
-         </table>
+                  ">
+              <td>{{ i + (page-1)*pageSize + 1 }}</td>
+              <td [innerHTML]="e.email"></td>
+              <td [innerHTML]="e.full_name"></td>
+              <td [innerHTML]="e.phone_number"></td>
+              <td [innerHTML]="e.address"></td>
+              <td [innerHTML]="e.created_at"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-   </div>
+    </div>
   </div>
 </div>

@@ -15,43 +15,35 @@ export class NewsComponent implements OnInit {
 
   @ViewChild(UpdateNewsComponent) view!: UpdateNewsComponent;
   arraylist_news: Array<newsModel> = [];
+  filterResultTemplist: newsModel[] = [];
+  listFilterResult: newsModel[] = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  isLoading = false;
-  isSelected = true;
   searchedKeyword: string;
-  filterResultTemplist: newsModel[] = [];
-  listFilterResult: newsModel[] = [];
   page = 1;
   pageSize = 5;
+
   constructor(
     private modalService: NgbModal,
-     private newsService: NewsService,
+    private newsService: NewsService,
     private toastr: ToastrService,
-    public loaderService:LoaderService 
-    ) {
-    }
+    public loaderService: LoaderService
+  ) { }
 
-  
   ngOnInit(): void {
-    this.fetcharraylist_news();
+    this.fetchListNews();
   }
 
-
-  
-
-  fetcharraylist_news(){
-    this.isLoading =  true;
+  fetchListNews() {
     this.newsService.getAll().subscribe(data => {
       this.arraylist_news = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
-      this.filterResultTemplist = this.listFilterResult;    },
-    err => {
-        this.isLoading = false;
-      })
+      this.filterResultTemplist = this.listFilterResult;
+    })
   }
+
   public filterByKeyword() {
     var filterResult = [];
     if (this.searchedKeyword.length == 0) {
@@ -62,14 +54,14 @@ export class NewsComponent implements OnInit {
       this.listFilterResult.forEach(item => {
         var dc = item.title.toLowerCase();
         var hot_line = item.url.toLowerCase();
-        if (dc.includes(keyword) || hot_line.includes(keyword) ) {
+        if (dc.includes(keyword) || hot_line.includes(keyword)) {
           filterResult.push(item);
         }
       });
       this.listFilterResult = filterResult;
     }
   }
-  
+
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -109,14 +101,13 @@ export class NewsComponent implements OnInit {
       .map((p) => p.news_id);
     if (selectedHometowns.length > 0) {
       this.isDelete = false;
-
     } else {
       this.isDelete = true;
     }
   }
 
-  delete_news(item: any = null) {
-    let selectednews= [];
+  deleteNews(item: any = null) {
+    let selectednews = [];
     if (item !== null && item !== undefined && item !== '') {
       selectednews.push(item);
       this.delete(selectednews);
@@ -132,32 +123,8 @@ export class NewsComponent implements OnInit {
     this.delete(selectednews);
   }
 
-  initModal(model: any,type = null): void {
+  initModal(model: any, type = null): void {
     this.view.view(model, type);
-  }
-
-  changeStatus(event: any) {
-    this.isLoading = true;
-    let list = [];
-    // tslint:disable-next-line: radix
-    switch (parseInt(event)) {
-      case -1:
-        this.listFilterResult = [...this.arraylist_news];
-        this.isLoading = false;
-        break;
-      case 1:
-        list = [...this.arraylist_news];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
-        this.isLoading = false;
-        break;
-      case 0:
-        list = [...this.arraylist_news];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
-        this.isLoading = false;
-        break;
-      default:
-        break;
-    }
   }
 
   public delete(listid: any) {
@@ -174,8 +141,7 @@ export class NewsComponent implements OnInit {
 
     this.newsService.delete(modelDelete).subscribe(
       (result) => {
-        // status: 200
-        this.ngOnInit();
+        this.fetchListNews();
         this.changeModel();
         if (result.error) {
           this.toastr.error(result.error);

@@ -19,6 +19,7 @@ export const routes: Routes = [
       title: 'Order'
     }
   },
+  
   {
     path: 'print-order/:bill_id',
     component: PrintOrderComponent,
@@ -30,6 +31,13 @@ export const routes: Routes = [
     path: 'update/:id',
     component: UpdateOrderComponent,
     data: {
+      title: 'Update Order'
+    }
+  },
+  {
+    path: 'view/:id',
+    component: ViewOrderComponent,
+    data: {
       title: 'View Order'
     }
   },
@@ -40,7 +48,6 @@ export const routes: Routes = [
   //     title: 'View Order'
   //   }
   // },
-  
 ];
 
 @NgModule({

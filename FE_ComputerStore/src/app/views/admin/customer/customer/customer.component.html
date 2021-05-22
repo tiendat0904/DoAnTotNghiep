@@ -1,6 +1,6 @@
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
- </div>
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
+</div>
 <div class="container">
    <div class="table-responsive">
       <div class="table-wrapper">
@@ -33,7 +33,7 @@
                      Bạn có chắc chắn muốn xóa thông tin những nhãn hiệu này ?
                   </div>
                   <div class="modal-footer">
-                     <button class="btn btn-danger" style="width: 80px" (click)="delete_customer()">
+                     <button class="btn btn-danger" style="width: 80px" (click)="deleteCustomer()">
                         Có
                      </button>
                      <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
@@ -92,7 +92,7 @@
                               </div>
                               <div class="modal-footer">
                                  <button class="btn btn-danger" style="width: 80px"
-                                    (click)="delete_customer(e.customer_id)">
+                                    (click)="deleteCustomer(e.customer_id)">
                                     Có
                                  </button>
                                  <button class="btn btn-outline-dark" style="width: 80px"

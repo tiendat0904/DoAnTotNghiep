@@ -32,25 +32,22 @@ export class UpdateNewsComponent implements OnInit {
   isEdit = false;
   isInfo = false;
   submitted = false;
-  isLoading=false;
   title = '';
   type: any;
   model: newsModel;
   arrCheck = [];
-  update_id:any;
+  update_id: any;
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
     private newsService: NewsService,
     private store: AngularFireStorage,
-    private datePipe : DatePipe) {
-    }
+    private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.submitted = false;
-
-    
   }
 
   updateFormType(type: any) {
@@ -60,21 +57,18 @@ export class UpdateNewsComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = true;
         this.title = `Thêm mới thông tin tin tức`;
-        // this.update_id= this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
         this.title = `Xem chi tiết thông tin tin tức`;
-        // this.update_id = this.model.id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin tin tức`;
-        // this.update_id = this.model.id;
         break;
       default:
         this.isInfo = false;
@@ -91,37 +85,32 @@ export class UpdateNewsComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
-   
     if (model.news_id === null || model.news_id === undefined) {
       this.formGroup = this.fb.group({
-        title: [ null, [Validators.required]],
-        news_content: [ null, [Validators.required]],
-        highlight: [ null],
-        thumbnail: [ null,[Validators.required] ],
-        url : [ null,[Validators.required,Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)] ],
-        created_at: [ this.datePipe.transform(Date.now(),"dd/MM/yyyy")],
-        
+        title: [null, [Validators.required]],
+        news_content: [null, [Validators.required]],
+        highlight: [null],
+        thumbnail: [null, [Validators.required]],
+        url: [null, [Validators.required, Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]],
+        created_at: [this.datePipe.transform(Date.now(), "dd/MM/yyyy")],
       });
       this.urlPictureDefault = avatarDefault;
     } else {
       this.formGroup = this.fb.group({
-        title: [{value: this.model.title, disabled: this.isInfo}, [Validators.required]],
-        news_content: [{value: this.model.news_content, disabled: this.isInfo}, [Validators.required]],
-        highlight: [{value: this.model.highlight, disabled: this.isInfo}],
+        title: [{ value: this.model.title, disabled: this.isInfo }, [Validators.required]],
+        news_content: [{ value: this.model.news_content, disabled: this.isInfo }, [Validators.required]],
+        highlight: [{ value: this.model.highlight, disabled: this.isInfo }],
         thumbnail: '',
-        url : [{value: this.model.url, disabled: this.isInfo},[Validators.required,Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]],
-        created_at: [{value: this.model.created_at, disabled: this.isInfo}],
+        url: [{ value: this.model.url, disabled: this.isInfo }, [Validators.required, Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]],
+        created_at: [{ value: this.model.created_at, disabled: this.isInfo }],
       });
-      if(this.model.thumbnail===""){
+      if (this.model.thumbnail === "") {
         this.urlPictureDefault = avatarDefault;
-      }else{
+      } else {
         this.urlPictureDefault = this.model.thumbnail;
       }
-
-
     }
   }
-
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -162,41 +151,30 @@ export class UpdateNewsComponent implements OnInit {
         news_id: this.model.news_id,
         title: this.formGroup.get('title')?.value,
         news_content: this.formGroup.get('news_content')?.value,
-        highlight:this.formGroup.get('highlight')?.value,
+        highlight: this.formGroup.get('highlight')?.value,
         thumbnail: this.urlPictureDefault,
-        url : this.formGroup.get('url')?.value,
+        url: this.formGroup.get('url')?.value,
         created_at: this.formGroup.get('created_at')?.value,
       };
-      
     } else {
       news = {
         title: this.formGroup.get('title')?.value,
         news_content: this.formGroup.get('news_content')?.value,
-        highlight:this.formGroup.get('highlight')?.value,
+        highlight: this.formGroup.get('highlight')?.value,
         thumbnail: this.urlPictureDefault,
-        url : this.formGroup.get('url')?.value,
+        url: this.formGroup.get('url')?.value,
         created_at: this.formGroup.get('created_at')?.value,
       };
     }
     if (this.isAdd) {
-      for (let i = 0; i < this.arrCheck.length; i++) {
-        if (this.arrCheck[i].news_id === news.news_id) {
-          check = true;
-          break;
-        }
-      }
-      if (check === true) {
-        this.toastr.error('id đã tồn tại');
-        return;
-      }
       this.newsService.create(news).subscribe(res => {
         this.closeModalReloadData();
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
     if (this.isEdit) {
@@ -205,9 +183,9 @@ export class UpdateNewsComponent implements OnInit {
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
   }
@@ -218,23 +196,19 @@ export class UpdateNewsComponent implements OnInit {
   }
 
   uploadImage(event) {
-    // tslint:disable-next-line:prefer-const
     let file = event.target.files[0];
-    // tslint:disable-next-line:prefer-const
     let path = `thuonghieu/${file.name}`;
     if (file.type.split('/')[0] !== 'image') {
       return alert('Erreur, ce fichier n\'est pas une image');
     } else {
-      // tslint:disable-next-line:prefer-const
       let ref = this.store.ref(path);
-      // tslint:disable-next-line:prefer-const
       let task = this.store.upload(path, file);
       this.uploadPercent = task.percentageChanges();
       task.snapshotChanges().pipe(
         finalize(() => {
           this.downloadURL = ref.getDownloadURL();
           this.downloadURL.subscribe(url => {
-          this.urlPictureDefault=url;
+            this.urlPictureDefault = url;
           });
         }
         )

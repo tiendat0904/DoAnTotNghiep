@@ -14,44 +14,37 @@ import { UpdateTrademarkComponent } from '../update-trademark/update-trademark/u
 export class TrademarkComponent implements OnInit {
 
   @ViewChild(UpdateTrademarkComponent) view!: UpdateTrademarkComponent;
-  list_supplier: Array<trademarkModel> = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  isLoading = false;
-  isSelected = true;
+  // isLoading = false;
+  // isSelected = true;
   searchedKeyword: string;
+  list_supplier: Array<trademarkModel> = [];
   listFilterResult: trademarkModel[] = [];
+  filterResultTemplist: trademarkModel[] = [];
   page = 1;
   pageSize = 5;
-  filterResultTemplist: trademarkModel[] = [];
+
   constructor(
     private modalService: NgbModal,
     private trademarkService: TrademarkService,
     private toastr: ToastrService,
-    public loaderService:LoaderService 
-    ) {
-    }
+    public loaderService: LoaderService
+  ) { }
 
-  
   ngOnInit(): void {
-    this.fetchlist_supplier();
+    this.fetchlistSupplier();
   }
 
-
-  
-
-  fetchlist_supplier() {
-    this.isLoading = true;
+  fetchlistSupplier() {
+    // this.isLoading = true;
     this.trademarkService.getAll().subscribe(data => {
       this.list_supplier = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
@@ -71,7 +64,6 @@ export class TrademarkComponent implements OnInit {
     }
   }
 
-  
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -117,8 +109,8 @@ export class TrademarkComponent implements OnInit {
     }
   }
 
-  delete_trademark(item: any = null) {
-    let selectedsupplier= [];
+  deleteTrademark(item: any = null) {
+    let selectedsupplier = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedsupplier.push(item);
       this.delete(selectedsupplier);
@@ -134,32 +126,8 @@ export class TrademarkComponent implements OnInit {
     this.delete(selectedsupplier);
   }
 
-  initModal(model: any,type = null): void {
+  initModal(model: any, type = null): void {
     this.view.view(model, type);
-  }
-
-  changeStatus(event: any) {
-    this.isLoading = true;
-    let list = [];
-    // tslint:disable-next-line: radix
-    switch (parseInt(event)) {
-      case -1:
-        this.listFilterResult = [...this.list_supplier];
-        this.isLoading = false;
-        break;
-      case 1:
-        list = [...this.list_supplier];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
-        this.isLoading = false;
-        break;
-      case 0:
-        list = [...this.list_supplier];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
-        this.isLoading = false;
-        break;
-      default:
-        break;
-    }
   }
 
   public delete(listid: any) {
@@ -173,18 +141,9 @@ export class TrademarkComponent implements OnInit {
     }
     this.searchedKeyword = null;
     this.filterResultTemplist = this.listFilterResult;
-    for (var i = 0; i < this.listFilterResult.length; i++) {
-      if (this.listFilterResult[i].checked == true) {
-        this.listFilterResult[i].checked = false;
-      }
-    }
-    this.searchedKeyword = null;
-    this.filterResultTemplist = this.listFilterResult;
-
     this.trademarkService.delete(modelDelete).subscribe(
       (result) => {
-        // status: 200
-        this.ngOnInit();
+        this.fetchlistSupplier();
         this.changeModel();
         if (result.error) {
           this.toastr.error(result.error);

@@ -79,10 +79,6 @@
                               class="form-control" placeholder="Search&hellip;">
                         </div>
                      </div>
-
-
-
-
                   </div>
                </div>
                <div class="row">
@@ -97,7 +93,6 @@
                            </tr>
                         </thead>
                         <tbody>
-
                            <tr *ngFor="
                                let e of listFilterResult  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
                                let i = index
@@ -107,7 +102,6 @@
                               <td [innerHTML]="e.product_name"></td>
                               <td [innerHTML]="e.amount"></td>
                               <td [innerHTML]="e.price | currency:'VND'"></td>
-
                            </tr>
                         </tbody>
                      </table>

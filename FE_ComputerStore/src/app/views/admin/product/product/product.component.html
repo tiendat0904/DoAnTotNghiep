@@ -32,7 +32,7 @@
                      Bạn có chắc chắn muốn xóa những thông tin này ?
                   </div>
                   <div class="modal-footer">
-                     <button class="btn btn-danger" style="width: 80px" (click)="delete_product()">
+                     <button class="btn btn-danger" style="width: 80px" (click)="deleteProduct()">
                         Có
                      </button>
                      <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
@@ -76,7 +76,7 @@
                         <td [innerHTML]="e.product_name "></td>
                         <td [innerHTML]="e.trademark_name "></td>
                         <td [innerHTML]="e.product_type_name "></td>
-                        <td> <img [src]="e.image[0]" alt="" style="width:40px;height:40px"> </td>
+                        <td> <img [src]="e.image[0]" alt="" style="max-width:50px;max-height:50px;object-fit: cover;"> </td>
                         <td>
                            <ng-template #mymodal let-modal>
                               <div class="modal-header">
@@ -93,7 +93,7 @@
                               </div>
                               <div class="modal-footer">
                                  <button class="btn btn-danger" style="width: 80px"
-                                    (click)="delete_product(e.product_id)">
+                                    (click)="deleteProduct(e.product_id)">
                                     Có
                                  </button>
                                  <button class="btn btn-outline-dark" style="width: 80px"

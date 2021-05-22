@@ -18,6 +18,11 @@
     background: #f5f5f5;
     font-family: 'Roboto', sans-serif;
 }
+
+::ng-deep .modal-content{
+    margin-bottom: 0 !important;
+}
+
 .table-wrapper {
     min-width: 1000px;
     background: #fff;
@@ -113,11 +118,11 @@ table.table td .edit{
     }
 }
 
-.modal-content{
+// .modal-content{
     
-    margin-bottom: 370px;
+//     margin-bottom: 370px;
 
-}
+// }
 
 .justify-content-center {
     display: flex !important;

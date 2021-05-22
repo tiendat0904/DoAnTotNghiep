@@ -20,7 +20,6 @@ export class UpdateSupplierComponent implements OnInit {
   @ViewChild('content') public childModal!: ModalDirective;
   @Input() arraylist_supplier: Array<supplierModel>;
   @Output() eventEmit: EventEmitter<any> = new EventEmitter<any>();
-  checkButton = false;
   closeResult: String;
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
@@ -28,43 +27,33 @@ export class UpdateSupplierComponent implements OnInit {
   formGroup: FormGroup;
   subscription: Subscription;
   isAdd = false;
-  image: string = null;
   isEdit = false;
-  avatarUrl;
-  isEditimage=false;
+  isEditimage = false;
   isInfo = false;
   submitted = false;
-  isLoading=false;
   title = '';
   type: any;
   arrCheck = [];
-  update_ma_tai_khoan:any;
   model: supplierModel;
-  urlPictureDefault = avatarDefault;
- 
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private supplierService: SupplierService,
-    private store: AngularFireStorage) {
-    }
+    private supplierService: SupplierService
+    ) {}
 
   ngOnInit(): void {
     this.submitted = false;
-    this.fetcharraylist_supplier();
-    
+    this.fetchListSupplier();
   }
 
-  fetcharraylist_supplier(){
-    this.subscription=this.supplierService.getAll().subscribe(data => {
+  fetchListSupplier() {
+    this.subscription = this.supplierService.getAll().subscribe(data => {
       this.arraylist_supplier = data.data;
-      // this.avatarUrl = data.data.hinh_anh;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
+
   updateFormType(type: any) {
     switch (type) {
       case 'add':
@@ -72,21 +61,18 @@ export class UpdateSupplierComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = true;
         this.title = `Thêm mới thông tin nhà cung cấp`;
-        // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
         this.title = `Xem chi tiết thông tin nhà cung cấp`;
-        // this.update_ma_tai_khoan = this.model.supplier_id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin nhà cung cấp`;
-        // this.update_ma_tai_khoan = this.model.supplier_id;
         break;
       default:
         this.isInfo = false;
@@ -103,36 +89,23 @@ export class UpdateSupplierComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
-   
     if (model.supplier_id === null || model.supplier_id === undefined) {
       this.formGroup = this.fb.group({
-        ten: [ null, [Validators.required]],
-        dia_chi: [ null, [Validators.required]],
-        hot_line : [ null, [Validators.required]],
-        email: [ null,[Validators.required, Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]],
-        // so_dien_thoai: [ null, [Validators.required]],
-        
+        ten: [null, [Validators.required]],
+        dia_chi: [null, [Validators.required]],
+        hot_line: [null, [Validators.required]],
+        email: [null, [Validators.required, Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]],
       });
-      this.urlPictureDefault = avatarDefault;
     } else {
       this.formGroup = this.fb.group({
-        ten: [{value: this.model.supplier_name, disabled: this.isInfo}, [Validators.required]],
-        dia_chi: [{value: this.model.supplier_address, disabled: this.isInfo}, [Validators.required]],
-        hot_line: [{value: this.model.hotline, disabled: this.isInfo}, [Validators.required]],
-        email: [{value: this.model.email, disabled: this.isInfo},[Validators.required, Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]],
-        // so_dien_thoai: [{value: this.model., disabled: this.isInfo}, [Validators.required]],
-      });
-      // if(this.model.image===""){
-      //   this.urlPictureDefault = avatarDefault;
-      // }
-      // else{
-      //   this.urlPictureDefault=this.model.hinh_anh;
+        ten: [{ value: this.model.supplier_name, disabled: this.isInfo }, [Validators.required]],
+        dia_chi: [{ value: this.model.supplier_address, disabled: this.isInfo }, [Validators.required]],
+        hot_line: [{ value: this.model.hotline, disabled: this.isInfo }, [Validators.required]],
+        email: [{ value: this.model.email, disabled: this.isInfo }, [Validators.required, Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]],
 
-      // }
-      
+      });
     }
   }
-
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -175,10 +148,8 @@ export class UpdateSupplierComponent implements OnInit {
         supplier_address: this.formGroup.get('dia_chi')?.value,
         hotline: this.formGroup.get('hot_line')?.value,
         email: this.formGroup.get('email')?.value,
-        // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
-        // hinh_anh : this.urlPictureDefault,
       };
-     
+
     } else {
       nhacungcap = {
         supplier_id: this.model.supplier_id,
@@ -186,12 +157,9 @@ export class UpdateSupplierComponent implements OnInit {
         supplier_address: this.formGroup.get('dia_chi')?.value,
         hotline: this.formGroup.get('hot_line')?.value,
         email: this.formGroup.get('email')?.value,
-        // so_dien_thoai: this.formGroup.get('so_dien_thoai')?.value,
-        // hinh_anh : this.urlPictureDefault,
       };
     }
     if (this.isAdd) {
-      
       for (let i = 0; i < this.arrCheck.length; i++) {
         if (this.arrCheck[i].supplier_id === nhacungcap.supplier_id) {
           check = true;
@@ -207,20 +175,20 @@ export class UpdateSupplierComponent implements OnInit {
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
     if (this.isEdit) {
       this.supplierService.update(nhacungcap.supplier_id, nhacungcap).subscribe(res => {
+        this.modalReference.dismiss();
         this.closeModalReloadData();
         this.toastr.success(res.success);
-        this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
   }
@@ -229,30 +197,4 @@ export class UpdateSupplierComponent implements OnInit {
     this.submitted = false;
     this.eventEmit.emit('success');
   }
-
-  // uploadImage(event) {
-  //   // tslint:disable-next-line:prefer-const
-  //   let file = event.target.files[0];
-  //   // tslint:disable-next-line:prefer-const
-  //   let path = `${file.name}`;
-  //   if (file.type.split('/')[0] !== 'image') {
-  //     return alert('Erreur, ce fichier n\'est pas une image');
-  //   } else {
-  //     // tslint:disable-next-line:prefer-const
-  //     let ref = this.store.ref(path);
-  //     // tslint:disable-next-line:prefer-const
-  //     let task = this.store.upload(path, file);
-  //     this.uploadPercent = task.percentageChanges();
-  //     task.snapshotChanges().pipe(
-  //       finalize(() => {
-  //         this.downloadURL = ref.getDownloadURL();
-  //         this.downloadURL.subscribe(url => {
-  //         this.urlPictureDefault=url;
-  //         });
-  //       }
-  //       )
-  //     ).subscribe();
-  //   }
-  // }
-
 }

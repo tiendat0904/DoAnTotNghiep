@@ -6,9 +6,6 @@ import { UpdateCouponComponent } from './update-coupon/update-coupon.component';
 import { ViewCouponComponent } from './view-coupon/view-coupon.component';
 
 
-// import { DropdownsComponent } from './dropdowns.component';
-// import { BrandButtonsComponent } from './brand-buttons.component';
-
 export const routes: Routes = [
   {
     path: '',
@@ -43,11 +40,10 @@ export const routes: Routes = [
       title: 'Update Coupon'
     }
   },
-  
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CouponRoutingModule {}
+export class CouponRoutingModule { }

@@ -7,8 +7,6 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
-
-
       <div class="form-group">
         <label>Tên nhãn hiệu</label>
         <input type="text" name="" class="form-control" formControlName="trademark_name" id="trademark_name" />
@@ -18,9 +16,6 @@
           </div>
         </div>
       </div>
-
-
-
       <div class="form-group">
         <label>Hình ảnh</label>
         <div class="profile-img">
@@ -28,29 +23,23 @@
         </div>
         <div [hidden]="isInfo" id="profile-input" class="file btn btn-lg btn-primary">
           Change Photo
-          <input type="file" formControlName = "image" (change)="uploadImage($event)" name="file" />
+          <input type="file" formControlName="image" (change)="uploadImage($event)" name="file" />
         </div>
         <div *ngIf="submitted && formGroup.controls['image'].errors?.required">
-          <div
-            *ngIf="formGroup.controls['image'].errors?.required"
-            style="color: red"
-          >
+          <div *ngIf="formGroup.controls['image'].errors?.required" style="color: red">
             * Hình ảnh nhãn hiệu không được để trống
           </div>
         </div>
-
       </div>
-
       <div class="form-group" align="center">
-        <button [hidden]="checkButton" type="submit" class="btn btn-success"
-          style="width: 100px;height:38px; background:'green';" *ngIf="isEdit || isAdd">
+        <button type="submit" class="btn btn-success" style="width: 100px;height:38px; background:'green';"
+          *ngIf="isEdit || isAdd">
           Lưu
         </button>
         <button type="button" class="btn btn-danger" style="width: 100px" (click)="modal.dismiss('Cross click')">
           Thoát
         </button>
       </div>
-
     </form>
   </div>
 </ng-template>

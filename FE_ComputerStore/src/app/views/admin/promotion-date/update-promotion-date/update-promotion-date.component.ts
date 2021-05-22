@@ -22,9 +22,11 @@ export class UpdatePromotionDateComponent implements OnInit {
   @Input() arraylist_promotion_date: Array<promotionDateModel>;
   @Output() eventEmit: EventEmitter<any> = new EventEmitter<any>();
   list_product: Array<productModel> = [];
+  arraylist_promotion_date_filter: Array<promotionDateModel> = [];
   list_product_filter: Array<productModel> = [];
+  list_product_main: Array<productModel> = [];
   filterResultTemplist: productModel[] = [];
-  checkButton = false;
+  list_product_select: Array<productModel> = [];
   closeResult: String;
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
@@ -34,105 +36,123 @@ export class UpdatePromotionDateComponent implements OnInit {
   isAdd = false;
   image: string = null;
   isEdit = false;
-  avatarUrl;
-  isEditimage=false;
+  isEditimage = false;
   isInfo = false;
   submitted = false;
-  isLoading=false;
   title = '';
   type: any;
   arrCheck = [];
-  update_ma_tai_khoan:any;
+  update_ma_tai_khoan: any;
   model: promotionDateModel;
   urlPictureDefault = avatarDefault;
   searchedKeyword: string;
   page = 1;
   pageSize = 5;
-  checkedProduct:boolean;
- 
+  checkedProduct: boolean;
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private productService:ProductService,
+    private productService: ProductService,
     private promotionDateService: PromotionDateService,
-    private store: AngularFireStorage) {
-    }
+  ) { }
 
   ngOnInit(): void {
     this.submitted = false;
-    this.fetcharraylist_promotion_date();
-    this.fetcharraylistproduct();
+    this.fetchListPromotionDate();
+    this.fetchListProduct();
   }
 
-  fetcharraylistproduct(){
+  fetchListProduct() {
     this.searchedKeyword = null;
-    this.subscription=this.productService.getAll().subscribe(data => {
+    this.subscription = this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.list_product.forEach((x) => (x.checked = false));
       this.checkedProduct = true;
+      this.list_product_main = this.list_product;
       this.filterResultTemplist = this.list_product;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
-  
 
-  fetcharraylist_promotion_date(){
+  fetchListPromotionDate() {
     this.formGroup = new FormGroup({
       date: new FormControl(),
       promotion_level: new FormControl()
     });
-    this.subscription=this.promotionDateService.getAll().subscribe(data => {
+    this.subscription = this.promotionDateService.getAll().subscribe(data => {
       this.arraylist_promotion_date = data.data;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
-    var filterResult = [];
-    if (this.searchedKeyword.length == 0) {
-      this.list_product =  this.filterResultTemplist;
+    if (this.isAdd) {
+      var filterResult = [];
+      if (this.searchedKeyword.length == 0) {
+        this.list_product = this.filterResultTemplist;
+      } else {
+        this.list_product = this.filterResultTemplist;
+        var keyword = this.searchedKeyword.toLowerCase();
+        this.list_product.forEach(item => {
+          var name = item.product_name.toLowerCase();
+          var trademark = item.trademark_name.toLowerCase();
+          var product_type_name = item.product_type_name.toLowerCase();
+          if (name.includes(keyword) || trademark.includes(keyword) || product_type_name.includes(keyword)) {
+            filterResult.push(item);
+          }
+        });
+        this.list_product = filterResult;
+      }
     } else {
-      this.list_product =  this.filterResultTemplist;
-      var keyword = this.searchedKeyword.toLowerCase();
-      this.list_product.forEach(item => {
-        var name = item.product_name.toLowerCase();
-        var trademark = item.trademark_name.toLowerCase();
-        var product_type_name = item.product_type_name.toLowerCase();
-        if (name.includes(keyword) || trademark.includes(keyword) || product_type_name.includes(keyword)) {
-          filterResult.push(item);
-        }
-      });
-      this.list_product = filterResult;
+      var filterResult = [];
+      if (this.searchedKeyword.length == 0) {
+        this.list_product = this.filterResultTemplist;
+        console.log(this.list_product);
+        this.changeModel();
+      } else {
+        this.list_product = this.filterResultTemplist;
+        var keyword = this.searchedKeyword.toLowerCase();
+        this.list_product.forEach(item => {
+          var name = item.product_name.toLowerCase();
+          var trademark = item.trademark_name.toLowerCase();
+          var product_type_name = item.product_type_name.toLowerCase();
+          if (name.includes(keyword) || trademark.includes(keyword) || product_type_name.includes(keyword)) {
+            filterResult.push(item);
+          }
+        });
+        this.list_product = filterResult;
+      }
     }
   }
 
   checkAllCheckBox(ev) {
     this.list_product.forEach((x) => (x.checked = ev.target.checked));
+    this.list_product.sort(function (a, b) {
+      return Number(b.checked) - Number(a.checked);
+    });
     this.changeModel();
   }
 
   isAllCheckBoxChecked() {
+    this.list_product.sort(function (a, b) {
+      return Number(b.checked) - Number(a.checked);
+    });
     return this.list_product.every((p) => p.checked);
+
   }
 
   changeModel() {
     const selectedHometowns = this.list_product
       .filter((product) => product.checked)
       .map((p) => p.product_id);
-      if (selectedHometowns.length > 0) {
-        this.checkedProduct = false;
-  
-      } else {
-        this.checkedProduct = true;
-      }
+    if (selectedHometowns.length > 0) {
+      this.checkedProduct = false;
+    } else {
+      this.checkedProduct = true;
+    }
   }
 
-  resetProduct(){
+  resetProduct() {
     this.list_product.forEach((x) => (x.checked = false));
     this.checkedProduct = true;
   }
@@ -145,21 +165,18 @@ export class UpdatePromotionDateComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = true;
         this.title = `Thêm mới thông tin ngày khuyến mãi`;
-        // this.update_ma_tai_khoan = this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
         this.title = `Xem chi tiết thông tin ngày khuyến mãi`;
-        // this.update_ma_tai_khoan = this.model.promotion_date_id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin ngày khuyến mãi`;
-        // this.update_ma_tai_khoan = this.model.promotion_date_id;
         break;
       default:
         this.isInfo = false;
@@ -176,13 +193,12 @@ export class UpdatePromotionDateComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
-   
     if (model.promotion_date_id === null || model.promotion_date_id === undefined) {
       this.formGroup = this.fb.group({
-        date: [ null, [Validators.required]],
-        promotion_level: [ null, [Validators.required]],
-        
+        date: [null, [Validators.required]],
+        promotion_level: [null, [Validators.required]],
       });
+      this.list_product = this.list_product_main;
       for (var i = 0; i < this.list_product.length; i++) {
         if (this.list_product[i].checked == true) {
           this.list_product[i].checked = false;
@@ -192,13 +208,47 @@ export class UpdatePromotionDateComponent implements OnInit {
       this.checkedProduct = true;
       this.filterResultTemplist = this.list_product;
     } else {
-      this.formGroup = this.fb.group({
-        date: [{value: this.model.date, disabled: this.isInfo}, [Validators.required]],
-        promotion_level: [{value:this.model.promotion_level, disabled: this.isInfo}, [Validators.required]],
-      });     
+      if (this.isEdit) {
+        this.list_product = this.list_product_main;
+        this.list_product_select = [];
+        this.promotionDateService.detail(model.promotion_date_id).subscribe(data => {
+          this.arraylist_promotion_date_filter = data.data;
+          this.formGroup = this.fb.group({
+            date: [{ value: this.model.date, disabled: this.isInfo }, [Validators.required]],
+            promotion_level: [{ value: this.arraylist_promotion_date_filter[0].promotion_level, disabled: this.isInfo }, [Validators.required]],
+          });
+          for (let item of this.arraylist_promotion_date_filter) {
+            this.list_product_select.push(item.listProduct[0]);
+          }
+          for (let item of this.list_product) {
+            for (let item1 of this.list_product_select) {
+              if (item.product_id === item1.product_id) {
+                item.checked = true;
+              }
+            }
+          }
+          this.list_product.sort(function (a, b) {
+            return Number(b.checked) - Number(a.checked);
+          });
+          this.changeModel();
+          this.filterResultTemplist = this.list_product;
+        })
+      } else {
+        this.list_product_select = [];
+        this.promotionDateService.detail(model.promotion_date_id).subscribe(data => {
+          this.arraylist_promotion_date_filter = data.data;
+          this.formGroup = this.fb.group({
+            date: [{ value: this.model.date, disabled: this.isInfo }, [Validators.required]],
+            promotion_level: [{ value: this.arraylist_promotion_date_filter[0].promotion_level, disabled: this.isInfo }, [Validators.required]],
+          });
+          for (let item of this.arraylist_promotion_date_filter) {
+            this.list_product_select.push(item.listProduct[0]);
+          }
+          this.list_product = this.list_product_select;
+        })
+      }
     }
   }
-
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -235,23 +285,22 @@ export class UpdatePromotionDateComponent implements OnInit {
       return;
     }
     if (this.isEdit) {
-      // promotion_date = {
-      //   promotion_date_id: this.model.promotion_date_id,
-      //   date: this.formGroup.get('date')?.value,
-      //   promotion_level: this.formGroup.get('promotion_level').value
-      // };
-     
-    } else {
-      
       this.list_product_filter = this.filterResultTemplist.filter(product => product.checked === true);
       promotion_date = {
         date: this.formGroup.get('date')?.value,
         promotion_level: this.formGroup.get('promotion_level').value,
-        listProduct:this.list_product_filter
+        listProduct: this.list_product_filter
+      };
+    } else {
+      this.list_product_filter = this.filterResultTemplist.filter(product => product.checked === true);
+      promotion_date = {
+        date: this.formGroup.get('date')?.value,
+        promotion_level: this.formGroup.get('promotion_level').value,
+        listProduct: this.list_product_filter
       };
     }
     if (this.isAdd) {
-      if(this.list_product_filter.length !== 0){
+      if (this.list_product_filter.length !== 0) {
         this.promotionDateService.create(promotion_date).subscribe(res => {
           for (var i = 0; i < this.list_product.length; i++) {
             if (this.list_product[i].checked == true) {
@@ -264,23 +313,34 @@ export class UpdatePromotionDateComponent implements OnInit {
           this.toastr.success(res.success);
           this.modalReference.dismiss();
         },
-        err => {
-          this.toastr.error(err.error.error);
-        }
+          err => {
+            this.toastr.error(err.error.error);
+          }
         );
-      }else{
+      } else {
         this.toastr.warning("Vui lòng chọn sản phẩm khuyến mãi!!!");
       }
     }
     if (this.isEdit) {
-      this.promotionDateService.update(promotion_date.promotion_date_id, promotion_date).subscribe(res => {
+      const modelDelete = {
+        id: this.model.promotion_date_id
+      };
+      this.promotionDateService.delete(modelDelete).subscribe();
+      this.promotionDateService.create(promotion_date).subscribe(res => {
+        for (var i = 0; i < this.list_product.length; i++) {
+          if (this.list_product[i].checked == true) {
+            this.list_product[i].checked = false;
+          }
+        }
+        this.searchedKeyword = null;
+        this.filterResultTemplist = this.list_product;
         this.closeModalReloadData();
         this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
-      err => {
-        this.toastr.error(err.error.error);
-      }
+        err => {
+          this.toastr.error(err.error.error);
+        }
       );
     }
   }

@@ -1,7 +1,6 @@
 <div *ngIf ="loaderService.isLoading | async" class ="loader-container">
    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
  </div>
-
 <div class="container">
    <div class="table-responsive">
       <div class="table-wrapper">
@@ -20,19 +19,16 @@
                   <option value="1">Quý</option>
                   <option value="2">Năm</option>
                </select>
-
                <select [hidden]="ismonth" (change)="changeStatus1($event.target.value)"
                   class="custom-select col-md-3 col-lg-2 col-sm-12">
                   <option [selected]="isSelected">--</option>
                   <option *ngFor="let item of arr_month">{{item}}</option>
                </select>
-
                <select [hidden]="isQuarter" (change)="changeStatus3($event.target.value)"
                   class="custom-select col-md-3 col-lg-2 col-sm-12">
                   <option [selected]="isSelected">--</option>
                   <option *ngFor="let item of arr_quarter">{{item}}</option>
                </select>
-
                <select [hidden]="isyear" (change)="changeStatus2($event.target.value)"
                   class="custom-select col-md-3 col-lg-2 col-sm-12">
                   <option [selected]="isSelected">--</option>
@@ -49,8 +45,8 @@
                         <th>Mã phiếu nhập </th>
                         <th>Tên nhân viên</th>
                         <th>Tên nhà cung cấp</th>
-                        <th>Tổng tiền(VNĐ</th>
                         <th>Ngày nhập</th>
+                        <th>Tổng tiền(VNĐ</th>
                         <th>Ghi chú</th>
                      </tr>
                   </thead>
@@ -61,14 +57,19 @@
                         let e of listFilterResult | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
                         let i = index
                         ">
-
                         <td>{{ i + (page-1)*pageSize + 1 }}</td>
                         <td [innerHTML]="e.coupon_id"></td>
                         <td [innerHTML]="e.employee_name"></td>
                         <td [innerHTML]="e.supplier_name "></td>
-                        <td [innerHTML]="e.total_money | currency:'VND' "></td>
                         <td [innerHTML]="e.created_at "></td>
+                        <td [innerHTML]="e.total_money | currency:'VND' "></td>                      
                         <td [innerHTML]="e.note "></td>
+                     </tr>
+                     <tr>
+                        <td colspan="4" style="text-align: right;">
+                           Doanh thu:
+                        </td>
+                        <td colspan="2">{{Revenue | currency:'VND'}}</td>
                      </tr>
                   </tbody>
                </table>

@@ -14,15 +14,17 @@
     position: relative;
     bottom: 8px;
 }
+
 .profile-img{
     text-align: center;
     width: 100%;
 }
+
 .profile-img img{
     width: 30%;
     height: 100%;
-    // margin-top: -55px;
 }
+
 .file {
     position: relative;
     overflow: hidden;
@@ -34,6 +36,7 @@
     font-size: 15px;
     background: #212529b8;
 }
+
  .file input {
     position: absolute;
     opacity: 0;

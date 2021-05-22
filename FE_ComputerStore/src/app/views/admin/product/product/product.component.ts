@@ -30,29 +30,21 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private toastr: ToastrService,
     public loaderService:LoaderService 
-    ) {
-    }
+    ) {}
 
-  
   ngOnInit(): void {
-    this.fetchlist_product();
+    this.fetchListProduct();
     
   }
 
-
-  
-
-  fetchlist_product() {
+  fetchListProduct() {
     this.isLoading = true;
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
@@ -73,7 +65,6 @@ export class ProductComponent implements OnInit {
       this.listFilterResult = filterResult;
     }
   }
-
   
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -120,7 +111,7 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  delete_product(item: any = null) {
+  deleteProduct(item: any = null) {
     let selectedproduct= [];
     if (item !== null && item !== undefined && item !== '') {
       selectedproduct.push(item);
@@ -141,30 +132,6 @@ export class ProductComponent implements OnInit {
     this.view.view(model, type);
   }
 
-  changeStatus(event: any) {
-    this.isLoading = true;
-    let list = [];
-    // tslint:disable-next-line: radix
-    switch (parseInt(event)) {
-      case -1:
-        this.listFilterResult = [...this.list_product];
-        this.isLoading = false;
-        break;
-      case 1:
-        list = [...this.list_product];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
-        this.isLoading = false;
-        break;
-      case 0:
-        list = [...this.list_product];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
-        this.isLoading = false;
-        break;
-      default:
-        break;
-    }
-  }
-
   public delete(listid: any) {
     const modelDelete = {
       listId: listid
@@ -183,11 +150,9 @@ export class ProductComponent implements OnInit {
     }
     this.searchedKeyword = null;
     this.filterResultTemplist = this.listFilterResult;
-
     this.productService.delete(modelDelete).subscribe(
       (result) => {
-        // status: 200
-        this.ngOnInit();
+        this.fetchListProduct();
         this.changeModel();
         if (result.error) {
           this.toastr.error(result.error);

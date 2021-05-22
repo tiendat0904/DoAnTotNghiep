@@ -12,8 +12,6 @@
     </div>
     <div class="modal-body">
       <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
-        
-  
         <div class="form-group">
           <label>Tên sản phẩm</label>
           <input
@@ -32,7 +30,6 @@
             </div>
           </div>
         </div>
-
         <div class="form-group">
           <label>Loại sản phẩm</label>
           <select class="form-control" name="" formControlName="product_type_id" id="" placeholder="Hãy chọn loại sản phẩm">
@@ -47,7 +44,6 @@
             </div>
           </div>
         </div>
-
         <div class="form-group">
           <label>Thương hiệu</label>
           <select class="form-control" name="" formControlName="trademark_id" id="" placeholder="Hãy chọn thương hiệu">
@@ -62,7 +58,6 @@
             </div>
           </div>
         </div>
-
         <div class="form-group">
           <label>Bảo hành(Tháng)</label>
           <input
@@ -104,7 +99,6 @@
             </div>
           </div>
         </div>
-
         <div class="form-group">
           <label>Hình ảnh</label>
           <div class="profile-img">
@@ -124,13 +118,9 @@
               * Hình ảnh sản phẩm không được để trống
             </div>
           </div>
-        </div>
-  
-       
-        
+        </div>       
         <div class="form-group" align="center">
           <button
-            [hidden]="checkButton"
             type="submit"
             class="btn btn-success"
             style="width: 100px;height:38px; background:'green';"

@@ -1,3 +1,12 @@
+.loader-container{
+    position: absolute;
+    height: 100%;
+    width: 81%;
+    background: #fff;
+    opacity: 0.85;
+    z-index: 99999;
+}
+
 .order_status{
     height: 30px;
     padding: 5px;
@@ -5,13 +14,4 @@
     width: 85%;
     color: white;
     border-radius: 20px;
-}
-
-.loader-container{
-    position: absolute;
-    height: 100%;
-    width: 87%;
-    background: #fff;
-    opacity: 0.8;
-    z-index: 99999;
 }

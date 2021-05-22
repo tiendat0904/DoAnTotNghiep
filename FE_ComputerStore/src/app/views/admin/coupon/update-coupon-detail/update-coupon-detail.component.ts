@@ -26,24 +26,20 @@ export class UpdateCouponDetailComponent implements OnInit {
   @Output() eventEmit: EventEmitter<any> = new EventEmitter<any>();
   arraylist_product: Array<productModel> = [];
   arraylist_coupon: Array<couponModel> = [];
-  checkButton = false;
+  arrCheck = [];
   closeResult: String;
   modalReference!: any;
   formGroup: FormGroup;
   isAdd = false;
-  image: string = null;
   isEdit = false;
-  avatarUrl;
   isEditimage = false;
   isInfo = false;
   submitted = false;
   isLoading = false;
   title = '';
   type: any;
-  arrCheck = [];
   update_coupon_id: any;
   model: couponDetailModel;
-  dem: number = 0;
 
   constructor(
     private modalService: NgbModal,
@@ -57,12 +53,12 @@ export class UpdateCouponDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.submitted = false;
-    this.fetcharraylist_coupon_detail();
-    this.fetcharraylist_product();
+    this.fetchListCouponDetail();
+    this.fetchListProduct();
     // this.fetcharraylist_coupon();
   }
 
-  fetcharraylist_coupon_detail() {
+  fetchListCouponDetail() {
     this.arraylist_coupon_detail = [];
     this.couponDetailService.getAll().subscribe(data => {
       this.arraylist_coupon_detail = data.data;
@@ -92,14 +88,11 @@ export class UpdateCouponDetailComponent implements OnInit {
   //     })
   // }
 
-  fetcharraylist_product() {
+  fetchListProduct() {
     this.arraylist_product = [];
     this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   updateFormType(type: any) {
@@ -121,7 +114,6 @@ export class UpdateCouponDetailComponent implements OnInit {
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin chi tiết phiếu nhập`;
-        //  this.update_coupon_id = this.model.id;
         break;
       default:
         this.isInfo = false;
@@ -132,7 +124,6 @@ export class UpdateCouponDetailComponent implements OnInit {
   }
 
   view(model: couponDetailModel, type = null): void {
-    // this.arrCheck = this.arraylist_coupon_detail;
     this.open(this.childModal);
     this.type = type;
     this.model = model;
@@ -153,11 +144,8 @@ export class UpdateCouponDetailComponent implements OnInit {
           product_id: [null, [Validators.required]],
           amount: [null, [Validators.required]],
           price: [null, [Validators.required]],
-
-
         });
       }
-
     } else {
       this.formGroup = this.fb.group({
         // coupon_id: [{ value: this.mess_coupon1, disabled: this.isInfo }],
@@ -168,7 +156,6 @@ export class UpdateCouponDetailComponent implements OnInit {
 
     }
   }
-
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -197,15 +184,12 @@ export class UpdateCouponDetailComponent implements OnInit {
   }
 
   save() {
-
-    let check = false;
     let couponDetail: couponDetailModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
       this.toastr.error('Kiểm tra thông tin các trường đã nhập');
       return;
     }
-
     // if (this.checkNumber === 0 && this.isAdd1 === true) {
     //   this.couponService.create(this.mess_coupon).subscribe(res => {
     //   },
@@ -214,8 +198,6 @@ export class UpdateCouponDetailComponent implements OnInit {
     //     }
     //   );
     // }
-
-
     if (this.isEdit) {
       couponDetail = {
         coupon_detail_id: this.model.coupon_detail_id,
@@ -224,7 +206,6 @@ export class UpdateCouponDetailComponent implements OnInit {
         amount: this.formGroup.get('amount')?.value,
         price: this.formGroup.get('price')?.value,
       };
-
     } else {
       couponDetail = {
         // coupon_id: this.formGroup.get('coupon_id')?.value,
@@ -259,7 +240,6 @@ export class UpdateCouponDetailComponent implements OnInit {
         // })
         this.toastr.success(res.success);
         this.modalReference.dismiss();
-
       },
         err => {
           this.toastr.error(err.error.error);

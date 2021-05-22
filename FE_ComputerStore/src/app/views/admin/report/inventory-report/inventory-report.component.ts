@@ -14,42 +14,37 @@ import { ReportService } from '../../../../services/report.service';
 export class InventoryReportComponent implements OnInit {
 
   arraylist_product_inventory: Array<iventoryReportModel> = [];
+  listFilterResult: iventoryReportModel[] = [];
+  filterResultTemplist: iventoryReportModel[] = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  isLoading = false;
   searchedKeyword: string;
-  filterResultTemplist: iventoryReportModel[] = [];
   isSelected = true;
   page = 1;
   pageSize = 5;
-  listFilterResult: iventoryReportModel[] = [];
+  totalAmount = 0;
+
   constructor(
-    private modalService: NgbModal,
     private reportService: ReportService,
     private toastr: ToastrService,
     private exportService: ExcelService,
-    public loaderService:LoaderService 
-    ) {
-    }
-
-  
-  ngOnInit(): void {
-    this.fetcharraylist_product_inventory();
+    public loaderService: LoaderService
+  ) {
   }
 
+  ngOnInit(): void {
+    this.fetchListProductInventory();
+  }
 
-  
-
-  fetcharraylist_product_inventory(){
-    this.isLoading =  true;
+  fetchListProductInventory() {
     this.reportService.reportIventoryProduct().subscribe(data => {
       this.arraylist_product_inventory = data.data;
       this.listFilterResult = data.data;
-   },
-    err => {
-        this.isLoading = false;
-      })
+      for (let item of this.listFilterResult) {
+        this.totalAmount += item.amount;
+      }
+    })
   }
 
   export() {

@@ -15,43 +15,36 @@ export class SupplierComponent implements OnInit {
 
   @ViewChild(UpdateSupplierComponent) view!: UpdateSupplierComponent;
   list_supplier: Array<supplierModel> = [];
+  listFilterResult: supplierModel[] = [];
+  filterResultTemplist: supplierModel[] = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
   isLoading = false;
-  isSelected = true;
+  // isSelected = true;
   searchedKeyword: string;
-  listFilterResult: supplierModel[] = [];
   page = 1;
   pageSize = 5;
-  filterResultTemplist: supplierModel[] = [];
+
   constructor(
     private modalService: NgbModal,
     private supplierService: SupplierService,
     private toastr: ToastrService,
-    public loaderService:LoaderService 
-    ) {
-    }
+    public loaderService: LoaderService
+  ) { }
 
-  
   ngOnInit(): void {
-    this.fetchlist_supplier();
+    this.fetchListSupplier();
   }
 
-
-  
-
-  fetchlist_supplier() {
+  fetchListSupplier() {
     this.isLoading = true;
     this.supplierService.getAll().subscribe(data => {
       this.list_supplier = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
@@ -73,7 +66,6 @@ export class SupplierComponent implements OnInit {
     }
   }
 
-  
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -113,14 +105,13 @@ export class SupplierComponent implements OnInit {
       .map((p) => p.supplier_id);
     if (selectedHometowns.length > 0) {
       this.isDelete = false;
-
     } else {
       this.isDelete = true;
     }
   }
 
-  delete_supplier(item: any = null) {
-    let selectedsupplier= [];
+  deleteSupplier(item: any = null) {
+    let selectedsupplier = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedsupplier.push(item);
       this.delete(selectedsupplier);
@@ -136,32 +127,8 @@ export class SupplierComponent implements OnInit {
     this.delete(selectedsupplier);
   }
 
-  initModal(model: any,type = null): void {
+  initModal(model: any, type = null): void {
     this.view.view(model, type);
-  }
-
-  changeStatus(event: any) {
-    this.isLoading = true;
-    let list = [];
-    // tslint:disable-next-line: radix
-    switch (parseInt(event)) {
-      case -1:
-        this.listFilterResult = [...this.list_supplier];
-        this.isLoading = false;
-        break;
-      case 1:
-        list = [...this.list_supplier];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
-        this.isLoading = false;
-        break;
-      case 0:
-        list = [...this.list_supplier];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
-        this.isLoading = false;
-        break;
-      default:
-        break;
-    }
   }
 
   public delete(listid: any) {
@@ -182,20 +149,17 @@ export class SupplierComponent implements OnInit {
     }
     this.searchedKeyword = null;
     this.filterResultTemplist = this.listFilterResult;
-
     this.supplierService.delete(modelDelete).subscribe(
       (result) => {
-        // status: 200
-        this.ngOnInit();
+        this.modalReference.dismiss();
+        this.fetchListSupplier();
         this.changeModel();
         if (result.error) {
           this.toastr.error(result.error);
         } else {
           this.toastr.success(result.success);
         }
-        this.modalReference.dismiss();
       },
     );
   }
-
 }

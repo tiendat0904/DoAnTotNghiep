@@ -1,15 +1,15 @@
-.close{
-    outline: none;
-    height: 40px;
-}
-
 .loader-container{
     position: absolute;
     height: 100%;
-    width: 87%;
+    width: 81%;
     background: #fff;
     opacity: 0.8;
     z-index: 99999;
+}
+
+.close{
+    outline: none;
+    height: 40px;
 }
 
 .close:hover{

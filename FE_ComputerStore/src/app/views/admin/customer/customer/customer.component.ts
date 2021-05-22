@@ -14,45 +14,33 @@ import { UpdateCustomerComponent } from '../update-customer/update-customer.comp
 export class CustomerComponent implements OnInit {
 
   @ViewChild(UpdateCustomerComponent) view!: UpdateCustomerComponent;
-  list_customer: Array<accountModel> = [];
+  // list_customer: Array<accountModel> = [];
+  listFilterResult: accountModel[] = [];
+  filterResultTemplist: accountModel[] = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  isLoading = false;
-  isSelected = true;
   searchedKeyword: string;
-  listFilterResult: accountModel[] = [];
   page = 1;
   pageSize = 5;
-  filterResultTemplist: accountModel[] = [];
+
   constructor(
     private modalService: NgbModal,
     private customerService: AccountService,
     private toastr: ToastrService,
-    public loaderService:LoaderService 
-    ) {
-    }
+    public loaderService: LoaderService
+  ) { }
 
-  
   ngOnInit(): void {
-    this.fetchlist_customer();
+    this.fetchListCustomer();
   }
 
-
-  
-
-  fetchlist_customer() {
-    this.isLoading = true;
-    this.customerService.getAll().subscribe(data => {
-      this.list_customer = data.data;
-      this.listFilterResult = this.list_customer.filter(function (customer) {
-        return customer.value === "KH";
-      });
+  fetchListCustomer() {
+    this.customerService.getAccountByCustomer().subscribe(data => {
+      this.listFilterResult = data.data;
+      this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
@@ -75,7 +63,6 @@ export class CustomerComponent implements OnInit {
     }
   }
 
-  
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -115,14 +102,13 @@ export class CustomerComponent implements OnInit {
       .map((p) => p.account_id);
     if (selectedHometowns.length > 0) {
       this.isDelete = false;
-
     } else {
       this.isDelete = true;
     }
   }
 
-  delete_customer(item: any = null) {
-    let selectedcustomer= [];
+  deleteCustomer(item: any = null) {
+    let selectedcustomer = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedcustomer.push(item);
       this.delete(selectedcustomer);
@@ -138,10 +124,9 @@ export class CustomerComponent implements OnInit {
     this.delete(selectedcustomer);
   }
 
-  initModal(model: any,type = null): void {
+  initModal(model: any, type = null): void {
     this.view.view(model, type);
   }
-
 
   public delete(listid: any) {
     const modelDelete = {
@@ -161,11 +146,9 @@ export class CustomerComponent implements OnInit {
     }
     this.searchedKeyword = null;
     this.filterResultTemplist = this.listFilterResult;
-
     this.customerService.delete(modelDelete).subscribe(
       (result) => {
-        // status: 200
-        this.ngOnInit();
+        this.fetchListCustomer();
         this.changeModel();
         if (result.error) {
           this.toastr.error(result.error);

@@ -1,9 +1,8 @@
 <div *ngIf="loaderService.isLoading | async" class="loader-container">
    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
 </div>
-
-<div class="row" style="margin: 0 auto; display: flex;">
-   <div class="col-sm-3" style="background-color:rgb(240, 240, 240);">
+<div class="row" style="margin: 0 auto; display: flex;padding: 60px 0;">
+   <div class="col-sm-3" style="background-color:#fff;margin-right: 20px;">
       <h2 style="font-size:30px;"> Chỉnh sửa hóa đơn nhập</h2>
       <form [formGroup]="formGroup" (ngSubmit)="save()">
          <div class="row">
@@ -19,8 +18,7 @@
                   <label>Tên nhân viên</label>
                   <select [(ngModel)]="update_employee_id" class="form-control" name="" formControlName="employee_id"
                      id="">
-                     <option [selected]="isSelected" selected hidden disabled> --vui lòng chọn nhân viên--</option>
-                     <option *ngFor="let e of arraylist_employee_filter" value="{{e.account_id}}">{{e.full_name}}
+                     <option *ngFor="let e of arraylist_employee" value="{{e.account_id}}">{{e.full_name}}
                      </option>
                   </select>
                   <div *ngIf="submitted && formGroup.controls['employee_id'].errors?.required">
@@ -37,8 +35,6 @@
                   <label>Nhà phát hành</label>
                   <select [(ngModel)]="update_supplier_id" class="form-control" name="" formControlName="supplier_id"
                      id="">
-                     <option [selected]="isSelected" selected hidden disabled> --vui lòng chọn nhà phát hành--
-                     </option>
                      <option *ngFor="let e of arraylist_supplier" value="{{e.supplier_id}}">{{e.supplier_name}}
                      </option>
                   </select>
@@ -78,8 +74,7 @@
          </div>
       </form>
    </div>
-   <div class="col-sm-8" style="background-color:rgb(240, 240, 240);margin:30px">
-
+   <div class="col-sm-8" style="background-color:#fff;">
       <div class="container">
          <div class="table-responsive">
             <div class="table-wrapper" style="min-width : 700px">
@@ -112,7 +107,7 @@
                            Bạn có chắc chắn muốn xóa những thông tin này ?
                         </div>
                         <div class="modal-footer">
-                           <button class="btn btn-danger" style="width: 80px" (click)="delete_coupon_detail()">
+                           <button class="btn btn-danger" style="width: 80px" (click)="deleteCouponDetail()">
                               Có
                            </button>
                            <button class="btn btn-outline-dark" style="width: 80px"
@@ -173,7 +168,7 @@
                                     </div>
                                     <div class="modal-footer">
                                        <button class="btn btn-danger" style="width: 80px"
-                                          (click)="delete_coupon_detail(e.coupon_detail_id)">
+                                          (click)="deleteCouponDetail(e.coupon_detail_id)">
                                           Có
                                        </button>
                                        <button class="btn btn-outline-dark" style="width: 80px"
@@ -202,6 +197,5 @@
       </div>
    </div>
 </div>
-
 <app-update-coupon-detail [mess_coupon1]="update_coupon_id" [arraylist_coupon_detail]="arraylist_coupon_detail"
    (eventEmit)="ngOnInit()"></app-update-coupon-detail>

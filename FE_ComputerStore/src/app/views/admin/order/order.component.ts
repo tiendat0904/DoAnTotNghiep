@@ -14,25 +14,22 @@ import { BillService } from '../../../services/bill/bill.service';
 export class OrderComponent implements OnInit {
 
   arraylist_order: Array<billModel> = [];
+  filterResultTemplist: billModel[] = [];
+  listFilterResult: billModel[] = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  isLoading = false;
-  isSelected = true;
   searchedKeyword: string;
-  listFilterResult: billModel[] = [];
   page = 1;
   pageSize = 5;
-  filterResultTemplist: billModel[] = [];
+
   constructor(
     private modalService: NgbModal,
     private orderService: BillService,
     private toastr: ToastrService,
     private router: Router,
     public loaderService:LoaderService 
-  ) {
-  }
-
+  ) {}
 
   ngOnInit(): void {
     this.fetcharraylist_order();
@@ -58,9 +55,7 @@ export class OrderComponent implements OnInit {
     }
   }
 
-
   fetcharraylist_order() {
-    this.isLoading = true;
     this.orderService.getAll().subscribe(data => {
       this.arraylist_order = data.data;
       this.listFilterResult = data.data;
@@ -73,10 +68,7 @@ export class OrderComponent implements OnInit {
           item.check_order_status = true;
         }
       }
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
@@ -88,7 +80,6 @@ export class OrderComponent implements OnInit {
       var keyword = this.searchedKeyword.toLowerCase();
       console.log(this.listFilterResult);
       this.listFilterResult.forEach(item => {
-        // var dc = item.employee_name.toLowerCase();
         var hot_line = item.name.toLowerCase();
         if (hot_line.includes(keyword) ) {
           filterResult.push(item);
@@ -97,7 +88,6 @@ export class OrderComponent implements OnInit {
       this.listFilterResult = filterResult;
     }
   }
-
 
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
@@ -144,7 +134,7 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  delete_order(item: any = null) {
+  deleteOrder(item: any = null) {
     let selectedorder = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedorder.push(item);
@@ -161,48 +151,36 @@ export class OrderComponent implements OnInit {
     this.delete(selectedorder);
   }
 
-  // initModal(model: any,type = null): void {
-  //   this.view.view(model, type);
-  // }
-
   changeStatus(event: any) {
-    this.isLoading = true;
     let list = [];
     // tslint:disable-next-line: radix
     switch (parseInt(event)) {
       case 0:
         this.listFilterResult = [...this.arraylist_order];
-        this.isLoading = false;
         break;
       case 1:
         list = [...this.arraylist_order];
         this.listFilterResult = list.filter(item => item.order_status_id === 1);
-        this.isLoading = false;
         break;
       case 2:
         list = [...this.arraylist_order];
         this.listFilterResult = list.filter(item => item.order_status_id === 2);
-        this.isLoading = false;
         break;
       case 3:
         list = [...this.arraylist_order];
         this.listFilterResult = list.filter(item => item.order_status_id === 3);
-        this.isLoading = false;
         break;
       case 4:
         list = [...this.arraylist_order];
         this.listFilterResult = list.filter(item => item.order_status_id === 4);
-        this.isLoading = false;
         break;
       case 5:
         list = [...this.arraylist_order];
         this.listFilterResult = list.filter(item => item.order_status_id === 5);
-        this.isLoading = false;
         break;
       case 6:
         list = [...this.arraylist_order];
         this.listFilterResult = list.filter(item => item.order_status_id === 6);
-        this.isLoading = false;
         break;
       default:
         break;

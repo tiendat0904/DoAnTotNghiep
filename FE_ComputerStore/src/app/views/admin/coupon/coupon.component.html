@@ -1,7 +1,6 @@
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
- </div>
-
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+   <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
+</div>
 <div class="container">
    <div class="table-responsive">
       <div class="table-wrapper">
@@ -33,7 +32,7 @@
                      Bạn có chắc chắn muốn xóa những phiếu nhập này ?
                   </div>
                   <div class="modal-footer">
-                     <button class="btn btn-danger" style="width: 80px" (click)="delete_coupon()">
+                     <button class="btn btn-danger" style="width: 80px" (click)="deleteCoupon()">
                         Có
                      </button>
                      <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
@@ -41,7 +40,8 @@
                      </button>
                   </div>
                </ng-template>
-               <button type="button" [hidden]="isDelete" (click)="open(mymodal1)" class="btn btn-danger" style="height: 35px; margin-top: 7px;">
+               <button type="button" [hidden]="isDelete" (click)="open(mymodal1)" class="btn btn-danger"
+                  style="height: 35px; margin-top: 7px;">
                   <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
                </button>
             </div>
@@ -93,7 +93,7 @@
                               </div>
                               <div class="modal-footer">
                                  <button class="btn btn-danger" style="width: 80px"
-                                    (click)="delete_coupon(e.coupon_id)">
+                                    (click)="deleteCoupon(e.coupon_id)">
                                     Có
                                  </button>
                                  <button class="btn btn-outline-dark" style="width: 80px"

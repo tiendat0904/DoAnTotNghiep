@@ -15,40 +15,33 @@ export class PromotionDateComponent implements OnInit {
 
   @ViewChild(UpdatePromotionDateComponent) view!: UpdatePromotionDateComponent;
   list_promotion_date: Array<promotionDateModel> = [];
+  listFilterResult: promotionDateModel[] = [];
+  filterResultTemplist: promotionDateModel[] = [];
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  isLoading = false;
-  isSelected = true;
   searchedKeyword: string;
-  listFilterResult: promotionDateModel[] = [];
   page = 1;
   pageSize = 5;
-  filterResultTemplist: promotionDateModel[] = [];
+
   constructor(
     private modalService: NgbModal,
     private promotionDateService: PromotionDateService,
     private toastr: ToastrService,
-    public loaderService:LoaderService 
-    ) {
-    }
+    public loaderService: LoaderService
+  ) { }
 
-  
   ngOnInit(): void {
-    this.fetchlist_promotion_date();
+    this.fetchListPromotionDate();
   }
 
-  fetchlist_promotion_date() {
-    this.isLoading = true;
+  fetchListPromotionDate() {
     this.promotionDateService.getAll().subscribe(data => {
       this.list_promotion_date = data.data;
       this.listFilterResult = data.data;
       this.listFilterResult.forEach((x) => (x.checked = false));
       this.filterResultTemplist = this.listFilterResult;
-    },
-      err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   public filterByKeyword() {
@@ -60,7 +53,7 @@ export class PromotionDateComponent implements OnInit {
       var keyword = this.searchedKeyword.toLowerCase();
       this.listFilterResult.forEach(item => {
         var date = item.date.toString();
-        if (date.includes(keyword) ) {
+        if (date.includes(keyword)) {
           filterResult.push(item);
         }
       });
@@ -68,7 +61,6 @@ export class PromotionDateComponent implements OnInit {
     }
   }
 
-  
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -108,14 +100,13 @@ export class PromotionDateComponent implements OnInit {
       .map((p) => p.promotion_date_id);
     if (selectedHometowns.length > 0) {
       this.isDelete = false;
-
     } else {
       this.isDelete = true;
     }
   }
 
-  delete_promotion_date(item: any = null) {
-    let selectedpromotion_date= [];
+  deletePromotionDate(item: any = null) {
+    let selectedpromotion_date = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedpromotion_date.push(item);
       this.delete(selectedpromotion_date);
@@ -131,32 +122,8 @@ export class PromotionDateComponent implements OnInit {
     this.delete(selectedpromotion_date);
   }
 
-  initModal(model: any,type = null): void {
+  initModal(model: any, type = null): void {
     this.view.view(model, type);
-  }
-
-  changeStatus(event: any) {
-    this.isLoading = true;
-    let list = [];
-    // tslint:disable-next-line: radix
-    switch (parseInt(event)) {
-      case -1:
-        this.listFilterResult = [...this.list_promotion_date];
-        this.isLoading = false;
-        break;
-      case 1:
-        list = [...this.list_promotion_date];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
-        this.isLoading = false;
-        break;
-      case 0:
-        list = [...this.list_promotion_date];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
-        this.isLoading = false;
-        break;
-      default:
-        break;
-    }
   }
 
   public delete(listid: any) {
@@ -177,11 +144,9 @@ export class PromotionDateComponent implements OnInit {
     }
     this.searchedKeyword = null;
     this.filterResultTemplist = this.listFilterResult;
-
     this.promotionDateService.delete(modelDelete).subscribe(
       (result) => {
-        // status: 200
-        this.ngOnInit();
+        this.fetchListPromotionDate();
         this.changeModel();
         if (result.error) {
           this.toastr.error(result.error);
