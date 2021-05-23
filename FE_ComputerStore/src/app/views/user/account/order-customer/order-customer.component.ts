@@ -14,12 +14,21 @@ import { BillService } from '../../../../services/bill/bill.service';
 export class OrderCustomerComponent implements OnInit {
 
   arraylist_bill: billModel[] = [];
+  arraylist_bill_filter: billModel[] = [];
   ischeck = false;
   ischeck1 = true;
-  arraylist_bill_filter: billModel[] = [];
-  constructor(private billService: BillService, private toastr: ToastrService, private router: Router,public loaderService:LoaderService) { }
+
+  constructor(
+    private billService: BillService,
+    private toastr: ToastrService,
+    private router: Router,
+    public loaderService: LoaderService) { }
 
   ngOnInit(): void {
+    this.fetchOrderCustomer();
+  }
+
+  fetchOrderCustomer() {
     if (localStorage.getItem("account_id")) {
       this.billService.getAll().subscribe(data => {
         this.arraylist_bill = data.data;
@@ -33,14 +42,10 @@ export class OrderCustomerComponent implements OnInit {
           this.ischeck = true;
           this.ischeck1 = false;
         }
-      }, err => {
-
       })
     } else {
       this.toastr.warning("Vui lòng đăng nhập để sử dụng dịch vụ");
       this.router.navigate(['/login']);
     }
-
   }
-
 }

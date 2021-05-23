@@ -33,7 +33,7 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     Bạn có chắc chắn muốn xóa thông tin những nhãn hiệu này ?
+                     Bạn có chắc chắn muốn xóa thông tin những ngày khuyến mãi này ?
                   </div>
                   <div class="modal-footer">
                      <button class="btn btn-danger" style="width: 80px" (click)="deletePromotionDate()">
@@ -50,7 +50,7 @@
          </div>
          <div class="row">
             <div class="col-12" style="height: 350px;">
-               <table class="table table-striped table-hover table-bordered ">
+               <table class="table table-striped table-hover table-bordered" *ngIf="condition; else elseBlock">
                   <thead>
                      <tr>
                         <th scope="col">
@@ -110,6 +110,9 @@
                      </tr>
                   </tbody>
                </table>
+               <ng-template #elseBlock>
+                  <p style="margin-left: 3px;font-size: 15px;">Không tìm thấy ngày khuyến mãi phù hợp.</p>
+               </ng-template>
             </div>
             <div class="col-12 justify-content-center">
                <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"

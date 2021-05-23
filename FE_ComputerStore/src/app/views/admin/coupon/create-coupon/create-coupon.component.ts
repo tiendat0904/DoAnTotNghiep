@@ -88,26 +88,28 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.update_coupon_id = localStorage.getItem("coupon_id");
-    this.update_employee_id = localStorage.getItem("account_id");
-    this.isAdd = true;
-    this.submitted = false;
-    this.fetchListCouponDetail();
-    this.fetchListEmployee();
-    this.fetchListSupplier();
-    this.couponService.detail(this.update_coupon_id).subscribe(data => {
-      this.arraylist_coupon = data.data;
-      if (data.data === undefined) {
-      } else {
-        if (data.data.coupon_id === undefined || data.data.coupon_id === null) {
+    setTimeout(() => {
+      this.update_coupon_id = Number(localStorage.getItem("coupon_id"));
+      this.update_employee_id = localStorage.getItem("account_id");
+      this.isAdd = true;
+      this.submitted = false;
+      this.fetchListCouponDetail();
+      this.fetchListEmployee();
+      this.fetchListSupplier();
+      this.couponService.detail(this.update_coupon_id).subscribe(data => {
+        this.arraylist_coupon = data.data;
+        if (data.data === undefined) {
+        } else {
+          if (data.data.coupon_id === undefined || data.data.coupon_id === null) {
+          }
+          else {
+            this.update_supplier_id = data.data.supplier_id;
+            this.update_employee_id = data.data.employee_id;
+            this.update_total_money = data.data.total_money;
+          }
         }
-        else {
-          this.update_supplier_id = data.data.supplier_id;
-          this.update_employee_id = data.data.employee_id;
-          this.update_total_money = data.data.total_money;
-        }
-      }
-    })
+      })
+    },500);
   }
 
   save() {
@@ -157,7 +159,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     this.couponDetailService.getAll().subscribe(data => {
       this.arraylist_coupon_detail = data.data;
       for (let item of this.arraylist_coupon_detail) {
-        if (item.coupon_id.toString() === this.update_coupon_id.toString()) {
+        if (item.coupon_id === this.update_coupon_id) {
           this.listFilterResult.push(item);
         }
       }

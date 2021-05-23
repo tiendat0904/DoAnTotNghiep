@@ -14,11 +14,15 @@ export class ForgotPasswordComponent implements OnInit {
 
   formForgotPassword: FormGroup;
   email: any;
-  code:any;
-  numbercode:any;
-  checkCode:boolean;
-  forgotPasswordModel:forgotPasswordModel;
-  constructor(private mailService:MailService,private router: Router, private toaster: ToastrService,private fb: FormBuilder,) { 
+  code: any;
+  numbercode: any;
+  checkCode: boolean;
+  forgotPasswordModel: forgotPasswordModel;
+  constructor(
+    private mailService: MailService,
+    private router: Router,
+    private toaster: ToastrService,
+    private fb: FormBuilder,) {
     this.createForm();
   }
 
@@ -34,27 +38,27 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
 
-  SendEmail(){
+  SendEmail() {
     if (this.formForgotPassword.invalid) {
       this.toaster.error('Kiểm tra thông tin các trường đã nhập');
       return;
     }
-      this.numbercode= Math.floor((Math.random() * (999999-100000 + 1)))+1;
-      this.forgotPasswordModel = {
-        email:this.formForgotPassword.get("email")?.value,
-        code:this.numbercode
-      }
-      this.mailService.sendcode(this.forgotPasswordModel).subscribe(data =>{
-        this.checkCode = false;
-        this.toaster.success(data.success);
-      });
+    this.numbercode = Math.floor((Math.random() * (999999 - 100000 + 1))) + 1;
+    this.forgotPasswordModel = {
+      email: this.formForgotPassword.get("email")?.value,
+      code: this.numbercode
+    }
+    this.mailService.sendcode(this.forgotPasswordModel).subscribe(data => {
+      this.checkCode = false;
+      this.toaster.success(data.success);
+    });
   }
 
-  acceptCode(){
-    if(this.code.toString() === this.numbercode.toString()){
-      localStorage.setItem("emailReset",this.formForgotPassword.get("email")?.value);
+  acceptCode() {
+    if (this.code.toString() === this.numbercode.toString()) {
+      localStorage.setItem("emailReset", this.formForgotPassword.get("email")?.value);
       this.router.navigate(['/reset-password']);
-    }else{
+    } else {
       this.toaster.error("Mã xác nhận không đúng, vui lòng kiểm tra lại !!!");
     }
   }

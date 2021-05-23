@@ -18,6 +18,7 @@ export class SupplierComponent implements OnInit {
   listFilterResult: supplierModel[] = [];
   filterResultTemplist: supplierModel[] = [];
   modalReference: any;
+  condition = true;
   isDelete = true;
   closeResult: string;
   isLoading = false;
@@ -48,6 +49,7 @@ export class SupplierComponent implements OnInit {
   }
 
   public filterByKeyword() {
+    this.condition = true;
     var filterResult = [];
     if (this.searchedKeyword.length == 0) {
       this.listFilterResult = this.filterResultTemplist;
@@ -63,6 +65,11 @@ export class SupplierComponent implements OnInit {
         }
       });
       this.listFilterResult = filterResult;
+      if(this.listFilterResult.length !== 0){
+        this.condition = true;
+      }else{
+        this.condition = false;
+      }
     }
   }
 

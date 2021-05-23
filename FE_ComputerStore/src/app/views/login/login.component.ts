@@ -21,33 +21,32 @@ export class LoginComponent {
 
   formLogin: FormGroup;
   account: accountModel;
-  submitted = false;
-  check_bill: boolean;
   billModel: billModel;
   billDetailModel: billDetailModel;
-  account_id: any;
-  list_bill: Array<billModel> = [];
-  list_item: Array<ItemModel> = [];
-  update_bill_id: any;
   array_buildpc = [];
   array_buildpc_filter: Array<BuildPCModel> = [];
   array_pc: [];
   array_pc_customer: Array<BuildPCModel> = [];
+  list_bill: Array<billModel> = [];
+  list_item: Array<ItemModel> = [];
+  submitted = false;
+  check_bill: boolean;
+  account_id: any;
+  update_bill_id: any;
 
+  constructor(
+    private fb: FormBuilder,
+    private accountService: AccountService,
+    private router: Router, private toaster: ToastrService,
+    private billService: BillService,
+    private billDetailService: BillDetailService,
+    private cartService: CartService,
+    private pcService: PcService) { }
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router, private toaster: ToastrService,
-    private billService: BillService, private billDetailService: BillDetailService, private cartService: CartService, private pcService: PcService) {
-
-  }
   ngOnInit(): void {
     this.createForm();
-    // if (!localStorage.getItem('foo')) {
-    //   localStorage.setItem('foo', 'no reload')
-    //   location.reload()
-    // } else {
-    //   localStorage.removeItem('foo')
-    // }
   }
+
   createForm() {
     this.formLogin = this.fb.group({
       email: [null, [Validators.required, Validators.pattern(new RegExp(/^(.{10,})$/))]],
@@ -142,7 +141,6 @@ export class LoginComponent {
                   });
                 }
               }
-
               else {
                 this.billModel = {
                   customer_id: this.account_id,
@@ -165,14 +163,12 @@ export class LoginComponent {
                 });
               }
             }
-          }, err => {
           })
           this.router.navigate(['']);
         }
         else {
           this.router.navigate(['/admin/dashboard']);
         }
-
       }
       if (res.error) {
         this.toaster.error("Sai mật khẩu, vui lòng nhập lại");
@@ -197,7 +193,7 @@ export class LoginComponent {
           const modelDelete = {
             listId: build_pc_delete
           };
-          this.pcService.delete(modelDelete).subscribe(data =>{
+          this.pcService.delete(modelDelete).subscribe(data => {
             for (let item of this.array_buildpc) {
               pcModel = {
                 customer_id: Number(localStorage.getItem("account_id")),
@@ -208,7 +204,7 @@ export class LoginComponent {
               this.pcService.create(pcModel).subscribe();
             }
           })
-        }else{
+        } else {
           for (let item of this.array_buildpc) {
             pcModel = {
               customer_id: Number(localStorage.getItem("account_id")),

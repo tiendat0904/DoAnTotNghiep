@@ -95,7 +95,7 @@ export class BuildPcComponent implements OnInit {
     private productService: ProductService,
     private billService: BillService,
     private billDetailService: BillDetailService,
-    public loaderService:LoaderService
+    public loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
@@ -127,9 +127,8 @@ export class BuildPcComponent implements OnInit {
     }
   }
 
-
-  initModal(product_type: any,type:any): void {
-    this.view.view(product_type,type);
+  initModal(product_type: any, type: any): void {
+    this.view.view(product_type, type);
   }
 
   addToCart() {
@@ -164,7 +163,6 @@ export class BuildPcComponent implements OnInit {
                   amount: item.quantity,
                 }
                 this.billDetailService.create(this.billDetailModel).subscribe(data => {
-
                 })
               }
             }
@@ -175,7 +173,6 @@ export class BuildPcComponent implements OnInit {
       } else {
         this.toastr.warning("Bộ PC đang trống, vui lòng thêm linh kiện !!!");
       }
-
     } else {
       if (this.array_pc.length !== 0) {
         for (let item of this.array_pc) {
@@ -186,8 +183,6 @@ export class BuildPcComponent implements OnInit {
         this.toastr.warning("Bộ PC đang trống, vui lòng thêm linh kiện !!!");
       }
     }
-
-
   }
 
 
@@ -234,14 +229,12 @@ export class BuildPcComponent implements OnInit {
             this.loadproduct();
           });
         }
-
       })
     } else {
       this.pcService.addQty(item);
       this.loadproduct();
     }
   }
-
 
   deleteItem(item) {
     let array_build_delete = [];
@@ -254,15 +247,16 @@ export class BuildPcComponent implements OnInit {
           id: array_build_delete[0].build_pc_id
         };
         this.pcService.delete(modelDelete).subscribe(data => {
-          this.loadproduct();
           this.resetCheckBuildPC();
+          this.loadproduct();
+          this.modalReference.dismiss();
         });
       })
-
     } else {
       this.pcService.deleteItem(item);
-      this.loadproduct();
       this.resetCheckBuildPC();
+      this.loadproduct();
+      this.modalReference.dismiss();
     }
   }
 
@@ -280,7 +274,6 @@ export class BuildPcComponent implements OnInit {
             this.loadproduct();
           });
         }
-
       })
     } else {
       this.pcService.minusQty(item);
@@ -301,17 +294,17 @@ export class BuildPcComponent implements OnInit {
         };
         this.pcService.delete(modelDelete).subscribe(data => {
           this.toastr.success("Làm mới cấu hình PC thành công.");
-          this.loadproduct();
+
           this.resetCheckBuildPC();
+          this.loadproduct();
         });
       })
-
     } else {
       this.pcService.clearCart();
+
       this.loadproduct();
       this.resetCheckBuildPC();
     }
-
     this.modalReference.dismiss();
   }
 
@@ -445,11 +438,12 @@ export class BuildPcComponent implements OnInit {
           }
         }
       })
+
     } else {
       let pricecheck: any;
       this.array_pc = this.pcService.getItems();
       console.log(this.array_pc);
-      if(this.array_pc !== [] && this.array_pc !== null){
+      if (this.array_pc !== [] && this.array_pc !== null) {
         for (let item of this.array_pc) {
           if (item.product.price_new === null) {
             pricecheck = item.product.price;
@@ -468,8 +462,6 @@ export class BuildPcComponent implements OnInit {
         }
         // }
       }
-      
-
       if (this.array_build_pc !== []) {
         for (let item of this.array_build_pc) {
           switch (item.product_type_name) {
@@ -561,7 +553,4 @@ export class BuildPcComponent implements OnInit {
     }
     this.totalPC();
   }
-
-
-
 }

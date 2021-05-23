@@ -105,11 +105,8 @@ export class SelectItemBuildPcComponent implements OnInit {
         this.pcService.addToCart(product);
         this.eventEmit.emit('success');
         this.modalReference.dismiss();
-
       }
     }
-
-
   }
 
 
@@ -120,11 +117,9 @@ export class SelectItemBuildPcComponent implements OnInit {
     this.arraylist_product_filter = [];
     this.arraylist_trademark_filter = [];
     this.arraylist_trademark_selected = [];
-      
     setTimeout(() => {
       this.open(this.childModal);
     }, 650);
-
     this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
       this.arraylist_product_include = this.arraylist_product_filter = this.arraylist_product.filter(function (laptop) {
@@ -144,17 +139,14 @@ export class SelectItemBuildPcComponent implements OnInit {
               item2.checkAmount = true;
             }
             if (item2.price_new === null) {
-              // item2.isCheckPrice = true;
               item2.price_display = item2.price;
             } else {
-              // item2.isCheckPrice = false;
               item2.price_display = item2.price_new;
             }
             if (item1.trademark_id === item2.trademark_id) {
               this.arraylist_trademark_selected.push(item1);
             }
           }
-
         }
         this.arraylist_trademark_filter = this.arraylist_trademark_selected.filter((test, index, array) =>
           index === array.findIndex((findTest) =>
@@ -163,7 +155,6 @@ export class SelectItemBuildPcComponent implements OnInit {
       })
     });
   }
-
 
   public filterByKeyword() {
     for (let item of this.arraylist_trademark_filter) {
@@ -191,7 +182,6 @@ export class SelectItemBuildPcComponent implements OnInit {
         this.arraylist_product_filter = filterResult;
       }
     }
-
   }
 
   public filterProducts(): void {
@@ -208,7 +198,6 @@ export class SelectItemBuildPcComponent implements OnInit {
       let list = list_product_filter.filter(product => activeColors.includes(product.trademark_id));
       this.arraylist_product_filter = [];
       this.arraylist_product_filter = list;
-
     }
   }
 
@@ -237,6 +226,4 @@ export class SelectItemBuildPcComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
-
 }

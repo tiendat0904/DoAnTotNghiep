@@ -300,31 +300,31 @@ class AccountController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == self::NV || $ac_type == self::QT) {
-            try {
-                if ($listId = $request->get(BaseController::listId)) {
-                    if (count($listId) > 0) {
-                        foreach ($listId as $id) {
-                            if (DB::table(self::table)->where(self::table . '.' . self::account_type_id, '=', '3')
-                                ->where(self::table . '.' . self::id, '=', $id)->get()
-                            ) {
-                                return response()->json(['error' => 'Xóa thất bại. Không thể xóa tài khoản khách hàng'], 403);
-                            }
-                        }
-                    } else {
-                        return response()->json(['error' => 'Xóa thất bại. Không có dữ liệu'], 400);
-                    }
-                } else {
-                    $id = $request->get(BaseController::key_id);
-                    if (DB::table(self::table)->where(self::table . '.' . self::account_type_id, '=', '3')
-                        ->where(self::table . '.' . self::id, '=', $id)->get()
-                    ) {
-                        return response()->json(['error' => 'Xóa thất bại. Không thể xóa tài khoản khách hàng'], 403);
-                    }
-                }
-            } catch (\Throwable $e) {
-                report($e);
-                return response()->json(['error' => $e], 500);
-            }
+            // try {
+            //     if ($listId = $request->get(BaseController::listId)) {
+            //         if (count($listId) > 0) {
+            //             foreach ($listId as $id) {
+            //                 if (DB::table(self::table)->where(self::table . '.' . self::account_type_id, '=', '3')
+            //                     ->where(self::table . '.' . self::id, '=', $id)->get()
+            //                 ) {
+            //                     return response()->json(['error' => 'Xóa thất bại. Không thể xóa tài khoản khách hàng'], 403);
+            //                 }
+            //             }
+            //         } else {
+            //             return response()->json(['error' => 'Xóa thất bại. Không có dữ liệu'], 400);
+            //         }
+            //     } else {
+            //         $id = $request->get(BaseController::key_id);
+            //         if (DB::table(self::table)->where(self::table . '.' . self::account_type_id, '=', '3')
+            //             ->where(self::table . '.' . self::id, '=', $id)->get()
+            //         ) {
+            //             return response()->json(['error' => 'Xóa thất bại. Không thể xóa tài khoản khách hàng'], 403);
+            //         }
+            //     }
+            // } catch (\Throwable $e) {
+            //     report($e);
+            //     return response()->json(['error' => $e], 500);
+            // }
             $this->base->destroy($request);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {

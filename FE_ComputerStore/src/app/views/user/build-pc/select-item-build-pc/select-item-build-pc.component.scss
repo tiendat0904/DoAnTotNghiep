@@ -2,7 +2,7 @@
     position: absolute;
     height: 100%;
     width: 87%;
-    opacity: 1;
+    opacity: 0.85;
     z-index: 99999;
 }
 
@@ -74,9 +74,11 @@ hr{
     margin-top: 20px;
     margin-left: 10px;
 }
+
 .product-description-cart p{
     margin-bottom: 0px;
 }
+
 .product-description-cart h5{
     font-weight: bold;
     font-size: 16px;
@@ -101,7 +103,6 @@ hr{
     background-color: #2d3877;
     color: #fff;
 }
-
 
 ::ng-deep .modal-content{
     margin-bottom: 0 !important;

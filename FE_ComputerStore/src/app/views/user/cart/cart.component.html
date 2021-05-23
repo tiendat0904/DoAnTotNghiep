@@ -1,7 +1,6 @@
-
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-    <mat-progress-spinner mode="indeterminate" style="top: 5%; left: 40%;" ></mat-progress-spinner>
-  </div>
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+    <mat-progress-spinner mode="indeterminate" style="top: 5%; left: 40%;"></mat-progress-spinner>
+</div>
 <div class='product-detail-page'>
     <div class='product-detail-icon'>
         <a href=""><i class="fas fa-home"></i></a>
@@ -11,7 +10,7 @@
     <hr />
     <div></div>
 </div>
-<div *ngIf="checkCart; else elseNocart" >
+<div *ngIf="checkCart; else elseNocart">
     <div class='cart-main'>
         <div style="margin-right: 20px;">
             <h2>THÔNG TIN GIỎ HÀNG</h2>
@@ -100,7 +99,6 @@
             </div>
         </div>
     </div>
-
     <div class="order-cart">
         <div class="order-info-custommer">
             <h3>THÔNG TIN KHÁCH HÀNG</h3>
@@ -116,11 +114,15 @@
                 </div>
                 <br>
                 <div>
-                    <span style="margin-right: 91px;">Email</span><input type="text"
-                        [(ngModel)]="update_email" formControlName="email">
-                    <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
+                    <span style="margin-right: 85px;">Email*</span><input type="text" [(ngModel)]="update_email"
+                        formControlName="email">
+                    <div
+                        *ngIf="submitted && formGroup.controls['email'].errors?.required || formGroup.controls['email'].errors?.pattern">
                         <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
                             * Email không được để trống
+                        </div>
+                        <div *ngIf="formGroup.controls['email'].errors?.pattern" style="color: red">
+                            * Nhập đúng định dạng email
                         </div>
                     </div>
                 </div>
@@ -145,17 +147,11 @@
                     </div>
                 </div>
                 <br>
-                <div>
+                <div style="margin-bottom: 10px;">
                     <span style="margin-right: 93px;">Note</span><input type="text" [(ngModel)]="update_note"
                         formControlName="note">
-                    <!-- <div *ngIf="submitted && formGroup.controls['email'].errors?.required">
-                        <div *ngIf="formGroup.controls['email'].errors?.required" style="color: red">
-                            * Email không được để trống
-                        </div>
-                    </div> -->
                 </div>
             </form>
-
         </div>
         <div class="order-type">
             <h3>HÌNH THỨC THANH TOÁN</h3>
@@ -170,12 +166,13 @@
             <div style="display: flex;">
                 <div style="padding-right: 5px;">
                     <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" autocomplete="off">
-                    <div style="background-color: #ccc2c2;" *ngFor="let item of list_voucher_filter">
-                        <p><span style="font-weight: normal;">Voucher :</span>{{item.voucher_level}}%</p>
+                    <div style="background-color: #fff;" *ngFor="let item of list_voucher_filter">
+                        <p style="font-weight: normal; color: red;"><span style="font-weight: normal">Voucher
+                                :</span>{{item.voucher_level}}%</p>
                     </div>
                 </div>
-
-                <button style="border-radius: 3px;border:0px;height: 35px;background-color: #243a76;width: 78px;color: #fff;"
+                <button
+                    style="border-radius: 3px;border:0px;height: 35px;background-color: #243a76;width: 78px;color: #fff;"
                     (click)="useVouvher();">Áp dụng</button>
             </div>
             <div>

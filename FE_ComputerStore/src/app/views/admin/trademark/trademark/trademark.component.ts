@@ -17,8 +17,7 @@ export class TrademarkComponent implements OnInit {
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  // isLoading = false;
-  // isSelected = true;
+  condition = true;
   searchedKeyword: string;
   list_supplier: Array<trademarkModel> = [];
   listFilterResult: trademarkModel[] = [];
@@ -38,7 +37,6 @@ export class TrademarkComponent implements OnInit {
   }
 
   fetchlistSupplier() {
-    // this.isLoading = true;
     this.trademarkService.getAll().subscribe(data => {
       this.list_supplier = data.data;
       this.listFilterResult = data.data;
@@ -49,7 +47,9 @@ export class TrademarkComponent implements OnInit {
 
   public filterByKeyword() {
     var filterResult = [];
+    this.condition = true;
     if (this.searchedKeyword.length == 0) {
+      this.condition = true;
       this.listFilterResult = this.filterResultTemplist;
     } else {
       this.listFilterResult = this.filterResultTemplist;
@@ -61,6 +61,11 @@ export class TrademarkComponent implements OnInit {
         }
       });
       this.listFilterResult = filterResult;
+      if (this.listFilterResult.length !== 0) {
+        this.condition = true;
+      } else {
+        this.condition = false;
+      }
     }
   }
 

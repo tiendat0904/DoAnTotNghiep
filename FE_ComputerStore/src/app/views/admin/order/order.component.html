@@ -54,8 +54,8 @@
             </div>
          </div>
          <div class="row">
-            <div class="col-12" style="height: 350px;">
-               <table class="table table-striped table-hover table-bordered ">
+            <div class="col-12" style="height: 350px;" >
+               <table class="table table-striped table-hover table-bordered " *ngIf="condition; else elseBlock">
                   <thead>
                      <tr>
                         <th scope="col">
@@ -125,6 +125,9 @@
                      </tr>
                   </tbody>
                </table>
+               <ng-template #elseBlock>
+                  <p style="margin-left: 3px;font-size: 15px;">Không tìm thấy hóa đơn phù hợp.</p>
+               </ng-template>
             </div>
             <div class="col-12 justify-content-center">
                <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"

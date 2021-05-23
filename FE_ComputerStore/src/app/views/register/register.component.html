@@ -5,146 +5,100 @@
         <div class="col-md-6 mx-auto">
           <div class="card mx-4">
             <div class="card-body p-4">
-              <form [formGroup]="formRegister" (ngSubmit)="save()" >
+              <form [formGroup]="formRegister" (ngSubmit)="save()">
                 <h1>Register</h1>
                 <p class="text-muted">Create your account</p>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-user"></i></span>
                   </div>
-                  <input
-                        type="text"
-                        class="form-control"
-                        name="full_name"
-                        formControlName="full_name"
-                        required
-                        minlength="6"
-                        placeholder="Nhập họ tên"
-                        />
-                     <div
-                        *ngIf="submitted && formRegister.controls['full_name'].errors?.required">
-                        <div *ngIf="formRegister.controls['full_name'].errors?.required" style="color: red">
-                           * Họ tên không được để trống
-                        </div>
-                     </div>
+                  <input type="text" class="form-control" name="full_name" formControlName="full_name" required
+                    minlength="6" placeholder="Nhập họ tên" />
+                  <div *ngIf="submitted && formRegister.controls['full_name'].errors?.required">
+                    <div *ngIf="formRegister.controls['full_name'].errors?.required" style="color: red">
+                      * Họ tên không được để trống
+                    </div>
+                  </div>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">@</span>
                   </div>
-                  <input
-                        type="text"
-                        class="form-control"
-                        name=""
-                        formControlName="email"
-                        placeholder="Nhập email"
-                        autocomplete="off"
-                        required
-                        />
-                     <div
-                        *ngIf="submitted && formRegister.controls['email'].errors?.required || formRegister.controls['email'].errors?.pattern">
-                        <div *ngIf="formRegister.controls['email'].errors?.required" style="color: red">
-                           * Email không được để trống
-                        </div>
-                        <div *ngIf="formRegister.controls['email'].errors?.pattern" style="color: red">
-                           * Nhập đúng định dạng email
-                        </div>
-                     </div>
+                  <input type="text" class="form-control" name="" formControlName="email" placeholder="Nhập email"
+                    autocomplete="off" required />
+                  <div
+                    *ngIf="submitted && formRegister.controls['email'].errors?.required || formRegister.controls['email'].errors?.pattern">
+                    <div *ngIf="formRegister.controls['email'].errors?.required" style="color: red">
+                      * Email không được để trống
+                    </div>
+                    <div *ngIf="formRegister.controls['email'].errors?.pattern" style="color: red">
+                      * Nhập đúng định dạng email
+                    </div>
+                  </div>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-user"></i></span>
                   </div>
-                  <input
-                        type="text"
-                        class="form-control"
-                        name="phone_number"
-                        formControlName="phone_number"
-                        required
-                        minlength="10"
-                        placeholder="Nhập số điện thoại"
-                        />
-                     <div
-                        *ngIf="submitted && formRegister.controls['phone_number'].errors?.required || formRegister.controls['phone_number'].errors?.pattern">
-                        <div *ngIf="formRegister.controls['phone_number'].errors?.required" style="color: red">
-                           * Số diện thoại không được để trống
-                        </div>
-                        <div *ngIf="formRegister.controls['phone_number'].errors?.pattern" style="color: red">
-                           * Nhập đúng định dạng số điện thoại
-                        </div>
-                     </div>
+                  <input type="text" class="form-control" name="phone_number" formControlName="phone_number" required
+                    minlength="10" placeholder="Nhập số điện thoại" />
+                  <div
+                    *ngIf="submitted && formRegister.controls['phone_number'].errors?.required || formRegister.controls['phone_number'].errors?.pattern">
+                    <div *ngIf="formRegister.controls['phone_number'].errors?.required" style="color: red">
+                      * Số diện thoại không được để trống
+                    </div>
+                    <div *ngIf="formRegister.controls['phone_number'].errors?.pattern" style="color: red">
+                      * Nhập đúng định dạng số điện thoại
+                    </div>
+                  </div>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-user"></i></span>
                   </div>
-                  <input
-                        type="text"
-                        class="form-control"
-                        name=""
-                        formControlName="address"
-                        required
-                        minlength="6"
-                        placeholder="Nhập địa chỉ"
-                        autocomplete="off"
-                        />
-                     <div
-                        *ngIf="submitted && formRegister.controls['address'].errors?.required || formRegister.controls['address'].errors?.pattern">
-                        <div *ngIf="formRegister.controls['address'].errors?.required" style="color: red">
-                           * Đia chỉ không được để trống
-                        </div>
-                        <div *ngIf="formRegister.controls['address'].errors?.pattern" style="color: red">
-                           * Đia chỉ tối thiểu 4 kí tự
-                        </div>
-                     </div>
+                  <input type="text" class="form-control" name="" formControlName="address" required minlength="6"
+                    placeholder="Nhập địa chỉ" autocomplete="off" />
+                  <div
+                    *ngIf="submitted && formRegister.controls['address'].errors?.required || formRegister.controls['address'].errors?.pattern">
+                    <div *ngIf="formRegister.controls['address'].errors?.required" style="color: red">
+                      * Đia chỉ không được để trống
+                    </div>
+                    <div *ngIf="formRegister.controls['address'].errors?.pattern" style="color: red">
+                      * Đia chỉ tối thiểu 4 kí tự
+                    </div>
+                  </div>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-lock"></i></span>
                   </div>
-                  <input
-                        type="password"
-                        class="form-control"
-                        name=""
-                        formControlName="password"
-                        required
-                        minlength="8"
-                        autocomplete="new-password"
-                        placeholder="Nhập mật khẩu"
-
-                        />
-                     <div
-                        *ngIf="submitted && formRegister.controls['password'].errors?.required || formRegister.controls['password'].errors?.pattern">
-                        <div *ngIf="formRegister.controls['password'].errors?.required" style="color: red">
-                           * Mật khẩu không được để trống
-                        </div>
-                        <div *ngIf="formRegister.controls['password'].errors?.pattern" style="color: red">
-                           * Mật khẩu tối thiểu 8 kí tự
-                        </div>
-                     </div>
+                  <input type="password" class="form-control" name="" formControlName="password" required minlength="8"
+                    autocomplete="new-password" placeholder="Nhập mật khẩu" />
+                  <div
+                    *ngIf="submitted && formRegister.controls['password'].errors?.required || formRegister.controls['password'].errors?.pattern">
+                    <div *ngIf="formRegister.controls['password'].errors?.required" style="color: red">
+                      * Mật khẩu không được để trống
+                    </div>
+                    <div *ngIf="formRegister.controls['password'].errors?.pattern" style="color: red">
+                      * Mật khẩu tối thiểu 8 kí tự
+                    </div>
+                  </div>
                 </div>
                 <div class="input-group mb-4">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-lock"></i></span>
                   </div>
-                  <input
-                        type="password"
-                        class="form-control"
-                        name=""
-                        formControlName="confirm_password"
-                        required
-                        minlength="8"
-                        placeholder="Confilm mật khẩu"
-                        />
-                     <div
-                        *ngIf="submitted && formRegister.controls['confirm_password'].errors?.required || formRegister.controls['confirm_password'].errors?.pattern">
-                        <div *ngIf="formRegister.controls['confirm_password'].errors?.required" style="color: red">
-                           * Vui lòng điền lại mật khẩu 
-                        </div>
-                        <div *ngIf="formRegister.controls['confirm_password'].errors?.pattern" style="color: red">
-                           * Mật khẩu tối thiểu 8 kí tự
-                        </div>
-                     </div>
+                  <input type="password" class="form-control" name="" formControlName="confirm_password" required
+                    minlength="8" placeholder="Confilm mật khẩu" />
+                  <div
+                    *ngIf="submitted && formRegister.controls['confirm_password'].errors?.required || formRegister.controls['confirm_password'].errors?.pattern">
+                    <div *ngIf="formRegister.controls['confirm_password'].errors?.required" style="color: red">
+                      * Vui lòng điền lại mật khẩu
+                    </div>
+                    <div *ngIf="formRegister.controls['confirm_password'].errors?.pattern" style="color: red">
+                      * Mật khẩu tối thiểu 8 kí tự
+                    </div>
+                  </div>
                 </div>
                 <button type="submit" class="btn btn-block btn-success">Create Account</button>
               </form>

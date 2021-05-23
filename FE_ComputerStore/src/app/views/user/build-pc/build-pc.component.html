@@ -14,7 +14,7 @@
         <h2>XÂY DỰNG MÁY TÍNH HÀNG ĐẦU VIỆT NAM</h2>
     </div>
     <div class="button-reset">
-        <button (click) = "open(resetPC);">Làm mới <i class="fas fa-sync-alt"></i></button>
+        <button (click)="open(resetPC);">Làm mới <i class="fas fa-sync-alt"></i></button>
         <ng-template #resetPC let-modal>
             <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title">
@@ -28,7 +28,7 @@
                 Bạn có chắc chắn muốn xóa cấu hình PC này ?
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger" style="width: 80px" (click) = "resetBuildPC();">
+                <button class="btn btn-danger" style="width: 80px" (click)="resetBuildPC();">
                     Có
                 </button>
                 <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
@@ -42,7 +42,8 @@
             <tbody style="float: right;width: 33%;">
                 <tr style="float: right;width: 85%;">
                     <td>Chi phí dự tính</td>
-                    <td> <span class="js-config-summary"><span class="total-price-config">{{total_money | currency: 'VND'}}</span>
+                    <td> <span class="js-config-summary"><span class="total-price-config">{{total_money | currency:
+                                'VND'}}</span>
                         </span>
                     </td>
                 </tr>
@@ -50,12 +51,13 @@
         </table>
     </div>
     <div class="buildpc-main">
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>1.Bộ vi xử lý</span></div>
-            <div class= "select-item" [hidden] = "checkCPU">
-                <button (click)="initModal('CPU','add');"><span><i class="fa fa-plus"></i> Chọn bộ vi xử lý</span></button>
+            <div class="select-item" [hidden]="checkCPU">
+                <button (click)="initModal('CPU','add');"><span><i class="fa fa-plus"></i> Chọn bộ vi xử
+                        lý</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_cpu" [hidden] = "checkDisplayCPU">
+            <div class='product-cart-detail' *ngIf="product_cpu" [hidden]="checkDisplayCPU">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_cpu.product_id]"><img src="{{product_cpu.image}}" alt=""></a>
                 </div>
@@ -75,18 +77,41 @@
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('CPU','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_cpu.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_cpu.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>2.Bo mạch chủ</span></div>
-            <div class= "select-item"[hidden] = "checkmain">
-                <button (click)="initModal('Main','add');"><span><i class="fa fa-plus"></i> Chọn Bo mạch chủ</span></button>
+            <div class="select-item" [hidden]="checkmain">
+                <button (click)="initModal('Main','add');"><span><i class="fa fa-plus"></i> Chọn Bo mạch
+                        chủ</span></button>
             </div>
-            <div class='product-cart-detail'  *ngIf = "product_main"  [hidden] = "checkDisplayMain">
+            <div class='product-cart-detail' *ngIf="product_main" [hidden]="checkDisplayMain">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_main.product_id]"><img src="{{product_main.image}}" alt=""></a>
                 </div>
@@ -99,25 +124,47 @@
                 <div class='product-price-cart'>
                     <span>{{product_main.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_main.product_id);"><i
-                                class='fa fa-minus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="minusQuantity(product_main.product_id);"><i class='fa fa-minus'></i></button>
                         <input type="text" value={{product_main.quantity}} readonly>
                         <button type="button" style="outline: none;" (click)="addQuantity(product_main.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Main','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_main.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_main.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>3.RAM</span></div>
-            <div class= "select-item"  [hidden] = "checkram">
+            <div class="select-item" [hidden]="checkram">
                 <button (click)="initModal('RAM','add');"><span><i class="fa fa-plus"></i> Chọn RAM</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_ram" [hidden] = "checkDisplayRAM">
+            <div class='product-cart-detail' *ngIf="product_ram" [hidden]="checkDisplayRAM">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_ram.product_id]"><img src="{{product_ram.image}}" alt=""></a>
                 </div>
@@ -137,18 +184,40 @@
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('RAM','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_ram.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_ram.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>4.HDD</span></div>
-            <div class= "select-item"  [hidden] = "checkhdd">
+            <div class="select-item" [hidden]="checkhdd">
                 <button (click)="initModal('HDD','add');"><span><i class="fa fa-plus"></i> Chọn HDD</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_hdd" [hidden] = "checkDisplayHDD">
+            <div class='product-cart-detail' *ngIf="product_hdd" [hidden]="checkDisplayHDD">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_hdd.product_id]"><img src="{{product_hdd.image}}" alt=""></a>
                 </div>
@@ -168,18 +237,40 @@
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('HDD','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_hdd.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_hdd.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>5.SSD</span></div>
-            <div class= "select-item"  [hidden] = "checkssd">
+            <div class="select-item" [hidden]="checkssd">
                 <button (click)="initModal('SSD','add');"><span><i class="fa fa-plus"></i> Chọn SSD</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_ssd" [hidden] = "checkDisplaySSD">
+            <div class='product-cart-detail' *ngIf="product_ssd" [hidden]="checkDisplaySSD">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_ssd.product_id]"><img src="{{product_ssd.image}}" alt=""></a>
                 </div>
@@ -199,18 +290,40 @@
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('SSD','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_ssd.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_ssd.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>6.VGA</span></div>
-            <div class= "select-item" [hidden] = "checkvga">
+            <div class="select-item" [hidden]="checkvga">
                 <button (click)="initModal('VGA','add');"><span><i class="fa fa-plus"></i> Chọn VGA</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_vga"  [hidden] = "checkDisplayVGA">
+            <div class='product-cart-detail' *ngIf="product_vga" [hidden]="checkDisplayVGA">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_vga.product_id]"><img src="{{product_vga.image}}" alt=""></a>
                 </div>
@@ -229,19 +342,41 @@
                         <button type="button" style="outline: none;" (click)="addQuantity(product_vga.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart"  (click)="initModal('VGA','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_vga.product_id);" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('VGA','edit');" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_vga.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>7.Nguồn</span></div>
-            <div class= "select-item"  [hidden] = "checkpsu">
+            <div class="select-item" [hidden]="checkpsu">
                 <button (click)="initModal('PSU','add');"><span><i class="fa fa-plus"></i> Chọn Nguồn</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_psu" [hidden] = "checkDisplayPSU">
+            <div class='product-cart-detail' *ngIf="product_psu" [hidden]="checkDisplayPSU">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_psu.product_id]"><img src="{{product_psu.image}}" alt=""></a>
                 </div>
@@ -261,18 +396,40 @@
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('PSU',edit);" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_psu.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_psu.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item"> 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>8.Vỏ case</span></div>
-            <div class= "select-item"   [hidden] = "checkcase">
+            <div class="select-item" [hidden]="checkcase">
                 <button (click)="initModal('CASE','add');"><span><i class="fa fa-plus"></i> Chọn Vỏ Case</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_case" [hidden] = "checkDisplayCASE">
+            <div class='product-cart-detail' *ngIf="product_case" [hidden]="checkDisplayCASE">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_case.product_id]"><img src="{{product_case.image}}" alt=""></a>
                 </div>
@@ -285,25 +442,48 @@
                 <div class='product-price-cart'>
                     <span>{{product_case.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_case.product_id);"><i
-                                class='fa fa-minus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="minusQuantity(product_case.product_id);"><i class='fa fa-minus'></i></button>
                         <input type="text" value={{product_case.quantity}} readonly>
                         <button type="button" style="outline: none;" (click)="addQuantity(product_case.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('CASE','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_case.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_case.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>9.Màn hình</span></div>
-            <div class= "select-item"  [hidden] = "checkmanhinh">
-                <button (click)="initModal('Màn hình','add');"><span><i class="fa fa-plus"></i> Chọn màn hình</span></button>
+            <div class="select-item" [hidden]="checkmanhinh">
+                <button (click)="initModal('Màn hình','add');"><span><i class="fa fa-plus"></i> Chọn màn
+                        hình</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_manhinh" [hidden] = "checkDisplayManHinh">
+            <div class='product-cart-detail' *ngIf="product_manhinh" [hidden]="checkDisplayManHinh">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_manhinh.product_id]"><img src="{{product_manhinh.image}}" alt=""></a>
                 </div>
@@ -316,27 +496,51 @@
                 <div class='product-price-cart'>
                     <span>{{product_manhinh.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_manhinh.product_id);"><i
-                                class='fa fa-minus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="minusQuantity(product_manhinh.product_id);"><i class='fa fa-minus'></i></button>
                         <input type="text" value={{product_manhinh.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_manhinh.product_id);"><i
-                                class='fa fa-plus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="addQuantity(product_manhinh.product_id);"><i class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Màn hình','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_manhinh.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_manhinh.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>10.Bàn phím</span></div>
-            <div class= "select-item"  [hidden] = "checkkeyboard">
-                <button (click)="initModal('Keyboard','add');"><span><i class="fa fa-plus"></i> Chọn bàn phím</span></button>
+            <div class="select-item" [hidden]="checkkeyboard">
+                <button (click)="initModal('Keyboard','add');"><span><i class="fa fa-plus"></i> Chọn bàn
+                        phím</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_keyboard" [hidden] = "checkDisplayKeyboard">
+            <div class='product-cart-detail' *ngIf="product_keyboard" [hidden]="checkDisplayKeyboard">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_keyboard.product_id]"><img src="{{product_keyboard.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_keyboard.product_id]"><img src="{{product_keyboard.image}}"
+                            alt=""></a>
                 </div>
                 <div class="product-description-cart">
                     <h5>{{product_keyboard.product_name}}</h5>
@@ -347,25 +551,47 @@
                 <div class='product-price-cart'>
                     <span>{{product_keyboard.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_keyboard.product_id);"><i
-                                class='fa fa-minus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="minusQuantity(product_keyboard.product_id);"><i class='fa fa-minus'></i></button>
                         <input type="text" value={{product_keyboard.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_keyboard.product_id);"><i
-                                class='fa fa-plus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="addQuantity(product_keyboard.product_id);"><i class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Keyboard','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_keyboard.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_keyboard.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>11.Chuột</span></div>
-            <div class= "select-item"  [hidden] = "checkmouse">
+            <div class="select-item" [hidden]="checkmouse">
                 <button (click)="initModal('Mouse','add');"><span><i class="fa fa-plus"></i> Chọn chuột</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_mouse" [hidden] = "checkDisplayMouse">
+            <div class='product-cart-detail' *ngIf="product_mouse" [hidden]="checkDisplayMouse">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_mouse.product_id]"><img src="{{product_mouse.image}}" alt=""></a>
                 </div>
@@ -378,27 +604,51 @@
                 <div class='product-price-cart'>
                     <span>{{product_mouse.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_mouse.product_id);"><i
-                                class='fa fa-minus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="minusQuantity(product_mouse.product_id);"><i class='fa fa-minus'></i></button>
                         <input type="text" value={{product_mouse.quantity}} readonly>
                         <button type="button" style="outline: none;" (click)="addQuantity(product_mouse.product_id);"><i
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Mouse','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_mouse.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_mouse.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>12.Tai nghe</span></div>
-            <div class= "select-item"  [hidden] = "checkheadphone">
-                <button (click)="initModal('Headphone','add');"><span><i class="fa fa-plus"></i> Chọn tai nghe</span></button>
+            <div class="select-item" [hidden]="checkheadphone">
+                <button (click)="initModal('Headphone','add');"><span><i class="fa fa-plus"></i> Chọn tai
+                        nghe</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_headphone" [hidden] = "checkDisplayHeadphone">
+            <div class='product-cart-detail' *ngIf="product_headphone" [hidden]="checkDisplayHeadphone">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_headphone.product_id]"><img src="{{product_headphone.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_headphone.product_id]"><img src="{{product_headphone.image}}"
+                            alt=""></a>
                 </div>
                 <div class="product-description-cart">
                     <h5>{{product_headphone.product_name}}</h5>
@@ -409,25 +659,47 @@
                 <div class='product-price-cart'>
                     <span>{{product_headphone.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_headphone.product_id);"><i
-                                class='fa fa-minus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="minusQuantity(product_headphone.product_id);"><i class='fa fa-minus'></i></button>
                         <input type="text" value={{product_headphone.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_headphone.product_id);"><i
-                                class='fa fa-plus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="addQuantity(product_headphone.product_id);"><i class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Headphone','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_headphone.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_headphone.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>13.Loa</span></div>
-            <div class= "select-item"  [hidden] = "checkloa">
+            <div class="select-item" [hidden]="checkloa">
                 <button (click)="initModal('Loa','add');"><span><i class="fa fa-plus"></i> Chọn Loa</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_loa" [hidden] = "checkDisplayLoa">
+            <div class='product-cart-detail' *ngIf="product_loa" [hidden]="checkDisplayLoa">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_loa.product_id]"><img src="{{product_loa.image}}" alt=""></a>
                 </div>
@@ -447,18 +719,41 @@
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Loa','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_loa.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_loa.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>14.Ghế gaming</span></div>
-            <div class= "select-item"   [hidden] = "checkghe">
-                <button (click)="initModal('Ghế gaming','add');"><span><i class="fa fa-plus"></i> Chọn Ghế gaming</span></button>
+            <div class="select-item" [hidden]="checkghe">
+                <button (click)="initModal('Ghế gaming','add');"><span><i class="fa fa-plus"></i> Chọn Ghế
+                        gaming</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_ghe" [hidden] = "checkDisplayGhe">
+            <div class='product-cart-detail' *ngIf="product_ghe" [hidden]="checkDisplayGhe">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_ghe.product_id]"><img src="{{product_ghe.image}}" alt=""></a>
                 </div>
@@ -478,18 +773,41 @@
                                 class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Ghế gaming','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_ghe.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_ghe.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>15.Quạt làm mát</span></div>
-            <div class= "select-item"  [hidden] = "checkfancase">
-                <button (click)="initModal('Fan Case','add');"><span><i class="fa fa-plus"></i> Chọn quạt làm mát</span></button>
+            <div class="select-item" [hidden]="checkfancase">
+                <button (click)="initModal('Fan Case','add');"><span><i class="fa fa-plus"></i> Chọn quạt làm
+                        mát</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_fancase" [hidden] = "checkDisplayFanCase">
+            <div class='product-cart-detail' *ngIf="product_fancase" [hidden]="checkDisplayFanCase">
                 <div class='product-cart-image'>
                     <a [routerLink]="['/',product_fancase.product_id]"><img src="{{product_fancase.image}}" alt=""></a>
                 </div>
@@ -502,27 +820,51 @@
                 <div class='product-price-cart'>
                     <span>{{product_fancase.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_fancase.product_id);"><i
-                                class='fa fa-minus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="minusQuantity(product_fancase.product_id);"><i class='fa fa-minus'></i></button>
                         <input type="text" value={{product_fancase.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_fancase.product_id);"><i
-                                class='fa fa-plus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="addQuantity(product_fancase.product_id);"><i class='fa fa-plus'></i></button>
                     </div>
                     <button id="change-product-cart" (click)="initModal('Fan Case','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_fancase.product_id);" style="outline: none;"><i
+                            class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_fancase.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
-        <div class="buldpc-main-item" > 
+        <div class="buldpc-main-item">
             <div class="span-title"><span>16.Tản nhiệt nước</span></div>
-            <div class= "select-item"  [hidden] = "checktannhiet">
-                <button (click)="initModal('Tản nhiệt nước','add');"><span><i class="fa fa-plus"></i> Chọn tản nhiệt nước</span></button>
+            <div class="select-item" [hidden]="checktannhiet">
+                <button (click)="initModal('Tản nhiệt nước','add');"><span><i class="fa fa-plus"></i> Chọn tản nhiệt
+                        nước</span></button>
             </div>
-            <div class='product-cart-detail' *ngIf = "product_tannhiet" [hidden] = "checkDisplayTanNhiet">
+            <div class='product-cart-detail' *ngIf="product_tannhiet" [hidden]="checkDisplayTanNhiet">
                 <div class='product-cart-image'>
-                    <a [routerLink]="['/',product_tannhiet.product_id]"><img src="{{product_tannhiet.image}}" alt=""></a>
+                    <a [routerLink]="['/',product_tannhiet.product_id]"><img src="{{product_tannhiet.image}}"
+                            alt=""></a>
                 </div>
                 <div class="product-description-cart">
                     <h5>{{product_tannhiet.product_name}}</h5>
@@ -533,17 +875,39 @@
                 <div class='product-price-cart'>
                     <span>{{product_tannhiet.price | currency: 'VND'}}</span>
                     <div>
-                        <button type="button" style="outline: none;" (click)="minusQuantity(product_tannhiet.product_id);"><i
-                                class='fa fa-minus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="minusQuantity(product_tannhiet.product_id);"><i class='fa fa-minus'></i></button>
                         <input type="text" value={{product_tannhiet.quantity}} readonly>
-                        <button type="button" style="outline: none;" (click)="addQuantity(product_tannhiet.product_id);"><i
-                                class='fa fa-plus'></i></button>
+                        <button type="button" style="outline: none;"
+                            (click)="addQuantity(product_tannhiet.product_id);"><i class='fa fa-plus'></i></button>
                     </div>
-                    <button id="change-product-cart" (click)="initModal('Tản nhiệt nước','edit');" style="outline: none;"><i
-                        class="fas fa-edit edit" aria-hidden="true"></i></button>
-                    <button id="delete-product-cart" (click)="deleteItem(product_tannhiet.product_id);" style="outline: none;"><i
+                    <button id="change-product-cart" (click)="initModal('Tản nhiệt nước','edit');"
+                        style="outline: none;"><i class="fas fa-edit edit" aria-hidden="true"></i></button>
+                    <button id="delete-product-cart" (click)="open(mymodal);" style="outline: none;"><i
                             class="far fa-trash-alt"></i></button>
                 </div>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            Xác nhận xóa thông tin
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa thông tin sản phẩm này ?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" style="width: 80px"
+                            (click)="deleteItem(product_tannhiet.product_id);">
+                            Có
+                        </button>
+                        <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                            Không
+                        </button>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -552,17 +916,18 @@
             <tbody style="float: right;width: 33%;">
                 <tr style="float: right;width: 85%;">
                     <td>Chi phí dự tính</td>
-                    <td> <span class="js-config-summary"><span class="total-price-config">{{total_money | currency: 'VND'}}</span>
+                    <td> <span class="js-config-summary"><span class="total-price-config">{{total_money | currency:
+                                'VND'}}</span>
                         </span>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class ="action">
-        <button (click) = "saveBuildPC();">LƯU CẤU HÌNH <i class="fas fa-save"></i></button>
-        <button (click) = "addToCart();">THÊM VÀO GIỎ HÀNG <i class="fas fa-shopping-cart"></i></button>
+    <div class="action">
+        <button (click)="saveBuildPC();">LƯU CẤU HÌNH <i class="fas fa-save"></i></button>
+        <button (click)="addToCart();">THÊM VÀO GIỎ HÀNG <i class="fas fa-shopping-cart"></i></button>
     </div>
 </div>
 
-<app-select-item-build-pc (eventEmit)="ngOnInit()" ></app-select-item-build-pc>
+<app-select-item-build-pc (eventEmit)="ngOnInit()"></app-select-item-build-pc>

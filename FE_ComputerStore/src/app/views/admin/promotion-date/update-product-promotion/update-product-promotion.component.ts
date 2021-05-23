@@ -190,7 +190,8 @@ export class UpdateProductPromotionComponent implements OnInit {
       );
     }
     if (this.isEdit) {
-      this.productPromotionService.update(promotion_date.promotion_date_id, promotion_date).subscribe(res => {
+      console.log(promotion_date);
+      this.productPromotionService.update(promotion_date.product_promotion_id, promotion_date).subscribe(res => {
         this.closeModalReloadData();
         this.toastr.success(res.success);
         this.modalReference.dismiss();

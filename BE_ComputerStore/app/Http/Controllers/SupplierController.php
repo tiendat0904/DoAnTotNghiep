@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class SupplierController extends Controller
@@ -68,6 +68,13 @@ class SupplierController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['error' => $validator->errors()->all()], 400);
                 }
+                $data = DB::table(self::table)
+                ->select(self::table . '.*')
+                ->where(self::supplier_name, '=', $request->supplier_name)
+                ->get();
+            if (count($data) > 0) {
+                return response()->json(['error' => 'Tên nhà cung cấp đã tồn tại vui lòng kiểm tra lại!!!'], 400);
+            }
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
@@ -116,6 +123,13 @@ class SupplierController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+            $data = DB::table(self::table)
+            ->select(self::table . '.*')
+            ->where(self::supplier_name, '=', $request->supplier_name)
+            ->get();
+        if (count($data) > 0) {
+            return response()->json(['error' => 'Tên nhà cung cấp đã tồn tại vui lòng kiểm tra lại!!!'], 400);
+        }
             $this->base->update($request, $id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {

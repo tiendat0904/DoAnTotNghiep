@@ -18,6 +18,7 @@ export class CouponComponent implements OnInit {
   isDelete = true;
   closeResult: string;
   isLoading = false;
+  condition = true;
   isSelected = true;
   searchedKeyword: string;
   listFilterResult: couponModel[] = [];
@@ -31,7 +32,6 @@ export class CouponComponent implements OnInit {
     private router: Router,
     public loaderService: LoaderService
   ) { }
-
 
   ngOnInit(): void {
     this.fetchListCoupon();
@@ -47,6 +47,7 @@ export class CouponComponent implements OnInit {
   }
 
   public filterByKeyword() {
+    this.condition = true;
     var filterResult = [];
     if (this.searchedKeyword.length == 0) {
       this.listFilterResult = this.filterResultTemplist;
@@ -62,6 +63,11 @@ export class CouponComponent implements OnInit {
         }
       });
       this.listFilterResult = filterResult;
+      if (this.listFilterResult.length !== 0) {
+        this.condition = true;
+      } else {
+        this.condition = false;
+      }
     }
   }
 
@@ -126,10 +132,6 @@ export class CouponComponent implements OnInit {
     }
     this.delete(selectedcoupon);
   }
-
-  // initModal(model: any,type = null): void {
-  //   this.view.view(model, type);
-  // }
 
   getNavigation(link, id) {
     if (id === '') {

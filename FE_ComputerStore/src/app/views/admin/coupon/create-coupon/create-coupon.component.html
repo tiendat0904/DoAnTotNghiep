@@ -16,7 +16,8 @@
             <div class="col-md-12">
                <div class="form-group">
                   <label>Tên nhân viên</label>
-                  <select [(ngModel)]="update_employee_id" class="form-control" name="" formControlName="employee_id" id="">
+                  <select [(ngModel)]="update_employee_id" class="form-control" name="" formControlName="employee_id"
+                     id="" readonly>
                      <option *ngFor="let e of arraylist_employee" value="{{e.account_id}}">{{e.full_name}}
                      </option>
                   </select>
@@ -75,7 +76,8 @@
       </form>
    </div>
    <div class="col-sm-8" style="background-color:#fff">
-      <h4 [hidden]="isCheckhdn1" style="padding-top: 10px;"><i>Vui lòng thêm phiếu nhập trước khi thêm chi tiết phiếu nhập !!!</i></h4>
+      <h4 [hidden]="isCheckhdn1" style="padding-top: 10px;"><i>Vui lòng thêm phiếu nhập trước khi thêm chi tiết phiếu
+            nhập !!!</i></h4>
       <div class="container" [hidden]="isCheckhdn">
          <div class="table-responsive">
             <div class="table-wrapper" style="min-width :700px">
@@ -91,8 +93,8 @@
                               class="form-control" placeholder="Search&hellip;">
                         </div>
                      </div>
-                     <button (click)="initModal({},'add')" type="button" class="btn btn-primary"><i
-                           class="fas fa-user-plus"></i>Thêm mới</button>
+                     <button (click)="initModal({},'add')" type="button" class="btn btn-primary" style="margin-left: 15px;"><i class="fa fa-plus"
+                           style="margin-right: 12px"></i>Thêm mới</button>
                      <ng-template #mymodal1 let-modal>
                         <div class="modal-header">
                            <h4 class="modal-title" id="modal-basic-title">
@@ -116,7 +118,7 @@
                            </button>
                         </div>
                      </ng-template>
-                     <button type="button" [hidden]="isDelete" (click)="open(mymodal1)" class="btn btn-danger">
+                     <button type="button" [hidden]="isDelete" (click)="open(mymodal1)" class="btn btn-danger" >
                         <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
                      </button>
                   </div>
@@ -145,7 +147,7 @@
                                     ">
                               <td>
                                  <input type="checkbox" [(ngModel)]="listFilterResult[i + (page-1)*pageSize].checked"
-                                    (ngModelChange)="changeModel()" value="{{ e.ma_CD }}" />
+                                    (ngModelChange)="changeModel()" value="{{ e.coupon_detail_id }}" />
                               <td>{{ i + (page-1)*pageSize + 1 }}</td>
                               <td [innerHTML]="e.product_name"></td>
                               <td [innerHTML]="e.amount"></td>

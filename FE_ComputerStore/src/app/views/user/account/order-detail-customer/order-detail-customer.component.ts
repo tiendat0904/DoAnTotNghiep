@@ -13,34 +13,34 @@ import { BillService } from '../../../../services/bill/bill.service';
 })
 export class OrderDetailCustomerComponent implements OnInit {
 
-  order_id:any;
-  order:billModel;
-  customer:accountModel;
+  arraylist_bill_detail: BillDetailService[] = [];
+  order_id: any;
+  order: billModel;
+  customer: accountModel;
   page = 1;
   pageSize = 5;
-  arraylist_bill_detail: BillDetailService[] = [];
-  constructor(private route: ActivatedRoute,private billService:BillService,private billDetailService:BillDetailService,private customerService:AccountService) { }
 
+  constructor(
+    private route: ActivatedRoute,
+    private billService: BillService,
+    private billDetailService: BillDetailService,
+    private customerService: AccountService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.order_id = Number.parseInt(params['bill_id']);
       this.getOrder();
     });
-    
   }
 
-  getOrder(){
-    this.billService.detail(this.order_id).subscribe(data =>{
+  getOrder() {
+    this.billService.detail(this.order_id).subscribe(data => {
       this.order = data.data;
-      console.log(this.order);
     })
-
     this.billDetailService.getbybill(this.order_id).subscribe(data => {
       this.arraylist_bill_detail = data.data;
     })
-
-    this.customerService.getInfo().subscribe(data=>{
+    this.customerService.getInfo().subscribe(data => {
       this.customer = data.data;
     })
   }

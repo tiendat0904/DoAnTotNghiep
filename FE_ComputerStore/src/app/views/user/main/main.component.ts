@@ -30,10 +30,10 @@ export class MainComponent implements OnInit {
     pullDrag: false,
     dots: false,
     navSpeed: 600,
-    navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
+    navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
     responsive: {
       0: {
-        items: 1 
+        items: 1
       },
       400: {
         items: 2
@@ -48,8 +48,6 @@ export class MainComponent implements OnInit {
     nav: true
   }
 
-
-
   list_news: Array<newsModel> = [];
   list_product_type: Array<productTypeModel> = [];
   list_product: Array<productModel> = [];
@@ -62,28 +60,27 @@ export class MainComponent implements OnInit {
   list_product_ram: Array<productModel> = [];
   list_product_laptop: Array<productModel> = [];
   images = ['https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fkhuyenmai-laptop.png?alt=media&token=6b12593e-de8e-4e34-abe1-4cffce35f4b7',
-'https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fbanner-2.jpg?alt=media&token=ba82fcab-0e61-4d8c-955a-31b94c164696',
-'https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fbanner1.png?alt=media&token=9a4aefcf-b032-4c11-b1a8-bfc77c9863d6',
-'https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fbanner4.png?alt=media&token=a1b70248-924a-4c9d-8595-7043c8d7cb18'];
+    'https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fbanner-2.jpg?alt=media&token=ba82fcab-0e61-4d8c-955a-31b94c164696',
+    'https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fbanner1.png?alt=media&token=9a4aefcf-b032-4c11-b1a8-bfc77c9863d6',
+    'https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Fbanner4.png?alt=media&token=a1b70248-924a-4c9d-8595-7043c8d7cb18'];
   constructor(
     private router: Router,
-    private productService : ProductService,
-    private newService : NewsService,
-    private productTypeService : ProductTypeService,
+    private productService: ProductService,
+    private newService: NewsService,
+    private productTypeService: ProductTypeService,
     private cartService: CartService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
-    private billService:BillService,
-    public loaderService:LoaderService
-                          ) { }
- 
+    private billService: BillService,
+    public loaderService: LoaderService
+  ) { }
+
   ngOnInit(): void {
     // var refresh = window.localStorage.getItem('refresh');
-  //   if(refresh===null){
-  //     window.location.reload();
-  //     window.localStorage.setItem('refresh', "1");
-  // }
- 
+    //   if(refresh===null){
+    //     window.location.reload();
+    //     window.localStorage.setItem('refresh', "1");
+    // }
     this.fetchProductNew();
     this.fetchProductLaptop();
     this.fetchProductRam();
@@ -94,7 +91,6 @@ export class MainComponent implements OnInit {
     this.fetchProductComputerComponent();
     this.fetchNews();
     this.fetchProductType();
-    
     // setTimeout(() => {{
     //   $('.checkContact').hide();
     //   $('.checkAmount').hover(
@@ -107,25 +103,25 @@ export class MainComponent implements OnInit {
     //   )
     // }
     // }, 3200);
-    
+
   }
 
-  fetchProductType(){
+  fetchProductType() {
     this.productTypeService.getAll().subscribe(data => {
       this.list_product_type = data.data;
-    },)
+    })
   }
 
-  fetchNews(){
+  fetchNews() {
     this.newService.getAll().subscribe(data => {
       this.list_news = data.data;
-    },)
+    })
   }
 
-  fetchProductNew(){
-    this.productService.getAll().subscribe(data =>{
+  fetchProductNew() {
+    this.productService.getAll().subscribe(data => {
       this.list_product_new = data.data;
-      for(let item of this.list_product_new){
+      for (let item of this.list_product_new) {
         item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
@@ -136,10 +132,10 @@ export class MainComponent implements OnInit {
           item.check = "Còn hàng";
           item.checkAmount = false;
         }
-        if(item.price_new === null){
+        if (item.price_new === null) {
           item.isCheckPrice = true;
           item.price_display = item.price;
-        }else{
+        } else {
           item.isCheckPrice = false;
           item.price_display = item.price_new;
         }
@@ -147,13 +143,13 @@ export class MainComponent implements OnInit {
     })
   }
 
-  fetchProductPSU(){
+  fetchProductPSU() {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.list_product_psu = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "PSU";
       });
-      for(let item of this.list_product_psu){
+      for (let item of this.list_product_psu) {
         item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         item.checkAmount = true;
@@ -165,24 +161,24 @@ export class MainComponent implements OnInit {
           item.check = "Còn hàng";
           item.checkAmount = false;
         }
-        if(item.price_new === null){
+        if (item.price_new === null) {
           item.isCheckPrice = true;
           item.price_display = item.price;
-        }else{
+        } else {
           item.isCheckPrice = false;
           item.price_display = item.price_new;
         }
       }
-    },)
+    })
   }
 
-  fetchProductLaptop(){
+  fetchProductLaptop() {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.list_product_laptop = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "Laptop";
       });
-      for(let item of this.list_product_laptop){
+      for (let item of this.list_product_laptop) {
         item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
@@ -193,25 +189,24 @@ export class MainComponent implements OnInit {
           item.check = "Còn hàng";
           item.checkAmount = false;
         }
-        if(item.price_new === null){
+        if (item.price_new === null) {
           item.isCheckPrice = true;
           item.price_display = item.price;
-        }else{
+        } else {
           item.isCheckPrice = false;
           item.price_display = item.price_new;
         }
       }
-    },)
+    })
   }
 
-  fetchProductComputerComponent(){
+  fetchProductComputerComponent() {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.list_product_computer_conponent = this.list_product.filter(function (laptop) {
         return (laptop.product_type_name === "Headphone" || laptop.product_type_name === "Mouse" || laptop.product_type_name === "Keyboard");
-       
       });
-      for(let item of this.list_product_computer_conponent){
+      for (let item of this.list_product_computer_conponent) {
         item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
@@ -222,24 +217,24 @@ export class MainComponent implements OnInit {
           item.check = "Còn hàng";
           item.checkAmount = false;
         }
-        if(item.price_new === null){
+        if (item.price_new === null) {
           item.isCheckPrice = true;
           item.price_display = item.price;
-        }else{
+        } else {
           item.isCheckPrice = false;
           item.price_display = item.price_new;
         }
       }
-    },)
+    })
   }
 
-  fetchProductCPU(){
+  fetchProductCPU() {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.list_product_cpu = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "CPU";
       });
-      for(let item of this.list_product_cpu){
+      for (let item of this.list_product_cpu) {
         item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
@@ -250,24 +245,24 @@ export class MainComponent implements OnInit {
           item.check = "Còn hàng";
           item.checkAmount = false;
         }
-        if(item.price_new === null){
+        if (item.price_new === null) {
           item.isCheckPrice = true;
           item.price_display = item.price;
-        }else{
+        } else {
           item.isCheckPrice = false;
           item.price_display = item.price_new;
         }
       }
-    },)
+    })
   }
 
-  fetchProductVGA(){
+  fetchProductVGA() {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.list_product_vga = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "VGA";
       });
-      for(let item of this.list_product_vga){
+      for (let item of this.list_product_vga) {
         item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
@@ -278,24 +273,24 @@ export class MainComponent implements OnInit {
           item.check = "Còn hàng";
           item.checkAmount = false;
         }
-        if(item.price_new === null){
+        if (item.price_new === null) {
           item.isCheckPrice = true;
           item.price_display = item.price;
-        }else{
+        } else {
           item.isCheckPrice = false;
           item.price_display = item.price_new;
         }
       }
-    },)
+    })
   }
 
-  fetchProductMain(){
+  fetchProductMain() {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.list_product_main = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "Main";
       });
-      for(let item of this.list_product_main){
+      for (let item of this.list_product_main) {
         item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
@@ -306,93 +301,93 @@ export class MainComponent implements OnInit {
           item.check = "Còn hàng";
           item.checkAmount = false;
         }
-        if(item.price_new === null){
+        if (item.price_new === null) {
           item.isCheckPrice = true;
           item.price_display = item.price;
-        }else{
+        } else {
           item.isCheckPrice = false;
           item.price_display = item.price_new;
         }
-        
+
       }
-    },)
+    })
   }
 
-  addProductToCart(product: productModel){
+  addProductToCart(product: productModel) {
     let product_detail = product;
-    let billDetailModel : billDetailModel;
-    let billModel : billModel;
+    let billDetailModel: billDetailModel;
+    let billModel: billModel;
     let list_bill = [];
     let list_item: Array<ItemModel> = [];
-    let list_bill_detail=[];
+    let list_bill_detail = [];
     let account_id = 0;
     let list_bill_filter = list_bill;
-    let list_bill_detail_filter =  list_bill_detail;
-      if(localStorage.getItem("account_id")){
-        account_id = Number(localStorage.getItem("account_id"));
-        this.billService.getAll().subscribe(data=>{
-          list_bill = data.data;
-          billDetailModel ={};
-          list_bill_filter =list_bill.filter(function (bill) {
-            return (bill.customer_id === account_id && bill.order_status_id === 1);         
-          });
-          if(list_bill_filter.length !== 0){
-            this.billDetailService.getAll().subscribe(data=>{
-               list_bill_detail = data.data;
-              list_bill_detail_filter =  list_bill_detail.filter(function (bill) {
-                return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);         
+    let list_bill_detail_filter = list_bill_detail;
+    if (localStorage.getItem("account_id")) {
+      account_id = Number(localStorage.getItem("account_id"));
+      this.billService.getAll().subscribe(data => {
+        list_bill = data.data;
+        billDetailModel = {};
+        list_bill_filter = list_bill.filter(function (bill) {
+          return (bill.customer_id === account_id && bill.order_status_id === 1);
+        });
+        if (list_bill_filter.length !== 0) {
+          this.billDetailService.getAll().subscribe(data => {
+            list_bill_detail = data.data;
+            list_bill_detail_filter = list_bill_detail.filter(function (bill) {
+              return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);
+            });
+            if (list_bill_detail_filter.length === 0) {
+              billDetailModel = {
+                bill_id: list_bill_filter[0].bill_id,
+                product_id: product_detail.product_id,
+                price: product_detail.price_display,
+                amount: 1,
+              }
+              this.billDetailService.create(billDetailModel).subscribe(data => {
               });
-              if(list_bill_detail_filter.length === 0 ){
+            } else {
+              billDetailModel = {
+                bill_detail_id: list_bill_detail_filter[0].bill_detail_id,
+                amount: list_bill_detail_filter[0].amount + 1
+              }
+              this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id, billDetailModel).subscribe(data => {
+              });
+            }
+          })
+        } else {
+          billModel = {
+            customer_id: account_id,
+          }
+          this.billService.create(billModel).subscribe(data => {
+            list_item = this.cartService.getItems();
+            if (list_item !== null) {
+              for (let item of list_item) {
                 billDetailModel = {
-                  bill_id: list_bill_filter[0].bill_id,
-                  product_id: product_detail.product_id,
-                  price: product_detail.price_display,
-                  amount: 1,
+                  bill_id: data.data[0].bill_id,
+                  product_id: item.product.product_id,
+                  price: item.product.price_display,
+                  amount: item.quantity,
                 }
                 this.billDetailService.create(billDetailModel).subscribe(data => {
                 });
-              }else{
-                billDetailModel = {
-                  bill_detail_id:list_bill_detail_filter[0].bill_detail_id,
-                  amount: list_bill_detail_filter[0].amount+1
-                }
-                this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id,billDetailModel).subscribe(data=>{
-                });
               }
-            })           
-          }else{
-            billModel = {
-              customer_id: account_id,
             }
-            this.billService.create(billModel).subscribe(data => {
-              list_item = this.cartService.getItems();
-              if (list_item !== null) {
-                for (let item of list_item) {
-                  billDetailModel = {
-                    bill_id: data.data[0].bill_id,
-                    product_id: item.product.product_id,
-                    price: item.product.price_display,
-                    amount: item.quantity,
-                  }
-                  this.billDetailService.create(billDetailModel).subscribe(data => {
-                  });
-                }
-              }
-            });
-          }
-        })
-      }
-      this.cartService.addToCart(product);
-      this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
+          });
+        }
+      })
+    }
+    this.cartService.addToCart(product);
+    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
   }
 
-  fetchProductRam(){
+  fetchProductRam() {
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.list_product_ram = this.list_product.filter(function (laptop) {
         return laptop.product_type_name === "RAM";
       });
-      for(let item of this.list_product_ram){
+      for (let item of this.list_product_ram) {
         item.descriptions = item.description.split("\n");
         item.checkAmount = true;
         if (item.amount === 0) {
@@ -403,24 +398,24 @@ export class MainComponent implements OnInit {
           item.check = "Còn hàng";
           item.checkAmount = false;
         }
-        if(item.price_new === null){
+        if (item.price_new === null) {
           item.isCheckPrice = true;
           item.price_display = item.price;
-        }else{
+        } else {
           item.isCheckPrice = false;
           item.price_display = item.price_new;
         }
       }
-    },)
+    })
   }
-  
-  
 
-  getNavigation(link, id){
-    if(id === ''){
-        this.router.navigate([link]);
+
+
+  getNavigation(link, id) {
+    if (id === '') {
+      this.router.navigate([link]);
     } else {
-        this.router.navigate([link + '/' + id]);
+      this.router.navigate([link + '/' + id]);
     }
   }
 

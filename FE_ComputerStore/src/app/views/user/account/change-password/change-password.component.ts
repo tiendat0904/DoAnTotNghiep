@@ -13,8 +13,8 @@ import { AccountService } from '../../../../services/account/account.service';
 export class ChangePasswordComponent implements OnInit {
 
   formGroup: FormGroup;
-  constructor( private accountService: AccountService,
-    private toastr: ToastrService,private fb: FormBuilder,private router: Router) { }
+  constructor(private accountService: AccountService,
+    private toastr: ToastrService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
@@ -32,29 +32,22 @@ export class ChangePasswordComponent implements OnInit {
       new_password: this.formGroup.get("new_password").value,
       confirm_password: this.formGroup.get("confirm_password").value,
     }
-      
-      if(account.confirm_password === null || account.new_password === null || account.old_password === null)
-      {
-        this.toastr.warning("vui lòng nhập đủ số trường");
-      }
-      else{
-        if(account.confirm_password === account.new_password){
-          this.accountService.update(account).subscribe(res => {
-            this.router.navigate(['/account/account-info']);
-            this.toastr.success("Thay đổi mật khẩu thành cống");
-          },
-        err => {
-          this.toastr.error(err.error.error);
-        }
-        );
-        }else{
-          this.toastr.error("mật khẩu mới không trùng khớp, vui lòng nhập lại");
-        }
-      }
-      
-      
-      
+    if (account.confirm_password === null || account.new_password === null || account.old_password === null) {
+      this.toastr.warning("vui lòng nhập đủ số trường");
     }
-
-
+    else {
+      if (account.confirm_password === account.new_password) {
+        this.accountService.update(account).subscribe(res => {
+          this.router.navigate(['/account/account-info']);
+          this.toastr.success("Thay đổi mật khẩu thành cống");
+        },
+          err => {
+            this.toastr.error(err.error.error);
+          }
+        );
+      } else {
+        this.toastr.error("mật khẩu mới không trùng khớp, vui lòng nhập lại");
+      }
+    }
+  }
 }

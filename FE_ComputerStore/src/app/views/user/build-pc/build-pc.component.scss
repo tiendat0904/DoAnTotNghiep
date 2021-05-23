@@ -2,7 +2,7 @@
     position: absolute;
     height: 100%;
     width: 87%;
-    opacity: 1;
+    opacity: 0.85;
     z-index: 99999;
 }
 
@@ -133,7 +133,6 @@ hr{
     font-size: 20px;
 }
 
-
 .product-cart-detail{
     display: inline-flex;
     width: 85%;
@@ -158,11 +157,11 @@ hr{
     font-size: 15px;
     line-height: 20px;
 }
+
 .product-description-cart h5{
     font-weight: bold;
     font-size: 16px;
 }
-
 
 .product-price-cart {
     display: flex;
@@ -203,7 +202,6 @@ hr{
     background-color: white;
     color: #1d7be5;
 }
-
 
 .product-price-cart button{
     border:2px solid #ddd;

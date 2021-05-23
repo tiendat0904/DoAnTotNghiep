@@ -19,6 +19,7 @@ export class ProductComponent implements OnInit {
   isDelete = true;
   closeResult: string;
   isLoading = false;
+  condition = true;
   isSelected = true;
   searchedKeyword: string;
   listFilterResult: productModel[] = [];
@@ -29,12 +30,12 @@ export class ProductComponent implements OnInit {
     private modalService: NgbModal,
     private productService: ProductService,
     private toastr: ToastrService,
-    public loaderService:LoaderService 
-    ) {}
+    public loaderService: LoaderService
+  ) { }
 
   ngOnInit(): void {
     this.fetchListProduct();
-    
+
   }
 
   fetchListProduct() {
@@ -49,6 +50,7 @@ export class ProductComponent implements OnInit {
 
   public filterByKeyword() {
     var filterResult = [];
+    this.condition = true;
     if (this.searchedKeyword.length == 0) {
       this.listFilterResult = this.filterResultTemplist;
     } else {
@@ -63,9 +65,14 @@ export class ProductComponent implements OnInit {
         }
       });
       this.listFilterResult = filterResult;
+      if (this.listFilterResult.length !== 0) {
+        this.condition = true;
+      } else {
+        this.condition = false;
+      }
     }
   }
-  
+
   open(content: any) {
     this.modalReference = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -112,7 +119,7 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(item: any = null) {
-    let selectedproduct= [];
+    let selectedproduct = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedproduct.push(item);
       this.delete(selectedproduct);
@@ -128,7 +135,7 @@ export class ProductComponent implements OnInit {
     this.delete(selectedproduct);
   }
 
-  initModal(model: any,type = null): void {
+  initModal(model: any, type = null): void {
     this.view.view(model, type);
   }
 

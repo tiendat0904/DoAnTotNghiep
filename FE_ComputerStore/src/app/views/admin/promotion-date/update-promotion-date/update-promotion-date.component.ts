@@ -41,6 +41,7 @@ export class UpdatePromotionDateComponent implements OnInit {
   submitted = false;
   title = '';
   type: any;
+  condition = true;
   arrCheck = [];
   update_ma_tai_khoan: any;
   model: promotionDateModel;
@@ -86,6 +87,7 @@ export class UpdatePromotionDateComponent implements OnInit {
   }
 
   public filterByKeyword() {
+    this.condition = true;
     if (this.isAdd) {
       var filterResult = [];
       if (this.searchedKeyword.length == 0) {
@@ -102,6 +104,11 @@ export class UpdatePromotionDateComponent implements OnInit {
           }
         });
         this.list_product = filterResult;
+        if (this.list_product.length !== 0) {
+          this.condition = true;
+        } else {
+          this.condition = false;
+        }
       }
     } else {
       var filterResult = [];

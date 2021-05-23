@@ -13,13 +13,17 @@ import { AccountService } from '../../../../services/account/account.service';
 })
 export class AccountInfoComponent implements OnInit {
 
-  constructor(private accountService: AccountService, private fb: FormBuilder, private toastr: ToastrService,private router: Router) { }
-
-
   account: accountModel;
   picture: any;
   urlPictureDefault = avatarDefault;
   formGroup: FormGroup;
+
+  constructor(
+    private accountService: AccountService,
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private router: Router) { }
+
   ngOnInit(): void {
     this.formGroup = new FormGroup({
       full_name: new FormControl(),
@@ -28,7 +32,6 @@ export class AccountInfoComponent implements OnInit {
       phone_number: new FormControl(),
     });
     this.fetchgetInfo();
-    
   }
 
   fetchgetInfo() {
@@ -39,15 +42,12 @@ export class AccountInfoComponent implements OnInit {
         email: this.account.email,
         address: this.account.address,
         phone_number: this.account.phone_number,
-
-        // image : new FormControl()
       });
       if (data.image == null) {
         this.picture = this.urlPictureDefault;
       } else {
         this.picture = data.data.image;
       }
-    }, error => {
     })
   }
 
@@ -59,7 +59,6 @@ export class AccountInfoComponent implements OnInit {
       address: this.formGroup.get('address')?.value,
       phone_number: this.formGroup.get('phone_number')?.value,
     }
-
     this.accountService.update(account).subscribe(res => {
       this.toastr.success("Cập nhật thành công");
     },
@@ -67,8 +66,5 @@ export class AccountInfoComponent implements OnInit {
         this.toastr.error(err.error.error);
       }
     );
-
-
   }
-
 }

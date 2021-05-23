@@ -1,9 +1,8 @@
 <div *ngIf="loaderService.isLoading | async" class="loader-container">
     <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
 </div>
-
 <span>Danh sách đơn hàng</span>
-<div class="col-12" style="padding-left: 0; width: 1030px;" [hidden] = "ischeck1">
+<div class="col-12" style="padding-left: 0; width: 1030px;" [hidden]="ischeck1">
     <table class="table table-striped table-hover table-bordered " style="background-color: white;">
         <thead>
             <tr>
@@ -18,7 +17,6 @@
             </tr>
             <tr *ngFor="let e of arraylist_bill_filter">
                 <td><a [routerLink]="['/account/order/',e.bill_id]" [innerHTML]="e.bill_id"></a></td>
-                <!-- <a href=""><td [innerHTML]="e.bill_id"></td></a> -->
                 <td [innerHTML]="e.into_money"></td>
                 <td [innerHTML]="e.created_at"></td>
                 <td [innerHTML]="e.order_status_description"></td>
@@ -26,6 +24,6 @@
         </tbody>
     </table>
 </div>
-<div [hidden] = "ischeck">
+<div [hidden]="ischeck">
     <h3>Chưa có đơn hàng nào</h3>
 </div>

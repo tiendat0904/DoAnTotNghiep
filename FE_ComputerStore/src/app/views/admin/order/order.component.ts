@@ -17,6 +17,7 @@ export class OrderComponent implements OnInit {
   filterResultTemplist: billModel[] = [];
   listFilterResult: billModel[] = [];
   modalReference: any;
+  condition = true;
   isDelete = true;
   closeResult: string;
   searchedKeyword: string;
@@ -73,6 +74,7 @@ export class OrderComponent implements OnInit {
 
   public filterByKeyword() {
     var filterResult = [];
+    this.condition = true;
     if (this.searchedKeyword.length == 0) {
       this.listFilterResult = this.filterResultTemplist;
     } else {
@@ -86,6 +88,11 @@ export class OrderComponent implements OnInit {
         }
       });
       this.listFilterResult = filterResult;
+      if(this.listFilterResult.length !== 0 ){
+        this.condition = true;
+      }else{
+        this.condition = false;
+      }
     }
   }
 
@@ -184,6 +191,11 @@ export class OrderComponent implements OnInit {
         break;
       default:
         break;
+    }
+    if(this.listFilterResult.length !== 0 ){
+      this.condition = true;
+    }else{
+      this.condition = false;
     }
   }
 

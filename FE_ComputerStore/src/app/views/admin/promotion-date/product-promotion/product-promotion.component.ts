@@ -19,6 +19,7 @@ export class ProductPromotionComponent implements OnInit {
   filterResultTemplist: productPromotionDModel[] = [];
   modalReference: any;
   isDelete = true;
+  condition = true;
   closeResult: string;
   searchedKeyword: string;
   page = 1;
@@ -31,7 +32,6 @@ export class ProductPromotionComponent implements OnInit {
     public loaderService: LoaderService
   ) {
   }
-
 
   ngOnInit(): void {
     this.fetchListProductPromotion();
@@ -48,6 +48,7 @@ export class ProductPromotionComponent implements OnInit {
 
   public filterByKeyword() {
     var filterResult = [];
+    this.condition = true;
     if (this.searchedKeyword.length == 0) {
       this.listFilterResult = this.filterResultTemplist;
     } else {
@@ -61,6 +62,12 @@ export class ProductPromotionComponent implements OnInit {
         }
       });
       this.listFilterResult = filterResult;
+      this.listFilterResult = filterResult;
+      if (this.listFilterResult.length !== 0) {
+        this.condition = true;
+      } else {
+        this.condition = false;
+      }
     }
   }
 

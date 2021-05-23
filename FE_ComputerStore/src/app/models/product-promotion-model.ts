@@ -4,6 +4,6 @@ export interface productPromotionDModel{
     product_name?: string,
     promotion_date_id?: bigint,
     date?: Date,
-    promotion_level? : number,
+    promotion_level? : bigint,
     checked?:boolean
  }

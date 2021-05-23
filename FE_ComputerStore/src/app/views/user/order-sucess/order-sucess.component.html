@@ -1,74 +1,73 @@
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
-  </div>
-
-<div class = "order-sucess">
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
+</div>
+<div class="order-sucess">
     <h2>Cảm ơn quý khách đã đặt hàng</h2>
-    <p>Đơn hàng của quý khách đã được gửi thành công. Bộ phận chăm sóc khách hàng của website sẽ Liên hệ : 18001008 lại với quý khách thông qua đơn hàng để có hướng dẫn thêm.</p>
+    <p>Đơn hàng của quý khách đã được gửi thành công. Bộ phận chăm sóc khách hàng của website sẽ Liên hệ : 18001008 lại
+        với quý khách thông qua đơn hàng để có hướng dẫn thêm.</p>
     <p>Cảm ơn quý khách !!!</p>
-    <div class ="order-sucess-main">
-        <div class = "order-sucess-h1">
+    <div class="order-sucess-main">
+        <div class="order-sucess-h1">
             <h1>Thông tin đơn đặt hàng,</h1>
         </div>
-        <div class = "order-sucess-detail">
+        <div class="order-sucess-detail">
             <h3>Thông tin khách hàng</h3>
-            <div class = "order-sucess-info">
-                <table class ="order-sucess-table-info">
+            <div class="order-sucess-info">
+                <table class="order-sucess-table-info">
                     <tbody>
                         <tr>
                             <th>Tên khách hàng: </th>
-                            <th class ="order-sucess-table-info-th">{{update_customer_name}}</th>
+                            <th class="order-sucess-table-info-th">{{update_customer_name}}</th>
                         </tr>
                         <tr>
                             <th>Email: </th>
-                            <th class ="order-sucess-table-info-th">{{update_email}}</th>
+                            <th class="order-sucess-table-info-th">{{update_email}}</th>
                         </tr>
                         <tr>
                             <th>Điện thoại: </th>
-                            <th class ="order-sucess-table-info-th">0{{update_phone_number}}</th>
+                            <th class="order-sucess-table-info-th">0{{update_phone_number}}</th>
                         </tr>
                         <tr>
                             <th>Địa chỉ: </th>
-                            <th class ="order-sucess-table-info-th">{{update_address}}</th>
+                            <th class="order-sucess-table-info-th">{{update_address}}</th>
                         </tr>
                         <tr>
                             <th>Ghi chú: </th>
-                            <th class ="order-sucess-table-info-th">{{update_note}}</th>
+                            <th class="order-sucess-table-info-th">{{update_note}}</th>
                         </tr>
                     </tbody>
                 </table>
                 <h3>Nội dung đặt hàng</h3>
-            <table class = "table table-striped table-hover table-bordered">
-                <thead>
-                    <tr style="background-color: #00ff66;">
-                        <td>STT</td>
-                        <td>Mã kho</td>
-                        <td>Sản phẩm</td>
-                        <td>Đơn giá</td>
-                        <td>Số lượng</td>
-                        <td>Tổng tiền</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor = "let item of array_product">
-                        <td>1</td>
-                        <td>{{item.product_id}}</td>
-                        <td>{{item.product_name}}</td>
-                        <td>{{item.price  |  currency: 'VND' }}</td>
-                        <td>{{item.amount}}</td>
-                        <td>{{(item.amount * item.price)  |  currency: 'VND' }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" style="text-align: end;font-size: 18px;">
-                            Thanh toán :
-                        </td>
-                        <td colspan="2" style="color: red;font-size: 18px;"><span>{{total_money |  currency: 'VND'}}</span></td>
-                         </tr>
-                </tbody>
-
-            </table>
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr style="background-color: #00ff66;">
+                            <td>STT</td>
+                            <td>Mã kho</td>
+                            <td>Sản phẩm</td>
+                            <td>Đơn giá</td>
+                            <td>Số lượng</td>
+                            <td>Tổng tiền</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of array_product">
+                            <td>1</td>
+                            <td>{{item.product_id}}</td>
+                            <td>{{item.product_name}}</td>
+                            <td>{{item.price | currency: 'VND' }}</td>
+                            <td>{{item.amount}}</td>
+                            <td>{{(item.amount * item.price) | currency: 'VND' }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: end;font-size: 18px;">
+                                Thanh toán :
+                            </td>
+                            <td colspan="2" style="color: red;font-size: 18px;"><span>{{total_money | currency:
+                                    'VND'}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            
         </div>
     </div>
 </div>

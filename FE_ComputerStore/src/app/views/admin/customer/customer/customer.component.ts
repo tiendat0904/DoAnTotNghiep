@@ -19,6 +19,7 @@ export class CustomerComponent implements OnInit {
   filterResultTemplist: accountModel[] = [];
   modalReference: any;
   isDelete = true;
+  condition = true;
   closeResult: string;
   searchedKeyword: string;
   page = 1;
@@ -45,6 +46,7 @@ export class CustomerComponent implements OnInit {
 
   public filterByKeyword() {
     var filterResult = [];
+    this.condition = true;
     if (this.searchedKeyword.length == 0) {
       this.listFilterResult = this.filterResultTemplist;
     } else {
@@ -60,6 +62,11 @@ export class CustomerComponent implements OnInit {
         }
       });
       this.listFilterResult = filterResult;
+      if(this.listFilterResult.length !==0){
+        this.condition = true;
+      }else{
+        this.condition = false;
+      }
     }
   }
 

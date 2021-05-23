@@ -217,5 +217,4 @@ export class UpdateTrademarkComponent implements OnInit {
       ).subscribe();
     }
   }
-
 }

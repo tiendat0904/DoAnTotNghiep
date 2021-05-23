@@ -15,7 +15,7 @@ export class WarrantySearchComponent implements OnInit {
   billDetailModel: billDetailModel;
   searchedWarranty: any;
   warrantyDate: any;
-  orderDate :any;
+  orderDate: any;
   constructor(private billDetailService: BillDetailService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -29,14 +29,14 @@ export class WarrantySearchComponent implements OnInit {
       this.isCheck1 = false;
     } else {
       this.billDetailService.detail(this.searchedWarranty).subscribe(data => {
-        if(data.data !== undefined && data.data.order_status_id === 5){
+        if (data.data !== undefined && data.data.order_status_id === 5) {
           this.billDetailModel = data.data;
-        var date = new Date(data.data.updatedDate);
-        this.orderDate = this.datePipe.transform(date,"dd/MM/yyyy"); 
-        this.warrantyDate = this.datePipe.transform(date.setMonth(date.getMonth() + data.data.warranty), "dd/MM/yyyy");
+          var date = new Date(data.data.updatedDate);
+          this.orderDate = this.datePipe.transform(date, "dd/MM/yyyy");
+          this.warrantyDate = this.datePipe.transform(date.setMonth(date.getMonth() + data.data.warranty), "dd/MM/yyyy");
           this.isCheck = true;
           this.isCheck1 = false;
-        }else{
+        } else {
           this.isCheck = false;
           this.isCheck1 = true;
         }

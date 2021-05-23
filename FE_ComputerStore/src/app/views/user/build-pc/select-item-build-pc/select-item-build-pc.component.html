@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class='col-lg-9' style="overflow: auto; height: 650px;max-width: 861px;">
-            <p [hidden]="check_product">Không tìm thấy sản phẩm phù hợp</p>
+            <p [hidden]="check_product" style="margin-left: 40px;">Không tìm thấy sản phẩm phù hợp</p>
             <div *ngFor="let item of arraylist_product_filter">
                 <div class='product-cart-detail'>
                     <div class='product-cart-image'>
@@ -36,14 +36,14 @@
                         </p>
                         <h4>{{item.price_display| currency: 'VND'}}</h4>
                     </div>
-                    <div class='product-price-cart'  *ngIf="item.checkAmount; else elseBlock">
+                    <div class='product-price-cart' *ngIf="item.checkAmount; else elseBlock">
                         <button id="add-build-pc" (click)="add(item);" style="outline: none;"><i
                                 class="fas fa-plus"></i></button>
                     </div>
                     <ng-template #elseBlock>
-                        <div class='product-price-cart' >
-                            <div id="add-build-pc"  style="outline: none;text-align: center; background-color: #ec1b23;"><i
-                                    class="fas fa-ban"></i></div>
+                        <div class='product-price-cart'>
+                            <div id="add-build-pc" style="outline: none;text-align: center; background-color: #ec1b23;">
+                                <i class="fas fa-ban"></i></div>
                         </div>
                     </ng-template>
                 </div>

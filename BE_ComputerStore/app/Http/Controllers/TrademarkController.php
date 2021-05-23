@@ -120,6 +120,15 @@ class TrademarkController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+            if ($request->trademark_name) {
+                $data = DB::table(self::table)
+                    ->select(self::table . '.*')
+                    ->where(self::trademark_name, '=', $request->trademark_name)
+                    ->get();
+                if (count($data) > 0) {
+                    return response()->json(['error' => 'Tên nhãn hiệu đã tồn tại vui lòng kiểm tra lại!!!'], 400);
+                }
+            }
             $this->base->update($request, $id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {

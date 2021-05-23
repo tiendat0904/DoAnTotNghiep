@@ -4,10 +4,12 @@
     
       
 }
+
 .profile-img img{
     width: 30%;
     height: 100%;
 }
+
 .file {
     position: relative;
     overflow: hidden;
@@ -19,13 +21,16 @@
     font-size: 15px;
     background: #212529b8;
 }
+
  .file input {
     position: absolute;
     opacity: 0;
     right: 0;
     top: 0;
     width: 100%;
-}.close{
+}
+
+.close{
     outline: none;
     height: 40px;
 }

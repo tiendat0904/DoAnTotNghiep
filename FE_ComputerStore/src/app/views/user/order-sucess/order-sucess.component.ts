@@ -33,7 +33,11 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-    // if(localStorage.getItem("account_id")){
+    this.fetchOrderSuccess();
+  }
+
+  fetchOrderSuccess(){
+// if(localStorage.getItem("account_id")){
     //   this.accountService.getInfo().subscribe(data => {
     //     this.update_customer_name = data.data.name;
     //     this.update_note = data.data.note;
@@ -53,17 +57,10 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
         this.total_money = data.data.into_money;
       })
     // }
-    
-   
 
     // this.array_product = JSON.parse(localStorage.getItem('listProduct'));
     // for(let item of this.array_product_filter){
     //   this.array_product.push(item);
     // }
-    
-    
   }
-
-
-
 }

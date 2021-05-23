@@ -1,31 +1,32 @@
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;" ></mat-progress-spinner>
-  </div>
-<div class = 'product-detail-page'>
-    <div class = 'product-detail-icon' >
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
+</div>
+<div class='product-detail-page'>
+    <div class='product-detail-icon'>
         <a href=""><i class="fas fa-home"></i></a>
         <p style="margin-top: 5px;margin-left: 5px;">></p>
         <p style="font-size: 20px;margin-left: 5px;">Tin công nghệ</p>
     </div>
-    <hr/>
+    <hr />
 </div>
-
 <div>
     <h2>Tin tức mới nhất</h2>
 </div>
-<div class = "news-main">
-    <div class = "news-detail" *ngFor = "let news of list_news |  slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;">
-        <div class = "news-detail-image">
-            <a href="{{news.url}}" target="_blank"><img src="{{news.thumbnail}}" alt="" ></a>
+<div class="news-main">
+    <div class="news-detail"
+        *ngFor="let news of list_news |  slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;">
+        <div class="news-detail-image">
+            <a href="{{news.url}}" target="_blank"><img src="{{news.thumbnail}}" alt=""></a>
         </div>
-        <div class = "news-detail-info">
-            <a href="https://zingnews.vn/apple-sap-ra-mat-macbook-m2-post1210106.html" target="_blank"><h1>{{news.title}}</h1></a>
+        <div class="news-detail-info">
+            <a href="https://zingnews.vn/apple-sap-ra-mat-macbook-m2-post1210106.html" target="_blank">
+                <h1>{{news.title}}</h1>
+            </a>
             <p>{{news.news_content}}</p>
         </div>
     </div>
 </div>
-
 <div class="col-12 justify-content-center">
-    <ngb-pagination [ellipses]="true"  [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
-    [pageSize]="pageSize" [collectionSize]="list_news.length"></ngb-pagination>
+    <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
+        [pageSize]="pageSize" [collectionSize]="list_news.length"></ngb-pagination>
 </div>

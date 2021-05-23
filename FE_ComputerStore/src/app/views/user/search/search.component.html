@@ -1,5 +1,5 @@
-<div *ngIf ="loaderService.isLoading | async" class ="loader-container">
-  <mat-progress-spinner mode="indeterminate" style="top: 50%; left: 50%;" ></mat-progress-spinner>
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+  <mat-progress-spinner mode="indeterminate" style="top: 50%; left: 50%;"></mat-progress-spinner>
 </div>
 <div class='product-detail-page'>
   <div class='product-detail-icon'>
@@ -26,11 +26,11 @@
         <input type="checkbox" [(ngModel)]="item.selected" (ngModelChange)="filterProducts()"
           style="margin-right: 3px">{{item.trademark_name}}
       </div>
-
     </div>
     <div class='col-lg-10'>
       <div class="product-grid" style="display: flex;flex-wrap: wrap;">
-        <div class='product-item' style="width: 25%;" *ngFor="let item of list_product_laptop |  slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;">
+        <div class='product-item' style="width: 25%;"
+          *ngFor="let item of list_product_laptop |  slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;">
           <div class='product-item-detail' style="display: grid;height: 100%;">
             <div class='product-image'>
               <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""
@@ -38,7 +38,8 @@
             </div>
             <div class='product-description'>
               <div class='product-title'>
-                <a [routerLink]="['/',item.product_id]" style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                <a [routerLink]="['/',item.product_id]"
+                  style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
               </div>
             </div>
             <div style="align-self: flex-end; margin-left: 15px;">
@@ -46,16 +47,18 @@
                 <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
                 <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
               </div>
-               <div class='product-checked'>
+              <div class='product-checked'>
                 <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                <div style="padding-left: 135px;" [hidden] = "item.checkAmount"><button (click)= "addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                    (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
               </div>
             </div>
           </div>
           <a [routerLink]="['/',item.product_id]">
-            <div class ="product-item-detail-hover">
+            <div class="product-item-detail-hover">
               <div style="height: 240px;overflow:hidden;border:0.5px solid #234a76">
-                <div style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                <div
+                  style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
                   <h3 style="font-weight: 500;">Chi tiết</h3>
                 </div>
                 <div style="padding-left: 10px;padding-right:5px">
@@ -66,16 +69,14 @@
                   <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
                 </div>
               </div>
-             
             </div>
           </a>
         </div>
       </div>
       <div class="col-12 justify-content-center">
         <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
-           [pageSize]="pageSize" [collectionSize]="list_product_laptop.length"></ngb-pagination>
-     </div>
+          [pageSize]="pageSize" [collectionSize]="list_product_laptop.length"></ngb-pagination>
+      </div>
     </div>
   </div>
-
 </div>

@@ -31,11 +31,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   product_type_name: any;
   page = 1;
   pageSize = 16;
-  constructor(private productService: ProductService, private route: ActivatedRoute, private trademarkService: TrademarkService,
+
+  constructor(private productService: ProductService, 
+    private route: ActivatedRoute, 
+    private trademarkService: TrademarkService,
     private cartService: CartService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
-    private billService:BillService,public loaderService:LoaderService) { }
+    private billService: BillService, public loaderService: LoaderService) { }
 
   ngOnInit(): void {
     this.search = localStorage.getItem("search");
@@ -61,7 +64,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         } else {
           this.list_product_laptop = this.list_product_laptop1 = filterResult;
         }
-        for(let item of this.list_product_laptop){
+        for (let item of this.list_product_laptop) {
           item.descriptions = item.description.split("\n");
           item.checkAmount = true;
           if (item.amount === 0) {
@@ -72,10 +75,10 @@ export class SearchComponent implements OnInit, OnDestroy {
             item.check = "Còn hàng";
             item.checkAmount = false;
           }
-          if(item.price_new === null){
+          if (item.price_new === null) {
             item.isCheckPrice = true;
             item.price_display = item.price;
-          }else{
+          } else {
             item.isCheckPrice = false;
             item.price_display = item.price_new;
           }
@@ -100,72 +103,72 @@ export class SearchComponent implements OnInit, OnDestroy {
     });
   }
 
-  addProductToCart(product: productModel){
+  addProductToCart(product: productModel) {
     let product_detail = product;
-    let billDetailModel : billDetailModel;
-    let billModel : billModel;
+    let billDetailModel: billDetailModel;
+    let billModel: billModel;
     let list_bill = [];
     let list_item: Array<ItemModel> = [];
-    let list_bill_detail=[];
+    let list_bill_detail = [];
     let account_id = 0;
     let list_bill_filter = list_bill;
-    let list_bill_detail_filter =  list_bill_detail;
-      if(localStorage.getItem("account_id")){
-        account_id = Number(localStorage.getItem("account_id"));
-        this.billService.getAll().subscribe(data=>{
-          list_bill = data.data;
-          billDetailModel ={};
-          list_bill_filter =list_bill.filter(function (bill) {
-            return (bill.customer_id === account_id && bill.order_status_id === 1);         
-          });
-          if(list_bill_filter.length !== 0){
-            this.billDetailService.getAll().subscribe(data=>{
-               list_bill_detail = data.data;
-              list_bill_detail_filter =  list_bill_detail.filter(function (bill) {
-                return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);         
+    let list_bill_detail_filter = list_bill_detail;
+    if (localStorage.getItem("account_id")) {
+      account_id = Number(localStorage.getItem("account_id"));
+      this.billService.getAll().subscribe(data => {
+        list_bill = data.data;
+        billDetailModel = {};
+        list_bill_filter = list_bill.filter(function (bill) {
+          return (bill.customer_id === account_id && bill.order_status_id === 1);
+        });
+        if (list_bill_filter.length !== 0) {
+          this.billDetailService.getAll().subscribe(data => {
+            list_bill_detail = data.data;
+            list_bill_detail_filter = list_bill_detail.filter(function (bill) {
+              return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);
+            });
+            if (list_bill_detail_filter.length === 0) {
+              billDetailModel = {
+                bill_id: list_bill_filter[0].bill_id,
+                product_id: product_detail.product_id,
+                price: product_detail.price_display,
+                amount: 1,
+              }
+              this.billDetailService.create(billDetailModel).subscribe(data => {
               });
-              if(list_bill_detail_filter.length === 0 ){
+            } else {
+              billDetailModel = {
+                bill_detail_id: list_bill_detail_filter[0].bill_detail_id,
+                amount: list_bill_detail_filter[0].amount + 1
+              }
+              this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id, billDetailModel).subscribe(data => {
+              });
+            }
+          })
+        } else {
+          billModel = {
+            customer_id: account_id,
+          }
+          this.billService.create(billModel).subscribe(data => {
+            list_item = this.cartService.getItems();
+            if (list_item !== null) {
+              for (let item of list_item) {
                 billDetailModel = {
-                  bill_id: list_bill_filter[0].bill_id,
-                  product_id: product_detail.product_id,
-                  price: product_detail.price_display,
-                  amount: 1,
+                  bill_id: data.data[0].bill_id,
+                  product_id: item.product.product_id,
+                  price: item.product.price_display,
+                  amount: item.quantity,
                 }
                 this.billDetailService.create(billDetailModel).subscribe(data => {
                 });
-              }else{
-                billDetailModel = {
-                  bill_detail_id:list_bill_detail_filter[0].bill_detail_id,
-                  amount: list_bill_detail_filter[0].amount+1
-                }
-                this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id,billDetailModel).subscribe(data=>{
-                });
               }
-            })           
-          }else{
-            billModel = {
-              customer_id: account_id,
             }
-            this.billService.create(billModel).subscribe(data => {
-              list_item = this.cartService.getItems();
-              if (list_item !== null) {
-                for (let item of list_item) {
-                  billDetailModel = {
-                    bill_id: data.data[0].bill_id,
-                    product_id: item.product.product_id,
-                    price: item.product.price_display,
-                    amount: item.quantity,
-                  }
-                  this.billDetailService.create(billDetailModel).subscribe(data => {
-                  });
-                }
-              }
-            });
-          }
-        })
-      }
-      this.cartService.addToCart(product);
-      this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
+          });
+        }
+      })
+    }
+    this.cartService.addToCart(product);
+    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
   }
 
   public filterProducts(): void {
@@ -183,41 +186,29 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     }
   }
+
   changeStatus(event: any) {
-    // this.isLoading = true;
-    // let list = [];
-    // tslint:disable-next-line: radix
     switch (parseInt(event)) {
       case 0:
         this.list_product_laptop = [...this.list_product_laptop];
-        // this.isLoading = false;
         break;
       case 1:
-        // list = [...this.list_product_laptop];
         this.list_product_laptop.sort(function (a, b) {
           return b.product_id - a.product_id;
         });
-        // this.isLoading = false;
         break;
       case 2:
-        // list = [...this.list_product_laptop];
         this.list_product_laptop.sort(function (a, b) {
           return b.price - a.price;
         });
-        // this.isLoading = false;
         break;
       case 3:
-        // list = [...this.list_product_laptop];
         this.list_product_laptop.sort(function (a, b) {
           return a.price - b.price;
         });
-
-        // this.isLoading = false;
         break;
       default:
         break;
     }
   }
-
-
 }

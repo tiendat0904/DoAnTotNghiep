@@ -21,46 +21,47 @@ export class ProductDetailComponent implements OnInit {
   list_product: Array<productModel> = [];
   list_product_trademark_filter: Array<productModel> = [];
   list_product_trademark: Array<productModel> = [];
-  product : productModel;
+  product: productModel;
   billModel: billModel;
   billDetailModel: billDetailModel;
   list_bill: Array<billModel> = [];
   list_bill_detail: Array<billDetailModel> = [];
   list_item: Array<ItemModel> = [];
   descriptions: any;
-  check:any;
-  trademark_name : any;
+  check: any;
+  trademark_name: any;
   account_id: any;
-  photos:any[];
+  photos: any[];
   constructor(
-    private route :ActivatedRoute,
-    private productService : ProductService,
+    private route: ActivatedRoute,
+    private productService: ProductService,
     private cartService: CartService,
     private billService: BillService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
-    public loaderService:LoaderService
+    public loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
-    
+    this.fetchProductDetail();
+  }
 
-    
+  fetchProductDetail() {
     this.route.params.subscribe(params => {
       let product_id = Number.parseInt(params['product_id']);
-      this.productService.detail(product_id).subscribe(data =>{
+      this.productService.detail(product_id).subscribe(data => {
         this.product = data.data;
         this.photos = data.data.image;
-        if(this.product.amount === 0){
-          this.check= "Liên hệ : 18001008";
+        if (this.product.amount === 0) {
+          this.check = "Liên hệ : 18001008";
         }
-        else{
+        else {
           this.check = "Còn hàng";
         }
-        if(this.product.price_new === null){
+        if (this.product.price_new === null) {
           this.product.isCheckPrice = true;
           this.product.price_display = this.product.price;
-        }else{
+        } else {
           this.product.isCheckPrice = false;
           this.product.price_display = this.product.price_new;
         }
@@ -73,51 +74,50 @@ export class ProductDetailComponent implements OnInit {
             return (product.trademark_name === trademark_name_product);
           });
           this.list_product_trademark = [];
-          for(let item of this.list_product_trademark_filter){
-            if(item.product_id === product_id){
-            }else{
-              if(item.price_new === null){
+          for (let item of this.list_product_trademark_filter) {
+            if (item.product_id === product_id) {
+            } else {
+              if (item.price_new === null) {
                 item.isCheckPrice = true;
                 item.price_display = item.price;
-              }else{
+              } else {
                 item.isCheckPrice = false;
                 item.price_display = item.price_new;
               }
               this.list_product_trademark.push(item);
             }
           }
-        },)
+        })
       });
-      
     });
   }
 
-  addProductToCart(){
+  addProductToCart() {
     let product_detail = this.product;
     this.list_bill = [];
-    this.list_bill_detail=[];
+    this.list_bill_detail = [];
     let account_id = 0;
     let list_bill_filter = this.list_bill;
     let list_bill_detail_filter = this.list_bill_detail;
-    if(product_detail.amount === 0){
+    if (product_detail.amount === 0) {
       this.toastr.info("Sản phẩm đang hết hàng, vui lòng chọn sản phẩm khác !");
     }
-    else{
-      if(localStorage.getItem("account_id")){
+    else {
+      if (localStorage.getItem("account_id")) {
         account_id = Number(localStorage.getItem("account_id"));
-        this.billService.getAll().subscribe(data=>{
+        this.billService.getAll().subscribe(data => {
           this.list_bill = data.data;
-          this.billDetailModel ={};
+          this.billDetailModel = {};
           list_bill_filter = this.list_bill.filter(function (bill) {
-            return (bill.customer_id === account_id && bill.order_status_id === 1);         
+            return (bill.customer_id === account_id && bill.order_status_id === 1);
           });
-          if(list_bill_filter.length !== 0){
-            this.billDetailService.getAll().subscribe(data=>{
+          if (list_bill_filter.length !== 0) {
+            this.billDetailService.getAll().subscribe(data => {
               this.list_bill_detail = data.data;
               list_bill_detail_filter = this.list_bill_detail.filter(function (bill) {
-                return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);         
+                return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);
               });
-              if(list_bill_detail_filter.length === 0 ){
+              if (list_bill_detail_filter.length === 0) {
                 this.billDetailModel = {
                   bill_id: list_bill_filter[0].bill_id,
                   product_id: product_detail.product_id,
@@ -126,16 +126,16 @@ export class ProductDetailComponent implements OnInit {
                 }
                 this.billDetailService.create(this.billDetailModel).subscribe(data => {
                 });
-              }else{
+              } else {
                 this.billDetailModel = {
-                  bill_detail_id:list_bill_detail_filter[0].bill_detail_id,
-                  amount: list_bill_detail_filter[0].amount+1
+                  bill_detail_id: list_bill_detail_filter[0].bill_detail_id,
+                  amount: list_bill_detail_filter[0].amount + 1
                 }
-                this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id,this.billDetailModel).subscribe(data=>{
+                this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id, this.billDetailModel).subscribe(data => {
                 });
               }
-            })           
-          }else{
+            })
+          } else {
             this.billModel = {
               customer_id: account_id,
             }
@@ -160,6 +160,6 @@ export class ProductDetailComponent implements OnInit {
       this.cartService.addToCart(this.product);
       this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
     }
-    
+
   }
 }

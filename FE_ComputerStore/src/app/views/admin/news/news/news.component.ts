@@ -19,6 +19,7 @@ export class NewsComponent implements OnInit {
   listFilterResult: newsModel[] = [];
   modalReference: any;
   isDelete = true;
+  condition = true;
   closeResult: string;
   searchedKeyword: string;
   page = 1;
@@ -46,6 +47,7 @@ export class NewsComponent implements OnInit {
 
   public filterByKeyword() {
     var filterResult = [];
+    this.condition = true;
     if (this.searchedKeyword.length == 0) {
       this.listFilterResult = this.filterResultTemplist;
     } else {
@@ -59,6 +61,12 @@ export class NewsComponent implements OnInit {
         }
       });
       this.listFilterResult = filterResult;
+      this.listFilterResult = filterResult;
+      if (this.listFilterResult.length !== 0) {
+        this.condition = true;
+      } else {
+        this.condition = false;
+      }
     }
   }
 

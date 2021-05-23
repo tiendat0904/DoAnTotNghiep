@@ -32,16 +32,16 @@ export class CartComponent implements OnInit {
   list_bill: Array<billModel> = [];
   list_voucher: Array<voucherModel> = [];
   list_voucher_filter: Array<voucherModel> = [];
-  update_bill_id: any;
   list_product_filter: Array<billDetailModel> = [];
   list_bill_detail: Array<billDetailModel> = [];
   list_bill_filter: Array<billModel> = [];
+  update_bill_id: any;
   total = 0;
   total_money = 0;
-  mailModel:mailModel;
+  mailModel: mailModel;
   billDetailModel: billDetailModel;
   itemModel: ItemModel;
-  checkCart :boolean;
+  checkCart: boolean;
   account: accountModel;
   voucherModel: voucherModel;
   bill_id: any;
@@ -60,9 +60,11 @@ export class CartComponent implements OnInit {
   checkVoucher: boolean;
   modalReference: any;
   closeResult: string;
+
+
   constructor(private cartService: CartService,
     private fb: FormBuilder,
-    private productService: ProductService,
+    // private productService: ProductService,
     private billService: BillService,
     private billDetailService: BillDetailService,
     private accountService: AccountService,
@@ -70,31 +72,23 @@ export class CartComponent implements OnInit {
     private toastr: ToastrService,
     private voucherService: VoucherService,
     private modalService: NgbModal,
-    private mailService:MailService,
-    public loaderService:LoaderService) { }
+    private mailService: MailService,
+    public loaderService: LoaderService) { }
 
   ngOnInit(): void {
-        this.submitted = true;
-        this.selectedType = 0;
-        this.loadListProductCart();
-        this.formGroup = new FormGroup({
-          name: new FormControl(),
-          email:new FormControl(),
-          note: new FormControl(),
-          phone_number: new FormControl(),
-          address: new FormControl()
-        });
-    setTimeout(() => {
-      {
-        
-      }
-    }, 100);
-
-    
+    this.submitted = true;
+    this.selectedType = 0;
+    this.loadListProductCart();
+    this.formGroup = new FormGroup({
+      name: new FormControl(),
+      email: new FormControl(),
+      note: new FormControl(),
+      phone_number: new FormControl(),
+      address: new FormControl()
+    });
   }
 
   CaptureData() {
-    //cach 1
     var data = document.getElementById("product_cart_capture");
     htmlToImage.toJpeg(data, { quality: 0.95 }).then(function (canvas) {
       const link: any = document.createElement("a");
@@ -104,7 +98,6 @@ export class CartComponent implements OnInit {
       link.click();
     });
   }
-
 
   selectcontinue() {
     this.router.navigate(['/']);
@@ -135,11 +128,10 @@ export class CartComponent implements OnInit {
   }
 
   loadListProductCart() {
+    this.checkCart = true;
     this.list_product = [];
     this.list_bill = [];
     this.update_bill_id = localStorage.getItem("bill_id");
-    // this.list_product.length = 0;
-    // this.account_id = 0;
     let account_id = 0;
     account_id = Number(localStorage.getItem("account_id"));
     if (localStorage.getItem("account_id")) {
@@ -149,37 +141,18 @@ export class CartComponent implements OnInit {
           return (laptop.customer_id === account_id && laptop.order_status_id === 1);
         });
         if (this.list_bill_filter.length !== 0) {
-          this.billDetailService.getAll().subscribe(data => {
-            this.list_product_filter = data.data;
-            if(this.list_product_filter !== []){     
-              this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id);
-              if (this.list_product.length !== 0) {
-                // localStorage.setItem("listProduct", JSON.stringify(this.list_product));
-                this.bill_detail_id = this.list_product[0].bill_detail_id;
-              }
+          this.billDetailService.getbybill(this.list_bill_filter[0].bill_id).subscribe(data => {
+            this.list_product = data.data;
+            if (this.list_product.length !== 0) {
+              this.checkCart = true;
+              this.bill_detail_id = this.list_product[0].bill_detail_id;
+            } else {
+              this.checkCart = false;
             }
           })
-          // for (let item of this.list_bill_filter){
-          //   this.billDetailModel = {
-          //     product_id: item.product_id,
-          //     price: item.product.price_new,
-          //     image: item.product.image,
-          //     amount: item.quantity,
-          //     product_name: item.product.product_name,
-          //   }   
-          //   this.list_product.push(this.billDetailModel);
-          // }
         } else {
           this.list_product = [];
         }
-        // else{
-        //   this.billDetailService.getAll().subscribe(data => {
-        //     this.list_product_filter = data.data;
-        //     this.list_product = this.list_product_filter.filter(product => product.bill_id === this.update_bill_id)
-        //   },
-        //   err => {
-        //     })
-        // }
       })
       this.accountService.getInfo().subscribe(data => {
         this.update_customer_name = data.data.full_name;
@@ -188,18 +161,20 @@ export class CartComponent implements OnInit {
         this.update_address = data.data.address;
         this.formGroup = this.fb.group({
           name: [this.update_customer_name],
-          email:[this.update_email],
+          email: [this.update_email],
           note: [],
           phone_number: [this.update_phone_number],
           address: [this.update_address],
         });
       })
-
     } else {
+      this.list_item = [];
       this.list_item = this.cartService.getItems();
-      // this.list_product.length = this.list_item.length;
-      if (this.list_item !== null) {
-        let checkprice: boolean;
+      if (this.list_item === null) {
+        this.list_item = [];
+      }
+      if (this.list_item.length !== 0) {
+        this.checkCart = true;
         let pricecheck: any;
         for (let item of this.list_item) {
           if (item.product.price_new === null) {
@@ -216,29 +191,22 @@ export class CartComponent implements OnInit {
             product_name: item.product.product_name,
           }
           this.list_product.push(this.billDetailModel);
-          // localStorage.setItem("listProduct", JSON.stringify(this.list_product));
         }
+      } else {
+        this.checkCart = false;
       }
     }
-    // console.log(this.list_product);
     this.totalCart();
-    // setTimeout(() => , 1000);
-
-    // if(this.list_product === [] || this.list_product.length === 0){
-    //   this.checkCart = false;
-    // }
   }
-
 
   public filterByKeyword() {
     var filterResult = [];
     this.voucherService.detail(localStorage.getItem("account_id")).subscribe(data => {
       this.list_voucher = data.data;
       if (this.searchedKeyword === null || this.searchedKeyword.length === 0) {
-        // this.checkVoucher = false;
         this.list_voucher_filter = null;
+        this.total_money = this.total;
       } else {
-        // this.checkVoucher = true;
         this.list_voucher_filter = this.list_voucher;
         var keyword = this.searchedKeyword.toString();
         for (let item of this.list_voucher_filter) {
@@ -248,10 +216,8 @@ export class CartComponent implements OnInit {
           }
         }
         if (filterResult.length === 0) {
-          // this.checkVoucher = true;
           this.list_voucher_filter = null;
         } else {
-          // this.checkVoucher = false;
           this.list_voucher_filter = filterResult;
         }
       }
@@ -262,31 +228,18 @@ export class CartComponent implements OnInit {
   useVouvher() {
     if (this.list_voucher_filter.length !== 0) {
       this.total_money = (this.total * ((100 - this.list_voucher_filter[0].voucher_level) / 100));
-      // localStorage.setItem("total_money", this.total_money.toString());
     } else {
       this.total_money = this.total;
-      // localStorage.setItem("total_money", this.total_money.toString());
     }
-
   }
 
-
   orderSuccess() {
-    // console.log(this.formGroup);
     this.submitted = false;
     this.list_bill = [];
     this.list_bill_filter = [];
-    let account: accountModel;
     let bill: billModel;
     let account_id = Number(localStorage.getItem("account_id"));
     if (localStorage.getItem("account_id")) {
-      // account = {
-      //   email: this.formGroup.get('email')?.value,
-      //   full_name: this.formGroup.get('customer_name')?.value,
-      //   phone_number: this.formGroup.get('phone_number')?.value,
-      //   address: this.formGroup.get('address')?.value,
-      // }
-      // this.accountService.update(account).subscribe(data => {
       this.billService.getAll().subscribe(data => {
         this.list_bill = data.data;
         this.list_bill_filter = this.list_bill.filter(function (laptop) {
@@ -321,22 +274,22 @@ export class CartComponent implements OnInit {
                 this.toastr.success("Đặt hàng thành công");
                 this.mailModel = {
                   name: this.formGroup.get('name')?.value,
-                  email:this.formGroup.get('email')?.value,
+                  email: this.formGroup.get('email')?.value,
                   phone_number: this.formGroup.get('phone_number')?.value,
                   address: this.formGroup.get('address')?.value,
                   note: this.formGroup.get('note')?.value,
-                  total_money:this.total_money,
-                  listProduct:this.list_product,
+                  total_money: this.total_money,
+                  listProduct: this.list_product,
                 }
                 this.mailService.sendEmail(this.mailModel).subscribe();
                 this.router.navigate(['/send-cart']);
-               
+
               })
             } else {
               bill = {
                 order_status_id: 2,
                 order_type_id: this.selectedType,
-                email:this.formGroup.get('email')?.value,
+                email: this.formGroup.get('email')?.value,
                 phone_number: this.formGroup.get('phone_number')?.value,
                 address: this.formGroup.get('address')?.value,
                 note: this.formGroup.get('note')?.value,
@@ -347,12 +300,12 @@ export class CartComponent implements OnInit {
                 this.toastr.success("Đặt hàng thành công");
                 this.mailModel = {
                   name: this.formGroup.get('name')?.value,
-                  email:this.formGroup.get('email')?.value,
+                  email: this.formGroup.get('email')?.value,
                   phone_number: this.formGroup.get('phone_number')?.value,
                   address: this.formGroup.get('address')?.value,
                   note: this.formGroup.get('note')?.value,
-                  total_money:this.total_money,
-                  listProduct:this.list_product,
+                  total_money: this.total_money,
+                  listProduct: this.list_product,
                 }
                 this.mailService.sendEmail(this.mailModel).subscribe();
                 this.router.navigate(['/send-cart']);
@@ -392,34 +345,25 @@ export class CartComponent implements OnInit {
                 this.toastr.success("Đặt hàng thành công");
                 this.mailModel = {
                   name: this.formGroup.get('name')?.value,
-                  email:this.formGroup.get('email')?.value,
+                  email: this.formGroup.get('email')?.value,
                   phone_number: this.formGroup.get('phone_number')?.value,
                   address: this.formGroup.get('address')?.value,
                   note: this.formGroup.get('note')?.value,
-                  total_money:this.total_money,
-                  listProduct:this.list_product,
+                  total_money: this.total_money,
+                  listProduct: this.list_product,
                 }
                 this.mailService.sendEmail(this.mailModel).subscribe();
                 this.router.navigate(['/send-cart']);
               })
             }
-
           })
         }
-
       } else {
         this.toastr.error("Vui lòng nhập đầy đủ thông tin khách hàng");
         return;
       }
-      // if (this.formGroup.invalid) {
-      //   this.toastr.error('Vui lòng điền đầy đủ thông tin khách hàng.');
-      //   return;
-      // }
-      // console.log(this.list_product);
-
     }
   }
-
 
   totalCart() {
     this.total = 0;
@@ -433,42 +377,26 @@ export class CartComponent implements OnInit {
           return (laptop.customer_id === account_id && laptop.order_status_id === 1);
         });
         if (this.list_bill_filter.length !== 0) {
-          this.billDetailService.getAll().subscribe(data => {
-            this.list_product_filter = data.data;
-            this.list_product = this.list_product_filter.filter(product => product.bill_id === this.list_bill_filter[0].bill_id)
-            // console.log(this.list_product);
-            if(this.list_product.length === 0){
-              this.checkCart = false;
-            }else{
-              this.checkCart = true;
-            }
+          this.billDetailService.getbybill(this.list_bill_filter[0].bill_id).subscribe(data => {
+            this.list_product = data.data;
             if (this.list_product !== null) {
               for (let i of this.list_product) {
                 this.total += i.amount * i.price;
               }
               this.total_money = this.total;
-              
-              // localStorage.setItem("total_money", this.total_money.toString());
             }
           })
         }
       })
-      // console.log(this.formGroup);
     }
     else {
       this.total = 0;
       this.list_item = this.cartService.getItems();
-      if(this.list_product.length === 0){
-        this.checkCart = false;
-      }else{
-        this.checkCart = true;
-      }
       if (this.list_product !== null) {
         for (let i of this.list_product) {
           this.total += i.amount * i.price;
         }
         this.total_money = this.total;
-        // localStorage.setItem("total_money", this.total_money.toString());
       }
       else {
         this.total = 0;
@@ -493,19 +421,15 @@ export class CartComponent implements OnInit {
           this.cartService.clearCart();
         });
       })
-
     } else {
       this.cartService.clearCart();
-      this.totalCart();
     }
-    setTimeout( () => {
+    setTimeout(() => {
       this.loadListProductCart();
       this.modalReference.dismiss();
     }, 1000);
     this.checkCart = false;
-    
   }
-
 
   deleteItem(item) {
     this.list_bill_detail = [];
@@ -513,7 +437,7 @@ export class CartComponent implements OnInit {
       let list_bill_detail_filter = this.list_bill_detail;
       this.billDetailService.getAll().subscribe(data => {
         this.list_bill_detail = data.data;
-        list_bill_detail_filter = this.list_bill_detail.filter(bill_detail => bill_detail.product_id === item);
+        list_bill_detail_filter = this.list_bill_detail.filter(bill_detail => (bill_detail.product_id === item && bill_detail.bill_id === this.list_bill_filter[0].bill_id));
         if (list_bill_detail_filter.length !== 0) {
           const modelDelete = {
             id: list_bill_detail_filter[0].bill_detail_id
@@ -523,7 +447,6 @@ export class CartComponent implements OnInit {
           })
         }
       })
-
     }
     else {
       this.cartService.deleteItem(item);
@@ -555,7 +478,6 @@ export class CartComponent implements OnInit {
           this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id, this.billDetailModel).subscribe(data => {
             this.totalCart();
           })
-
         })
       })
     }
@@ -598,6 +520,4 @@ export class CartComponent implements OnInit {
       this.loadListProductCart();
     }
   }
-
-
 }
