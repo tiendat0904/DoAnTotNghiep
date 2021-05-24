@@ -14,6 +14,10 @@ class TrademarkController extends Controller
     const id = 'trademark_id';
     const trademark_name = 'trademark_name';
     const image = 'image';
+    const created_at = 'created_at';
+    const createdBy = 'createdBy';
+    const updatedBy = 'updatedBy';
+    const updatedDate = 'updatedDate';
 
     /**
      * NhaCungCapController constructor.
@@ -54,6 +58,7 @@ class TrademarkController extends Controller
     public function store(Request $request)
     {
         //
+        date_default_timezone_set(BaseController::timezone);
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
@@ -76,8 +81,12 @@ class TrademarkController extends Controller
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
-            $this->base->store($request);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            $arr_value = [];
+            $arr_value = $request->all();
+            $arr_value[self::created_at] = date('Y-m-d h:i:s');
+            $arr_value[self::createdBy] = $user->account_id;
+            DB::table(self::table)->insert($arr_value);
+            return response()->json(['success' => "Thêm mới thành công", "data" =>  $arr_value], 201);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
@@ -117,20 +126,19 @@ class TrademarkController extends Controller
     public function update(Request $request, $id)
     {
         //
+        date_default_timezone_set(BaseController::timezone);
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            if ($request->trademark_name) {
-                $data = DB::table(self::table)
-                    ->select(self::table . '.*')
-                    ->where(self::trademark_name, '=', $request->trademark_name)
-                    ->get();
-                if (count($data) > 0) {
-                    return response()->json(['error' => 'Tên nhãn hiệu đã tồn tại vui lòng kiểm tra lại!!!'], 400);
-                }
+            $obj = [];
+            $obj = $request->all();
+            $obj[self::updatedDate] = date('Y-m-d h:i:s');
+            $obj[self::updatedBy] = $user->account_id;
+            if (count($obj) == 1) {
+                return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
             }
-            $this->base->update($request, $id);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            DB::table(self::table)->where(self::id, $id)->update($obj);
+            return response()->json(['success' => 'Chỉnh sửa thành công'], 201);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

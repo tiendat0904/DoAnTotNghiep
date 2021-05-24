@@ -20,6 +20,10 @@ class ProductController extends Controller
     const warranty = 'warranty';
     // const image = 'image';
     const description = 'description';
+    const created_at = 'created_at';
+    const createdBy = 'createdBy';
+    const updatedBy = 'updatedBy';
+    const updatedDate = 'updatedDate';
 
     /**
      * NhaCungCapController constructor.
@@ -107,6 +111,8 @@ class ProductController extends Controller
             $arr_value1[self::product_type_id] = $request->product_type_id;
             $arr_value1[self::description] = $request->description;
             $arr_value1[self::warranty] = $request->warranty;
+            $arr_value1[self::created_at] = date('Y-m-d h:i:s');
+            $arr_value1[self::createdBy] = $user->account_id;
             DB::table(self::table)->insert($arr_value1);
 
             $product_id = DB::table(self::table)->latest('product_id')->select(self::table . '.' . self::id)->first();
@@ -179,8 +185,16 @@ class ProductController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $this->base->update($request, $id);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            $obj = [];
+            $obj = $request->all();
+            $obj[self::updatedDate] = date('Y-m-d h:i:s');
+            $obj[self::updatedBy] = $user->account_id;
+            if (count($obj) == 1) {
+                return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
+            }
+            DB::table(self::table)->where(self::id, $id)->update($obj);
+            return response()->json(['success' => 'Chỉnh sửa thành công'], 201);
+            // return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

@@ -17,6 +17,10 @@ class CreateTrademarksTable extends Migration
             $table->id('trademark_id');
             $table->string('trademark_name');
             $table->string('image');
+            $table->date('created_at')->default(now());
+            $table->bigInteger('createdBy');
+            $table->bigInteger('updatedBy') ->nullable();
+            $table->date('updatedDate')->nullable();
         });
     }
 

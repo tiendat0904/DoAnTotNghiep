@@ -24,6 +24,8 @@ class CreateAccountsTable extends Migration
             $table->string('image');
             $table->bigInteger('account_type_id')->default('3');
             $table->date('created_at')->default(now());
+            $table->bigInteger('updatedBy');
+            $table->date('updatedDate')->default(now());
         });
 
       

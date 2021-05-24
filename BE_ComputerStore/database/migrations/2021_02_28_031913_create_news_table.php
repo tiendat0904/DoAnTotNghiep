@@ -21,6 +21,9 @@ class CreateNewsTable extends Migration
             $table->string('thumbnail')->nullable();
             $table->string('url');
             $table->date('created_at')->nullable();
+            $table->bigInteger('createdBy');
+            $table->bigInteger('updatedBy') ->nullable();
+            $table->date('updatedDate')->nullable();
         });
     }
 

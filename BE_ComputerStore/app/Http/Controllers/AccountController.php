@@ -25,6 +25,8 @@ class AccountController extends Controller
     const account_type_id = 'account_type_id';
     const remember_token = 'remember_token';
     const created_at = 'created_at';
+    const updatedBy = "updatedBy";
+    const updatedDate = "updatedDate";
     const NV = '2';
     const QT = '1';
     const KH = '3';
@@ -224,6 +226,7 @@ class AccountController extends Controller
         //
         $user = auth()->user();
         $ac_type = $user->account_type_id;
+        date_default_timezone_set(BaseController::timezone);
         if ($ac_type == self::NV || $ac_type == self::QT || $ac_type == self::KH) {
             $validator = Validator::make($request->all(), [
                 self::email => 'required|email'
@@ -250,6 +253,8 @@ class AccountController extends Controller
             if ($request->image != null) {
                 $array[self::image] = $request->image;
             }
+            $array[self::updatedDate] = date('Y-m-d h:i:s');
+            $array[self::updatedBy] =$user->account_id;
             if ($request->new_password != null && !Hash::check($request->old_password, $ac->password)) {
                 return response()->json(['error' => 'Chỉnh sửa thất bại. Mật khẩu cũ không chính xác'], 400);
             } elseif ($request->new_password != null && $request->old_password != null && $request->new_password == $request->old_password) {
@@ -279,6 +284,7 @@ class AccountController extends Controller
         $array = [];
         $array[self::email] = $request->email;
         $array[self::password] = bcrypt($request->new_password);
+        $array[self::created_at] = date('Y-m-d h:i:s');
         DB::table(self::table)->where(self::email, $request->email)->update($array);
             $ac = Account::where(self::email, $request->email)->first();
             if ($request->new_password != null) {

@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -30,7 +30,8 @@ import { InterceptorService } from '../../../loader/interceptor.service';
     NgbPaginationModule,
     Ng2SearchPipeModule,
     PipesModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgSelectModule
   ],
   declarations: [
     CouponComponent,

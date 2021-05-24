@@ -19,6 +19,10 @@ class CreateSuppliersTable extends Migration
             $table->string('supplier_address');
             $table->string('email');
             $table->string('hotline');
+            $table->date('created_at')->default(now());
+            $table->bigInteger('createdBy');
+            $table->bigInteger('updatedBy') ->nullable();
+            $table->date('updatedDate')->nullable();
         });
     }
 

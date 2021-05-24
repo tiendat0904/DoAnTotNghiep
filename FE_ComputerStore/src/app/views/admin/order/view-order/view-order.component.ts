@@ -50,6 +50,7 @@ export class ViewOrderComponent implements OnInit {
   filterResultTemplist: billDetailModel[] = [];
   isCheckhdn = true;
   isCheckhdn1 = false;
+  checkEmployee = false;
   bill_id: any;
   update_employee_id = null;
   // update_customer_id = null;
@@ -90,7 +91,7 @@ export class ViewOrderComponent implements OnInit {
     this.fetcharraylist_employee();
     this.fetcharraylist_customer();
     this.update_bill_id = this.actRoute.snapshot.params['id'];
-    this.update_employee_id = localStorage.getItem("account_id");
+    // this.update_employee_id = localStorage.getItem("account_id");
     this.billService.detail(this.update_bill_id).subscribe(data => {
       this.arraylist_bill = data.data;
       if (data.data === undefined) {
@@ -99,6 +100,7 @@ export class ViewOrderComponent implements OnInit {
         }
         else {
           // this.update_customer_id = data.data.customer_id;
+          this.update_employee_id = data.data.employee_id;
           this.update_total_money = data.data.total_money;
           this.update_into_money = data.data.into_money;
           this.update_created_at = data.data.created_at;
@@ -107,7 +109,11 @@ export class ViewOrderComponent implements OnInit {
           this.update_name = data.data.name;
         }
       }
-
+      if(this.update_employee_id !== null){
+        this.checkEmployee = true;
+      }else{
+        this.checkEmployee = false;
+      }
     })
 
     this.formGroup = this.fb.group({

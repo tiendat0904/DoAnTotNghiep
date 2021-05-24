@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-
-
-
+import { NgSelectModule } from '@ng-select/ng-select';
 // Dropdowns Component
 
 import { ProductComponent } from './product.component';
@@ -21,7 +19,6 @@ import { InterceptorService } from '../../../../loader/interceptor.service';
 
 @NgModule({
   imports: [
-    CommonModule,
     ProductRoutingModule,
     FormsModule,
     CommonModule,
@@ -29,7 +26,8 @@ import { InterceptorService } from '../../../../loader/interceptor.service';
     NgbPaginationModule,
     Ng2SearchPipeModule,
     PipesModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgSelectModule
   ],
   declarations: [
     ProductComponent,

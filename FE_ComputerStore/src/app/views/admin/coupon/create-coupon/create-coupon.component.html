@@ -17,7 +17,7 @@
                <div class="form-group">
                   <label>Tên nhân viên</label>
                   <select [(ngModel)]="update_employee_id" class="form-control" name="" formControlName="employee_id"
-                     id="" readonly>
+                     id="" disabled="disabled">
                      <option *ngFor="let e of arraylist_employee" value="{{e.account_id}}">{{e.full_name}}
                      </option>
                   </select>
@@ -33,12 +33,9 @@
             <div class="col-md-12">
                <div class="form-group">
                   <label>Nhà phát hành</label>
-                  <select ngModel class="form-control" name="" formControlName="supplier_id" id="">
-                     <option value="" disabled selected> --vui lòng chọn nhà phát hành--
-                     </option>
-                     <option *ngFor="let e of arraylist_supplier" value="{{e.supplier_id}}">{{e.supplier_name}}
-                     </option>
-                  </select>
+                  <ng-select  formControlName="supplier_id" placeholder="Hãy chọn nhà phát hành">
+                     <ng-option *ngFor="let e of arraylist_supplier" value="{{e.supplier_id}}">{{e.supplier_name}}</ng-option>
+                   </ng-select>
                   <div *ngIf="submitted && formGroup.controls['supplier_id'].errors?.required">
                      <div *ngIf="formGroup.controls['supplier_id'].errors?.required" style="color: red">
                         * Nhà cung cấp không được để trống

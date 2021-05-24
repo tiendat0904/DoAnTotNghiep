@@ -17,6 +17,9 @@ class NewsController extends Controller
     const thumbnail = 'thumbnail';
     const url = 'url';
     const created_at = 'created_at';
+    const createdBy = 'createdBy';
+    const updatedBy = 'updatedBy';
+    const updatedDate = 'updatedDate';
 
     /**
      * NhaCungCapController constructor.
@@ -82,7 +85,7 @@ class NewsController extends Controller
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
-            
+
             $obj = [];
             $obj[self::title] = $request->title;
             $obj[self::news_content] = $request->news_content;
@@ -93,8 +96,9 @@ class NewsController extends Controller
                 $obj[self::thumbnail] = $request->thumbnail;
             }
             $obj[self::url] = $request->url;
-            $obj[self::created_at] = date('Y-m-d');
-            
+            $obj[self::created_at] = date('Y-m-d h:i:s');
+            $obj[self::createdBy] = $user->account_id;
+
             DB::table(self::table)->insert($obj);
             return response()->json(['success' => "Thêm mới thành công"], 201);
         } else {
@@ -116,7 +120,7 @@ class NewsController extends Controller
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $this->base->show($id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-         } else {
+        } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
     }
@@ -142,11 +146,33 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        date_default_timezone_set(BaseController::timezone);
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $this->base->update($request, $id);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            $obj = [];
+            if ($request->title) {
+                $obj[self::title] = $request->title;
+            }
+            if ($request->news_content) {
+                $obj[self::news_content] = $request->news_content;
+            }
+            if ($request->highlight) {
+                $obj[self::highlight] = $request->highlight;
+            }
+            if ($request->thumbnail) {
+                $obj[self::thumbnail] = $request->thumbnail;
+            }
+            if ($request->url) {
+                $obj[self::url] = $request->url;
+            }
+            $obj[self::updatedDate] = date('Y-m-d h:i:s');
+            $obj[self::updatedBy] = $user->account_id;
+            if (count($obj) == 1) {
+                return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
+            }
+            DB::table(self::table)->where(self::id, $id)->update($obj);
+            return response()->json(['success' => 'Chỉnh sửa thành công'], 201);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

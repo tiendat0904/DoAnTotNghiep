@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { avatarDefault } from '../../../../../environments/environment';
 import { productModel } from '../../../../models/product-model';
 import { productPromotionDModel } from '../../../../models/product-promotion-model';
@@ -44,6 +45,10 @@ export class UpdateProductPromotionComponent implements OnInit {
   model: productPromotionDModel;
   urlPictureDefault = avatarDefault;
 
+  myControl = new FormControl();
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -54,10 +59,20 @@ export class UpdateProductPromotionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
     this.submitted = false;
     this.fetchListProduct();
     this.fetchListProductPromotion();
     this.fetchListPromotionDate();
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   fetchListProduct() {

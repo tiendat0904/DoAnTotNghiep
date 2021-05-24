@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map, startWith } from 'rxjs/operators';
 import { avatarDefault } from '../../../../../environments/environment';
 import { productModel } from '../../../../models/product-model';
 import { productTypeModel } from '../../../../models/product-type-model';
@@ -26,6 +26,7 @@ export class UpdateProductComponent implements OnInit {
   @Output() eventEmit: EventEmitter<any> = new EventEmitter<any>();
   arraylist_trademark: Array<trademarkModel> = [];
   arraylist_product_type: Array<productTypeModel> = [];
+  arraylist_product_type_filter: Array<productTypeModel> = [];
   checkButton = false;
   closeResult: String;
   uploadPercent: Observable<number>;
@@ -49,6 +50,7 @@ export class UpdateProductComponent implements OnInit {
   update_ma_tai_khoan: any;
   model: productModel;
   urlPictureDefault = avatarDefault;
+  searchedKeyword: any;
 
   constructor(
     private modalService: NgbModal,
@@ -76,6 +78,7 @@ export class UpdateProductComponent implements OnInit {
   fetchListProductType() {
     this.subscription = this.productTypeService.getAll().subscribe(data => {
       this.arraylist_product_type = data.data;
+      this.arraylist_product_type_filter = this.arraylist_product_type;
     })
   }
 

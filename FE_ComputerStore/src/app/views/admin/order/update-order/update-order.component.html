@@ -10,9 +10,8 @@
             <div class="col-md-12">
                <div class="form-group">
                   <label>Tên nhân viên</label>
-                  <select [(ngModel)]="update_employee_id" class="form-control" name="" formControlName="employee_id"
-                     id="">
-                     <option [selected]="isSelected" selected hidden disabled> --vui lòng chọn nhân viên--</option>
+                  <select [(ngModel)]="update_employee_id" disabled="disabled" class="form-control" name="" formControlName="employee_id"
+                     id="" disabled="disabled">
                      <option *ngFor="let e of arraylist_employee_filter" value="{{e.account_id}}">{{e.full_name}}
                      </option>
                   </select>
