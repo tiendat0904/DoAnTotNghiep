@@ -15,10 +15,13 @@ class CreateCouponsTable extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id('coupon_id');
+            $table->string('coupon_code');
             $table->bigInteger('employee_id');
             $table->bigInteger('supplier_id');
             $table->double('total_money', 15, 2)->default(0.00);
             $table->date('created_at')->default(now());
+            $table->bigInteger('updatedBy') ->nullable();
+            $table->date('updatedDate')->nullable();
         });
     }
 

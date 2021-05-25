@@ -47,6 +47,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   // coupon_id: any;
   update_employee_id = null;
   update_supplier_id = null;
+  update_coupon_code = null;
   coupon: couponModel;
 
   constructor(
@@ -61,29 +62,17 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     public loaderService: LoaderService
   ) {
-    // this.couponService.getAll().subscribe(data => {
-    //   this.arraylist_coupon = data.data;
-    //   if (this.arraylist_coupon.length === 0) {
-    //     this.update_coupon_id = 1;
-    //   } else {
-    //     this.arraylist_coupon.sort(function (a, b) {
-    //       return a.coupon_id - b.coupon_id;
-    //     });
-    //     this.update_coupon_id = this.arraylist_coupon[this.arraylist_coupon.length - 1].coupon_id;
-    //     this.update_coupon_id = this.update_coupon_id + 1;
-    //   }
-
-    // })
     this.formGroup = this.fb.group({
-      // coupon_id: [this.update_coupon_id],
       employee_id: [null, [Validators.required]],
       supplier_id: [null, [Validators.required]],
+      coupon_code: [null, [Validators.required]],
       created_at: [this.datePipe.transform(Date.now(), "dd/MM/yyyy")],
       total_money: [this.update_total_money],
     });
   }
 
   ngOnDestroy(): void {
+    this.searchedKeyword = '';
     localStorage.removeItem("coupon_id");
   }
 
@@ -93,9 +82,10 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       this.update_employee_id = localStorage.getItem("account_id");
       this.isAdd = true;
       this.submitted = false;
-      this.fetchListCouponDetail();
+      this.update_total_money = 0;
       this.fetchListEmployee();
       this.fetchListSupplier();
+      console.log(this.arraylist_coupon_detail.length);
       this.couponService.detail(this.update_coupon_id).subscribe(data => {
         this.arraylist_coupon = data.data;
         if (data.data === undefined) {
@@ -105,10 +95,15 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
           else {
             this.update_supplier_id = data.data.supplier_id;
             this.update_employee_id = data.data.employee_id;
-            this.update_total_money = data.data.total_money;
+            this.update_coupon_code = data.data.coupon_code;
           }
         }
       })
+      this.arraylist_coupon_detail = this.listFilterResult;
+      for(let item of this.listFilterResult){
+        this.update_total_money += item.amount * item.price;
+      }
+      
     },500);
   }
 
@@ -118,26 +113,30 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
       this.toastr.error('Kiểm tra thông tin các trường đã nhập');
       return;
     }
-    this.coupon = {
-      employee_id: this.formGroup.get('employee_id')?.value,
-      supplier_id: this.formGroup.get('supplier_id')?.value,
-    };
     this.isButtonSave = true;
     this.isCheckhdn = false;
     this.isCheckhdn1 = true;
   }
 
-  // fetcharraylist_coupon() {
-  //   this.arraylist_coupon = [];
-  //   this.isLoading = true;
-  //   this.couponService.getAll().subscribe(data => {
-  //     this.arraylist_coupon = data.data;
-  //     // this.update_coupon_id = this.arraylist_coupon.length + 1;
-  //   },
-  //     err => {
-  //       this.isLoading = false;
-  //     })
-  // }
+  saveCoupon(){
+    if(this.arraylist_coupon_detail.length === 0){
+      this.toastr.error("Phiếu nhập trống, vui lòng thêm chi tiết sản phẩm");
+    }
+    else{
+      this.coupon = {
+        employee_id: this.formGroup.get('employee_id')?.value,
+        supplier_id: this.formGroup.get('supplier_id')?.value,
+        coupon_code : this.formGroup.get('coupon_code')?.value,
+        listCouponDetail:this.arraylist_coupon_detail
+      };
+      this.couponService.create(this.coupon).subscribe(data =>{
+        this.toastr.success(data.success);
+        this.getNavigation('admin/coupon');
+      }
+      );
+    }
+  }
+
 
   fetchListEmployee() {
     this.arraylist_employee = [];
@@ -154,18 +153,15 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   }
 
 
-  fetchListCouponDetail() {
-    this.listFilterResult = [];
-    this.couponDetailService.getAll().subscribe(data => {
-      this.arraylist_coupon_detail = data.data;
-      for (let item of this.arraylist_coupon_detail) {
-        if (item.coupon_id === this.update_coupon_id) {
-          this.listFilterResult.push(item);
-        }
-      }
-      this.listFilterResult.forEach((x) => (x.checked = false));
-      this.filterResultTemplist = this.listFilterResult;
-    })
+  addItem(newItem: couponDetailModel) {
+    this.listFilterResult.push(newItem);
+  }
+
+  deleteCoupon_Detail(product_name :any){
+    this.listFilterResult.forEach((element,index)=>{
+      if(element.product_name === product_name) this.listFilterResult.splice(index,1);
+   });
+   this.modalReference.dismiss();
   }
 
   public filterByKeyword() {
@@ -232,7 +228,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     }
   }
 
-  getNavigation(link, id) {
+  getNavigation(link) {
     if (this.listFilterResult.length === 0) {
       this.router.navigate([link]);
     } else {
@@ -240,57 +236,57 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteCouponDetail(item: any = null) {
-    let selectedcouponDetail = [];
-    if (item !== null && item !== undefined && item !== '') {
-      selectedcouponDetail.push(item);
-      this.delete(selectedcouponDetail);
-      return;
-    }
-    selectedcouponDetail = this.listFilterResult
-      .filter((couponDetail) => couponDetail.checked)
-      .map((p) => p.product_id);
-    if (selectedcouponDetail.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
-      return;
-    }
-    this.delete(selectedcouponDetail);
-  }
+  // deleteCouponDetail(item: any = null) {
+  //   let selectedcouponDetail = [];
+  //   if (item !== null && item !== undefined && item !== '') {
+  //     selectedcouponDetail.push(item);
+  //     this.delete(selectedcouponDetail);
+  //     return;
+  //   }
+  //   selectedcouponDetail = this.listFilterResult
+  //     .filter((couponDetail) => couponDetail.checked)
+  //     .map((p) => p.product_id);
+  //   if (selectedcouponDetail.length === 0) {
+  //     this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+  //     return;
+  //   }
+  //   this.delete(selectedcouponDetail);
+  // }
 
   initModal(model: any, type = null): void {
     this.view.view(model, type);
   }
 
-  public delete(listid: any) {
-    const modelDelete = {
-      listId: listid
-    };
-    for (var i = 0; i < this.listFilterResult.length; i++) {
-      if (this.listFilterResult[i].checked == true) {
-        this.listFilterResult[i].checked = false;
-      }
-    }
-    this.searchedKeyword = null;
-    this.filterResultTemplist = this.listFilterResult;
-    for (var i = 0; i < this.listFilterResult.length; i++) {
-      if (this.listFilterResult[i].checked == true) {
-        this.listFilterResult[i].checked = false;
-      }
-    }
-    this.searchedKeyword = null;
-    this.filterResultTemplist = this.listFilterResult;
-    this.couponDetailService.delete(modelDelete).subscribe(
-      (result) => {
-        this.ngOnInit();
-        this.changeModel();
-        if (result.error) {
-          this.toastr.error(result.error);
-        } else {
-          this.toastr.success(result.success);
-        }
-        this.modalReference.dismiss();
-      },
-    );
-  }
+  // public delete(listid: any) {
+  //   const modelDelete = {
+  //     listId: listid
+  //   };
+  //   for (var i = 0; i < this.listFilterResult.length; i++) {
+  //     if (this.listFilterResult[i].checked == true) {
+  //       this.listFilterResult[i].checked = false;
+  //     }
+  //   }
+  //   this.searchedKeyword = null;
+  //   this.filterResultTemplist = this.listFilterResult;
+  //   for (var i = 0; i < this.listFilterResult.length; i++) {
+  //     if (this.listFilterResult[i].checked == true) {
+  //       this.listFilterResult[i].checked = false;
+  //     }
+  //   }
+  //   this.searchedKeyword = null;
+  //   this.filterResultTemplist = this.listFilterResult;
+  //   this.couponDetailService.delete(modelDelete).subscribe(
+  //     (result) => {
+  //       this.ngOnInit();
+  //       this.changeModel();
+  //       if (result.error) {
+  //         this.toastr.error(result.error);
+  //       } else {
+  //         this.toastr.success(result.success);
+  //       }
+  //       this.modalReference.dismiss();
+  //     },
+  //   );
+  // }
 
 }

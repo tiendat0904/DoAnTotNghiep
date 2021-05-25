@@ -243,7 +243,7 @@ export class UpdateProductComponent implements OnInit {
     this.uploads = [];
     const filelist = event.target.files;
     for (const file of filelist) {
-      let path = `computerstore/${file.name}`;
+      let path = `computerstore/product/${file.name}`;
       if (file.type.split('/')[0] !== 'image') {
         return alert('Erreur, ce fichier n\'est pas une image');
       } else {
@@ -258,9 +258,10 @@ export class UpdateProductComponent implements OnInit {
               this.urlPictureDefault = this.uploads[0];
             });
           }
-          )
+          )   
         ).subscribe();
       }
     }
+    console.log(this.uploads);
   }
 }

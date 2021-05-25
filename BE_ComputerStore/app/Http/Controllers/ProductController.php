@@ -106,6 +106,10 @@ class ProductController extends Controller
                 return response()->json(['error' => $validator->errors()->all()], 400);
             }
             $arr_value1 = [];
+            $data = DB::table(self::table)->where(self::product_name, '=', $request->product_name)->get();
+            if (count($data) > 0) {
+                return response()->json(['error' => 'Đã tồn tại tên sản phẩm này'], 400);
+            }
             $arr_value1[self::product_name] = $request->product_name;
             $arr_value1[self::trademark_id] = $request->trademark_id;
             $arr_value1[self::product_type_id] = $request->product_type_id;

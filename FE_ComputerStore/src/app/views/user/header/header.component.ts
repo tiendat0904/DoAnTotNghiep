@@ -47,6 +47,7 @@ export class HeaderComponent implements OnInit {
     private productService: ProductService) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.check_product = true;
     this.picture = this.urlPictureDefault;
     this.name = "Đăng nhập";

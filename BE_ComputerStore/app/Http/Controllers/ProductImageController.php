@@ -238,8 +238,7 @@ class ProductImageController extends Controller
                         DB::table(self::table)->insert($objs);
                     }
                 }
-
-            
+                return response()->json(['success' => 'Cập nhật hình ảnh sản phẩm thành công'], 201); 
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

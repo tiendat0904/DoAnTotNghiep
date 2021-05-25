@@ -3,16 +3,21 @@
 </div>
 <div class="row" style="margin: 0 auto; display: flex;padding: 60px 0;">
    <div class="col-sm-3" style="background-color:#fff;margin-right: 20px;">
-      <h2 style="font-size:30px; margin-top: 15px;"> Chỉnh sửa hóa đơn nhập</h2>
+      <h2 style="font-size:30px; margin-top: 15px;"> Chỉnh sửa phiếu nhập</h2>
       <form [formGroup]="formGroup" (ngSubmit)="save()">
          <div class="row">
-            <!-- <div class="col-md-12">
-                  <div class="form-group">
-                     <label for="coupon_id">Mã phiếu nhập</label>
-                     <input type="text" name="" class="form-control" formControlName="coupon_id" id="coupon_id"
-                        [(ngModel)]='update_coupon_id' readonly />
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label>Mã phiếu nhập của nhà cung cấp</label>
+                  <input type="text" name="" [(ngModel)]="update_coupon_code" class="form-control"
+                     formControlName="coupon_code" id="coupon_code" />
+                  <div *ngIf="submitted && formGroup.controls['coupon_code'].errors?.required">
+                     <div *ngIf="formGroup.controls['coupon_code'].errors?.required" style="color: red">
+                        * Mã phiếu nhập của nhà cung cấp không được để trống
+                     </div>
                   </div>
-               </div> -->
+               </div>
+            </div>
             <div class="col-md-12">
                <div class="form-group">
                   <label>Tên nhân viên</label>
@@ -33,9 +38,9 @@
             <div class="col-md-12">
                <div class="form-group">
                   <label>Nhà phát hành</label>
-                  <ng-select  formControlName="supplier_id" placeholder="Hãy chọn nhà phát hành">
-                     <ng-option *ngFor="let e of arraylist_supplier" value="{{e.supplier_id}}">{{e.supplier_name}}</ng-option>
-                   </ng-select>
+                  <ng-select [items]="arraylist_supplier" bindLabel="supplier_name" bindValue="supplier_id"
+                     formControlName="supplier_id" [(ngModel)]="update_supplier_id">
+                  </ng-select>
                   <div *ngIf="submitted && formGroup.controls['supplier_id'].errors?.required">
                      <div *ngIf="formGroup.controls['supplier_id'].errors?.required" style="color: red">
                         * Nhà cung cấp không được để trống
@@ -61,7 +66,7 @@
                </div>
             </div>
          </div>
-         <div class="form-group" align="center">
+         <!-- <div class="form-group" align="center">
             <button type="submit" class="btn btn-success" style="width: 100px">
                Lưu
             </button>
@@ -69,7 +74,7 @@
                style="width: 100px">
                Thoát
             </button>
-         </div>
+         </div> -->
       </form>
    </div>
    <div class="col-sm-8" style="background-color:#fff;">
@@ -191,6 +196,10 @@
                   </div>
                </div>
             </div>
+         </div>
+         <div style="text-align: center;margin-bottom: 10px;">
+            <button class="btn btn-success" style="width: 100px;" (click)="save();">Lưu</button>
+            <button class="btn btn-danger" style="width: 100px;" (click)="getNavigation('admin/coupon')">Thoát</button>
          </div>
       </div>
    </div>

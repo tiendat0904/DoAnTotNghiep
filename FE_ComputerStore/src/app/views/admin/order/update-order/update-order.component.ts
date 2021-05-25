@@ -83,7 +83,7 @@ export class UpdateOrderComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.searchedKeyword = '';
     this.submitted = false;
     this.fetcharraylistOrderStatus();
     this.fetcharraylistOrderType();

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { ToastrService } from 'ngx-toastr';
@@ -36,11 +37,13 @@ export class SelectItemBuildPcComponent implements OnInit {
   type: any;
   constructor(private modalService: NgbModal,
     private toastr: ToastrService,
+    private router: Router,
     private productService: ProductService,
     private trademarkService: TrademarkService,
     private pcService: PcService) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.check_product = true;
   }
 
@@ -109,6 +112,14 @@ export class SelectItemBuildPcComponent implements OnInit {
     }
   }
 
+  goToProductDetail(link, id){
+    if (id === '') {
+      this.router.navigate([link]);
+    } else {
+      this.router.navigate([link + '/' + id]);
+    }
+    this.modalReference.dismiss();
+  }
 
   view(product_type: any, type: any) {
     this.product_type = product_type;

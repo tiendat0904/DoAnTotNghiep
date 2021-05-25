@@ -35,6 +35,7 @@ export class SupplierComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.fetchListSupplier();
   }
 

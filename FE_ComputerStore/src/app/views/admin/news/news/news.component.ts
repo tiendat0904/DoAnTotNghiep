@@ -33,6 +33,7 @@ export class NewsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.fetchListNews();
   }
 

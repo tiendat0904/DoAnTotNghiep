@@ -45,6 +45,7 @@ export class UpdateCouponComponent implements OnInit {
   update_employee_id = null;
   update_supplier_id = null;
   update_created_at = null;
+  update_coupon_code = null;
 
   constructor(
     private modalService: NgbModal,
@@ -65,7 +66,7 @@ export class UpdateCouponComponent implements OnInit {
     })
   }
   ngOnInit(): void {
-
+    this.searchedKeyword ='';
     this.submitted = false;
     this.fetchListEmployee();
     this.fetchListSupplier();
@@ -80,6 +81,7 @@ export class UpdateCouponComponent implements OnInit {
         else {
           this.update_supplier_id = data.data.supplier_id;
           this.update_employee_id = data.data.employee_id;
+          this.update_coupon_code = data.data.coupon_code;
           this.update_total_money = data.data.total_money;
           this.update_created_at = data.data.created_at;
         }
@@ -88,6 +90,7 @@ export class UpdateCouponComponent implements OnInit {
 
     this.formGroup = this.fb.group({
       coupon_id: [this.update_coupon_id],
+      coupon_code:[this.update_coupon_code],
       employee_id: [this.update_employee_id],
       supplier_id: [this.update_supplier_id],
       created_at: [this.update_created_at],
@@ -96,7 +99,6 @@ export class UpdateCouponComponent implements OnInit {
   }
 
   save() {
-    let check = false;
     let coupon: couponModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
@@ -104,6 +106,7 @@ export class UpdateCouponComponent implements OnInit {
       return;
     }
     coupon = {
+      coupon_code : this.formGroup.get('coupon_code')?.value,
       employee_id: this.formGroup.get('employee_id')?.value,
       supplier_id: this.formGroup.get('supplier_id')?.value,
     };
@@ -112,6 +115,7 @@ export class UpdateCouponComponent implements OnInit {
       this.toastr.success(res.success);
       this.isCheckhdn = false;
       this.isCheckhdn1 = true;
+      this.getNavigation('admin/coupon','');
     },
       err => {
         this.toastr.error(err.error.error);

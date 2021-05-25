@@ -34,6 +34,7 @@ export class CouponComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.fetchListCoupon();
   }
 

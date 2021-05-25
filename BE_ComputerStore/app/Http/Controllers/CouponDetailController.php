@@ -74,16 +74,16 @@ class CouponDetailController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            date_default_timezone_set(BaseController::timezone);
-            $coupon = $request->coupon;
-            $obj = [];
-            $obj["supplier_id"] = $coupon['supplier_id'];
-            $obj["employee_id"] = $coupon['employee_id'];
-            $obj["created_at"] = date('Y-m-d h:i:s');
-            DB::table(CouponController::table)->insert($obj);
-            $coupon_id = DB::table(CouponController::table)->select(CouponController::table . '.' . CouponController::id)->orderByDesc(CouponController::id)->first();
+            // date_default_timezone_set(BaseController::timezone);
+            // $coupon = $request->coupon;
+            // $obj = [];
+            // $obj["supplier_id"] = $coupon['supplier_id'];
+            // $obj["employee_id"] = $coupon['employee_id'];
+            // $obj["created_at"] = date('Y-m-d h:i:s');
+            // DB::table(CouponController::table)->insert($obj);
+            // $coupon_id = DB::table(CouponController::table)->select(CouponController::table . '.' . CouponController::id)->orderByDesc(CouponController::id)->first();
             $arr_value = [];
-            $arr_value[self::coupon_id] = $coupon_id->coupon_id;
+            $arr_value[self::coupon_id] = $request->coupon_id;
             $arr_value[self::product_id] = $request->product_id;
             $arr_value[self::price] = $request->price;
             $arr_value[self::amount] = $request->amount;
@@ -113,7 +113,7 @@ class CouponDetailController extends Controller
                     return response()->json(['error' => 'Thêm mới thất bại. Sản phẩm đã có trong phiếu nhập này'], 400);
                 }
                 DB::table(self::table)->insert($arr_value);
-                return response()->json(['success' => 'Thêm mới thành công','data'=> $coupon_id->coupon_id], 201);
+                return response()->json(['success' => 'Thêm mới thành công','data'=> $arr_value], 201);
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }

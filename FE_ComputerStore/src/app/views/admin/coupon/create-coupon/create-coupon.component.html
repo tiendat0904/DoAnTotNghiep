@@ -1,18 +1,22 @@
 <div *ngIf="loaderService.isLoading | async" class="loader-container">
    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
 </div>
-<div class="row" style="margin: 0 auto; display: flex;padding: 60px 0;">
+<div class="row" style="margin: 0 auto; display: flex;padding: 20px 0;">
    <div class="col-sm-3" style="background-color:#fff;margin-right: 20px;">
       <h2 style="font-size:30px;padding-top: 10px;">Thêm mới phiếu nhập kho</h2>
       <form [formGroup]="formGroup" (ngSubmit)="save()">
          <div class="row">
-            <!-- <div class="col-md-12">
-                  <div class="form-group">
-                     <label for="coupon_id">Mã Phiếu nhập</label>
-                     <input type="text" name="" class="form-control" formControlName="coupon_id" id="coupon_id"
-                        [(ngModel)]='update_coupon_id' readonly />
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label>Mã phiếu nhập của nhà cung cấp</label>
+                  <input type="text" name="" class="form-control" formControlName="coupon_code" id="coupon_code" />
+                  <div *ngIf="submitted && formGroup.controls['coupon_code'].errors?.required">
+                     <div *ngIf="formGroup.controls['coupon_code'].errors?.required" style="color: red">
+                        * Mã phiếu nhập của nhà cung cấp không được để trống
+                     </div>
                   </div>
-               </div> -->
+               </div>
+            </div>
             <div class="col-md-12">
                <div class="form-group">
                   <label>Tên nhân viên</label>
@@ -33,9 +37,10 @@
             <div class="col-md-12">
                <div class="form-group">
                   <label>Nhà phát hành</label>
-                  <ng-select  formControlName="supplier_id" placeholder="Hãy chọn nhà phát hành">
-                     <ng-option *ngFor="let e of arraylist_supplier" value="{{e.supplier_id}}">{{e.supplier_name}}</ng-option>
-                   </ng-select>
+                  <ng-select formControlName="supplier_id" placeholder="Hãy chọn nhà phát hành">
+                     <ng-option *ngFor="let e of arraylist_supplier" value="{{e.supplier_id}}">{{e.supplier_name}}
+                     </ng-option>
+                  </ng-select>
                   <div *ngIf="submitted && formGroup.controls['supplier_id'].errors?.required">
                      <div *ngIf="formGroup.controls['supplier_id'].errors?.required" style="color: red">
                         * Nhà cung cấp không được để trống
@@ -62,10 +67,10 @@
             </div>
          </div>
          <div class="form-group" align="center">
-            <button [hidden]="isButtonSave" type="submit" class="btn btn-success" style="width: 100px">
-               Lưu
+            <button [hidden]="isButtonSave" type="submit" class="btn btn-primary" style="width: 100px">
+               Tiếp tục
             </button>
-            <button type="button" (click)="getNavigation('admin/coupon', '')" class="btn btn-danger"
+            <button [hidden]="isButtonSave" type="button" (click)="getNavigation('admin/coupon')" class="btn btn-danger"
                style="width: 100px">
                Thoát
             </button>
@@ -76,8 +81,8 @@
       <h4 [hidden]="isCheckhdn1" style="padding-top: 10px;"><i>Vui lòng thêm phiếu nhập trước khi thêm chi tiết phiếu
             nhập !!!</i></h4>
       <div class="container" [hidden]="isCheckhdn">
-         <div class="table-responsive">
-            <div class="table-wrapper" style="min-width :700px">
+         <div class="table-responsive" style="margin :0">
+            <div class="table-wrapper" style="min-width :700px;padding:10px 15px">
                <div class="table-title">
                   <div class="row">
                      <div class="col-sm-8">
@@ -90,8 +95,9 @@
                               class="form-control" placeholder="Search&hellip;">
                         </div>
                      </div>
-                     <button (click)="initModal({},'add')" type="button" class="btn btn-primary" style="margin-left: 15px;"><i class="fa fa-plus"
-                           style="margin-right: 12px"></i>Thêm mới</button>
+                     <button (click)="initModal({},'add')" type="button" class="btn btn-primary"
+                        style="margin-left: 15px;"><i class="fa fa-plus" style="margin-right: 12px"></i>Thêm
+                        mới</button>
                      <ng-template #mymodal1 let-modal>
                         <div class="modal-header">
                            <h4 class="modal-title" id="modal-basic-title">
@@ -115,13 +121,13 @@
                            </button>
                         </div>
                      </ng-template>
-                     <button type="button" [hidden]="isDelete" (click)="open(mymodal1)" class="btn btn-danger" >
+                     <button type="button" [hidden]="isDelete" (click)="open(mymodal1)" class="btn btn-danger">
                         <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
                      </button>
                   </div>
                </div>
                <div class="row">
-                  <div class="col-12">
+                  <div class="col-12" style="min-height: 175px;">
                      <table class="table table-striped table-hover table-bordered ">
                         <thead>
                            <tr>
@@ -161,12 +167,11 @@
                                        </button>
                                     </div>
                                     <div class="modal-body">
-                                       Bạn có chắc chắn muốn xóa thông tin Chi tiết phiếu nhập {{ e.coupon_detail_id
-                                       }} ?
+                                       Bạn có chắc chắn muốn xóa thông tin Chi tiết phiếu nhập này ?
                                     </div>
                                     <div class="modal-footer">
                                        <button class="btn btn-danger" style="width: 80px"
-                                          (click)="deleteCouponDetail(e.coupon_detail_id)">
+                                          (click)="deleteCoupon_Detail(e.product_name)">
                                           Có
                                        </button>
                                        <button class="btn btn-outline-dark" style="width: 80px"
@@ -192,8 +197,12 @@
                </div>
             </div>
          </div>
+         <div style="text-align: center;margin-bottom: 10px;">
+            <button class="btn btn-success" style="width: 100px;" (click)="saveCoupon();">Lưu</button>
+            <button class="btn btn-danger" style="width: 100px;" (click)="getNavigation('admin/coupon')">Thoát</button>
+         </div>
       </div>
    </div>
 </div>
 <app-update-coupon-detail [isAdd1]="isAdd" [mess_coupon]="coupon" [arraylist_coupon_detail]="arraylist_coupon_detail"
-   (eventEmit)="ngOnInit()"></app-update-coupon-detail>
+   (eventEmit)="ngOnInit()" (eventEmit)="addItem($event)"></app-update-coupon-detail>

@@ -33,6 +33,7 @@ export class OrderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.fetcharraylist_order();
   }
 

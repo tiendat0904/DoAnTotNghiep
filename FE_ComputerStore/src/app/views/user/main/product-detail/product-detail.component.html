@@ -12,7 +12,7 @@
 </div>
 <div class='container'>
     <div class='product-detail-main row' *ngIf="product">
-        <div class='product-detail-image col-lg-4'>
+        <div class='product-detail-image col-lg-4' style="z-index: 0;">
             <mdb-carousel style="width: 85%;" class="carousel slide carousel-fade" [type]="'carousel-thumbnails'"
                 [animation]="'fade'">
                 <mdb-carousel-item *ngFor=" let photo of photos">
@@ -75,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div class="product-bestseller">
+    <div class="product-bestseller" style="padding-bottom: 20px;">
         <div class="product-title-container" style="width: 340px; margin-bottom: 20px;" *ngIf="product">
             <h3 style="font-size: 20px;">Cùng thương hiệu {{product.trademark_name}}</h3>
         </div>

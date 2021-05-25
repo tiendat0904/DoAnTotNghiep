@@ -35,6 +35,7 @@ export class ProductImageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.fetchListProductImage();
   }
 

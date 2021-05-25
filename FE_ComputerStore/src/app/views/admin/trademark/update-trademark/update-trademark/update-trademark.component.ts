@@ -199,7 +199,7 @@ export class UpdateTrademarkComponent implements OnInit {
 
   uploadImage(event) {
     let file = event.target.files[0];
-    let path = `${file.name}`;
+    let path = `computerstore/trademark/${file.name}`;
     if (file.type.split('/')[0] !== 'image') {
       return alert('Erreur, ce fichier n\'est pas une image');
     } else {

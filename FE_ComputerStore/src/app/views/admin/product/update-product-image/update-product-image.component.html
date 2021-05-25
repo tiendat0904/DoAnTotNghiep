@@ -9,8 +9,8 @@
     <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
       <div class="form-group">
         <label>Tên sản phẩm</label>
-        <ng-select  formControlName="product_id" placeholder="Hãy chọn sản phẩm">
-          <ng-option *ngFor="let e of arraylist_product" value="{{e.product_id}}">{{e.product_name}}</ng-option>
+        <ng-select [items]="arraylist_product"  bindLabel="product_name"
+          bindValue="product_id" formControlName="product_id">
         </ng-select>
         <div *ngIf="submitted && formGroup.controls['product_id'].errors?.required">
           <div *ngIf="formGroup.controls['product_id'].errors?.required" style="color: red">

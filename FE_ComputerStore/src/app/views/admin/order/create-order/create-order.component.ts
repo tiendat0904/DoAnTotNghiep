@@ -82,6 +82,7 @@ export class CreateOrderComponent implements OnInit {
 
   
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.isAdd = true;
     this.fetcharraylist_bill_detail();
     this.submitted = false;

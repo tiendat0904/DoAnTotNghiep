@@ -33,6 +33,7 @@ export class PromotionDateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.fetchListPromotionDate();
   }
 

@@ -33,6 +33,7 @@ export class TrademarkComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.fetchlistSupplier();
   }
 

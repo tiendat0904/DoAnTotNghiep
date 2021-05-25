@@ -57,6 +57,7 @@ export class UpdateProductImageComponent implements OnInit {
   ngOnInit(): void {
     this.submitted = false;
     this.fetchListProductImage();
+    this.uploads = [];
   }
 
   fetchListProductImage() {
@@ -100,6 +101,7 @@ export class UpdateProductImageComponent implements OnInit {
     this.model = model;
     this.submitted = false;
     this.updateFormType(type);
+    this.uploads = [];
 
     if (model.product_id === null || model.product_id === undefined) {
       this.formGroup = this.fb.group({
@@ -181,7 +183,7 @@ export class UpdateProductImageComponent implements OnInit {
     if (this.isEdit) {
       this.productImageService.update(product).subscribe(res => {
         this.closeModalReloadData();
-        // this.toastr.success(res.success);
+        this.toastr.success(res.success);
         this.modalReference.dismiss();
       },
         err => {
@@ -200,7 +202,7 @@ export class UpdateProductImageComponent implements OnInit {
     this.uploads = [];
     const filelist = event.target.files;
     for (const file of filelist) {
-      let path = `computerstore/${file.name}`;
+      let path = `computerstore/product/${file.name}`;
       if (file.type.split('/')[0] !== 'image') {
         return alert('Erreur, ce fichier n\'est pas une image');
       } else {

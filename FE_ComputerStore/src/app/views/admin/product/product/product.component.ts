@@ -18,9 +18,7 @@ export class ProductComponent implements OnInit {
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  isLoading = false;
   condition = true;
-  isSelected = true;
   searchedKeyword: string;
   listFilterResult: productModel[] = [];
   page = 1;
@@ -39,7 +37,7 @@ export class ProductComponent implements OnInit {
   }
 
   fetchListProduct() {
-    this.isLoading = true;
+    this.searchedKeyword = '';
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       this.listFilterResult = data.data;

@@ -60,6 +60,7 @@ export class UpdatePromotionDateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.submitted = false;
     this.fetchListPromotionDate();
     this.fetchListProduct();

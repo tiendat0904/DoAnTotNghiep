@@ -14,8 +14,11 @@ class CouponController extends Controller
     const employee_id = 'employee_id';
     const supplier_id = 'supplier_id';
     const note = 'note';
+    const coupon_code = 'coupon_code';
     const total_money = 'total_money';
     const created_at = 'created_at';
+    const updatedBy = 'updatedBy';
+    const updatedDate = 'updatedDate';
 
     /**
      * AccountController constructor.
@@ -86,14 +89,31 @@ class CouponController extends Controller
 
             $obj = [];
             $obj[self::supplier_id] = $request->supplier_id;
+            $obj[self::coupon_code] = $request->coupon_code;
+            $data = DB::table(self::table)->where(self::coupon_code, '=', $request->coupon_code)->get();
+            if (count($data) > 0) {
+                return response()->json(['error' => 'Mã phiếu nhập của nhà cung cấp đã tồn tại'], 400);
+            }
             $obj[self::employee_id] = $request->employee_id;
             $obj[self::created_at] = date('Y-m-d h:i:s');
             if ($request->note) {
                 $obj[self::note] = $request->note;
             }
-
             DB::table(self::table)->insert($obj);
-            return response()->json(['success' => "Thêm mới thành công"], 201);
+            $coupon_id = DB::table(CouponController::table)->select(CouponController::table . '.' . CouponController::id)->orderByDesc(CouponController::id)->first();
+            $listCouponDetails = [];
+            $listCouponDetails = $request->listCouponDetail;
+            foreach ($listCouponDetails as $listCouponDetail) {
+                DB::table(CouponDetailController::table)
+                    ->insert([
+                        CouponDetailController::coupon_id => $coupon_id->coupon_id,
+                        CouponDetailController::product_id => $listCouponDetail['product_id'],
+                        CouponDetailController::price =>$listCouponDetail['price'],
+                        CouponDetailController::amount => $listCouponDetail['amount'],
+                    ]);
+            }
+
+            return response()->json(['success' => "Thêm mới thành công"], 201); 
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
@@ -154,15 +174,23 @@ class CouponController extends Controller
     public function update(Request $request, $id)
     {
         //
+        date_default_timezone_set(BaseController::timezone);
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $pn = DB::table(self::table)->where(self::id, '=', $id)->first();
-            if (DB::table(self::table)->where(self::id, '=', $id)->update($request->all())) {
-                return response()->json(['success' => 'Cập nhật thành công'], 201);
-            } else {
+            $data = DB::table(self::table)->where(self::coupon_code, '=', $request->coupon_code)->get();
+            if (count($data) > 0) {
                 return response()->json(['error' => 'Cập nhật thất bại'], 400);
             }
+            $obj = [];
+            $obj = $request->all();
+            $obj[self::updatedDate] = date('Y-m-d h:i:s');
+            $obj[self::updatedBy] = $user->account_id;
+            if (count($obj) == 1) {
+                return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
+            }
+            DB::table(self::table)->where(self::id, $id)->update($obj);
+            return response()->json(['success' => 'Chỉnh sửa thành công'], 201);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

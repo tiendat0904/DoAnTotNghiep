@@ -124,6 +124,7 @@ export class UpdateCouponDetailComponent implements OnInit {
   }
 
   view(model: couponDetailModel, type = null): void {
+    console.log(this.mess_coupon1);
     this.open(this.childModal);
     this.type = type;
     this.model = model;
@@ -148,7 +149,7 @@ export class UpdateCouponDetailComponent implements OnInit {
       }
     } else {
       this.formGroup = this.fb.group({
-        // coupon_id: [{ value: this.mess_coupon1, disabled: this.isInfo }],
+        coupon_id: [{ value: this.mess_coupon1, disabled: this.isInfo }],
         product_id: [{ value: this.model.product_id, disabled: this.isInfo }, [Validators.required]],
         amount: [{ value: this.model.amount, disabled: this.isInfo }, [Validators.required]],
         price: [{ value: this.model.price, disabled: this.isInfo }, [Validators.required]],
@@ -183,6 +184,9 @@ export class UpdateCouponDetailComponent implements OnInit {
     }
   }
 
+  addCouponDetail(value : couponDetailModel){
+  }
+
   save() {
     let couponDetail: couponDetailModel;
     this.submitted = true;
@@ -190,14 +194,6 @@ export class UpdateCouponDetailComponent implements OnInit {
       this.toastr.error('Kiểm tra thông tin các trường đã nhập');
       return;
     }
-    // if (this.checkNumber === 0 && this.isAdd1 === true) {
-    //   this.couponService.create(this.mess_coupon).subscribe(res => {
-    //   },
-    //     err => {
-    //       this.toastr.error(err.error.error);
-    //     }
-    //   );
-    // }
     if (this.isEdit) {
       couponDetail = {
         coupon_detail_id: this.model.coupon_detail_id,
@@ -206,47 +202,6 @@ export class UpdateCouponDetailComponent implements OnInit {
         amount: this.formGroup.get('amount')?.value,
         price: this.formGroup.get('price')?.value,
       };
-    } else {
-      couponDetail = {
-        // coupon_id: this.formGroup.get('coupon_id')?.value,
-        product_id: this.formGroup.get('product_id')?.value,
-        amount: this.formGroup.get('amount')?.value,
-        price: this.formGroup.get('price')?.value,
-        coupon: this.mess_coupon
-      };
-    }
-    if (this.isAdd) {
-      // for (let i = 0; i < this.arrCheck.length; i++) {
-      //   if (this.arrCheck[i].coupon_detail_id === couponDetail.coupon_detail_id) {
-      //     check = true;
-      //     break;
-      //   }
-      // }
-      // if (check === true) {
-      //   this.toastr.error('Mã nhà cung cấp đã tồn tại');
-      //   return;
-      // }
-      this.couponDetailService.create(couponDetail).subscribe(res => {
-        this.closeModalReloadData();
-        localStorage.setItem("coupon_id",res.data);
-        // this.couponDetailService.getAll().subscribe(data => {
-        //   this.arraylist_coupon_detail = data.data;
-        //   for (let item of this.arraylist_coupon_detail) {
-        //     if (item.coupon_id === this.mess_coupon1 || item.coupon_id === this.update_coupon_id) {
-        //       this.listFilterResult.push(item);
-        //       this.checkNumber = this.listFilterResult.length;
-        //     }
-        //   }
-        // })
-        this.toastr.success(res.success);
-        this.modalReference.dismiss();
-      },
-        err => {
-          this.toastr.error(err.error.error);
-        }
-      );
-    }
-    if (this.isEdit) {
       this.couponDetailService.update(couponDetail.coupon_detail_id, couponDetail).subscribe(res => {
         this.closeModalReloadData();
         this.toastr.success(res.success);
@@ -256,6 +211,30 @@ export class UpdateCouponDetailComponent implements OnInit {
           this.toastr.error(err.error.error);
         }
       );
+    } else {
+      if(this.mess_coupon1 !== null || this.mess_coupon1 !== '' || this.mess_coupon1 !== undefined){
+        couponDetail = {
+          coupon_id: this.mess_coupon1,
+          product_id: this.formGroup.get('product_id')?.value,
+          amount: this.formGroup.get('amount')?.value,
+          price: this.formGroup.get('price')?.value,
+        };
+        this.couponDetailService.create(couponDetail).subscribe();
+      }
+      else{
+        this.productService.detail(this.formGroup.get('product_id')?.value).subscribe(data =>{
+          couponDetail = {
+            product_id: this.formGroup.get('product_id')?.value,
+            product_name: data.data.product_name,
+            amount: this.formGroup.get('amount')?.value,
+            price: this.formGroup.get('price')?.value,
+          };
+          this.eventEmit.emit(couponDetail);
+          this.modalReference.dismiss();
+        })
+      }
+      
+      
     }
   }
 

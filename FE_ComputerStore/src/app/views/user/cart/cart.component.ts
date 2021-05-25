@@ -128,6 +128,7 @@ export class CartComponent implements OnInit {
   }
 
   loadListProductCart() {
+    this.searchedKeyword = '';
     this.checkCart = true;
     this.list_product = [];
     this.list_bill = [];

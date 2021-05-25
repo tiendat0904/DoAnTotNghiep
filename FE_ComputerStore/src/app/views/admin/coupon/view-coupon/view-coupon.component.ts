@@ -65,6 +65,7 @@ export class ViewCouponComponent implements OnInit {
 
   ngOnInit(): void {
     this.submitted = false;
+    this.searchedKeyword = '';
     this.fetchListEmployee();
     this.fetchListSupplier();
     this.fetchListCouponDetail();

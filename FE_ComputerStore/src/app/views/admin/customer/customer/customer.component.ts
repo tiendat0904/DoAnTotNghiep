@@ -33,6 +33,7 @@ export class CustomerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.fetchListCustomer();
   }
 

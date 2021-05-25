@@ -34,6 +34,7 @@ export class ProductPromotionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchedKeyword = '';
     this.fetchListProductPromotion();
   }
 
