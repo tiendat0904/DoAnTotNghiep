@@ -71,7 +71,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('/getaccountbycustomer', [\App\Http\Controllers\AccountController::class, 'getAccountByCustomer']);
 
-    Route::get('/getaccountbyemployee', [\App\Http\Controllers\AccountController::class, 'getAccountByEmployee']);
+    Route::get('/getaccountofemployee', [\App\Http\Controllers\AccountController::class, 'getAccountOfEmployee']);
+
+    Route::get('/getaccountemployeebyadmin', [\App\Http\Controllers\AccountController::class, 'getAccountEmployeeByAdmin']);
 
     Route::get('/accounts/{id}', [AccountController::class, 'show']);
 

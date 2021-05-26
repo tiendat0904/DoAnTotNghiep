@@ -24,6 +24,7 @@ export class CouponReportComponent implements OnInit {
   isyear = true;
   closeResult: string;
   searchedKeyword: string;
+  permission:boolean;
   isSelected = true;
   page = 1;
   label = -1;
@@ -74,7 +75,6 @@ export class CouponReportComponent implements OnInit {
         this.listFilterResult = [];
       } else {
         this.reportService.reportCoupon(model).subscribe(data => {
-
           if (data.data !== null) {
             this.arraylist_coupon = data.data;
             this.listFilterResult = data.data;
@@ -84,6 +84,10 @@ export class CouponReportComponent implements OnInit {
             this.listFilterResult.forEach((x) => (x.checked = false));
             this.filterResultTemplist = this.listFilterResult;
           }
+        },
+        err => {
+          this.permission = true;
+          this.toastr.error(err.error.error);
         })
       }
     } else {
@@ -97,6 +101,10 @@ export class CouponReportComponent implements OnInit {
           this.listFilterResult.forEach((x) => (x.checked = false));
           this.filterResultTemplist = this.listFilterResult;
         }
+      },
+      err => {
+        this.permission = true;
+        this.toastr.error(err.error.error);
       })
     }
   }

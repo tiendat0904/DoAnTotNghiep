@@ -47,6 +47,11 @@ export const navItems: INavData[] = [
     ]
   },
   {
+    name: 'Nhân viên',
+    url: '/admin/employee',
+    icon: 'icon-handbag'
+  },
+  {
     name: 'Nhập kho',
     url: '/admin/coupon',
     icon: 'icon-arrow-down-circle'
@@ -106,11 +111,6 @@ export const navItems: INavData[] = [
       {
         name: 'Báo cáo phiếu nhập kho',
         url: '/admin/report/coupon-report',
-        icon: 'icon-rocket'
-      },
-      {
-        name: 'Báo cáo phiếu nhân viên',
-        url: '/admin/report/employee-report',
         icon: 'icon-rocket'
       },
     ]

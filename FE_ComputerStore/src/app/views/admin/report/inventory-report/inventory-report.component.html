@@ -1,7 +1,10 @@
 <div *ngIf="loaderService.isLoading | async" class="loader-container">
    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
 </div>
-<div class="container">
+<div *ngIf = "permission" style="padding-top: 20px;font-size: 20px;">
+   <p>Tài khoản này không đủ quyền truy cập</p>
+</div>
+<div class="container" [hidden] = 'permission'>
    <div class="table-responsive">
       <div class="table-wrapper">
          <div class="table-title">

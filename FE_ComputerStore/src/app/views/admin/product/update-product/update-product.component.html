@@ -7,50 +7,89 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
-      <div class="form-group">
-        <label>Tên sản phẩm</label>
-        <input type="text" name="" class="form-control" formControlName="product_name" id="product_name" />
-        <div *ngIf="submitted && formGroup.controls['product_name'].errors?.required">
-          <div *ngIf="formGroup.controls['product_name'].errors?.required" style="color: red">
-            * Tên sản phẩm không được để trống
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Tên sản phẩm</label>
+            <input type="text" name="" class="form-control" formControlName="product_name" id="product_name" />
+            <div *ngIf="submitted && formGroup.controls['product_name'].errors?.required">
+              <div *ngIf="formGroup.controls['product_name'].errors?.required" style="color: red">
+                * Tên sản phẩm không được để trống
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Loại sản phẩm</label>
+            <ng-select [items]="arraylist_product_type" placeholder="Hãy chọn loại sản phẩm"
+              bindLabel="product_type_name" bindValue="product_type_id" formControlName="product_type_id">
+            </ng-select>
+            <div *ngIf="submitted && formGroup.controls['product_type_id'].errors?.required">
+              <div *ngIf="formGroup.controls['product_type_id'].errors?.required" style="color: red">
+                * Loại sản phẩm không được để trống
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label>Loại sản phẩm</label>
-        <ng-select [items]="arraylist_product_type" placeholder="Hãy chọn loại sản phẩm" bindLabel="product_type_name"
-          bindValue="product_type_id" formControlName="product_type_id">
-        </ng-select>
-        <div *ngIf="submitted && formGroup.controls['product_type_id'].errors?.required">
-          <div *ngIf="formGroup.controls['product_type_id'].errors?.required" style="color: red">
-            * Loại sản phẩm không được để trống
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Thương hiệu</label>
+            <ng-select [items]="arraylist_trademark" placeholder="Hãy chọn nhãn hiệu" bindLabel="trademark_name"
+              bindValue="trademark_id" formControlName="trademark_id">
+            </ng-select>
+            <div *ngIf="submitted && formGroup.controls['trademark_id'].errors?.required">
+              <div *ngIf="formGroup.controls['trademark_id'].errors?.required" style="color: red">
+                * Mã thương hiệu không được để trống
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Bảo hành(Tháng)</label>
+            <input type="text" name="" class="form-control" formControlName="warranty" id="warranty" rows="10"
+              cols="30">
+            <div *ngIf="submitted && formGroup.controls['warranty'].errors?.required">
+              <div *ngIf="formGroup.controls['warranty'].errors?.required" style="color: red">
+                * Bảo hành không được để trống
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label>Thương hiệu</label>
-        <ng-select [items]="arraylist_trademark" placeholder="Hãy chọn nhãn hiệu" bindLabel="trademark_name"
-          bindValue="trademark_id" formControlName="trademark_id">
-        </ng-select>
-        <div *ngIf="submitted && formGroup.controls['trademark_id'].errors?.required">
-          <div *ngIf="formGroup.controls['trademark_id'].errors?.required" style="color: red">
-            * Mã thương hiệu không được để trống
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Thương hiệu</label>
+            <ng-select [items]="arraylist_trademark" placeholder="Hãy chọn nhãn hiệu" bindLabel="trademark_name"
+              bindValue="trademark_id" formControlName="trademark_id">
+            </ng-select>
+            <div *ngIf="submitted && formGroup.controls['trademark_id'].errors?.required">
+              <div *ngIf="formGroup.controls['trademark_id'].errors?.required" style="color: red">
+                * Mã thương hiệu không được để trống
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Bảo hành(Tháng)</label>
+            <input type="text" name="" class="form-control" formControlName="warranty" id="warranty" rows="10"
+              cols="30">
+            <div *ngIf="submitted && formGroup.controls['warranty'].errors?.required">
+              <div *ngIf="formGroup.controls['warranty'].errors?.required" style="color: red">
+                * Bảo hành không được để trống
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label>Bảo hành(Tháng)</label>
-        <input type="text" name="" class="form-control" formControlName="warranty" id="warranty" rows="10" cols="30">
-        <div *ngIf="submitted && formGroup.controls['warranty'].errors?.required">
-          <div *ngIf="formGroup.controls['warranty'].errors?.required" style="color: red">
-            * Bảo hành không được để trống
-          </div>
-        </div>
-      </div>
-
       <div class="form-group">
         <label>Mô tả sản phẩm</label>
-        <textarea type="text" name="" class="form-control" formControlName="description" id="description" rows="10"
+        <textarea type="text" name="" class="form-control" formControlName="description" id="description" rows="3"
           cols="30"></textarea>
         <div *ngIf="submitted && formGroup.controls['description'].errors?.required">
           <div *ngIf="formGroup.controls['description'].errors?.required" style="color: red">
@@ -87,7 +126,6 @@
           Thoát
         </button>
       </div>
-
     </form>
   </div>
 </ng-template>

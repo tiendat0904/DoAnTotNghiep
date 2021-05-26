@@ -239,5 +239,4 @@ export class UpdateCustomerComponent implements OnInit {
       ).subscribe();
     }
   }
-
 }

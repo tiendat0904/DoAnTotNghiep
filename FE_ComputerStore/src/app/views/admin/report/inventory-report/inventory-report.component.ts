@@ -20,6 +20,7 @@ export class InventoryReportComponent implements OnInit {
   isDelete = true;
   closeResult: string;
   searchedKeyword: string;
+  permission : boolean;
   isSelected = true;
   page = 1;
   pageSize = 5;
@@ -44,6 +45,10 @@ export class InventoryReportComponent implements OnInit {
       for (let item of this.listFilterResult) {
         this.totalAmount += item.amount;
       }
+    },
+    err => {
+      this.permission = true;
+      this.toastr.error(err.error.error);
     })
   }
 

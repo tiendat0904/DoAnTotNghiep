@@ -24,6 +24,7 @@ export class BillReportComponent implements OnInit {
   isyear = true;
   closeResult: string;
   searchedKeyword: string;
+  permission: boolean;
   page = 1;
   label = -1;
   label1: any;
@@ -84,6 +85,10 @@ export class BillReportComponent implements OnInit {
             this.listFilterResult.forEach((x) => (x.checked = false));
             this.filterResultTemplist = this.listFilterResult;
           }
+        },
+        err => {
+          this.permission = true;
+          this.toastr.error(err.error.error);
         })
       }
     } else {
@@ -97,6 +102,10 @@ export class BillReportComponent implements OnInit {
           this.listFilterResult.forEach((x) => (x.checked = false));
           this.filterResultTemplist = this.listFilterResult;
         }
+      },
+      err => {
+        this.permission = true;
+        this.toastr.error(err.error.error);
       })
     }
   }

@@ -97,7 +97,7 @@ class AccountController extends Controller
         }
     }
 
-    public function getAccountByEmployee()
+    public function getAccountOfEmployee()
     {
         //
         $user = auth()->user();
@@ -105,8 +105,27 @@ class AccountController extends Controller
         if ($ac_type == self::NV || $ac_type == self::QT) {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number,AccountTypeController::table . '.' . AccountTypeController::id, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
                 ->Where(self::table . '.' . self::account_type_id, '=', '1')
+                ->orWhere(self::table . '.' . self::account_type_id, '=', '2')
+                ->get();
+            $code = 200;
+            return response()->json(['data' => $objs], $code);
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
+    }
+
+
+    public function getAccountEmployeeByAdmin()
+    {
+        //
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == self::QT) {
+            $objs = DB::table(self::table)
+                ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number,AccountTypeController::table . '.' . AccountTypeController::id, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
                 ->orWhere(self::table . '.' . self::account_type_id, '=', '2')
                 ->get();
             $code = 200;
@@ -171,7 +190,7 @@ class AccountController extends Controller
             $email = $request->email;
             $ac = Account::where(self::email, $email)->first();
             $token = $ac->createToken('ComputerStore')->accessToken;
-            return response()->json(['token' => $token, 'data' => $ac], 201);
+            return response()->json(['token' => $token,"success" => "Thêm mới tài khoản thành công", 'data' => $ac], 201);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

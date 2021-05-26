@@ -78,6 +78,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UpdateCommentCustomerComponent } from './views/admin/New folder/update-comment-customer/update-comment-customer.component';
 import { CommentCustomerComponent } from './views/admin/New folder/comment-customer/comment-customer.component';
+import { EmployeeComponent } from './views/admin/emloyee/employee/employee.component';
+import { UpdateEmployeeComponent } from './views/admin/emloyee/update-employee/update-employee.component';
 registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
@@ -143,7 +145,9 @@ registerLocaleData(localeFr, 'vi');
     ForgotPasswordComponent,
     ResetPasswordComponent,
     CommentCustomerComponent,
-    UpdateCommentCustomerComponent
+    UpdateCommentCustomerComponent,
+    EmployeeComponent,
+    UpdateEmployeeComponent
     // MainComponent,
     // ProductDetailComponent
    

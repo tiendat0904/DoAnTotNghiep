@@ -31,8 +31,12 @@ export class AccountService {
     return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'getaccountbycustomer');
   }
 
-  getAccountByEmployee(): Observable<any>{
-    return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'getaccountbyemployee');
+  getAccountOfEmployee(): Observable<any>{
+    return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'getaccountofemployee');
+  }
+
+  getAccountEmployeeByAdmin(): Observable<any>{
+    return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'getaccountemployeebyadmin');
   }
   
   getInfo(): Observable<any>{

@@ -137,7 +137,7 @@ export class UpdateCouponComponent implements OnInit {
 
   fetchListEmployee() {
     this.arraylist_employee = [];
-    this.accountService.getAccountByEmployee().subscribe(data => {
+    this.accountService.getAccountOfEmployee().subscribe(data => {
       this.arraylist_employee = data.data;
     })
   }
