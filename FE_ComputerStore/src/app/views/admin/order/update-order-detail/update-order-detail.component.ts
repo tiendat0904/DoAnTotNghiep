@@ -69,10 +69,7 @@ export class UpdateOrderDetailComponent implements OnInit {
     this.arraylist_bill_detail=[];
     this.billDetailService.getAll().subscribe(data => {
       this.arraylist_bill_detail = data.data; 
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   fetcharraylist_bill(){
@@ -81,21 +78,16 @@ export class UpdateOrderDetailComponent implements OnInit {
       this.arraylist_bill = data.data;
       this.update_bill_id = this.arraylist_bill[this.arraylist_bill.length-1].bill_id;
       this.update_bill_id = this.update_bill_id+1;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
 
   fetcharraylist_product(){
     this.arraylist_product=[];
     this.productService.getAll().subscribe(data => {
       this.arraylist_product = data.data;
-    },
-    err => {
-        this.isLoading = false;
-      })
+    })
   }
+
   updateFormType(type: any) {
     switch (type) {
       case 'add':

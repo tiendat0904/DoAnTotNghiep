@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DefaultLayoutComponent } from './containers';
 import { AuthGuard } from './guard/auth/auth.guard';
 import { CustomerComponent } from './views/admin/customer/customer/customer.component';
+import { CommentCustomerComponent } from './views/admin/New folder/comment-customer/comment-customer.component';
 import { NewsComponent } from './views/admin/news/news/news.component';
 import { ProductPromotionComponent } from './views/admin/promotion-date/product-promotion/product-promotion.component';
 import { PromotionDateComponent } from './views/admin/promotion-date/promotion-date/promotion-date.component';
@@ -129,6 +130,10 @@ export const routes: Routes = [
       {
         path: 'account',
         loadChildren: () => import('./views/admin/account/account.module').then(m => m.AccountModule)
+      },
+      {
+        path: 'customer-comment',
+        component: CommentCustomerComponent,
       },
       {
         path: 'customer',

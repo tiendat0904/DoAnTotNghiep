@@ -1,14 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { image } from 'html2canvas/dist/types/css/types/image';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { isExternalModule } from 'typescript';
+import { avatarDefault } from '../../../../../environments/environment';
 import { LoaderService } from '../../../../loader/loader.service';
 import { billDetailModel } from '../../../../models/bill-detail-model';
 import { billModel } from '../../../../models/bill-model';
+import { commentModel } from '../../../../models/commnent-model';
 import { ItemModel } from '../../../../models/item-model';
 import { productModel } from '../../../../models/product-model';
+import { AccountService } from '../../../../services/account/account.service';
 import { BillDetailService } from '../../../../services/bill-detail/bill-detail.service';
 import { BillService } from '../../../../services/bill/bill.service';
 import { CartService } from '../../../../services/cart/cart.service';
+import { CommentService } from '../../../../services/comment/comment.service';
 import { ProductService } from '../../../../services/product/product.service';
 declare var $: any;
 @Component({
@@ -25,13 +31,29 @@ export class ProductDetailComponent implements OnInit {
   billModel: billModel;
   billDetailModel: billDetailModel;
   list_bill: Array<billModel> = [];
+  list_comment: Array<commentModel> = [];
+  list_comment_noparent: Array<commentModel> = [];
+  list_comment_rate: Array<commentModel> = [];
+  list_comment_parent: Array<commentModel> = [];
   list_bill_detail: Array<billDetailModel> = [];
   list_item: Array<ItemModel> = [];
   descriptions: any;
   check: any;
+  check_pagination: boolean;
+  comment_content: any;
+  comment_content1: any;
+  comment_content_rate: any;
   trademark_name: any;
   account_id: any;
+  checkRepComment: boolean;
+  comment: commentModel;
+  image_default: any;
   photos: any[];
+  urlPictureDefault = avatarDefault;
+  currentRate = 0;
+  page = 1;
+  pageSize = 3;
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -39,11 +61,15 @@ export class ProductDetailComponent implements OnInit {
     private billService: BillService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
+    private commentService: CommentService,
+    private accountService: AccountService,
     public loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
+    this.checkRepComment = false;
     this.fetchProductDetail();
+    this.fetchComment();
   }
 
   fetchProductDetail() {
@@ -160,6 +186,163 @@ export class ProductDetailComponent implements OnInit {
       this.cartService.addToCart(this.product);
       this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
     }
+  }
 
+  fetchComment() {
+    this.checkRepComment = false;
+    this.list_comment_noparent = [];
+    this.list_comment_rate = [];
+    this.list_comment_parent = [];
+    if (localStorage.getItem("account_id")) {
+      this.accountService.getInfo().subscribe(data => {
+        this.image_default = data.data.image;
+      })
+    } else {
+      this.image_default = this.urlPictureDefault;
+    }
+    this.route.params.subscribe(params => {
+      let product_id = Number.parseInt(params['product_id']);
+      this.commentService.detail(product_id).subscribe(data => {
+        this.list_comment = data.data;
+        for (let item of this.list_comment) {
+          if (item.rate === 0) {
+            if (item.status !== "Đang chờ xử lý") {
+              if (item.parentCommentId === null || item.parentCommentId === undefined) {
+                this.list_comment_noparent.push(item);
+              }
+              else {
+                this.list_comment_parent.push(item);
+              }
+            }
+          } else {
+            this.list_comment_rate.push(item);
+          }
+          if (this.list_comment_noparent.length === 0) {
+            this.check_pagination = false;
+          } else {
+            this.check_pagination = true;
+          }
+          item.checkRepComment = true;
+          if (item.image === '' || item.image === null || item.image === undefined) {
+            item.image = this.urlPictureDefault;
+          }
+        }
+        console.log(this.list_comment_noparent);
+      })
+    });
+  }
+
+  showCommentContent(comment_id) {
+    this.checkRepComment = true;
+    for (let comment of this.list_comment) {
+      if (comment.comment_id === comment_id) {
+        comment.checkRepComment = false;
+      } else {
+        comment.checkRepComment = true;
+      }
+    }
+  }
+
+  sendComment(parentCommentId: null, type: string) {
+    switch (type) {
+      case '1': {
+        if (localStorage.getItem("account_id")) {
+          if (this.comment_content === null || this.comment_content === undefined || this.comment_content === '') {
+            this.toastr.warning("Vui lòng nhập nội dung bình luận");
+            return;
+          }
+          if (Number(localStorage.getItem("account_type_id")) === 3) {
+            this.comment = {
+              account_id: Number(localStorage.getItem("account_id")),
+              product_id: this.product.product_id,
+              comment_content: this.comment_content,
+              status: "Đang chờ xử lý"
+            }
+          } else {
+            this.comment = {
+              account_id: Number(localStorage.getItem("account_id")),
+              product_id: this.product.product_id,
+              comment_content: this.comment_content,
+              status: "Đã xác nhận"
+            }
+          }
+
+          this.commentService.create(this.comment).subscribe(data => {
+            this.toastr.success(data.success);
+            this.comment_content = '';
+            this.fetchComment();
+          })
+        } else {
+          this.toastr.warning("vui lòng đăng nhập để sử dụng dịch vụ !");
+        }
+        break;
+      }
+      case '2': {
+        console.log("ja");
+        if (localStorage.getItem("account_id")) {
+          if (this.comment_content1 === null || this.comment_content1 === undefined || this.comment_content1 === '') {
+            this.toastr.warning("Vui lòng nhập nội dung bình luận");
+            return;
+          }
+          if (Number(localStorage.getItem("account_type_id")) === 3) {
+            this.comment = {
+              account_id: Number(localStorage.getItem("account_id")),
+              product_id: this.product.product_id,
+              comment_content: this.comment_content1,
+              parentCommentId:parentCommentId,
+              status: "Đang chờ xử lý"
+            }
+          } else {
+            this.comment = {
+              account_id: Number(localStorage.getItem("account_id")),
+              product_id: this.product.product_id,
+              comment_content: this.comment_content1,
+              parentCommentId:parentCommentId,
+              status: "Đã xác nhận"
+            }
+          }
+          this.commentService.create(this.comment).subscribe(data => {
+            this.toastr.success(data.success);
+            this.comment_content1 = '';
+            this.fetchComment();
+          })
+        } else {
+          this.toastr.warning("vui lòng đăng nhập để sử dụng dịch vụ !");
+        }
+        break;
+      }
+      case '3': {
+        console.log("ja222222");
+        if (localStorage.getItem("account_id")) {
+          if (this.comment_content_rate === null || this.comment_content_rate === undefined || this.comment_content_rate === '' || this.currentRate === 0) {
+            this.toastr.warning("Vui lòng nhập nội dung và đánh giá sản phẩm");
+            return;
+          }
+          if (Number(localStorage.getItem("account_type_id")) === 3) {
+            this.comment = {
+              account_id: Number(localStorage.getItem("account_id")),
+              product_id: this.product.product_id,
+              comment_content: this.comment_content_rate,
+              status: "Đang chờ xử lý"
+            }
+          } else {
+            this.comment = {
+              account_id: Number(localStorage.getItem("account_id")),
+              product_id: this.product.product_id,
+              comment_content: this.comment_content_rate,
+              status: "Đã xác nhận"
+            }
+          }
+          this.commentService.create(this.comment).subscribe(data => {
+            this.toastr.success(data.success);
+            this.comment_content_rate = '';
+            this.fetchComment();
+          })
+        } else {
+          this.toastr.warning("vui lòng đăng nhập để sử dụng dịch vụ !");
+        }
+      }
+      break;
+    }
   }
 }

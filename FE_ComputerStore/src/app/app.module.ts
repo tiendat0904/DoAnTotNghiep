@@ -76,6 +76,8 @@ import { ForgotPasswordComponent } from './views/forgot-password/forgot-password
 import { ResetPasswordComponent } from './views/forgot-password/reset-password/reset-password.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { UpdateCommentCustomerComponent } from './views/admin/New folder/update-comment-customer/update-comment-customer.component';
+import { CommentCustomerComponent } from './views/admin/New folder/comment-customer/comment-customer.component';
 registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
@@ -139,7 +141,9 @@ registerLocaleData(localeFr, 'vi');
     CustomerComponent,
     UpdateCustomerComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    CommentCustomerComponent,
+    UpdateCommentCustomerComponent
     // MainComponent,
     // ProductDetailComponent
    

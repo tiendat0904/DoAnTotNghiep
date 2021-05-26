@@ -15,9 +15,13 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id('comment_id');
+            $table->bigInteger("parentCommentId") ->nullable();
             $table->bigInteger("product_id");
-            $table->bigInteger('customer_id');
+            $table->bigInteger('account_id');
             $table->string('comment_content');
+            $table->string('status');
+            $table->integer('rate')->default(0);
+            $table->date('created_at')->default(now());
         });
     }
 

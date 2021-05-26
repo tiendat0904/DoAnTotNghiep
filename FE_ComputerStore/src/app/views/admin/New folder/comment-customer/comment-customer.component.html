@@ -1,0 +1,134 @@
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+    <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
+ </div>
+ <div class="container">
+    <div class="table-responsive">
+       <div class="table-wrapper">
+          <div class="table-title">
+             <div class="row">
+                <div class="col-sm-8">
+                   <h2 style="font-size:30px;">Bình luận và đánh giá</h2>
+                </div>
+                <div class="col-sm-4">
+                   <div class="search-box">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" class="form-control"
+                         placeholder="Search&hellip;">
+                   </div>
+                </div>
+                <button type="button" [hidden]="isDelete" (click)="open(mymodal1)" class="btn btn-danger"
+                   style="height: 35px; margin-top: 7px;">
+                   <i class="fa fa-window-close" aria-hidden="true"></i> Xóa
+                </button>
+                <ng-template #mymodal1 let-modal>
+                   <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title">
+                         Xác nhận xóa thông tin
+                      </h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                         <span aria-hidden="true">x</span>
+                      </button>
+                   </div>
+                   <div class="modal-body">
+                      Bạn có chắc chắn muốn xóa thông tin những nhà cung cấp này ?
+                   </div>
+                   <div class="modal-footer">
+                      <button class="btn btn-danger" style="width: 80px" (click)="deleteComment()">
+                         Có
+                      </button>
+                      <button class="btn btn-outline-dark" style="width: 80px" (click)="modal.dismiss('Cross click')">
+                         Không
+                      </button>
+                   </div>
+                </ng-template>
+                &nbsp;
+                &nbsp;
+             </div>
+          </div>
+          <div class="row">
+             <div class="col-12 table-main">
+                <table class="table table-striped table-hover table-bordered" *ngIf="condition; else elseBlock">
+                   <thead>
+                      <tr>
+                         <th scope="col">
+                            <input type="checkbox" [checked]="isAllCheckBoxChecked()"
+                               (change)="checkAllCheckBox($event)" />
+                         <th>STT</th>
+                         <th>Họ tên</th>
+                         <th>Loại tài khoản</th>
+                         <th>Số sao</th>
+                         <th>Nội dung bình luận, đánh giá</th>
+                         <th>Trạng thái</th>
+                         <th>Thao tác</th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr>
+                      </tr>
+                      <tr *ngFor="
+                         let e of listFilterResult  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
+                         let i = index
+                         ">
+                         <td>
+                            <input type="checkbox" [(ngModel)]="listFilterResult[i + (page-1)*pageSize].checked"
+                               (ngModelChange)="changeModel()" value="{{ e.comment_id }}" />
+                         <td>{{ i + (page-1)*pageSize + 1 }}</td>
+                         <td [innerHTML]="e.full_name"></td>
+                         <td [innerHTML]="e.description"></td>
+                         <td>
+                            <ngb-rating [max]="5" [(rate)]="e.rate" [readonly]="true" *ngIf = "e.rate !== 0"
+                            style="color: #fd7e14;font-size: 20px;position: relative;bottom: 3px;padding-left: 3px;">
+                        </ngb-rating>
+                         </td>
+                         <td [innerHTML]="e.comment_content"></td>
+                         <td [innerHTML]="e.status"></td>
+                         <td>
+                            <ng-template #mymodal let-modal>
+                               <div class="modal-header">
+                                  <h4 class="modal-title" id="modal-basic-title">
+                                     Xác nhận xóa thông tin
+                                  </h4>
+                                  <button type="button" class="close" aria-label="Close"
+                                     (click)="modal.dismiss('Cross click')">
+                                     <span aria-hidden="true">x</span>
+                                  </button>
+                               </div>
+                               <div class="modal-body">
+                                  Bạn có chắc chắn muốn xóa bình luận này ?
+                               </div>
+                               <div class="modal-footer">
+                                  <button class="btn btn-danger" style="width: 80px"
+                                     (click)="deleteComment(e.comment_id)">
+                                     Có
+                                  </button>
+                                  <button class="btn btn-outline-dark" style="width: 80px"
+                                     (click)="modal.dismiss('Cross click')">
+                                     Không
+                                  </button>
+                               </div>
+                            </ng-template>
+                            <div class="row justify-content-center">
+                               <button (click)="initModal(e,'show')" class="btn btn-info" title="View"><i
+                                     class="fa fa-info-circle" aria-hidden="true"></i></button>
+                               <button (click)="initModal(e,'edit')" class="btn btn-warning" title="Edit"><i
+                                     class="fas fa-edit edit" aria-hidden="true"></i></button>
+                               <button class="btn btn-danger" (click)="open(mymodal)" title="Delete"
+                                  data-toggle="tooltip"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </div>
+                         </td>
+                      </tr>
+                   </tbody>
+                </table>
+                <ng-template #elseBlock>
+                   <p style="margin-left: 3px;font-size: 15px;">Không tìm thấy nhà cung cấp phù hợp.</p>
+                </ng-template>
+             </div>
+             <div class="col-12 justify-content-center">
+                <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
+                   [pageSize]="pageSize" [collectionSize]="listFilterResult.length"></ngb-pagination>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+ <app-update-comment-customer [arraylist_comment]="arraylist_comment" (eventEmit)="ngOnInit()"><app-update-comment-customer>

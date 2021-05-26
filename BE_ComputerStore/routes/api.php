@@ -38,8 +38,7 @@ Route::get('/brands/{id}', [\App\Http\Controllers\TrademarkController::class, 's
 
 Route::get('/comments', [\App\Http\Controllers\CommnentController::class, 'index']);
 Route::get('/comments/{id}', [\App\Http\Controllers\CommnentController::class, 'show']);
-Route::post('/comments', [\App\Http\Controllers\CommnentController::class, 'store']);
-Route::put('/comments/{id}', [\App\Http\Controllers\CommnentController::class, 'update']);
+
 
 Route::get('/product_type', [\App\Http\Controllers\ProductTypeController::class, 'index']);
 Route::get('/product_type/{id}', [\App\Http\Controllers\ProductTypeController::class, 'show']);
@@ -76,6 +75,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('/accounts/{id}', [AccountController::class, 'show']);
 
+    Route::get('/accountOfCustomer/{id}', [AccountController::class, 'showByCustomer']);
+
     Route::post('/accounts', [AccountController::class, 'store']);
 
     Route::put('/accounts', [AccountController::class, 'update']);
@@ -94,7 +95,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/account_type/delete', [\App\Http\Controllers\AccountTypeController::class, 'destroy']);
 
-
+   
 
     //nhà cung cấp
     Route::get('/suppliers', [\App\Http\Controllers\SupplierController::class, 'index']);
@@ -126,7 +127,9 @@ Route::middleware('auth:api')->group(function () {
 
 
     //Bình luận đánh giá
+    Route::post('/comments', [\App\Http\Controllers\CommnentController::class, 'store']);
     Route::post('/comments/delete', [\App\Http\Controllers\CommnentController::class, 'destroy']);
+    Route::put('/comments/{id}', [\App\Http\Controllers\CommnentController::class, 'update']);
 
     //Sản phẩm
     Route::post('/products', [\App\Http\Controllers\ProductController::class, 'store']);

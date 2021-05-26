@@ -31,8 +31,20 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Khách hàng',
-    url: '/admin/customer',
-    icon: 'icon-handbag'
+    url: '/customer',
+    icon: 'icon-handbag',
+    children: [
+      {
+        name: 'Khách hàng',
+        url: '/admin/customer',
+        icon: 'icon-handbag'
+      },
+      {
+        name: 'Bình luận khách hàng',
+        url: '/admin/customer-comment',
+        icon: 'icon-rocket'
+      },
+    ]
   },
   {
     name: 'Nhập kho',

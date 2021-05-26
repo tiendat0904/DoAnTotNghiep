@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Undefined;
 
 class CommnentController extends Controller
 {
@@ -12,9 +13,12 @@ class CommnentController extends Controller
     const table = 'comment';
     const id = 'comment_id';
     const product_id = 'product_id';
-    const customer_id = 'customer_id';
+    const account_id = 'account_id';
+    const parentCommentId = "parentCommentId";
+    const rate = "rate";
     const comment_content = 'comment_content';
-    const create_at = 'create_at';
+    const status = "status";
+    const created_at = 'created_at';
 
     /**
      * NhaCungCapController constructor.
@@ -33,8 +37,16 @@ class CommnentController extends Controller
     public function index()
     {
         //
-        $this->base->index();
-        return response()->json($this->base->getMessage(), $this->base->getStatus());
+        $objs = null;
+        $code = null;
+        $comment_noparent = [];
+        $objs = DB::table(self::table)
+            ->join(AccountController::table, self::table . '.' . self::account_id, '=', AccountController::table . '.' . AccountController::id)
+            ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
+            ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name, AccountTypeController::table . '.' . AccountTypeController::description,AccountTypeController::table . '.' . AccountTypeController::id,AccountController::table . '.' . AccountController::image)
+            ->get();
+        $code = 200;
+        return response()->json(['data' => $objs], $code);
     }
 
     /**
@@ -56,22 +68,39 @@ class CommnentController extends Controller
     public function store(Request $request)
     {
         //
+        date_default_timezone_set(BaseController::timezone);
         $user = auth()->user();
+        $ac_type = $user->account_type_id;
         $validator = Validator::make($request->all(), [
             self::comment_content => 'required',
-            self::customer_id => 'required',
+            self::product_id => 'required',
+            self::account_id => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()], 400);
         }
 
         $obj = [];
-        $obj[self::customer_id] = $user->account_id;
+        if($request->parentCommentId){
+            $obj[self::parentCommentId] = $request->parentCommentId;
+        }
+        if($request->rate){
+            $obj[self::rate] = $request->rate;
+        }
+        $obj[self::account_id] = $request->account_id;
+        $obj[self::product_id] = $request->product_id;
         $obj[self::comment_content] = $request->comment_content;
+        $obj[self::status] = $request->status;
+        $obj[self::created_at] = date('Y-m-d h:i:s');;
         if (DB::table(self::table)->insert($obj)) {
-            return response()->json(['success' => 'Thêm mới thành công'], 201);
+            if($ac_type == AccountController::KH){
+                return response()->json(['success' => 'Bạn gửi thành công.Bình luận của bạn đang chờ phê duyệt. Chúng tôi sẽ phản hồi sớm'], 201);
+            }else{
+                return response()->json(['success' => 'Thêm bình luận thành công'], 201);
+            }
+           
         } else {
-            return response()->json(['error' => 'Thêm mới thất bại'], 400);
+            return response()->json(['error' => 'Thêm bình luận thất bại'], 400);
         }
     }
 
@@ -84,8 +113,15 @@ class CommnentController extends Controller
     public function show($id)
     {
         //
-        $this->base->show($id);
-        return response()->json($this->base->getMessage(), $this->base->getStatus());
+        $objs = null;
+        $code = null;
+        $objs = DB::table(self::table)
+            ->join(AccountController::table, self::table . '.' . self::account_id, '=', AccountController::table . '.' . AccountController::id)
+            ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name,AccountController::table . '.' . AccountController::image)
+            ->where(self::table . '.' . self::product_id, '=', $id)
+            ->get();
+        $code = 200;
+        return response()->json(['data' => $objs], $code);
     }
 
     /**
@@ -110,12 +146,11 @@ class CommnentController extends Controller
     {
         //
         $user = auth()->user();
-        $ma_tk = $user->account_id;
-        $ma_kh = DB::table(self::table)->where(self::id, '=', $id)->get(self::customer_id)->first();
-        if ($ma_kh == $ma_tk) {
+        $ac_type = $user->account_type_id;
+        if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $this->base->update($request, $id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-        } else {
+          } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
     }
@@ -131,25 +166,25 @@ class CommnentController extends Controller
         //
         $user = auth()->user();
         $loai_tk = $user->account_type_id;
-        $ma_tk = $user->account_id;
         try {
             if ($listId = $request->get(BaseController::listId)) {
                 if (count($listId) > 0) {
-                    foreach ($listId as $id) {
-                        $ma_kh = DB::table(self::table)->where(self::id, '=', $id)->get(self::customer_id);
-                        if ($loai_tk != AccountController::NV && $loai_tk != AccountController::QT && $ma_kh != $ma_tk) {
-                            return response()->json(['error' => 'Xóa thất bại. Bạn không được phép xóa nhận xét của người khác'], 403);
+                    foreach ($listId as $id) {      
+                        $comment_childs = DB::table(self::table)->where(self::parentCommentId, '=', $id)->get(self::id);
+                        foreach($comment_childs as $comment_child){
+                            DB::table(self::table)->where(self::id, '=', $comment_child->comment_id)->delete();
                         }
                     }
-                    DB::table(self::table)->whereIn(self::id, $listId)->delete();
+                    DB::table(self::table)->where(self::id,'=',$listId)->delete();
                     return response()->json(['success' => 'Xóa thành công'], 200);
                 } else {
                     return response()->json(['error' => 'Xóa thất bại. Không có dữ liệu'], 400);
                 }
             } else {
                 $id = $request->get(BaseController::key_id);
-                $ma_kh = DB::table(self::table)->where(self::id, '=', $id)->get(self::customer_id)->first();
-                if ($loai_tk == AccountController::NV || $loai_tk == AccountController::QT || $ma_kh == $ma_tk) {
+                $comment_child = DB::table(self::table)->where(self::parentCommentId, '=', $id)->get(self::id);
+                        DB::table(self::table)->whereIn(self::id, $comment_child)->delete();
+                if ($loai_tk == AccountController::NV || $loai_tk == AccountController::QT) {
                     if ($obj = DB::table(self::table)->where(self::id, '=', $id)->delete()) {
                         return response()->json(['success' => 'Xóa thành công'], 200);
                     } else {

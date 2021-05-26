@@ -203,6 +203,26 @@ class AccountController extends Controller
         }
     }
 
+    public function showByCustomer($id)
+    {
+        //
+        $user = auth()->user();
+        $ac_type = $user->account_type_id;
+        if ($ac_type == self::KH) {
+            $objs = DB::table(self::table)
+                ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
+                ->select(self::id, self::full_name, self::email, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->where(self::table . '.' . self::id, '=', $id)->first();
+            if ($objs) {
+                return response()->json(['data' => $objs], 200);
+            } else {
+                return response()->json(['error' => "Không tìm thấy"], 200);
+            }
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

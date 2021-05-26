@@ -1,0 +1,58 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">{{ title }}</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formGroup" novalidate (ngSubmit)="save()">
+            <div class="form-group">
+                <label>Họ tên</label>
+                <input type="text" name="" class="form-control" formControlName="full_name" id="full_name" readonly />
+            </div>
+            <div class="form-group">
+                <label>Loại tài khoản</label>
+                <input type="text" name="" class="form-control" formControlName="description" id="description"
+                    readonly />
+            </div>
+            <div class="form-group" *ngIf = "comment_rate !== 0">
+                <label>Số sao</label>
+                <div>
+                    <ngb-rating [max]="5" [(rate)]="comment_rate" [readonly]="true"
+                    style="color: #fd7e14;font-size: 20px;position: relative;bottom: 3px;padding-left: 3px;">
+                </ngb-rating>
+                </div>
+                
+            </div>
+
+            <div class="form-group">
+                <label>Nội dung bình luận, đánh giá</label>
+                <input type="text" name="" class="form-control" formControlName="comment_content"
+                    id="comment_content" />
+                <div *ngIf="submitted && formGroup.controls['comment_content'].errors?.required">
+                    <div *ngIf="formGroup.controls['comment_content'].errors?.required" style="color: red">
+                        * Nội dung bình luận, đánh giá không được để trống
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Trạng thái</label>
+                <select name="" id=""  formControlName="status" class="form-control">
+                    <option value="Đang chờ xử lý">Đang chờ xử lý</option>
+                    <option value="Đã xác nhận">Đã xác nhận</option>
+                </select>
+            </div>
+            <div class="form-group" align="center">
+                <button type="submit" class="btn btn-success" style="width: 100px;height:38px; background:'green';"
+                    *ngIf="isEdit || isAdd">
+                    Lưu
+                </button>
+                <button type="button" class="btn btn-danger" style="width: 100px"
+                    (click)="modal.dismiss('Cross click')">
+                    Thoát
+                </button>
+            </div>
+        </form>
+    </div>
+</ng-template>

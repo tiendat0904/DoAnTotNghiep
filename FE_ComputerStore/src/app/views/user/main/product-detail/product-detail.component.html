@@ -75,26 +75,133 @@
             </div>
         </div>
     </div>
-    <div class="product-bestseller" style="padding-bottom: 20px;">
-        <div class="product-title-container" style="width: 340px; margin-bottom: 20px;" *ngIf="product">
-            <h3 style="font-size: 20px;">Cùng thương hiệu {{product.trademark_name}}</h3>
+</div>
+<div style="background-color: #f4f4f4;">
+    <div style="padding-top: 50px;width: 74%;">
+        <div style="background-color: #fff;">
+            <h2 style="padding-top: 10px;padding-left: 18px;">Đánh giá sản phẩm</h2>
+            <hr style="width: 58.4rem;">
+            <div style="display: -webkit-inline-box;padding-left: 20px;">
+                <img style="max-height: 40px;max-width: 40px;" [src]="image_default" alt="">
+                <div style="padding-left: 15px;">
+                    <textarea name="" id="" placeholder="Nội dung" cols="100" rows="4"
+                        [(ngModel)]="comment_content_rate" style="padding: 5px 10px;"></textarea>
+                </div>
+                <div class="send-comment" style="display: grid;position: relative;bottom: 30px;">
+                    <ngb-rating [max]="5" [(rate)]="currentRate" [readonly]="false"
+                        style="color: #fd7e14;font-size: 30px;"></ngb-rating>
+                    <button (click)="sendComment('','3');">Gửi đánh giá</button>
+                </div>
+            </div>
         </div>
-        <div class="product-grid" style="display: flex;">
-            <div class='product-item'
-                *ngFor="let item of (list_product_trademark | slice:list_product_trademark.length - 5);">
-                <div class='product-item-detail' style="display: grid;height: 100%;">
-                    <div class='product-image'>
-                        <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+        <div *ngFor="let comment_rate of list_comment_rate" style="background-color: #fff;padding-bottom: 20px;">
+            <div style="display: -webkit-inline-box;padding-left: 20px;">
+                <img style="max-height: 40px;max-width: 40px;" [src]="comment_rate.image" alt="">
+                <div style="padding-left: 15px;" class="comment-detail">
+                    <div style="display: flex;">
+                        <p style="font-size: 17px;">{{comment_rate.full_name}}</p>
+                        <ngb-rating [max]="5" [(rate)]="comment_rate.rate" [readonly]="true"
+                            style="color: #fd7e14;font-size: 20px;position: relative;bottom: 3px;padding-left: 3px;">
+                        </ngb-rating>
                     </div>
-                    <div class='product-description1' style="text-align: center;padding-left: 6px;padding-right: 6px;">
-                        <div class='product-title'>
-                            <p><a href=""></a> {{[item.product_name]}}</p>
+
+                    <p style="width: 660px;">{{comment_rate.comment_content}}</p>
+                    <div>
+                        <p style="color: #999;">({{comment_rate.created_at}})</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="background-color: #f4f4f4;">
+    <div style="padding-top: 40px;width: 74%;">
+        <div style="background-color: #fff;">
+            <h2 style="padding-top: 10px;padding-left: 18px;">HỎI ĐÁP</h2>
+            <hr style="width: 58.4rem;">
+            <div style="display: -webkit-inline-box;padding-left: 20px;">
+                <img style="max-height: 40px;max-width: 40px;" [src]="image_default" alt="">
+                <div style="padding-left: 15px;">
+                    <textarea name="" id="" placeholder="Nội dung" cols="100" rows="4" [(ngModel)]="comment_content"
+                        style="padding: 5px 10px;"></textarea>
+                </div>
+                <div class="send-comment">
+                    <button (click)="sendComment('','1');">Gửi bình luận</button>
+                </div>
+            </div>
+        </div>
+        <div style="background-color: #fff;padding-top: 40px;padding-bottom: 30px;">
+            <div *ngFor="let comment of list_comment_noparent |  slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;"
+                style="padding-bottom: 10px;">
+                <div style="display: -webkit-inline-box;padding-left: 20px;">
+                    <img style="max-height: 40px;max-width: 40px;" [src]="comment.image" alt="">
+                    <div style="padding-left: 15px;" class="comment-detail">
+                        <p style="font-size: 17px;">{{comment.full_name}}</p>
+                        <p style="width: 660px;">{{comment.comment_content}}</p>
+                        <div>
+                            <p style="color: #999;">({{comment.created_at}})</p>
+                        </div>
+                        <a (click)="showCommentContent(comment.comment_id);" style="color: #20a8d8;cursor: pointer;">Trả
+                            lời</a>
+                    </div>
+                </div>
+                <div style="display: -webkit-inline-box;padding-left: 76px;" [hidden]="comment.checkRepComment"
+                    *ngIf="checkRepComment">
+                    <img style="max-height: 40px;max-width: 40px;" [src]="image_default" alt="">
+                    <div style="padding-left: 15px;">
+                        <textarea name="" id="" placeholder="Nội dung" cols="70" rows="3"
+                            [(ngModel)]="comment_content1"></textarea>
+                    </div>
+                    <div class="send-comment" style="padding: 20px;">
+                        <button (click)="sendComment(comment.comment_id,'2');">Gửi bình luận</button>
+                    </div>
+                </div>
+                <div *ngFor="let comment_parent of list_comment_parent"
+                    style="background-color: #edeef2;width: 69.5%;margin-left: 76px;">
+                    <div style="display: -webkit-inline-box;padding:8px 10px"
+                        *ngIf="comment_parent.parentCommentId === comment.comment_id">
+                        <img style="max-height: 40px;max-width: 40px;" [src]="comment_parent.image" alt="">
+                        <div style="padding-left: 15px;" class="comment-detail">
+                            <p style="font-size: 17px;">{{comment_parent.full_name}}</p>
+                            <p style="width: 660px;">{{comment_parent.comment_content}}</p>
+                            <div>
+                                <p style="color: #999;">({{comment_parent.created_at}})</p>
+                            </div>
                         </div>
                     </div>
-                    <div class='product-price' style="align-self: flex-end; margin-left: 15px;">
-                        <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
-                            }}</del>
-                        <span class='product-price-new'>{{item.price_display | currency: 'VND'}}</span>
+                </div>
+            </div>
+            <div class="col-12 justify-content-center" style="padding-top: 20px;" *ngIf = "check_pagination">
+                <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
+                    [pageSize]="pageSize" [collectionSize]="list_comment_noparent.length"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="background-color: #f4f4f4;">
+    <div class="product-bestseller" style="padding-bottom: 20px;padding-top: 50px">
+        <div style="background-color: #fff;padding-top: 20px;padding-left: 20px;padding-bottom: 20px;">
+            <div class="product-title-container" style="width: 340px; margin-bottom: 20px;" *ngIf="product">
+                <h3 style="font-size: 20px;">Cùng thương hiệu {{product.trademark_name}}</h3>
+            </div>
+            <div class="product-grid" style="display: flex;">
+                <div class='product-item'
+                    *ngFor="let item of (list_product_trademark | slice:list_product_trademark.length - 5);">
+                    <div class='product-item-detail' style="display: grid;height: 100%;">
+                        <div class='product-image'>
+                            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                        </div>
+                        <div class='product-description1'
+                            style="text-align: center;padding-left: 6px;padding-right: 6px;">
+                            <div class='product-title'>
+                                <p><a href=""></a> {{[item.product_name]}}</p>
+                            </div>
+                        </div>
+                        <div class='product-price' style="align-self: flex-end; margin-left: 15px;">
+                            <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
+                                }}</del>
+                            <span class='product-price-new'>{{item.price_display | currency: 'VND'}}</span>
+                        </div>
                     </div>
                 </div>
             </div>

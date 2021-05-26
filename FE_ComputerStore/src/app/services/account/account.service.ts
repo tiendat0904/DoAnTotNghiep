@@ -19,8 +19,6 @@ export class AccountService {
     return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API + "login", model);
   }
 
-  
-
   register(userModel: accountModel): Observable<any> {
     return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API + "register", userModel);
   }
