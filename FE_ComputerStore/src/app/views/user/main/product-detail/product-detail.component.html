@@ -25,7 +25,7 @@
             <hr style="width: 100%;" />
             <span>Lượt mua : 326</span>
             <p *ngFor="let description1 of descriptions"><i class="far fa-check-square"></i>{{[description1]}}</p>
-            <div style="background-color: #243a76;text-align: center; height: 65px;">
+            <div style="background-color: #243a76;text-align: center; height: 65px;margin-top: 6px;">
                 <div style="padding-top: 10px;">
                     <h4 style="margin-bottom: 0;">MỚI 100%</h4>
                     <h4>BẢO HÀNH {{product.warranty}} THÁNG</h4>
@@ -77,9 +77,9 @@
     </div>
 </div>
 <div style="background-color: #f4f4f4;">
-    <div style="padding-top: 50px;width: 74%;">
+    <div style="padding-top: 30px;width: 74%;">
         <div style="background-color: #fff;">
-            <h2 style="padding-top: 10px;padding-left: 18px;">Đánh giá sản phẩm</h2>
+            <h2 style="padding-top: 10px;padding-left: 18px;">Đánh GIÁ SẢN PHẨM</h2>
             <hr style="width: 58.4rem;">
             <div style="display: -webkit-inline-box;padding-left: 20px;">
                 <img style="max-height: 40px;max-width: 40px;" [src]="image_default" alt="">
@@ -115,7 +115,7 @@
     </div>
 </div>
 <div style="background-color: #f4f4f4;">
-    <div style="padding-top: 40px;width: 74%;">
+    <div style="padding-top: 30px;width: 74%;">
         <div style="background-color: #fff;">
             <h2 style="padding-top: 10px;padding-left: 18px;">HỎI ĐÁP</h2>
             <hr style="width: 58.4rem;">
@@ -157,7 +157,7 @@
                     </div>
                 </div>
                 <div *ngFor="let comment_parent of list_comment_parent"
-                    style="background-color: #edeef2;width: 69.5%;margin-left: 76px;">
+                    style="background-color: #edeef2;width: 65.5%;margin-left: 76px;">
                     <div style="display: -webkit-inline-box;padding:8px 10px"
                         *ngIf="comment_parent.parentCommentId === comment.comment_id">
                         <img style="max-height: 40px;max-width: 40px;" [src]="comment_parent.image" alt="">
@@ -179,10 +179,10 @@
     </div>
 </div>
 <div style="background-color: #f4f4f4;">
-    <div class="product-bestseller" style="padding-bottom: 20px;padding-top: 50px">
+    <div class="product-bestseller" style="padding-bottom: 20px;padding-top: 30px">
         <div style="background-color: #fff;padding-top: 20px;padding-left: 20px;padding-bottom: 20px;">
-            <div class="product-title-container" style="width: 340px; margin-bottom: 20px;" *ngIf="product">
-                <h3 style="font-size: 20px;">Cùng thương hiệu {{product.trademark_name}}</h3>
+            <div class="product-title-container" style="width: 202px; margin-bottom: 20px;" *ngIf="product">
+                <h3 style="font-size: 20px;">Cùng thương hiệu</h3>
             </div>
             <div class="product-grid" style="display: flex;">
                 <div class='product-item'

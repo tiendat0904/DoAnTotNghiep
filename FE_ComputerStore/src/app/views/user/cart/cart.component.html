@@ -52,8 +52,8 @@
                     </div>
                     <div class="product-description-cart">
                         <h5>{{item.product_name}}</h5>
-                        <p>{{item.product_id}}</p>
-                        <p>Bảo hành: {{item.warranty}}</p>
+                        <p>Mã sản phẩm: {{item.product_id}}</p>
+                        <p>Bảo hành: {{item.warranty}} tháng</p>
                     </div>
                     <div class='product-price-cart'>
                         <span>{{item.price | currency: 'VND'}}</span>
@@ -172,7 +172,7 @@
                     </div>
                 </div>
                 <button
-                    style="border-radius: 3px;border:0px;height: 35px;background-color: #243a76;width: 78px;color: #fff;"
+                    style="border-radius: 3px;border:0px;height: 35px;background-color: #243a76;width: 100px;color: #fff;"
                     (click)="useVouvher();">Áp dụng</button>
             </div>
             <div>

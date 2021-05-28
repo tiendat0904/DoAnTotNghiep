@@ -150,7 +150,6 @@ export class UpdateOrderComponent implements OnInit {
   }
 
   save() {
-    let check = false;
     let bill: billModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
@@ -165,6 +164,7 @@ export class UpdateOrderComponent implements OnInit {
 
     this.billService.update(this.update_bill_id, bill).subscribe(res => {
       this.toastr.success("Cập nhật đơn hàng thành công");
+      this.router.navigate(["/admin/order"]);
       this.isCheckhdn = false;
       this.isCheckhdn1 = true;
 

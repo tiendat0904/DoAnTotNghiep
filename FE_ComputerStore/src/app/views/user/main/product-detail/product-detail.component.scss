@@ -70,7 +70,7 @@ h4{
 
 .product-button{
     display: flex;
-
+    margin-top: 5px;
 }
 
 .product-button :single-button{
@@ -138,6 +138,16 @@ h4{
     border-radius: 4px;
     border:0;
     line-height: 25px;
+    outline: none;
+}
+
+.product-title-container h3::after{
+    content: '';
+    position: relative;
+    left: 36.4px;
+    bottom: 33.8px;
+    border-bottom: 44px solid #243a76;
+    border-right: 50px solid #00000000;
 }
 
 ::ng-deep .carousel-indicators{

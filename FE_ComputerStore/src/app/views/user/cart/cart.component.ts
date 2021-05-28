@@ -141,6 +141,11 @@ export class CartComponent implements OnInit {
         this.list_bill_filter = this.list_bill.filter(function (laptop) {
           return (laptop.customer_id === account_id && laptop.order_status_id === 1);
         });
+        if(this.list_bill_filter.length !== 0){
+          this.checkCart = true;
+        }else{
+          this.checkCart = false;
+        }
         if (this.list_bill_filter.length !== 0) {
           this.billDetailService.getbybill(this.list_bill_filter[0].bill_id).subscribe(data => {
             this.list_product = data.data;
@@ -253,7 +258,6 @@ export class CartComponent implements OnInit {
           if (this.selectedType === 0) {
             this.toastr.warning("Vui lòng chọn hình thức thanh toán");
           } else {
-
             if (this.list_voucher_filter.length !== 0) {
               const modelDelete = {
                 id: this.list_voucher_filter[0].voucher_id
@@ -331,7 +335,6 @@ export class CartComponent implements OnInit {
             order_type_id: this.selectedType
           }
           this.billService.createNotAccount(bill).subscribe(data => {
-
             if (this.list_product !== []) {
               for (let item of this.list_product) {
                 this.billDetailModel = {
@@ -340,22 +343,21 @@ export class CartComponent implements OnInit {
                   amount: item.amount,
                   price: item.price,
                 }
+                this.billDetailService.createNoAccount(this.billDetailModel).subscribe();
               }
-              this.billDetailService.createNoAccount(this.billDetailModel).subscribe(data => {
-                this.cartService.clearCart();
-                this.toastr.success("Đặt hàng thành công");
-                this.mailModel = {
-                  name: this.formGroup.get('name')?.value,
-                  email: this.formGroup.get('email')?.value,
-                  phone_number: this.formGroup.get('phone_number')?.value,
-                  address: this.formGroup.get('address')?.value,
-                  note: this.formGroup.get('note')?.value,
-                  total_money: this.total_money,
-                  listProduct: this.list_product,
-                }
-                this.mailService.sendEmail(this.mailModel).subscribe();
-                this.router.navigate(['/send-cart']);
-              })
+              this.cartService.clearCart();
+              this.toastr.success("Đặt hàng thành công");
+              this.mailModel = {
+                name: this.formGroup.get('name')?.value,
+                email: this.formGroup.get('email')?.value,
+                phone_number: this.formGroup.get('phone_number')?.value,
+                address: this.formGroup.get('address')?.value,
+                note: this.formGroup.get('note')?.value,
+                total_money: this.total_money,
+                listProduct: this.list_product,
+              }
+              this.mailService.sendEmail(this.mailModel).subscribe();
+              this.router.navigate(['/send-cart']);
             }
           })
         }

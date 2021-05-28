@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
   array_date = [];
   array_amount = [];
   array_bill: billModel[] = [];
+  array_bill_filter: billModel[] = [];
   array_customer: accountModel[] = [];
   array_product: productModel[] = [];
   array_trademark: trademarkModel[] = [];
@@ -82,10 +83,11 @@ export class DashboardComponent implements OnInit {
     }
     this.billService.getAll().subscribe(data => {
       this.array_bill = data.data;
-      this.bill_total = this.array_bill.length;
+      this.array_bill_filter = this.array_bill.filter(bill => (bill.order_status_id !== 1 && bill.order_status_id !== 6));
+      this.bill_total = this.array_bill_filter.length;
       for (let date of this.array_date) {
         amount = 0;
-        for (let bill of this.array_bill) {
+        for (let bill of this.array_bill_filter) {
           if (date === this.datepipe.transform(bill.created_at, 'shortDate')) {
             amount = amount + 1;
           }

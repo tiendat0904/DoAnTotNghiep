@@ -64,6 +64,22 @@ export class SearchComponent implements OnInit, OnDestroy {
         } else {
           this.list_product_laptop = this.list_product_laptop1 = filterResult;
         }
+        this.trademarkService.getAll().subscribe(data => {
+          this.list_trademark = data.data;
+          if (this.list_product_laptop !== null) {
+            for (let item1 of this.list_trademark) {
+              for (let item2 of this.list_product_laptop) {
+                if (item1.trademark_id === item2.trademark_id) {
+                  this.list_trademark_selected.push(item1);
+                }
+              }
+            }
+            this.list_trademark_show = this.list_trademark_selected.filter((test, index, array) =>
+              index === array.findIndex((findTest) =>
+                findTest.trademark_name === test.trademark_name
+              ));
+          }
+        })
         for (let item of this.list_product_laptop) {
           item.descriptions = item.description.split("\n");
           item.checkAmount = true;
@@ -83,22 +99,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             item.price_display = item.price_new;
           }
         }
-        this.trademarkService.getAll().subscribe(data => {
-          this.list_trademark = data.data;
-          if (this.list_product_laptop !== null) {
-            for (let item1 of this.list_trademark) {
-              for (let item2 of this.list_product_laptop) {
-                if (item1.trademark_id === item2.trademark_id) {
-                  this.list_trademark_selected.push(item1);
-                }
-              }
-            }
-            this.list_trademark_show = this.list_trademark_selected.filter((test, index, array) =>
-              index === array.findIndex((findTest) =>
-                findTest.trademark_name === test.trademark_name
-              ));
-          }
-        })
+        
       });
     });
   }

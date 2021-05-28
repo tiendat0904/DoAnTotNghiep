@@ -32,7 +32,7 @@ export class ProductLaptopComponent implements OnInit {
   product_type_name: any;
   price_new: any;
   page = 1;
-  pageSize = 16;
+  pageSize = 12;
   constructor(private productService: ProductService, private route: ActivatedRoute, private trademarkService: TrademarkService,
     private cartService: CartService,
     private toastr: ToastrService,
@@ -48,6 +48,7 @@ export class ProductLaptopComponent implements OnInit {
   }
 
   fetchProduct() {
+    this.checkSelect = 0;
     this.productService.getAll().subscribe(data => {
       let product_type = this.product_type_id;
       this.list_product = data.data;

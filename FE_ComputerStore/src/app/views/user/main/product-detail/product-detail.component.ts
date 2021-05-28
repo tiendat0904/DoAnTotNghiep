@@ -193,6 +193,7 @@ export class ProductDetailComponent implements OnInit {
     this.list_comment_noparent = [];
     this.list_comment_rate = [];
     this.list_comment_parent = [];
+    this.currentRate = 0;
     if (localStorage.getItem("account_id")) {
       this.accountService.getInfo().subscribe(data => {
         this.image_default = data.data.image;
@@ -323,6 +324,7 @@ export class ProductDetailComponent implements OnInit {
               account_id: Number(localStorage.getItem("account_id")),
               product_id: this.product.product_id,
               comment_content: this.comment_content_rate,
+              rate : this.currentRate,
               status: "Đang chờ xử lý"
             }
           } else {
@@ -330,6 +332,7 @@ export class ProductDetailComponent implements OnInit {
               account_id: Number(localStorage.getItem("account_id")),
               product_id: this.product.product_id,
               comment_content: this.comment_content_rate,
+              rate : this.currentRate,
               status: "Đã xác nhận"
             }
           }

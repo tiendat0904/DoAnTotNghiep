@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../../loader/loader.service';
+import { billDetailModel } from '../../../models/bill-detail-model';
 import { productModel } from '../../../models/product-model';
 import { AccountService } from '../../../services/account/account.service';
 import { BillDetailService } from '../../../services/bill-detail/bill-detail.service';
@@ -17,7 +18,7 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
   update_customer_name: any;
   update_note: any;
   update_phone_number: any;
-  array_product: Array<productModel> = [];
+  array_product: Array<billDetailModel> = [];
   array_product_filter:any;
   update_address: any;
   update_email:any;
@@ -46,6 +47,7 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
     //   })
     // }else{
       this.billService.getBill().subscribe(data =>{
+        this.total_money = data.data.into_money;
         this.update_customer_name = data.data.name;
         this.update_note = data.data.note;
         this.update_phone_number = data.data.phone_number;
@@ -54,7 +56,7 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
         this.billDetailService.getbybill(data.data.bill_id).subscribe(data =>{
           this.array_product = data.data;
         });
-        this.total_money = data.data.into_money;
+       
       })
     // }
 

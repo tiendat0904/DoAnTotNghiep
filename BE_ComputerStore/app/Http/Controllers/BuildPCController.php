@@ -34,8 +34,13 @@ class BuildPCController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::KH) {
-            $this->base->index();
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+            $objs = DB::table(self::table)
+            ->Join(ProductImageController::table, self::table . '.' . self::product_id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+            ->Join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+            ->Join(ProductTypeController::table, ProductTypeController::table . '.' . ProductTypeController::id, '=', ProductController::table . '.' . ProductController::product_type_id)
+            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name, ProductImageController::table . '.' . ProductImageController::image, ProductController::table . '.' . ProductController::warranty, ProductTypeController::table . '.' . ProductTypeController::product_type_name, ProductController::table . '.' . ProductController::product_type_id)
+            ->get();
+            return response()->json(['data' => $objs], 200);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

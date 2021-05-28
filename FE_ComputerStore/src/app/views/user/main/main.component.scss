@@ -68,12 +68,13 @@ hr{
 
 .banner-duoi-slider img{
     height: 165px;
-    width: 326px;
+    width: 100%;
     margin-right: 5px;
 }
 
 .picsum-img-banner{
     overflow: hidden;
+    margin-right: 5px;
 }
 
 .picsum-img-banner img{
@@ -118,6 +119,7 @@ hr{
 .product-title-container h3{
     font-size: 25px;
 }
+
 .product-title-container h3::after{
     content: '';
     position: relative;

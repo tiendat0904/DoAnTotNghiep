@@ -187,7 +187,8 @@ export class HeaderComponent implements OnInit {
         this.list_product_filter.forEach(item => {
           var product_name = item.product_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
           var product_type_name = item.product_type_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
-          if (product_name.includes(keyword) || product_type_name.includes(keyword)) {
+          var product_price = item.price_display.toString();
+          if (product_name.includes(keyword) || product_type_name.includes(keyword) || product_price.includes(keyword)) {
             filterResult.push(item);
           }
         });

@@ -73,14 +73,11 @@ export class MainComponent implements OnInit {
     private billDetailService: BillDetailService,
     private billService: BillService,
     public loaderService: LoaderService
-  ) { }
+  ) {
+    
+   }
 
   ngOnInit(): void {
-    // var refresh = window.localStorage.getItem('refresh');
-    //   if(refresh===null){
-    //     window.location.reload();
-    //     window.localStorage.setItem('refresh', "1");
-    // }
     this.fetchProductNew();
     this.fetchProductLaptop();
     this.fetchProductRam();

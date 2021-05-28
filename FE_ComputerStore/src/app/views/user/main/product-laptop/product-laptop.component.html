@@ -8,7 +8,7 @@
     <p style="font-size: 20px;margin-left: 5px">{{product_type_name}}</p>
     <select (change)="changeStatus($event.target.value)" class="custom-select col-md-4 col-lg-2 col-sm-12"
       [value]="checkSelect" style="position: relative;left: 919px;">
-      <option value="0">Lọc sản phẩm</option>
+      <option value="0" selected disabled>Lọc sản phẩm</option>
       <option value="1">Sản phẩm mới về</option>
       <option value="2">Giá giảm dần</option>
       <option value="3">Giá tăng dần</option>
@@ -36,7 +36,7 @@
               <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""
                   style="width: 250px;height: 250px;"></a>
             </div>
-            <div class='product-description'>
+            <div class='product-description' style="margin-left: 15px;">
               <div class='product-title'>
                 <a [routerLink]="['/',item.product_id]"
                   style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>

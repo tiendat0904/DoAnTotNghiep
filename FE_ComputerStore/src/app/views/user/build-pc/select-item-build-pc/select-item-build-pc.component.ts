@@ -64,10 +64,12 @@ export class SelectItemBuildPcComponent implements OnInit {
             if (item.product_type_name === this.product_type) {
               if (this.type === 'edit') {
                 const modelDelete = {
-                  id: item.product_id
+                  id: item.build_pc_id
                 };
-                this.pcService.delete(modelDelete).subscribe();
+                this.pcService.delete(modelDelete).subscribe(data =>{
+                });
                 this.pcService.create(pcModel).subscribe();;
+                
                 this.eventEmit.emit('success');
                 this.modalReference.dismiss();
               }
