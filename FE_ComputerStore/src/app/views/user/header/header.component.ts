@@ -7,12 +7,14 @@ import { billModel } from '../../../models/bill-model';
 import { ItemModel } from '../../../models/item-model';
 import { productModel } from '../../../models/product-model';
 import { productTypeModel } from '../../../models/product-type-model';
+import { trademarkModel } from '../../../models/trademark-model';
 import { AccountService } from '../../../services/account/account.service';
 import { BillDetailService } from '../../../services/bill-detail/bill-detail.service';
 import { BillService } from '../../../services/bill/bill.service';
 import { CartService } from '../../../services/cart/cart.service';
 import { ProductTypeService } from '../../../services/product-type/product-type.service';
 import { ProductService } from '../../../services/product/product.service';
+import { TrademarkService } from '../../../services/trademark/trademark.service';
 declare var $: any;
 @Component({
   selector: 'app-header1',
@@ -30,6 +32,7 @@ export class HeaderComponent implements OnInit {
   urlPictureDefault = avatarDefault;
   list_bill: Array<billModel> = [];
   list_product_type: Array<productTypeModel> = [];
+  list_trademark: Array<trademarkModel> = [];
   delay = ms => new Promise(res => setTimeout(res, ms));
   list_item: Array<ItemModel> = [];
   list_product: Array<productModel> = [];
@@ -48,7 +51,9 @@ export class HeaderComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private productTypeService: ProductTypeService,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private trademarkService: TrademarkService) { }
+    
 
   ngOnInit(): void {
     this.searchedKeyword = '';
@@ -88,6 +93,25 @@ export class HeaderComponent implements OnInit {
           $(this).hide();
         }
       )
+
+      $('.brand-hover').hide();
+      $('.header-main-brand').hover(
+        function () {
+          $('.brand-hover').show();
+        },
+        function () {
+          $('.brand-hover').hide();
+        }
+      );
+      $('.brand-hover').hover(
+        function () {
+          $('.brand-hover').show();
+        },
+        function () {
+          $(this).hide();
+        }
+      )
+
 
       $('.main-slider-left-scoll1').hide();
       $('.danh-muc-san-pham1').hover(
@@ -181,11 +205,18 @@ export class HeaderComponent implements OnInit {
     }
 
     this.fetchProductType();
+    this.fetchProductTrademark();
   }
 
   fetchProductType() {
     this.productTypeService.getAll().subscribe(data => {
       this.list_product_type = data.data;
+    })
+  }
+
+  fetchProductTrademark() {
+    this.trademarkService.getBrandHightlight().subscribe(data => {
+      this.list_trademark = data.data;
     })
   }
 

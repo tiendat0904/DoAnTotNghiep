@@ -1,0 +1,82 @@
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+    <mat-progress-spinner mode="indeterminate" style="top: 50%; left: 50%;"></mat-progress-spinner>
+  </div>
+  <div class='product-detail-page'>
+    <div class='product-detail-icon'>
+      <a href=""><i class="fas fa-home"></i></a>
+      <p style="margin-top: 5px;margin-left: 5px;">></p>
+      <p style="font-size: 20px;margin-left: 5px">{{trademark_name}}</p>
+      <select (change)="changeStatus($event.target.value)" class="custom-select col-md-4 col-lg-2 col-sm-12"
+        [value]="checkSelect" style="position: relative;left: 919px;">
+        <option value="0" selected disabled>Lọc sản phẩm</option>
+        <option value="1">Sản phẩm mới về</option>
+        <option value="2">Giá giảm dần</option>
+        <option value="3">Giá tăng dần</option>
+      </select>
+    </div>
+    <hr />
+  </div>
+  <div class='container'>
+    <div class='row' style="margin-left: 3px;">
+      <div class='col-lg-2'>
+        <h5 style="font-weight: normal ; text-align: center; border:1px solid #ddd;height: 33px;padding-top: 6px;">LỌC SẢN
+          PHẨM</h5>
+        <h4>Loại sản phẩm</h4>
+        <div *ngFor="let item of list_product_type_show">
+          <input type="checkbox" [(ngModel)]="item.selected" (ngModelChange)="filterProducts()"
+            style="margin-right: 3px">{{item.product_type_name}}
+        </div>
+      </div>
+      <div class='col-lg-10'>
+        <div class="product-grid" style="display: flex;flex-wrap: wrap;">
+          <div class='product-item' style="width: 25%;"
+            *ngFor="let item of list_product_laptop |  slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;">
+            <div class='product-item-detail' style="display: grid;height: 100%;">
+              <div class='product-image'>
+                <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""
+                    style="width: 250px;height: 250px;"></a>
+              </div>
+              <div class='product-description' style="margin-left: 15px;">
+                <div class='product-title'>
+                  <a [routerLink]="['/',item.product_id]"
+                    style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                </div>
+              </div>
+              <div style="align-self: flex-end; margin-left: 15px;">
+                <div class='product-price'>
+                  <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND' }}</del>
+                  <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                </div>
+                <div class='product-checked'>
+                  <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                  <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                      (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                </div>
+              </div>
+            </div>
+            <a [routerLink]="['/',item.product_id]">
+              <div class="product-item-detail-hover">
+                <div style="height: 240px;overflow:hidden;border:0.5px solid #234a76">
+                  <div
+                    style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                    <h3 style="font-weight: 500;">Chi tiết</h3>
+                  </div>
+                  <div style="padding-left: 10px;padding-right:5px">
+                    <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                    <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                      <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                    </div>
+                    <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-12 justify-content-center">
+          <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
+            [pageSize]="pageSize" [collectionSize]="list_product_laptop.length"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>

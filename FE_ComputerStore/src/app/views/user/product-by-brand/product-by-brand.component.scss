@@ -1,0 +1,92 @@
+.loader-container{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.85;
+    margin-left: -100px;
+    z-index: 99999;
+}
+
+.product-detail-icon{
+    display: flex;
+    padding: 15px;
+}
+
+.product-detail-icon a{
+    margin-left: 17px;
+    font-size: 20px;
+}
+
+hr{
+    border : 1px solid #243a76;
+    background-color: #243a76;
+    width: 95%;
+    text-align: left;
+    margin-top: 0px;
+}
+
+.product-grid{
+    display: flex;
+    padding-bottom: 30px;
+    width: 98.4%;
+    height: 1243.6px;
+}
+
+.product-item{
+    border: 1px solid #ddd;
+    width: 25%;
+    height: 397.6px;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.product-price-new{
+    color: red;
+    font-size: 20px;
+}
+
+.product-checked{
+    display: -webkit-inline-box;
+}
+
+.product-checked p{
+    text-align: inherit;
+    margin-left: 0px;
+}
+
+.product-checked button{
+    outline: none;
+    border: 0;
+    background-color: #fff;
+    font-size: 20px;
+    position: relative;
+    bottom: 5px;
+}
+
+.product-item-detail-hover{
+    position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        height: 250px;
+        width: 100%;
+        transition: .5s ease;
+        background-color:#fff;
+        z-index: 98;
+}
+
+.product-item-detail-hover p{
+    margin: 0;
+    color: #333;
+}
+
+.product-item a:hover  .product-item-detail-hover{
+    opacity: 1;
+    z-index: 99;
+    cursor: pointer;
+}

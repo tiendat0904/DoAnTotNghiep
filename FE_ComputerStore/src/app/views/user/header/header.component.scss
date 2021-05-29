@@ -1,3 +1,58 @@
+.brand-hover{
+    position: absolute;
+    background-color:#fff;
+    width: 480px;
+    z-index: 3;
+    left: 300px;
+    top:135px; 
+}
+
+
+.brand-hover:before{
+    position: absolute;
+    pointer-events: none;
+    content: " ";
+    width: 0;
+    height: 0;
+    top: -29px;
+    left: 10%;
+    border-width: 9px;
+    border-style: solid;
+    border-color: transparent transparent #fff;
+    border-image: initial;
+}
+
+.brand-hover p{
+    font-weight: 600;
+    font-size: 20px;
+    padding: 10px 0 0 15px;
+}
+
+.brand-hover-a{
+    display: inline-block;
+    width: 100px;
+    line-height: 70px;
+    background-color: #fff;
+}
+
+.brand-hover-detail{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 15px;
+}
+
+.brand-hover-image{
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+
+}
+
+.header-main-brand{
+    height: 50px;
+}
+
 .header-top{
     background-color: #243a76;
     color:black;
@@ -35,7 +90,6 @@ a{
 
 .header-main-center{
     margin-top: 13px;
-    margin-left: 55px;
 }
 
 .header-main-center-scoll{
@@ -66,7 +120,7 @@ a{
 
 .header-main-search input{
     background-color: #f1ecec;
-    width: 600px;
+    width: 527px;
     height: 40px;
     border:  0.5px solid white;
     border-radius: 10px;
@@ -82,6 +136,15 @@ a{
     border:  0.5px solid #f78d1c;
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
+}
+
+.findbybrand{
+    background-color: #f78d1c;
+    outline: none;
+    line-height: 34px;
+    border: 0;
+    font-weight: 500;
+    width: 140px;
 }
 
 .header-i{
@@ -317,10 +380,11 @@ a{
 
 
 .autocomplete-suggestions{
-    width: 645px;
+    width: 565px;
     position: absolute;
     display: none;
     overflow: auto;
+    left: 444px;
     z-index: 999;
     background-color: #fff;
     max-height: 300px;

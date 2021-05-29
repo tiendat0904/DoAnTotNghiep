@@ -9,6 +9,7 @@ import { ProductDetailComponent } from './main/product-detail/product-detail.com
 import { ProductLaptopComponent } from './main/product-laptop/product-laptop.component';
 import { NewsComponent } from './news/news.component';
 import { OrderSucessComponent } from './order-sucess/order-sucess.component';
+import { ProductByBrandComponent } from './product-by-brand/product-by-brand.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
 import { WarrantySearchComponent } from './warranty-search/warranty-search.component';
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path: 'product-type/:product_type_id',
         component: ProductLaptopComponent
+      },
+      {
+        path: 'brand/:trademark_id',
+        component: ProductByBrandComponent
       },
       {
         path: 'build-pc',

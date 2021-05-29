@@ -39,6 +39,18 @@ class TrademarkController extends Controller
         return response()->json($this->base->getMessage(), $this->base->getStatus());
     }
 
+    public function getTrademark()
+    {
+        //
+        $objs = DB::table(self::table)
+            ->leftJoin(ProductController::table, ProductController::table . '.' . ProductController::trademark_id, '=', self::table . '.' . self::id)
+            ->select(array(self::table . '.*', DB::raw('COUNT(product.product_id) as totalProduct')))
+            ->groupBy(self::table . '.' . self::id)
+            ->orderBy('totalProduct','desc')
+            ->get();
+        return response()->json(['data' => $objs], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

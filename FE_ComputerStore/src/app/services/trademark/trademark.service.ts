@@ -19,6 +19,10 @@ export class TrademarkService {
     return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'brands');
   }
 
+  getBrandHightlight(): Observable<any>{
+    return this.httpClient.get(environment.BASE_API_URL+ environment.BASE_API+'getBrandHightlight');
+  }
+
   update(id: any, model: trademarkModel): Observable<any>{
     return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'brands/' + id, model);
   }

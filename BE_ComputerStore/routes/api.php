@@ -34,6 +34,7 @@ Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index']);
 Route::put('/reset-password', [AccountController::class, 'resetPassword']);
 
 Route::get('/brands', [\App\Http\Controllers\TrademarkController::class, 'index']);
+Route::get('/getBrandHightlight', [\App\Http\Controllers\TrademarkController::class, 'getTrademark']);
 Route::get('/brands/{id}', [\App\Http\Controllers\TrademarkController::class, 'show']);
 
 Route::get('/comments', [\App\Http\Controllers\CommnentController::class, 'index']);

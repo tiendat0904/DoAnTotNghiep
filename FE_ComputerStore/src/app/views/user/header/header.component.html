@@ -78,6 +78,20 @@
     </div>
 
 </div>
+<div class = "brand-hover">
+    <div>
+        <div>
+            <div>
+                <p>THƯƠNG HIỆU NỔI BẬT</p>
+            </div>
+            <div class ="brand-hover-detail">
+                <a class = "brand-hover-a" [routerLink]="['/brand/',item.trademark_id]"  *ngFor="let item of list_trademark | slice:0:12;">
+                   <img class = "brand-hover-image" src="{{item.image}}" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="header">
     <div class="header-top">
         <div class="header-toolbar">
@@ -112,7 +126,9 @@
                     alt=""></a>
             <div class="header-main-search">
                 <div>
-                    <button>Tìm theo hãng <i class="fas fa-angle-down"></i></button>
+                    <div class ="header-main-brand">
+                        <button class ="findbybrand">Tìm theo hãng <i class="fas fa-angle-down"></i></button>
+                    </div>
                     <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword"
                         placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off" style="outline: none;">
                     <button class ="button-search" style="outline: none; color: #fff;" (click)="search();"><i class="header-i fa fa-search "
@@ -123,14 +139,14 @@
                     <a [routerLink]="['/',item.product_id]" *ngFor="let item of list_product_filter"
                         (click)="searchDetail()">
                         <img src="{{item.image}}" alt="">
-                        <span style="display: inline-grid; position: relative; bottom: 15px;width: 530px;">
+                        <span style="display: inline-grid; position: relative; bottom: 15px;width: 450px;">
                             <span style="font-size: 14px; color: black;">{{item.product_name}}</span>
                             <span style="font-size: 14px;color: red;">{{item.price_display | currency: 'VND'}}</span>
                         </span>
                     </a>
                 </div>
             </div>
-            <div style="width: 300px; display:-webkit-inline-box;position: absolute;margin:20px">
+            <div style="width: 300px; display:-webkit-inline-box;position: absolute;margin-top:20px">
                 <a class="header-item" href="">
                     <i class="icon-tag"></i>
                     <div style="height: 5px;"></div>
@@ -176,7 +192,7 @@
     </div>
     <div class="header-bottom">
         <div class="danh-muc-san-pham1">
-            <a href="" class="header-bottom-a" >
+            <a class="header-bottom-a" >
                 <i class="fa fa-bars" aria-hidden="true" style="font-size: 18px; color: #fff;"></i>
                 <span>Danh mục sản phẩm</span>
             </a>
@@ -189,15 +205,15 @@
                     {{item.description}}</a>
             </ul>
         </div>
-        <a href="" class = "header-bottom-a">
+        <a  class = "header-bottom-a">
             <span class='glyphicon glyphicon-ok'></span>
             <span>Linh kiện chính hãng</span>
         </a>
-        <a href="" class = "header-bottom-a">
+        <a  class = "header-bottom-a">
             <i class='fas fa-shuttle-van' style="font-size: 18px; color: #fff;"></i>
             <span>Ship COD toàn quốc</span>
         </a>
-        <a href="" class = "header-bottom-a">
+        <a  class = "header-bottom-a">
             <i class="fa fa-exchange" style="font-size: 18px; color: #fff;"></i>
             <span>Đổi trả miễn phí</span>
         </a>
