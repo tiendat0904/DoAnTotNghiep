@@ -126,7 +126,7 @@ export class NewsComponent implements OnInit {
       .filter((news) => news.checked)
       .map((p) => p.news_id);
     if (selectednews.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+     this.toastr.error('Chọn ít nhất một bản ghi để xóa.','www.tiendatcomputer.vn cho biết');
       return;
     }
     this.delete(selectednews);
@@ -153,9 +153,9 @@ export class NewsComponent implements OnInit {
         this.fetchListNews();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error.error, "www.tiendatcomputer.vn cho biết" );
         } else {
-          this.toastr.success(result.success);
+          this.toastr.success(result.success,'www.tiendatcomputer.vn cho biết');
         }
         this.modalReference.dismiss();
       },

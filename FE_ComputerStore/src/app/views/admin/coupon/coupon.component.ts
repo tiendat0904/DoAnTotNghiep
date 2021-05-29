@@ -128,7 +128,7 @@ export class CouponComponent implements OnInit {
       .filter((coupon) => coupon.checked)
       .map((p) => p.coupon_id);
     if (selectedcoupon.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+      this.toastr.error('Chọn ít nhất một bản ghi để xóa.', "www.tiendatcomputer.vn cho biết");
       return;
     }
     this.delete(selectedcoupon);
@@ -165,9 +165,9 @@ export class CouponComponent implements OnInit {
         this.fetchListCoupon();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error, "www.tiendatcomputer.vn cho biết");
         } else {
-          this.toastr.success(result.success);
+          this.toastr.success(result.success, "www.tiendatcomputer.vn cho biết");
         }
         this.modalReference.dismiss();
       },

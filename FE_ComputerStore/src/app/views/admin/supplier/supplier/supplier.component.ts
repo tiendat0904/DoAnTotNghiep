@@ -129,7 +129,7 @@ export class SupplierComponent implements OnInit {
       .filter((supplier) => supplier.checked)
       .map((p) => p.supplier_id);
     if (selectedsupplier.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+      this.toastr.error('Chọn ít nhất một bản ghi để xóa.', "www.tiendatcomputer.vn cho biết");
       return;
     }
     this.delete(selectedsupplier);
@@ -163,9 +163,9 @@ export class SupplierComponent implements OnInit {
         this.fetchListSupplier();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error , "www.tiendatcomputer.vn cho biết");
         } else {
-          this.toastr.success(result.success);
+          this.toastr.success(result.success, "www.tiendatcomputer.vn cho biết");
         }
       },
     );

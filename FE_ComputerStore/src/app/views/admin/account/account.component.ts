@@ -69,7 +69,7 @@ export class AccountComponent implements OnInit {
               image: url,
             }
             this.accountService.update(account).subscribe(data =>{
-              this.toastr.success("Cập nhật ảnh đại diện thành công");
+              this.toastr.success("Cập nhật ảnh đại diện thành công", "www.tiendatcomputer.vn cho biết");
             })
             this.picture = url;
             this.urlPictureDefault = url;

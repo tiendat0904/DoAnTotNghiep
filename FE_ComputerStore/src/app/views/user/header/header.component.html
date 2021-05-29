@@ -1,56 +1,69 @@
 <div class="header-main-center-scoll">
-    <div class ="header-main-scoll" style="z-index: 999;width: 100%;background-color: #243a76;height: 50px;">
+    <div class="header-main-scoll" style="z-index: 999;width: 100%;background-color: #243a76;height: 50px;">
         <div style="padding-right: 72px;margin-left: 79px;position: relative;top: 12px;">
-            <a href="">
-                <i class="fa fa-bars" aria-hidden="true" style="font-size: 18px; color: #fff;"></i>
-                <span>Danh mục sản phẩm</span>
-            </a>
+            <div class="danh-muc-san-pham">
+                <a>
+                    <i class="fa fa-bars" aria-hidden="true" style="font-size: 18px; color: #fff;"></i>
+                    <span>Danh mục sản phẩm</span>
+                </a>
+            </div>
+           
+            <div class='main-slider-left-scoll'>
+                <ul>
+                    <a *ngFor="let item of list_product_type | slice:0:14;"
+                        [routerLink]="['/product-type/',item.product_type_id]">{{item.product_type_name}}
+                        {{item.description}}</a>
+                </ul>
+            </div>
         </div>
-       
-        <div class = "header-main-search" style="position: relative; top: 10px;">
+        <div class="header-main-search" style="position: relative; top: 10px;">
             <div>
-                <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off" style="outline: none;height: 30px;background-color: #fff;">
-                <button style="background-color: #f78d1c;outline: none; color: #fff;height: 31px;width: 40px;" (click) ="search();"><i class="header-i fa fa-search " aria-hidden="true"></i></button>
-            </div>             
-            <div style="display: block;" class = "autocomplete-suggestions" [hidden] ="check_search">
-                <p [hidden] ="check_product">Không tìm thấy sản phẩm phù hợp</p>
-                <a [routerLink] = "['/',item.product_id]" *ngFor="let item of list_product_filter" (click)="searchDetail()">
+                <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword"
+                    placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off"
+                    style="outline: none;height: 30px;background-color: #fff;">
+                <button style="background-color: #f78d1c;outline: none; color: #fff;height: 31px;width: 40px;"
+                    (click)="search();"><i class="header-i fa fa-search " aria-hidden="true"></i></button>
+            </div>
+            <div style="display: block;" class="autocomplete-suggestions" [hidden]="check_search">
+                <p [hidden]="check_product">Không tìm thấy sản phẩm phù hợp</p>
+                <a [routerLink]="['/',item.product_id]" *ngFor="let item of list_product_filter"
+                    (click)="searchDetail()">
                     <img src="{{item.image}}" alt="">
                     <span style="display: inline-grid; position: relative; bottom: 15px;width: 530px;">
                         <span style="font-size: 14px; color: black;">{{item.product_name}}</span>
                         <span style="font-size: 14px;color: red;">{{item.price_display | currency: 'VND'}}</span>
-                    </span>                
+                    </span>
                 </a>
             </div>
         </div>
         <div style="width: 300px; display:-webkit-inline-box;position: relative;margin:20px;left: 55px;bottom: 6px;">
             <a class="header-item1" href="">
-                <i class = "icon-tag"></i>
+                <i class="icon-tag"></i>
             </a>
             <a class="header-item1" href="/#/account/order">
-                <i class = "icon-handbag"></i>
+                <i class="icon-handbag"></i>
                 <!-- <div style="height: 5px;"></div>
                 <span style="font-size: 15px;">Đơn hàng</span> -->
             </a>
             <div>
-                <div id = "header-account1">
+                <div id="header-account1">
                     <a class="header-item1" href="{{url}}">
-                        <i class = "icon-user"></i>
+                        <i class="icon-user"></i>
                         <!-- <div style="height: 5px;"></div>
                         <span id="name_check" style="font-size: 15px;">{{name}}</span> -->
                     </a>
                 </div>
-                <div id= "header-hide1">
+                <div id="header-hide1">
                     <a href="/#/account/account-info" style="border-top:0px">Thông tin tài khoản</a>
                     <a href="/#/account/order">Quản lý đơn hàng</a>
-                    <a href="" (click) = "onLogout();">Đăng xuất tài khoản</a>
+                    <a href="" (click)="onLogout();">Đăng xuất tài khoản</a>
                 </div>
             </div>
-            
+
             <div>
-                <div id = "header-basket">
-                    <a class="header-item" href="/#/cart" >
-                        <i class = "icon-basket"></i>
+                <div id="header-basket">
+                    <a class="header-item" href="/#/cart">
+                        <i class="icon-basket"></i>
                         <!-- <div style="height: 5px;"></div>
                         <span style="font-size: 15px;">Giỏ hàng</span> -->
                     </a>
@@ -60,87 +73,93 @@
                     <a href="">Quản lý đơn hàng</a>
                     <a href="">Đăng xuất tài khoản</a>
                 </div> -->
-            </div> 
+            </div>
         </div>
     </div>
-    
-</div> 
-<div class = "header" >
-    
-    <div class = "header-top">
-        <div class = "header-toolbar">
+
+</div>
+<div class="header">
+    <div class="header-top">
+        <div class="header-toolbar">
             <a href="">
-                <span class = 'span-header glyphicon glyphicon-home'></span>
-                <span class= 'span-header'>Hệ thống Showroom</span>
+                <span class='span-header glyphicon glyphicon-home'></span>
+                <span class='span-header'>Hệ thống Showroom</span>
             </a>
             <a href="">
-                <span class = 'span-header glyphicon glyphicon-headphones'></span>
-                <span class= 'span-header'>Tư vấn mua hàng: </span><span class= 'span-header' style="color: #20a8d8;">19001009</span>
+                <span class='span-header glyphicon glyphicon-headphones'></span>
+                <span class='span-header'>Tư vấn mua hàng: </span><span class='span-header'
+                    style="color: #20a8d8;">19001009</span>
             </a>
             <a href="">
-                <span class = 'span-header glyphicon glyphicon-headphones'></span>
-                 <span class= 'span-header'>CSKH: </span><span class= 'span-header' style="color: #20a8d8;">18001008</span>
+                <span class='span-header glyphicon glyphicon-headphones'></span>
+                <span class='span-header'>CSKH: </span><span class='span-header' style="color: #20a8d8;">18001008</span>
             </a>
             <a href="/#/news">
-                <span class = 'span-header glyphicon glyphicon-list-alt'></span>
-                <span class= 'span-header'>Tin công nghệ</span>
+                <span class='span-header glyphicon glyphicon-list-alt'></span>
+                <span class='span-header'>Tin công nghệ</span>
             </a>
             <a href="/#/build-pc">
-                <span class= 'span-header glyphicon glyphicon-wrench'></span>
-                <span  class= 'span-header'>Xây dựng cấu hình</span>
+                <span class='span-header glyphicon glyphicon-wrench'></span>
+                <span class='span-header'>Xây dựng cấu hình</span>
             </a>
-        </div>   
+        </div>
     </div>
-    
-    <div class = "header-main">
+
+    <div class="header-main">
         <div class="header-main-center">
-            <a href="#/"><img class ="header-main-logo-img" src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Flogodone4.PNG?alt=media&token=da4d981c-cba2-4c74-98b9-7cd58792cf0e" alt=""></a>
-            <div class = "header-main-search">
+            <a href="#/"><img class="header-main-logo-img"
+                    src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Flogodone4.PNG?alt=media&token=da4d981c-cba2-4c74-98b9-7cd58792cf0e"
+                    alt=""></a>
+            <div class="header-main-search">
                 <div>
-                    <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off" style="outline: none;">
-                    <button style="outline: none; color: #fff;" (click) ="search();"><i class="header-i fa fa-search " aria-hidden="true"></i></button>
-                </div>             
-                <div style="display: block;" class = "autocomplete-suggestions" [hidden] ="check_search">
-                    <p [hidden] ="check_product">Không tìm thấy sản phẩm phù hợp</p>
-                    <a [routerLink] = "['/',item.product_id]" *ngFor="let item of list_product_filter" (click)="searchDetail()">
+                    <button>Tìm theo hãng <i class="fas fa-angle-down"></i></button>
+                    <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword"
+                        placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off" style="outline: none;">
+                    <button class ="button-search" style="outline: none; color: #fff;" (click)="search();"><i class="header-i fa fa-search "
+                            aria-hidden="true"></i></button>
+                </div>
+                <div style="display: block;" class="autocomplete-suggestions" [hidden]="check_search">
+                    <p [hidden]="check_product">Không tìm thấy sản phẩm phù hợp</p>
+                    <a [routerLink]="['/',item.product_id]" *ngFor="let item of list_product_filter"
+                        (click)="searchDetail()">
                         <img src="{{item.image}}" alt="">
                         <span style="display: inline-grid; position: relative; bottom: 15px;width: 530px;">
                             <span style="font-size: 14px; color: black;">{{item.product_name}}</span>
                             <span style="font-size: 14px;color: red;">{{item.price_display | currency: 'VND'}}</span>
-                        </span>                
+                        </span>
                     </a>
                 </div>
             </div>
             <div style="width: 300px; display:-webkit-inline-box;position: absolute;margin:20px">
                 <a class="header-item" href="">
-                    <i class = "icon-tag"></i>
+                    <i class="icon-tag"></i>
                     <div style="height: 5px;"></div>
                     <span style="font-size: 15px;color: #20a8d8;">Khuyến mãi</span>
                 </a>
                 <a class="header-item" href="/#/account/order">
-                    <i class = "icon-handbag"></i>
+                    <i class="icon-handbag"></i>
                     <div style="height: 5px;"></div>
                     <span style="font-size: 15px;color: #20a8d8;">Đơn hàng</span>
                 </a>
                 <div>
-                    <div id = "header-account">
+                    <div id="header-account">
                         <a class="header-item" href="{{url}}">
-                            <i class = "icon-user"></i>
+                            <i class="icon-user"></i>
                             <div style="height: 5px;"></div>
                             <span id="name_check" style="font-size: 15px;color: #20a8d8;">{{name}}</span>
                         </a>
                     </div>
-                    <div id= "header-hide" >
+                    <div id="header-hide">
                         <a href="/#/account/account-info" style="border-top:0px">Thông tin tài khoản</a>
                         <a href="/#/account/order">Quản lý đơn hàng</a>
-                        <a href="" (click) = "onLogout();">Đăng xuất tài khoản</a>
+                        <a href="" (click)="onLogout();">Đăng xuất tài khoản</a>
                     </div>
                 </div>
-                
+
                 <div>
-                    <div id = "header-basket">
-                        <a class="header-item" href="/#/cart" >
-                            <i class = "icon-basket"></i>
+                    <div id="header-basket">
+                        <a class="header-item" href="/#/cart">
+                            <i class="icon-basket"></i>
                             <div style="height: 5px;"></div>
                             <span style="font-size: 15px;color: #20a8d8;">Giỏ hàng</span>
                         </a>
@@ -150,29 +169,39 @@
                         <a href="">Quản lý đơn hàng</a>
                         <a href="">Đăng xuất tài khoản</a>
                     </div> -->
-                </div> 
+                </div>
             </div>
-        </div>   
-        
+        </div>
+
     </div>
-    <div class = "header-bottom">
-        <a href="">
-            <i class="fa fa-bars" aria-hidden="true" style="font-size: 18px; color: #fff;"></i>
-            <span>Danh mục sản phẩm</span>
-        </a>
-        <a href="">
-            <span class = 'glyphicon glyphicon-ok'></span>
+    <div class="header-bottom">
+        <div class="danh-muc-san-pham1">
+            <a href="" class="header-bottom-a" >
+                <i class="fa fa-bars" aria-hidden="true" style="font-size: 18px; color: #fff;"></i>
+                <span>Danh mục sản phẩm</span>
+            </a>
+        </div>
+        
+        <div class='main-slider-left-scoll1'>
+            <ul>
+                <a *ngFor="let item of list_product_type | slice:0:14;"
+                    [routerLink]="['/product-type/',item.product_type_id]">{{item.product_type_name}}
+                    {{item.description}}</a>
+            </ul>
+        </div>
+        <a href="" class = "header-bottom-a">
+            <span class='glyphicon glyphicon-ok'></span>
             <span>Linh kiện chính hãng</span>
         </a>
-        <a href="">
-            <i class = 'fas fa-shuttle-van' style="font-size: 18px; color: #fff;"></i>
+        <a href="" class = "header-bottom-a">
+            <i class='fas fa-shuttle-van' style="font-size: 18px; color: #fff;"></i>
             <span>Ship COD toàn quốc</span>
         </a>
-        <a href="">
+        <a href="" class = "header-bottom-a">
             <i class="fa fa-exchange" style="font-size: 18px; color: #fff;"></i>
             <span>Đổi trả miễn phí</span>
         </a>
-        <a href="/#/warranty-search">
+        <a href="/#/warranty-search" class = "header-bottom-a">
             <i class="fa fa-search-plus" style="font-size: 18px; color: #fff;"></i>
             <span>Tra cứu bảo hành</span>
         </a>

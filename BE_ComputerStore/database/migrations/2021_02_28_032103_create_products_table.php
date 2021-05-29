@@ -21,6 +21,8 @@ class CreateProductsTable extends Migration
             $table->double('price', 15, 2)->default(0.00);
             $table->integer('amount')->default(0);
             $table->text('description');
+            $table->integer('view')->default(0);
+            $table->double('rate')->default(0.00);
             $table->date('created_at')->default(now());
             $table->bigInteger('createdBy');
             $table->bigInteger('updatedBy') ->nullable();

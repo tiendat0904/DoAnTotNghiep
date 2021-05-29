@@ -138,7 +138,7 @@ export class UpdateSupplierComponent implements OnInit {
     let nhacungcap: supplierModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+    this.toastr.error('Kiểm tra thông tin các trường đã nhập', 'www.tiendatcomputer.vn cho biết');;
       return;
     }
     if (this.isEdit) {
@@ -172,11 +172,11 @@ export class UpdateSupplierComponent implements OnInit {
       }
       this.supplierService.create(nhacungcap).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, "www.tiendatcomputer.vn cho biết");
         this.modalReference.dismiss();
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         }
       );
     }
@@ -184,10 +184,10 @@ export class UpdateSupplierComponent implements OnInit {
       this.supplierService.update(nhacungcap.supplier_id, nhacungcap).subscribe(res => {
         this.modalReference.dismiss();
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         }
       );
     }

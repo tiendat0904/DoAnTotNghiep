@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +23,7 @@ export class InventoryReportComponent implements OnInit {
   searchedKeyword: string;
   permission : boolean;
   isSelected = true;
+  created_at: any;
   page = 1;
   pageSize = 5;
   totalAmount = 0;
@@ -30,7 +32,8 @@ export class InventoryReportComponent implements OnInit {
     private reportService: ReportService,
     private toastr: ToastrService,
     private exportService: ExcelService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private datePipe: DatePipe,
   ) {
   }
 
@@ -48,12 +51,12 @@ export class InventoryReportComponent implements OnInit {
     },
     err => {
       this.permission = true;
-      this.toastr.error(err.error.error);
+      this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
     })
   }
 
   export() {
-    this.exportService.exportExcel(this.listFilterResult, 'HangTonKho');
+    this.exportService.exportExcel(this.listFilterResult, 'hangTonKho-'+this.datePipe.transform(Date.now(), "dd-MM-yyyy"));
   }
 
 }

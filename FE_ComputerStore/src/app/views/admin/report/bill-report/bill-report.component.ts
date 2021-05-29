@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +23,7 @@ export class BillReportComponent implements OnInit {
   ismonth = true;
   isQuarter = true;
   isyear = true;
+  excelModel : excelModel;
   closeResult: string;
   searchedKeyword: string;
   permission: boolean;
@@ -46,7 +48,8 @@ export class BillReportComponent implements OnInit {
     private reportService: ReportService,
     private toastr: ToastrService,
     private exportService: ExcelService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private datePipe: DatePipe,
   ) { }
 
   ngOnInit(): void {
@@ -70,6 +73,7 @@ export class BillReportComponent implements OnInit {
   }
 
   fetchListBill(model: excelModel) {
+    this.excelModel = model;
     this.Revenue = 0;
     if (model.key == "bcq") {
       if (model.param === "" || model.param === "NaN/" + this.year) {
@@ -88,7 +92,7 @@ export class BillReportComponent implements OnInit {
         },
         err => {
           this.permission = true;
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         })
       }
     } else {
@@ -105,13 +109,13 @@ export class BillReportComponent implements OnInit {
       },
       err => {
         this.permission = true;
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
       })
     }
   }
 
   export() {
-    this.exportService.exportExcel(this.listFilterResult, 'Hoadon');
+    this.exportService.exportExcel(this.listFilterResult, 'hoadon-'+this.excelModel.param+'-'+this.datePipe.transform(Date.now(), "dd-MM-yyyy"));
   }
 
   getColor(color) {

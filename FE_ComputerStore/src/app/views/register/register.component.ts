@@ -37,13 +37,13 @@ export class RegisterComponent {
   save() {
     this.submitted = true;
     if (this.formRegister.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+    this.toastr.error('Kiểm tra thông tin các trường đã nhập', 'www.tiendatcomputer.vn cho biết');;
       return;
     }
     this.confirm_password = this.formRegister.get('confirm_password').value;
     const password = this.formRegister.get('password')?.value;
     if (this.confirm_password !== password) {
-      this.toastr.error('Mật khẩu xác nhận không khớp');
+      this.toastr.error('Mật khẩu xác nhận không khớp','www.tiendatcomputer.vn cho biết');
       return;
     }
     this.user = {
@@ -55,10 +55,10 @@ export class RegisterComponent {
     };
     this.authService.register(this.user).subscribe(res => {
       this.router.navigate(['/login']);
-      this.toastr.success('Thêm mới thành công');
+      this.toastr.success('Thêm mới thành công', 'www.tiendatcomputer.vn cho biết');
     },
       err => {
-        this.toastr.error('Có lỗi xảy ra!');
+        this.toastr.error('Có lỗi xảy ra!', 'www.tiendatcomputer.vn cho biết');
       });
   }
 

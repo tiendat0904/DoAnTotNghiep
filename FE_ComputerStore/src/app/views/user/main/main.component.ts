@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastrService } from 'ngx-toastr';
@@ -22,7 +22,7 @@ declare var $: any;
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit,OnDestroy {
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: false,
@@ -76,8 +76,12 @@ export class MainComponent implements OnInit {
   ) {
     
    }
+  ngOnDestroy(): void {
+    $('.main-slider-left-scoll1').css("opacity","1");
+  }
 
   ngOnInit(): void {
+    $('.main-slider-left-scoll1').css("opacity","0");
     this.fetchProductNew();
     this.fetchProductLaptop();
     this.fetchProductRam();
@@ -375,7 +379,7 @@ export class MainComponent implements OnInit {
       })
     }
     this.cartService.addToCart(product);
-    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
+    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
   }
 
   fetchProductRam() {

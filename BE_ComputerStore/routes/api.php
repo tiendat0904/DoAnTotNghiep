@@ -18,7 +18,7 @@ use App\Http\Controllers\ReportController;
 Route::post('register', [AccountController::class, 'register']);
 Route::post('login', [AccountController::class, 'login']);
 
-
+Route::get('/getaccountcustomer', [\App\Http\Controllers\AccountController::class, 'getAccountCustomer']);
 
 Route::post('/sendemail', [\App\Http\Controllers\MailController::class, 'sendMail']);
 Route::post('/sendcode', [\App\Http\Controllers\MailController::class, 'sendCode']);
@@ -42,6 +42,7 @@ Route::get('/comments/{id}', [\App\Http\Controllers\CommnentController::class, '
 
 Route::get('/product_type', [\App\Http\Controllers\ProductTypeController::class, 'index']);
 Route::get('/product_type/{id}', [\App\Http\Controllers\ProductTypeController::class, 'show']);
+Route::put('/productupdateview/{id}', [\App\Http\Controllers\ProductController::class, 'updateview']);
 
 Route::get('/getBill', [\App\Http\Controllers\BillController::class, 'getBill']);
 Route::post('/bills_not_account', [\App\Http\Controllers\BillController::class, 'storenotaccount']);

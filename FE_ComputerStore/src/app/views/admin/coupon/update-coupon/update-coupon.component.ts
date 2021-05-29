@@ -102,7 +102,7 @@ export class UpdateCouponComponent implements OnInit {
     let coupon: couponModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+      this.toastr.error('Kiểm tra thông tin các trường đã nhập', "www.tiendatcomputer.vn cho biết");
       return;
     }
     coupon = {
@@ -112,13 +112,13 @@ export class UpdateCouponComponent implements OnInit {
     };
 
     this.couponService.update(this.update_coupon_id, coupon).subscribe(res => {
-      this.toastr.success(res.success);
+      this.toastr.success(res.success, "www.tiendatcomputer.vn cho biết");
       this.isCheckhdn = false;
       this.isCheckhdn1 = true;
       this.getNavigation('admin/coupon','');
     },
       err => {
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, "www.tiendatcomputer.vn cho biết");
       }
     );
   }
@@ -247,7 +247,7 @@ export class UpdateCouponComponent implements OnInit {
       .filter((thongtincd) => thongtincd.checked)
       .map((p) => p.coupon_id);
     if (selectedthongtincd.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+      this.toastr.error('Chọn ít nhất một bản ghi để xóa.', "www.tiendatcomputer.vn cho biết");
       return;
     }
     this.delete(selectedthongtincd);
@@ -280,9 +280,9 @@ export class UpdateCouponComponent implements OnInit {
         this.ngOnInit();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error, "www.tiendatcomputer.vn cho biết");
         } else {
-          this.toastr.success(result.success);
+          this.toastr.success(result.success, "www.tiendatcomputer.vn cho biết");
         }
         this.modalReference.dismiss();
       },

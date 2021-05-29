@@ -191,7 +191,7 @@ export class UpdateCouponDetailComponent implements OnInit {
     let couponDetail: couponDetailModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+    this.toastr.error('Kiểm tra thông tin các trường đã nhập', 'www.tiendatcomputer.vn cho biết');;
       return;
     }
     if (this.isEdit) {
@@ -204,11 +204,11 @@ export class UpdateCouponDetailComponent implements OnInit {
       };
       this.couponDetailService.update(couponDetail.coupon_detail_id, couponDetail).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, "www.tiendatcomputer.vn cho biết");
         this.modalReference.dismiss();
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, "www.tiendatcomputer.vn cho biết");
         }
       );
     } else {

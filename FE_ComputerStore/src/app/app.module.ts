@@ -107,7 +107,7 @@ registerLocaleData(localeFr, 'vi');
     NgxPrintModule,
     IconSetModule.forRoot(),
     ToastrModule.forRoot({
-			timeOut: 2500,
+			timeOut: 3000,
 			positionClass: 'toast-top-center',
 			closeButton: true,
 			maxOpened: 5,

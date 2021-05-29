@@ -12,7 +12,7 @@
                <div class="col-sm-12">
                   <h2 style="font-size:30px;">Báo cáo hóa đơn</h2>
                </div>
-               <button type="button" [appExport]="listFilterResult" fileName="Hoadon" class="btn btn-success"
+               <button type="button"  (click) = "export();" class="btn btn-success"
                   style="margin-left: 17px;">
                   Xuất báo cáo
                </button>

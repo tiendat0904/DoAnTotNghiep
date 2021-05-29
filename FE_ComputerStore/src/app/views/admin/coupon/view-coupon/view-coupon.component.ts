@@ -99,7 +99,7 @@ export class ViewCouponComponent implements OnInit {
     let coupon: couponModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+      this.toastr.error('Kiểm tra thông tin các trường đã nhập', "www.tiendatcomputer.vn cho biết");
       return;
     }
     coupon = {
@@ -108,12 +108,12 @@ export class ViewCouponComponent implements OnInit {
 
     };
     this.couponService.create(coupon).subscribe(res => {
-      this.toastr.success(res.success);
+      this.toastr.success(res.success, "www.tiendatcomputer.vn cho biết");
       this.isCheckhdn = false;
       this.isCheckhdn1 = true;
     },
       err => {
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, "www.tiendatcomputer.vn cho biết");
       }
     );
   }
@@ -258,9 +258,9 @@ export class ViewCouponComponent implements OnInit {
         this.ngOnInit();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error, "www.tiendatcomputer.vn cho biết");
         } else {
-          this.toastr.success(result.success);
+          this.toastr.success(result.success, "www.tiendatcomputer.vn cho biết");
         }
         this.modalReference.dismiss();
       },

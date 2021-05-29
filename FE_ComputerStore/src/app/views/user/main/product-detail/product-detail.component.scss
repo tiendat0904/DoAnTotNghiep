@@ -157,6 +157,17 @@ h4{
 ::ng-deep .carousel-indicators li {
     width: 3rem !important;
 }
+
+::ng-deep .carousel-control-prev{
+    height: 50px !important;
+    margin-top: 135px !important;
+}
+
+::ng-deep .carousel-control-next{
+    margin-top: 135px !important;
+    height: 50px !important;
+}
+
 ::ng-deep .carousel-indicators img{
     max-height: 42px;
     max-width: 42px;

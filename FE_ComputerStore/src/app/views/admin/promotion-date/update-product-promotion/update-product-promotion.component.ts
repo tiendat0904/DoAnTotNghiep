@@ -175,7 +175,7 @@ export class UpdateProductPromotionComponent implements OnInit {
     let promotion_date: productPromotionDModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+    this.toastr.error('Kiểm tra thông tin các trường đã nhập', 'www.tiendatcomputer.vn cho biết');;
       return;
     }
     if (this.isEdit) {
@@ -196,11 +196,11 @@ export class UpdateProductPromotionComponent implements OnInit {
     if (this.isAdd) {
       this.productPromotionService.create(promotion_date).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
         this.modalReference.dismiss();
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         }
       );
     }
@@ -208,11 +208,11 @@ export class UpdateProductPromotionComponent implements OnInit {
       console.log(promotion_date);
       this.productPromotionService.update(promotion_date.product_promotion_id, promotion_date).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
         this.modalReference.dismiss();
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         }
       );
     }

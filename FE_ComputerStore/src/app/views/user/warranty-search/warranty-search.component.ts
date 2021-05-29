@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { billDetailModel } from '../../../models/bill-detail-model';
 import { BillDetailService } from '../../../services/bill-detail/bill-detail.service';
+declare var $: any;
 
 @Component({
   selector: 'app-warranty-search',
@@ -21,6 +22,7 @@ export class WarrantySearchComponent implements OnInit {
   ngOnInit(): void {
     this.isCheck = true;
     this.isCheck1 = true;
+    
   }
 
   warrantySearch() {

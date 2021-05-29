@@ -23,6 +23,10 @@ export class ProductService {
     return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'products/' + id, model);
   }
 
+  updateview(id: any, model: productModel): Observable<any>{
+    return this.httpClient.put(environment.BASE_API_URL + environment.BASE_API +'productupdateview/' + id, model);
+  }
+
   detail(id: any): Observable<any>{
     return this.httpClient.get(environment.BASE_API_URL + environment.BASE_API +'products/'+id);
   }

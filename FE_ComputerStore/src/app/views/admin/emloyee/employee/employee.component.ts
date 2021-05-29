@@ -46,7 +46,7 @@ export class EmployeeComponent implements OnInit {
     },
       err => {
         this.permission = true;
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
       })
   }
 
@@ -131,7 +131,7 @@ export class EmployeeComponent implements OnInit {
       .filter((employee) => employee.checked)
       .map((p) => p.account_id);
     if (selectedemployee.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+     this.toastr.error('Chọn ít nhất một bản ghi để xóa.','www.tiendatcomputer.vn cho biết');
       return;
     }
     this.delete(selectedemployee);
@@ -164,9 +164,9 @@ export class EmployeeComponent implements OnInit {
         this.fetchListEmployee();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error.error, "www.tiendatcomputer.vn cho biết" );
         } else {
-          this.toastr.success(result.success);
+          this.toastr.success(result.success,'www.tiendatcomputer.vn cho biết');
         }
         this.modalReference.dismiss();
       },

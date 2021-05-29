@@ -60,10 +60,10 @@ export class AccountInfoComponent implements OnInit {
       phone_number: this.formGroup.get('phone_number')?.value,
     }
     this.accountService.update(account).subscribe(res => {
-      this.toastr.success("Cập nhật thành công");
+      this.toastr.success("Cập nhật thành công", 'www.tiendatcomputer.vn cho biết');
     },
       err => {
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
       }
     );
   }

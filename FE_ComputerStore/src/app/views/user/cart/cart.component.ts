@@ -19,6 +19,7 @@ import * as htmlToImage from 'html-to-image';
 import { MailService } from '../../../services/mail/mail.service';
 import { mailModel } from '../../../models/mail-model';
 import { LoaderService } from '../../../loader/loader.service';
+declare var $: any;
 
 @Component({
   selector: 'app-cart',
@@ -73,19 +74,21 @@ export class CartComponent implements OnInit {
     private voucherService: VoucherService,
     private modalService: NgbModal,
     private mailService: MailService,
-    public loaderService: LoaderService) { }
+    public loaderService: LoaderService) { 
+      this.formGroup = new FormGroup({
+        name: new FormControl(),
+        email: new FormControl(),
+        note: new FormControl(),
+        phone_number: new FormControl(),
+        address: new FormControl()
+      });
+    }
 
   ngOnInit(): void {
     this.submitted = true;
     this.selectedType = 0;
     this.loadListProductCart();
-    this.formGroup = new FormGroup({
-      name: new FormControl(),
-      email: new FormControl(),
-      note: new FormControl(),
-      phone_number: new FormControl(),
-      address: new FormControl()
-    });
+    
   }
 
   CaptureData() {
@@ -252,11 +255,11 @@ export class CartComponent implements OnInit {
           return (laptop.customer_id === account_id && laptop.order_status_id === 1);
         });
         if (this.list_bill_filter.length === 0) {
-          this.toastr.warning("Giỏ hàng trống, vui lòng thêm sản phẩm vào giỏ hàng");
+          this.toastr.warning("Giỏ hàng trống, vui lòng thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết');
         }
         else {
           if (this.selectedType === 0) {
-            this.toastr.warning("Vui lòng chọn hình thức thanh toán");
+            this.toastr.warning("Vui lòng chọn hình thức thanh toán", 'www.tiendatcomputer.vn cho biết');
           } else {
             if (this.list_voucher_filter.length !== 0) {
               const modelDelete = {
@@ -276,7 +279,7 @@ export class CartComponent implements OnInit {
               }
               this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
                 this.cartService.clearCart();
-                this.toastr.success("Đặt hàng thành công");
+                this.toastr.success("Đặt hàng thành công", 'www.tiendatcomputer.vn cho biết');
                 this.mailModel = {
                   name: this.formGroup.get('name')?.value,
                   email: this.formGroup.get('email')?.value,
@@ -302,7 +305,7 @@ export class CartComponent implements OnInit {
               }
               this.billService.update(this.list_bill_filter[0].bill_id, bill).subscribe(data => {
                 this.cartService.clearCart();
-                this.toastr.success("Đặt hàng thành công");
+                this.toastr.success("Đặt hàng thành công", 'www.tiendatcomputer.vn cho biết');
                 this.mailModel = {
                   name: this.formGroup.get('name')?.value,
                   email: this.formGroup.get('email')?.value,
@@ -324,7 +327,7 @@ export class CartComponent implements OnInit {
       if (this.formGroup.get('phone_number')?.value !== undefined && this.formGroup.get('address')?.value !== null && this.formGroup.get('name')?.value !== null && this.formGroup.get("email")?.value !== null
         && this.formGroup.get('phone_number')?.value !== "" && this.formGroup.get('address')?.value !== "" && this.formGroup.get('name')?.value !== "" && this.formGroup.get('email')?.value !== "") {
         if (this.selectedType === 0) {
-          this.toastr.warning("Vui lòng chọn hình thức thanh toán");
+          this.toastr.warning("Vui lòng chọn hình thức thanh toán", 'www.tiendatcomputer.vn cho biết');
         } else {
           bill = {
             phone_number: this.formGroup.get('phone_number')?.value,
@@ -346,7 +349,7 @@ export class CartComponent implements OnInit {
                 this.billDetailService.createNoAccount(this.billDetailModel).subscribe();
               }
               this.cartService.clearCart();
-              this.toastr.success("Đặt hàng thành công");
+              this.toastr.success("Đặt hàng thành công", 'www.tiendatcomputer.vn cho biết');
               this.mailModel = {
                 name: this.formGroup.get('name')?.value,
                 email: this.formGroup.get('email')?.value,
@@ -362,7 +365,7 @@ export class CartComponent implements OnInit {
           })
         }
       } else {
-        this.toastr.error("Vui lòng nhập đầy đủ thông tin khách hàng");
+        this.toastr.error("Vui lòng nhập đầy đủ thông tin khách hàng", 'www.tiendatcomputer.vn cho biết');
         return;
       }
     }
@@ -420,7 +423,7 @@ export class CartComponent implements OnInit {
           id: this.list_bill_filter[0].bill_id
         };
         this.billService.delete(modelDelete).subscribe(data => {
-          this.toastr.success("Xóa giỏ hàng thành công");
+          this.toastr.success("Xóa giỏ hàng thành công", 'www.tiendatcomputer.vn cho biết');
           this.cartService.clearCart();
         });
       })

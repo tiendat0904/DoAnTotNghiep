@@ -72,7 +72,7 @@ a{
     border-radius: 10px;
 }
 
-.header-main-search button{
+.button-search{
     background-color: #f78d1c;
     position: relative;
     right: 15px;
@@ -90,6 +90,16 @@ a{
     font-size: 20px;
 }
 
+.danh-muc-san-pham{
+    display: inline-block;
+    height: 50px;
+    z-index: 999;
+}
+
+.danh-muc-san-pham1{
+    display: inline-block;
+    height: 50px;
+}
 
 .header-item{
     height: 40px;
@@ -115,6 +125,93 @@ a{
     padding-left:10px;
     padding-right: 55px;
 }
+
+.main-slider-left-scoll{
+    position: absolute;
+    margin-left: 20px;
+    top: 34px;
+    background-color: #fff;
+    box-shadow:rgb(0 0 0 / 18%) 0 6px 12px 0;
+}
+
+.main-slider-left-scoll:before{
+    position: absolute;
+    pointer-events: none;
+    content: " ";
+    width: 0;
+    height: 0;
+    bottom: 99.8%;
+    left: 10%;
+    border-width: 9px;
+    border-style: solid;
+    border-color: transparent transparent #f9f9f9;
+    border-image: initial;
+}
+
+.main-slider-left-scoll > ul{
+    list-style: none;
+    padding-left: 0px;
+    display: grid;
+}
+
+.main-slider-left-scoll > ul > a{
+    font-size: 17px;
+    border: 1px solid #ddd;
+    height: 30.78px;
+    color: black;
+    
+}
+
+.main-slider-left-scoll > ul > a:hover{
+    background-color: #243a76;
+    color: white;
+    text-decoration: none
+}
+
+.main-slider-left-scoll1{
+    position: absolute;
+    margin-left: 20px;
+    top: 50px;
+    left: 78px;
+    z-index: 1;
+    background-color: #fff;
+    box-shadow:rgb(0 0 0 / 18%) 0 6px 12px 0;
+}
+
+.main-slider-left-scoll1:before{
+    position: absolute;
+    pointer-events: none;
+    content: " ";
+    width: 0;
+    height: 0;
+    bottom: 99.8%;
+    left: 10%;
+    border-width: 9px;
+    border-style: solid;
+    border-color: transparent transparent #f9f9f9;
+    border-image: initial;
+}
+
+.main-slider-left-scoll1 > ul{
+    list-style: none;
+    padding-left: 0px;
+    display: grid;
+}
+
+.main-slider-left-scoll1 > ul >a{
+    font-size: 17px;
+    border: 1px solid #ddd;
+    height: 30.78px;
+    color: black;
+}
+
+.main-slider-left-scoll1 > ul > a:hover{
+    background-color: #243a76;
+    color: white;
+    text-decoration: none
+}
+
+
 
 #header-hide{
     background-color:rgb(255, 255, 255);
@@ -208,9 +305,10 @@ a{
 .header-bottom{
     background-color: #243a76;
     height: 50px;
+    position: relative;
 }
 
-.header-bottom a{
+.header-bottom-a {
     position: relative;
     top: 30%;
     margin-right: 9.6px;

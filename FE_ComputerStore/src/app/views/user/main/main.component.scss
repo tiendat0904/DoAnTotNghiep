@@ -16,12 +16,17 @@ hr{
 .main-slider-left{
     padding-left: 0px;
     padding-right: 0px;
+    z-index: 2;
 }
 
 .main-slider-left ul{
     list-style: none;
     padding-left: 0px;
     display: grid;
+}
+
+.none{
+    opacity: 0;
 }
 
 .main-slider-left ul a{

@@ -127,7 +127,7 @@ export class ProductComponent implements OnInit {
       .filter((product) => product.checked)
       .map((p) => p.product_id);
     if (selectedproduct.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+     this.toastr.error('Chọn ít nhất một bản ghi để xóa.','www.tiendatcomputer.vn cho biết');
       return;
     }
     this.delete(selectedproduct);
@@ -160,9 +160,9 @@ export class ProductComponent implements OnInit {
         this.fetchListProduct();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error.error, "www.tiendatcomputer.vn cho biết" );
         } else {
-          this.toastr.success(result.success);
+          this.toastr.success(result.success,'www.tiendatcomputer.vn cho biết');
         }
         this.modalReference.dismiss();
       },

@@ -32,24 +32,24 @@ export const navItems: INavData[] = [
   {
     name: 'Khách hàng',
     url: '/customer',
-    icon: 'icon-handbag',
+    icon: 'icon-user',
     children: [
       {
         name: 'Khách hàng',
         url: '/admin/customer',
-        icon: 'icon-handbag'
+        icon: 'icon-user'
       },
       {
         name: 'Bình luận khách hàng',
         url: '/admin/customer-comment',
-        icon: 'icon-rocket'
+        icon: 'icon-question'
       },
     ]
   },
   {
     name: 'Nhân viên',
     url: '/admin/employee',
-    icon: 'icon-handbag'
+    icon: 'icon-user'
   },
   {
     name: 'Nhập kho',
@@ -64,39 +64,46 @@ export const navItems: INavData[] = [
   {
     name: 'Sản phẩm',
     url: '/product',
-    icon: 'icon-rocket',
+    icon: 'icon-badge',
     children: [
       {
         name: 'Sản phẩm',
         url: '/admin/product/product',
-        icon: 'icon-rocket'
+        icon: 'icon-badge'
       },
       {
         name: 'Hình ảnh sản phẩm',
         url: '/admin/product/product-image',
-        icon: 'icon-rocket'
+        icon: 'icon-badge'
       },
     ]
   },
   {
-    name: 'Ngày khuyến mãi',
-    url: '/admin/promotion-date',
-    icon: 'icon-pencil'
-  },
-  {
-    name: 'Khuyến mãi sản phẩm',
-    url: '/admin/product-promotion',
-    icon: 'icon-pencil'
+    name: 'Khuyến mãi',
+    url: '/product',
+    icon: 'icon-present',
+    children: [
+      {
+        name: 'Ngày khuyến mãi',
+        url: '/admin/promotion-date',
+        icon: 'icon-present'
+      },
+      {
+        name: 'Khuyến mãi sản phẩm',
+        url: '/admin/product-promotion',
+        icon: 'icon-present'
+      },
+    ]
   },
   {
     name: 'Tin tức',
     url: '/admin/news',
-    icon: 'icon-pencil'
+    icon: 'icon-envelope-open'
   },
   {
     name: 'Báo cáo',
     url: '/report',
-    icon: 'icon-rocket',
+    icon: 'icon-paper-plane',
     children: [
       {
         name: 'Báo cáo hàng tồn kho',

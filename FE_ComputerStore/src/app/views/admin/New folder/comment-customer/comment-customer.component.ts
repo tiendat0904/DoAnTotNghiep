@@ -128,7 +128,7 @@ export class CommentCustomerComponent implements OnInit {
       .filter((comment) => comment.checked)
       .map((p) => p.comment_id);
     if (selectedcomment.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+     this.toastr.error('Chọn ít nhất một bản ghi để xóa.','www.tiendatcomputer.vn cho biết');
       return;
     }
     this.delete(selectedcomment);
@@ -162,10 +162,10 @@ export class CommentCustomerComponent implements OnInit {
         this.fetchListSupplier();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error.error, "www.tiendatcomputer.vn cho biết" );
         } else {
           console.log(result.success)
-          this.toastr.success(result.success);
+          this.toastr.success(result.success,'www.tiendatcomputer.vn cho biết');
         }
       },
     );

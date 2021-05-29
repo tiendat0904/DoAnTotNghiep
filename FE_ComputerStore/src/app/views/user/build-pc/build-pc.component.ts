@@ -13,6 +13,7 @@ import { CartService } from '../../../services/cart/cart.service';
 import { PcService } from '../../../services/pc/pc.service';
 import { ProductService } from '../../../services/product/product.service';
 import { SelectItemBuildPcComponent } from './select-item-build-pc/select-item-build-pc.component';
+declare var $: any;
 
 @Component({
   selector: 'app-build-pc',
@@ -101,6 +102,7 @@ export class BuildPcComponent implements OnInit {
   ngOnInit(): void {
     this.resetCheckBuildPC();
     this.loadproduct();
+    
   }
 
   open(content: any) {
@@ -169,18 +171,18 @@ export class BuildPcComponent implements OnInit {
           }
 
         })
-        this.toastr.success("Thêm vào giỏ hàng thành công");
+        this.toastr.success("Thêm vào giỏ hàng thành công", 'www.tiendatcomputer.vn cho biết');
       } else {
-        this.toastr.warning("Bộ PC đang trống, vui lòng thêm linh kiện !!!");
+        this.toastr.warning("Bộ PC đang trống, vui lòng thêm linh kiện !!!", 'www.tiendatcomputer.vn cho biết');
       }
     } else {
       if (this.array_pc.length !== 0) {
         for (let item of this.array_pc) {
           this.cartService.addToCartByPC(item);
         }
-        this.toastr.success("Thêm vào giỏ hàng thành công");
+        this.toastr.success("Thêm vào giỏ hàng thành công", 'www.tiendatcomputer.vn cho biết');
       } else {
-        this.toastr.warning("Bộ PC đang trống, vui lòng thêm linh kiện !!!");
+        this.toastr.warning("Bộ PC đang trống, vui lòng thêm linh kiện !!!", 'www.tiendatcomputer.vn cho biết');
       }
     }
   }
@@ -293,7 +295,7 @@ export class BuildPcComponent implements OnInit {
           listId: build_pc_delete
         };
         this.pcService.delete(modelDelete).subscribe(data => {
-          this.toastr.success("Làm mới cấu hình PC thành công.");
+          this.toastr.success("Làm mới cấu hình PC thành công.", 'www.tiendatcomputer.vn cho biết');
 
           this.resetCheckBuildPC();
           this.loadproduct();

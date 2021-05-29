@@ -128,7 +128,7 @@ export class ProductImageComponent implements OnInit {
       .filter((product_image) => product_image.checked)
       .map((p) => p.product_image_id);
     if (selectedproduct_image.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+     this.toastr.error('Chọn ít nhất một bản ghi để xóa.','www.tiendatcomputer.vn cho biết');
       return;
     }
     this.delete(selectedproduct_image);
@@ -162,9 +162,9 @@ export class ProductImageComponent implements OnInit {
         this.fetchListProductImage();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error.error, "www.tiendatcomputer.vn cho biết" );
         } else {
-          this.toastr.success(result.success);
+          this.toastr.success(result.success,'www.tiendatcomputer.vn cho biết');
         }
         this.modalReference.dismiss();
       },

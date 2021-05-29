@@ -73,6 +73,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   fetchProductDetail() {
+    let productview: productModel;
     this.route.params.subscribe(params => {
       let product_id = Number.parseInt(params['product_id']);
       this.productService.detail(product_id).subscribe(data => {
@@ -91,6 +92,11 @@ export class ProductDetailComponent implements OnInit {
           this.product.isCheckPrice = false;
           this.product.price_display = this.product.price_new;
         }
+        productview = {
+          product_id: this.product.product_id,
+          view: this.product.view + 1
+        }
+        this.productService.updateview(this.product.product_id, productview).subscribe();
         this.trademark_name = data.data.trademark_name;
         this.descriptions = this.product.description.split("\n");
         this.productService.getAll().subscribe(data => {
@@ -126,7 +132,7 @@ export class ProductDetailComponent implements OnInit {
     let list_bill_filter = this.list_bill;
     let list_bill_detail_filter = this.list_bill_detail;
     if (product_detail.amount === 0) {
-      this.toastr.info("Sản phẩm đang hết hàng, vui lòng chọn sản phẩm khác !");
+      this.toastr.info("Sản phẩm đang hết hàng, vui lòng chọn sản phẩm khác !", 'www.tiendatcomputer.vn cho biết');
     }
     else {
       if (localStorage.getItem("account_id")) {
@@ -184,7 +190,7 @@ export class ProductDetailComponent implements OnInit {
         })
       }
       this.cartService.addToCart(this.product);
-      this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
+      this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
     }
   }
 
@@ -206,17 +212,17 @@ export class ProductDetailComponent implements OnInit {
       this.commentService.detail(product_id).subscribe(data => {
         this.list_comment = data.data;
         for (let item of this.list_comment) {
-          if (item.rate === 0) {
-            if (item.status !== "Đang chờ xử lý") {
+          if (item.status !== "Đang chờ xử lý") {
+            if (item.rate === 0) {
               if (item.parentCommentId === null || item.parentCommentId === undefined) {
                 this.list_comment_noparent.push(item);
               }
               else {
                 this.list_comment_parent.push(item);
               }
+            } else {
+              this.list_comment_rate.push(item);
             }
-          } else {
-            this.list_comment_rate.push(item);
           }
           if (this.list_comment_noparent.length === 0) {
             this.check_pagination = false;
@@ -249,7 +255,7 @@ export class ProductDetailComponent implements OnInit {
       case '1': {
         if (localStorage.getItem("account_id")) {
           if (this.comment_content === null || this.comment_content === undefined || this.comment_content === '') {
-            this.toastr.warning("Vui lòng nhập nội dung bình luận");
+            this.toastr.warning("Vui lòng nhập nội dung bình luận", 'www.tiendatcomputer.vn cho biết');
             return;
           }
           if (Number(localStorage.getItem("account_type_id")) === 3) {
@@ -269,12 +275,12 @@ export class ProductDetailComponent implements OnInit {
           }
 
           this.commentService.create(this.comment).subscribe(data => {
-            this.toastr.success(data.success);
+            this.toastr.success(data.success, "www.tiendatcomputer.vn cho biết");
             this.comment_content = '';
             this.fetchComment();
           })
         } else {
-          this.toastr.warning("vui lòng đăng nhập để sử dụng dịch vụ !");
+          this.toastr.warning("vui lòng đăng nhập để sử dụng dịch vụ !", 'www.tiendatcomputer.vn cho biết');
         }
         break;
       }
@@ -282,7 +288,7 @@ export class ProductDetailComponent implements OnInit {
         console.log("ja");
         if (localStorage.getItem("account_id")) {
           if (this.comment_content1 === null || this.comment_content1 === undefined || this.comment_content1 === '') {
-            this.toastr.warning("Vui lòng nhập nội dung bình luận");
+            this.toastr.warning("Vui lòng nhập nội dung bình luận", 'www.tiendatcomputer.vn cho biết');
             return;
           }
           if (Number(localStorage.getItem("account_type_id")) === 3) {
@@ -290,7 +296,7 @@ export class ProductDetailComponent implements OnInit {
               account_id: Number(localStorage.getItem("account_id")),
               product_id: this.product.product_id,
               comment_content: this.comment_content1,
-              parentCommentId:parentCommentId,
+              parentCommentId: parentCommentId,
               status: "Đang chờ xử lý"
             }
           } else {
@@ -298,17 +304,17 @@ export class ProductDetailComponent implements OnInit {
               account_id: Number(localStorage.getItem("account_id")),
               product_id: this.product.product_id,
               comment_content: this.comment_content1,
-              parentCommentId:parentCommentId,
+              parentCommentId: parentCommentId,
               status: "Đã xác nhận"
             }
           }
           this.commentService.create(this.comment).subscribe(data => {
-            this.toastr.success(data.success);
+            this.toastr.success(data.success, "www.tiendatcomputer.vn cho biết");
             this.comment_content1 = '';
             this.fetchComment();
           })
         } else {
-          this.toastr.warning("vui lòng đăng nhập để sử dụng dịch vụ !");
+          this.toastr.warning("vui lòng đăng nhập để sử dụng dịch vụ !", 'www.tiendatcomputer.vn cho biết');
         }
         break;
       }
@@ -316,7 +322,7 @@ export class ProductDetailComponent implements OnInit {
         console.log("ja222222");
         if (localStorage.getItem("account_id")) {
           if (this.comment_content_rate === null || this.comment_content_rate === undefined || this.comment_content_rate === '' || this.currentRate === 0) {
-            this.toastr.warning("Vui lòng nhập nội dung và đánh giá sản phẩm");
+            this.toastr.warning("Vui lòng nhập nội dung và đánh giá sản phẩm", 'www.tiendatcomputer.vn cho biết');
             return;
           }
           if (Number(localStorage.getItem("account_type_id")) === 3) {
@@ -324,7 +330,7 @@ export class ProductDetailComponent implements OnInit {
               account_id: Number(localStorage.getItem("account_id")),
               product_id: this.product.product_id,
               comment_content: this.comment_content_rate,
-              rate : this.currentRate,
+              rate: this.currentRate,
               status: "Đang chờ xử lý"
             }
           } else {
@@ -332,20 +338,20 @@ export class ProductDetailComponent implements OnInit {
               account_id: Number(localStorage.getItem("account_id")),
               product_id: this.product.product_id,
               comment_content: this.comment_content_rate,
-              rate : this.currentRate,
+              rate: this.currentRate,
               status: "Đã xác nhận"
             }
           }
           this.commentService.create(this.comment).subscribe(data => {
-            this.toastr.success(data.success);
+            this.toastr.success(data.success, "www.tiendatcomputer.vn cho biết");
             this.comment_content_rate = '';
             this.fetchComment();
           })
         } else {
-          this.toastr.warning("vui lòng đăng nhập để sử dụng dịch vụ !");
+          this.toastr.warning("vui lòng đăng nhập để sử dụng dịch vụ !", 'www.tiendatcomputer.vn cho biết');
         }
       }
-      break;
+        break;
     }
   }
 }

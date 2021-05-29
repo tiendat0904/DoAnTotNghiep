@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoaderService } from '../../../loader/loader.service';
 import { newsModel } from '../../../models/news-model';
 import { NewsService } from '../../../services/news/news.service';
+declare var $: any;
 
 @Component({
   selector: 'app-news',
@@ -17,6 +18,7 @@ export class NewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchNews();
+    
   }
 
   fetchNews() {

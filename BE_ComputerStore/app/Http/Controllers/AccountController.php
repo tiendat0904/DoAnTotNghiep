@@ -97,6 +97,18 @@ class AccountController extends Controller
         }
     }
 
+    public function getAccountCustomer()
+    {
+        //
+            $objs = DB::table(self::table)
+                ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number,AccountTypeController::table . '.' . AccountTypeController::id, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->Where(self::table . '.' . self::account_type_id, '=', '3')
+                ->get();
+            $code = 200;
+            return response()->json(['data' => $objs], $code);
+    }
+
     public function getAccountOfEmployee()
     {
         //

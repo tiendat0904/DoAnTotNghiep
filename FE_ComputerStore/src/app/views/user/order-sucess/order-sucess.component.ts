@@ -7,7 +7,7 @@ import { productModel } from '../../../models/product-model';
 import { AccountService } from '../../../services/account/account.service';
 import { BillDetailService } from '../../../services/bill-detail/bill-detail.service';
 import { BillService } from '../../../services/bill/bill.service';
-
+declare var $: any;
 @Component({
   selector: 'app-order-sucess',
   templateUrl: './order-sucess.component.html',
@@ -35,6 +35,8 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.fetchOrderSuccess();
+    
+    
   }
 
   fetchOrderSuccess(){

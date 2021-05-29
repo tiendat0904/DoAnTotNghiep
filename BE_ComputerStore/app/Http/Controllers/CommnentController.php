@@ -43,7 +43,7 @@ class CommnentController extends Controller
         $objs = DB::table(self::table)
             ->join(AccountController::table, self::table . '.' . self::account_id, '=', AccountController::table . '.' . AccountController::id)
             ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
-            ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name, AccountTypeController::table . '.' . AccountTypeController::description,AccountTypeController::table . '.' . AccountTypeController::id,AccountController::table . '.' . AccountController::image)
+            ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name, AccountTypeController::table . '.' . AccountTypeController::description, AccountTypeController::table . '.' . AccountTypeController::id, AccountController::table . '.' . AccountController::image)
             ->get();
         $code = 200;
         return response()->json(['data' => $objs], $code);
@@ -81,10 +81,10 @@ class CommnentController extends Controller
         }
 
         $obj = [];
-        if($request->parentCommentId){
+        if ($request->parentCommentId) {
             $obj[self::parentCommentId] = $request->parentCommentId;
         }
-        if($request->rate){
+        if ($request->rate) {
             $obj[self::rate] = $request->rate;
         }
         $obj[self::account_id] = $request->account_id;
@@ -93,12 +93,11 @@ class CommnentController extends Controller
         $obj[self::status] = $request->status;
         $obj[self::created_at] = date('Y-m-d h:i:s');;
         if (DB::table(self::table)->insert($obj)) {
-            if($ac_type == AccountController::KH){
+            if ($ac_type == AccountController::KH) {
                 return response()->json(['success' => 'Bạn gửi thành công.Bình luận của bạn đang chờ phê duyệt. Chúng tôi sẽ phản hồi sớm'], 201);
-            }else{
+            } else {
                 return response()->json(['success' => 'Thêm bình luận thành công'], 201);
             }
-           
         } else {
             return response()->json(['error' => 'Thêm bình luận thất bại'], 400);
         }
@@ -117,7 +116,7 @@ class CommnentController extends Controller
         $code = null;
         $objs = DB::table(self::table)
             ->join(AccountController::table, self::table . '.' . self::account_id, '=', AccountController::table . '.' . AccountController::id)
-            ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name,AccountController::table . '.' . AccountController::image)
+            ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name, AccountController::table . '.' . AccountController::image)
             ->where(self::table . '.' . self::product_id, '=', $id)
             ->get();
         $code = 200;
@@ -149,8 +148,22 @@ class CommnentController extends Controller
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $this->base->update($request, $id);
+            $rate = [];
+            $rateTotal = 0;
+            $productRates = DB::table(self::table)
+            ->where(self::product_id, '=' , $request->product_id)
+            ->Where(self::status, '=', "Đã xác nhận")
+            ->Where(self::rate, '>', 0)
+            ->get();
+            if(count($productRates)>0){
+                foreach($productRates as $productRate){
+                    $rateTotal += $productRate->rate;
+                }
+                $rate[self::rate] = $rateTotal/count($productRates);
+                DB::table(ProductController::table)->where(ProductController::id,'=',$request->product_id)->update($rate);
+            }
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-          } else {
+        } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
     }
@@ -169,13 +182,13 @@ class CommnentController extends Controller
         try {
             if ($listId = $request->get(BaseController::listId)) {
                 if (count($listId) > 0) {
-                    foreach ($listId as $id) {      
+                    foreach ($listId as $id) {
                         $comment_childs = DB::table(self::table)->where(self::parentCommentId, '=', $id)->get(self::id);
-                        foreach($comment_childs as $comment_child){
+                        foreach ($comment_childs as $comment_child) {
                             DB::table(self::table)->where(self::id, '=', $comment_child->comment_id)->delete();
                         }
                     }
-                    DB::table(self::table)->where(self::id,'=',$listId)->delete();
+                    DB::table(self::table)->where(self::id, '=', $listId)->delete();
                     return response()->json(['success' => 'Xóa thành công'], 200);
                 } else {
                     return response()->json(['error' => 'Xóa thất bại. Không có dữ liệu'], 400);
@@ -183,7 +196,7 @@ class CommnentController extends Controller
             } else {
                 $id = $request->get(BaseController::key_id);
                 $comment_child = DB::table(self::table)->where(self::parentCommentId, '=', $id)->get(self::id);
-                        DB::table(self::table)->whereIn(self::id, $comment_child)->delete();
+                DB::table(self::table)->whereIn(self::id, $comment_child)->delete();
                 if ($loai_tk == AccountController::NV || $loai_tk == AccountController::QT) {
                     if ($obj = DB::table(self::table)->where(self::id, '=', $id)->delete()) {
                         return response()->json(['success' => 'Xóa thành công'], 200);

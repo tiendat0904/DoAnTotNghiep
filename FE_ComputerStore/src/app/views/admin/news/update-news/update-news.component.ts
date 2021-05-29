@@ -143,7 +143,7 @@ export class UpdateNewsComponent implements OnInit {
     let news: newsModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+    this.toastr.error('Kiểm tra thông tin các trường đã nhập', 'www.tiendatcomputer.vn cho biết');;
       return;
     }
     if (this.isEdit) {
@@ -169,22 +169,22 @@ export class UpdateNewsComponent implements OnInit {
     if (this.isAdd) {
       this.newsService.create(news).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
         this.modalReference.dismiss();
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         }
       );
     }
     if (this.isEdit) {
       this.newsService.update(news.news_id, news).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
         this.modalReference.dismiss();
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         }
       );
     }

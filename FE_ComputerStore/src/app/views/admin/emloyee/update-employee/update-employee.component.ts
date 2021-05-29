@@ -178,7 +178,7 @@ export class UpdateEmployeeComponent implements OnInit {
     let employee: accountModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+    this.toastr.error('Kiểm tra thông tin các trường đã nhập', 'www.tiendatcomputer.vn cho biết');;
       return;
     }
     if (this.isEdit) {
@@ -204,22 +204,22 @@ export class UpdateEmployeeComponent implements OnInit {
     if (this.isAdd) {
       this.employeeService.create(employee).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
         this.modalReference.dismiss();
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         }
       );
     }
     if (this.isEdit) {
       this.employeeService.update(employee).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success("Chỉnh sửa thành công");
+        this.toastr.success("Chỉnh sửa thành công","www.tiendatcomputer.vn cho biết");
         this.modalReference.dismiss();
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         }
       );
     }

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -26,6 +27,7 @@ export class CouponReportComponent implements OnInit {
   searchedKeyword: string;
   permission:boolean;
   isSelected = true;
+  excelModel : excelModel;
   page = 1;
   label = -1;
   label1: any;
@@ -47,7 +49,8 @@ export class CouponReportComponent implements OnInit {
     private reportService: ReportService,
     private toastr: ToastrService,
     private exportService: ExcelService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private datePipe: DatePipe,
   ) { }
 
   ngOnInit(): void {
@@ -70,6 +73,7 @@ export class CouponReportComponent implements OnInit {
   }
 
   fetchListCoupon(model: excelModel) {
+    this.excelModel = model;
     if (model.key == "bcq") {
       if (model.param === "" || model.param === "NaN/" + this.year) {
         this.listFilterResult = [];
@@ -87,7 +91,7 @@ export class CouponReportComponent implements OnInit {
         },
         err => {
           this.permission = true;
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         })
       }
     } else {
@@ -104,13 +108,13 @@ export class CouponReportComponent implements OnInit {
       },
       err => {
         this.permission = true;
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
       })
     }
   }
 
   export() {
-    this.exportService.exportExcel(this.listFilterResult, 'phieuNhap');
+    this.exportService.exportExcel(this.listFilterResult, 'phieunhap-'+this.excelModel.param+'-'+this.datePipe.transform(Date.now(), "dd-MM-yyyy"));
   }
 
   changeStatus(event: any) {

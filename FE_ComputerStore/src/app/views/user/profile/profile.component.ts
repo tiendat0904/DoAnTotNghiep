@@ -114,14 +114,14 @@ export class ProfileComponent implements OnInit {
       }
       if(this.confirm_password === this.new_password){
         this.accountService.update(account).subscribe(res => {
-          this.toastr.success(res.success);
+          this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
         },
       err => {
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
       }
       );
       }else{
-        this.toastr.error("mật khẩu mới không trùng khớp, vui lòng nhập lại");
+        this.toastr.error("mật khẩu mới không trùng khớp, vui lòng nhập lại",'www.tiendatcomputer.vn cho biết');
       }
       
       

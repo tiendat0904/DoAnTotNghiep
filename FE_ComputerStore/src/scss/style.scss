@@ -15,6 +15,12 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
 
+.toast-title{
+    font-weight: 500 !important;
+    font-size: 18px !important;
+    margin-bottom: 15px;
+  }
+
 .table-responsive {
     margin: 30px 0;
     color: #566787;
@@ -32,19 +38,23 @@
     padding: 20px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
+
 .table-title {
     padding-bottom: 10px;
     margin: 0 0 10px;
     min-width: 100%;
 }
+
 .table-title h2 {
     margin: 8px 0 0;
     font-size: 22px;
 }
+
 .search-box {
     position: relative;        
     float: right;
 }
+
 .search-box input {
     height: 34px;
     border-radius: 20px;
@@ -52,9 +62,11 @@
     border-color: #ddd;
     box-shadow: none;
 }
+
 .search-box input:focus {
     border-color: #3FBAE4;
 }
+
 .search-box i {
     color: #a0a5b1;
     position: absolute;

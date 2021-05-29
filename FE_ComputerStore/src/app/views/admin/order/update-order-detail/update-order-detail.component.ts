@@ -192,7 +192,7 @@ export class UpdateOrderDetailComponent implements OnInit {
     let billDetail: billDetailModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+    this.toastr.error('Kiểm tra thông tin các trường đã nhập', 'www.tiendatcomputer.vn cho biết');;
       return;
     }
     
@@ -200,7 +200,7 @@ export class UpdateOrderDetailComponent implements OnInit {
       this.billService.create(this.mess_bill).subscribe(res => {
       },
       err => {
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
       }
       );
     }
@@ -248,23 +248,23 @@ export class UpdateOrderDetailComponent implements OnInit {
           }
         },)
 
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
         this.modalReference.dismiss();
        
       },
       err => {
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
       }
       );
     }
     if (this.isEdit) {
       this.billDetailService.update(billDetail.bill_detail_id, billDetail).subscribe(res => {
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
         this.modalReference.dismiss();
       },
       err => {
-        this.toastr.error(err.error.error);
+        this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
       }
       );
     }

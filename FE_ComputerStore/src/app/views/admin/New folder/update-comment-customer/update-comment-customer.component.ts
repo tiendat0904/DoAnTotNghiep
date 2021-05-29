@@ -141,12 +141,13 @@ export class UpdateCommentCustomerComponent implements OnInit {
     let comment: commentModel;
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+    this.toastr.error('Kiểm tra thông tin các trường đã nhập', 'www.tiendatcomputer.vn cho biết');;
       return;
     }
     if (this.isEdit) {
       comment = {
         comment_id: this.model.comment_id,
+        product_id:this.model.product_id,
         comment_content: this.formGroup.get('comment_content')?.value,
         status: this.formGroup.get('status')?.value,
       };
@@ -164,10 +165,10 @@ export class UpdateCommentCustomerComponent implements OnInit {
       this.commentService.update(comment.comment_id, comment).subscribe(res => {
         this.modalReference.dismiss();
         this.closeModalReloadData();
-        this.toastr.success(res.success);
+        this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
       },
         err => {
-          this.toastr.error(err.error.error);
+          this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');
         }
       );
     }

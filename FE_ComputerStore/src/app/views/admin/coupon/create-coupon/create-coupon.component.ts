@@ -110,7 +110,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   save() {
     this.submitted = true;
     if (this.formGroup.invalid) {
-      this.toastr.error('Kiểm tra thông tin các trường đã nhập');
+      this.toastr.error('Kiểm tra thông tin các trường đã nhập', "www.tiendatcomputer.vn cho biết");
       return;
     }
     this.isButtonSave = true;
@@ -120,7 +120,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
 
   saveCoupon(){
     if(this.arraylist_coupon_detail.length === 0){
-      this.toastr.error("Phiếu nhập trống, vui lòng thêm chi tiết sản phẩm");
+      this.toastr.error("Phiếu nhập trống, vui lòng thêm chi tiết sản phẩm", "www.tiendatcomputer.vn cho biết");
     }
     else{
       this.coupon = {
@@ -130,7 +130,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
         listCouponDetail:this.arraylist_coupon_detail
       };
       this.couponService.create(this.coupon).subscribe(data =>{
-        this.toastr.success(data.success);
+        this.toastr.success(data.success, "www.tiendatcomputer.vn cho biết");
         this.getNavigation('admin/coupon');
       }
       );
@@ -247,7 +247,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   //     .filter((couponDetail) => couponDetail.checked)
   //     .map((p) => p.product_id);
   //   if (selectedcouponDetail.length === 0) {
-  //     this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+  //    this.toastr.error('Chọn ít nhất một bản ghi để xóa.','www.tiendatcomputer.vn cho biết');
   //     return;
   //   }
   //   this.delete(selectedcouponDetail);
@@ -280,9 +280,9 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   //       this.ngOnInit();
   //       this.changeModel();
   //       if (result.error) {
-  //         this.toastr.error(result.error);
+  //         this.toastr.error(result.error.error, "www.tiendatcomputer.vn cho biết" );
   //       } else {
-  //         this.toastr.success(result.success);
+  //         this.toastr.success(result.success,'www.tiendatcomputer.vn cho biết');
   //       }
   //       this.modalReference.dismiss();
   //     },

@@ -12,7 +12,7 @@ import { BillService } from '../../../../services/bill/bill.service';
 import { CartService } from '../../../../services/cart/cart.service';
 import { ProductService } from '../../../../services/product/product.service';
 import { TrademarkService } from '../../../../services/trademark/trademark.service';
-
+declare var $: any;
 @Component({
   selector: 'app-product-laptop',
   templateUrl: './product-laptop.component.html',
@@ -41,6 +41,7 @@ export class ProductLaptopComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
     this.route.params.subscribe(params => {
       this.product_type_id = Number.parseInt(params['product_type_id']);
       this.fetchProduct();
@@ -155,7 +156,7 @@ export class ProductLaptopComponent implements OnInit {
       })
     }
     this.cartService.addToCart(product);
-    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
+    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng",'www.tiendatcomputer.vn cho biết')
   }
 
   public filterProducts(): void {

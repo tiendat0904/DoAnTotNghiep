@@ -124,7 +124,7 @@ export class PromotionDateComponent implements OnInit {
       .filter((promotion_date) => promotion_date.checked)
       .map((p) => p.promotion_date_id);
     if (selectedpromotion_date.length === 0) {
-      this.toastr.error('Chọn ít nhất một bản ghi để xóa.');
+      this.toastr.error('Chọn ít nhất một bản ghi để xóa.','www.tiendatcomputer.vn cho biết');
       return;
     }
     this.delete(selectedpromotion_date);
@@ -157,9 +157,9 @@ export class PromotionDateComponent implements OnInit {
         this.fetchListPromotionDate();
         this.changeModel();
         if (result.error) {
-          this.toastr.error(result.error);
+          this.toastr.error(result.error.error, 'www.tiendatcomputer.vn cho biết');
         } else {
-          this.toastr.success(result.success);
+          this.toastr.success(result.success, 'www.tiendatcomputer.vn cho biết');
         }
         this.modalReference.dismiss();
       },

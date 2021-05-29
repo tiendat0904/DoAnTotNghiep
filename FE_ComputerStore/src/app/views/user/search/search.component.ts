@@ -12,6 +12,7 @@ import { BillService } from '../../../services/bill/bill.service';
 import { CartService } from '../../../services/cart/cart.service';
 import { ProductService } from '../../../services/product/product.service';
 import { TrademarkService } from '../../../services/trademark/trademark.service';
+declare var $: any;
 
 @Component({
   selector: 'app-search',
@@ -43,7 +44,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.search = localStorage.getItem("search");
     this.fetchProduct();
-
+    
   }
 
   ngOnDestroy(): void {
@@ -169,7 +170,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       })
     }
     this.cartService.addToCart(product);
-    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng")
+    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
   }
 
   public filterProducts(): void {

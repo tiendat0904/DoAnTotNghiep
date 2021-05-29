@@ -6,10 +6,12 @@ import { billDetailModel } from '../../../models/bill-detail-model';
 import { billModel } from '../../../models/bill-model';
 import { ItemModel } from '../../../models/item-model';
 import { productModel } from '../../../models/product-model';
+import { productTypeModel } from '../../../models/product-type-model';
 import { AccountService } from '../../../services/account/account.service';
 import { BillDetailService } from '../../../services/bill-detail/bill-detail.service';
 import { BillService } from '../../../services/bill/bill.service';
 import { CartService } from '../../../services/cart/cart.service';
+import { ProductTypeService } from '../../../services/product-type/product-type.service';
 import { ProductService } from '../../../services/product/product.service';
 declare var $: any;
 @Component({
@@ -27,6 +29,7 @@ export class HeaderComponent implements OnInit {
   picture: any;
   urlPictureDefault = avatarDefault;
   list_bill: Array<billModel> = [];
+  list_product_type: Array<productTypeModel> = [];
   delay = ms => new Promise(res => setTimeout(res, ms));
   list_item: Array<ItemModel> = [];
   list_product: Array<productModel> = [];
@@ -44,6 +47,7 @@ export class HeaderComponent implements OnInit {
     private billDetailService: BillDetailService,
     private toastr: ToastrService,
     private router: Router,
+    private productTypeService: ProductTypeService,
     private productService: ProductService) { }
 
   ngOnInit(): void {
@@ -66,7 +70,44 @@ export class HeaderComponent implements OnInit {
       }
     }
     )
-   
+    $(document).ready(function () {
+      $('.main-slider-left-scoll').hide();
+      $('.danh-muc-san-pham').hover(
+        function () {
+          $('.main-slider-left-scoll').show();
+        },
+        function () {
+          $('.main-slider-left-scoll').hide();
+        }
+      );
+      $('.main-slider-left-scoll').hover(
+        function () {
+          $('.main-slider-left-scoll').show();
+        },
+        function () {
+          $(this).hide();
+        }
+      )
+
+      $('.main-slider-left-scoll1').hide();
+      $('.danh-muc-san-pham1').hover(
+        function () {
+          $('.main-slider-left-scoll1').show();
+        },
+        function () {
+          $('.main-slider-left-scoll1').hide();
+        }
+      )
+    })
+    $('.main-slider-left-scoll1').hover(
+      function () {
+        $('.main-slider-left-scoll1').show();
+      },
+      function () {
+        $(this).hide();
+      }
+    )
+
     $('#header-hide1').hide();
     $('#header-account1').hover(
       function () {
@@ -139,9 +180,14 @@ export class HeaderComponent implements OnInit {
     if (this.name) {
     }
 
+    this.fetchProductType();
   }
 
-
+  fetchProductType() {
+    this.productTypeService.getAll().subscribe(data => {
+      this.list_product_type = data.data;
+    })
+  }
 
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
@@ -155,7 +201,7 @@ export class HeaderComponent implements OnInit {
 
   public search() {
     if (this.searchedKeyword.length === 0) {
-      this.toastr.warning("Vui lòng nhập sản phẩm bạn muốn tìm kiếm");
+      this.toastr.warning("Vui lòng nhập sản phẩm bạn muốn tìm kiếm", 'www.tiendatcomputer.vn cho biết');
     } else {
       localStorage.setItem("search", this.searchedKeyword);
       this.searchedKeyword = null;
@@ -164,13 +210,11 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-
-
   public filterByKeyword() {
     var filterResult = [];
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
-      for(let item of this.list_product){
+      for (let item of this.list_product) {
         if (item.price_new === null) {
           item.price_display = item.price;
         } else {

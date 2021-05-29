@@ -204,6 +204,18 @@ class ProductController extends Controller
         }
     }
 
+    public function updateview(Request $request, $id)
+    {
+        //
+            $obj = [];
+            $obj = $request->all();
+            if (count($obj) == 1) {
+                return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
+            }
+            DB::table(self::table)->where(self::id, $id)->update($obj);
+            return response()->json(['success' => 'Chỉnh sửa thành công'], 201);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
