@@ -48,7 +48,7 @@ class BillDetailController extends Controller
             $code = 200;
             return response()->json(['data' => $objs], $code);
         } else {
-            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 400);
         }
     }
 
@@ -96,6 +96,14 @@ class BillDetailController extends Controller
                                 return response()->json(['error' => $validator->errors()->all()], 400);
                             }
 
+                            $data = DB::table(self::table)
+                                ->select(self::table . '.*')
+                                ->where(self::product_id, '=', $request->product_id)
+                                ->where(self::bill_id, '=', $request->bill_id)
+                                ->get();
+                            if (count($data) > 0) {
+                                return response()->json(['error' => 'Đã có sản phẩm trong giỏ hàng'], 403);
+                            }
                             $this->base->store($request);
                             return response()->json($this->base->getMessage(), $this->base->getStatus());
 
@@ -145,19 +153,18 @@ class BillDetailController extends Controller
                             ->where(self::product_id, '=', $arr_value[self::product_id])
                             ->where(self::bill_id, '=', $arr_value[self::bill_id])
                             ->get();
+                       
                         if (count($data) > 0) {
-                            // return response()->json(['error' => 'Thêm mới thất bại. Có 1 row đã tồn tại mã hóa đơn và mã sản phẩm'], 400);
+                            return response()->json(['error' => 'Sản phẩm đã có trong giỏ hàng'], 400);
                         } else {
                             $sl = DB::table(ProductController::table)
                                 ->select(ProductController::amount)
                                 ->where(ProductController::id, '=', $arr_value[self::product_id])
                                 ->get();
-
                             $sl = $sl[0]->amount;
                             if ($arr_value[self::amount] > $sl) {
                                 return response()->json(['error' => 'Thêm mới thất bại. Số lượng sản phẩm không đủ'], 400);
                             }
-
                             $this->base->store($request);
                             return response()->json($this->base->getMessage(), $this->base->getStatus());
                         }
@@ -243,6 +250,15 @@ class BillDetailController extends Controller
 
                             if ($validator->fails()) {
                                 return response()->json(['error' => $validator->errors()->all()], 400);
+                            }
+
+                             $data = DB::table(self::table)
+                                ->select(self::table . '.*')
+                                ->where(self::product_id, '=', self::product_id)
+                                ->where(self::bill_id, '=', self::bill_id)
+                                ->get();
+                            if (count($data) > 0) {
+                                return response()->json(['error' => 'Sản phẩm đã có trong giỏ hàng'], 400);
                             }
 
                             $this->base->store($request);

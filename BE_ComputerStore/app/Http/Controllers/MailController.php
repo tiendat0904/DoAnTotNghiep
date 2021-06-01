@@ -23,6 +23,17 @@ class MailController extends Controller
         return "Email send success";
     }
 
+    public function sendContact(Request $request){
+        $details = ['name'=>$request->name,'email'=>$request->email,'phone_number'=>$request->phone_number,'note'=>$request->note];
+       $user['to']=$request->email;
+        Mail::send('email/sendcontact',$details,function($messages) use ($user){
+            $messages->from($user['to']);
+            $messages->to('tiendatcomputerstore@gmail.com');
+            $messages->subject('Email liên hệ');
+        });
+        return response()->json(['success' => "Gửi liên hệ thành công, chúng tôi sẽ trả lời email trong thời gian sớm nhất."], 200);
+    }
+
     public function sendCode(Request $request){
         $details = ['email'=>$request->email,'code'=>$request->code];
         $user['to']=$request->email;

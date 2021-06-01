@@ -22,6 +22,7 @@ Route::get('/getaccountcustomer', [\App\Http\Controllers\AccountController::clas
 
 Route::post('/sendemail', [\App\Http\Controllers\MailController::class, 'sendMail']);
 Route::post('/sendcode', [\App\Http\Controllers\MailController::class, 'sendCode']);
+Route::post('/sendcontact', [\App\Http\Controllers\MailController::class, 'sendContact']);
 
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/products/{id}', [\App\Http\Controllers\ProductController::class, 'show']);

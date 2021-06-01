@@ -32,7 +32,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '../../loader/interceptor.service';
 import { ProductByBrandComponent } from './product-by-brand/product-by-brand.component';
-
 // Angular
 
 @NgModule({
@@ -49,7 +48,8 @@ import { ProductByBrandComponent } from './product-by-brand/product-by-brand.com
     Ng2SearchPipeModule,
     PipesModule,
     MDBBootstrapModule.forRoot(),
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    // FacebookModule.forRoot()
   ],
   declarations: [
     UserComponent,

@@ -105,7 +105,7 @@ export class UpdateProductComponent implements OnInit {
         this.title = `Xem chi tiết thông tin sản phẩm`;
         break;
       case 'edit':
-        this.isChangeImage = true;
+        this.isChangeImage = false;
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
@@ -196,7 +196,8 @@ export class UpdateProductComponent implements OnInit {
         trademark_id: this.formGroup.get('trademark_id')?.value,
         product_type_id: this.formGroup.get('product_type_id')?.value,
         warranty: this.formGroup.get('warranty')?.value,
-        description: this.formGroup.get('description')?.value
+        description: this.formGroup.get('description')?.value,
+        image: this.uploads,
       };
 
     } else {

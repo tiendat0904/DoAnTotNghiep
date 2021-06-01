@@ -104,8 +104,10 @@ hr{
     color: #fff;
 }
 
-::ng-deep .modal-content{
+.modal-content{
     margin-bottom: 0 !important;
+    margin-top: 0;
+    height: 610px;
 }
 
 .product-cart-detail a:hover{

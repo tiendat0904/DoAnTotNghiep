@@ -236,13 +236,14 @@ export class UpdateCouponComponent implements OnInit {
     }
   }
 
-  deleteCouponDetail(item: any = null) {
+  deleteCouponDetail(item: any = null,product_id:any) {
     let selectedthongtincd = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedthongtincd.push(item);
-      this.delete(selectedthongtincd);
+      this.delete(selectedthongtincd,product_id);
       return;
     }
+    
     selectedthongtincd = this.listFilterResult
       .filter((thongtincd) => thongtincd.checked)
       .map((p) => p.coupon_id);
@@ -257,9 +258,10 @@ export class UpdateCouponComponent implements OnInit {
     this.view.view(model, type);
   }
 
-  public delete(listid: any) {
+  public delete(listid: any, product_id = null) {
     const modelDelete = {
-      listId: listid
+      listId: listid,
+      product_id:product_id
     };
     for (var i = 0; i < this.listFilterResult.length; i++) {
       if (this.listFilterResult[i].checked == true) {
@@ -279,13 +281,17 @@ export class UpdateCouponComponent implements OnInit {
       (result) => {
         this.ngOnInit();
         this.changeModel();
-        if (result.error) {
-          this.toastr.error(result.error, "www.tiendatcomputer.vn cho biết");
-        } else {
-          this.toastr.success(result.success, "www.tiendatcomputer.vn cho biết");
-        }
+        this.toastr.success(result.success, "www.tiendatcomputer.vn cho biết");
+        // if (result.error) {
+        //   this.toastr.error(result.error, "www.tiendatcomputer.vn cho biết");
+        // } else {
+        //   this.toastr.success(result.success, "www.tiendatcomputer.vn cho biết");
+        // }
         this.modalReference.dismiss();
-      },
+      },err =>{
+        this.toastr.error(err.error.error, "www.tiendatcomputer.vn cho biết");
+        this.modalReference.dismiss();
+      }
     );
   }
 

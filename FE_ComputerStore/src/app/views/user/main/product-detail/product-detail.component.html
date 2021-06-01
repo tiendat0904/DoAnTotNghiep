@@ -38,7 +38,7 @@
                     <h4>BẢO HÀNH {{product.warranty}} THÁNG</h4>
                 </div>
             </div>
-            <div class='product-price' style="align-self: flex-end">
+            <div class='product-price' style="align-self: flex-end;padding-top: 7px;">
                 <span>Giá bán : </span>
                 <span class='product-price-new'>{{product.price_display | currency: 'VND'}}</span>
                 <del class='product-price-old' [hidden]="product.isCheckPrice">{{product.price | currency: 'VND'
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class='col-lg-3 product-shop'>
+        <div class='product-shop'>
             <div class='product-shop-title'>
                 <p id='p'>LƯU Ý KHÔNG BÁN LẺ VGA</p>
                 <div class='product-shop-detail'>
@@ -91,10 +91,10 @@
             <div style="display: -webkit-inline-box;padding-left: 20px;">
                 <img style="max-height: 40px;max-width: 40px;" [src]="image_default" alt="">
                 <div style="padding-left: 15px;">
-                    <textarea name="" id="" placeholder="Nội dung" cols="100" rows="4"
+                    <textarea name="" id="" placeholder="Nội dung" cols="86" rows="4"
                         [(ngModel)]="comment_content_rate" style="padding: 5px 10px;"></textarea>
                 </div>
-                <div class="send-comment" style="display: grid;position: relative;bottom: 30px;">
+                <div class="send-comment" style="display: grid;position: relative;bottom: 12px;">
                     <ngb-rating [max]="5" [(rate)]="currentRate" [readonly]="false"
                         style="color: #fd7e14;font-size: 30px;"></ngb-rating>
                     <button (click)="sendComment('','3');">Gửi đánh giá</button>
@@ -129,7 +129,7 @@
             <div style="display: -webkit-inline-box;padding-left: 20px;">
                 <img style="max-height: 40px;max-width: 40px;" [src]="image_default" alt="">
                 <div style="padding-left: 15px;">
-                    <textarea name="" id="" placeholder="Nội dung" cols="100" rows="4" [(ngModel)]="comment_content"
+                    <textarea name="" id="" placeholder="Nội dung" cols="86" rows="4" [(ngModel)]="comment_content"
                         style="padding: 5px 10px;"></textarea>
                 </div>
                 <div class="send-comment">
@@ -191,26 +191,58 @@
             <div class="product-title-container" style="width: 202px; margin-bottom: 20px;" *ngIf="product">
                 <h3 style="font-size: 20px;">Cùng thương hiệu</h3>
             </div>
-            <div class="product-grid" style="display: flex;">
-                <div class='product-item'
-                    *ngFor="let item of (list_product_trademark | slice:list_product_trademark.length - 5);">
-                    <div class='product-item-detail' style="display: grid;height: 100%;">
+            <div class="product-grid" style="display: flex;width: 100%;" >
+                <div class='product-item' style="width: 20%;" *ngFor="let item of (list_product_trademark | slice:list_product_trademark.length - 5);">
+                    <a class="product-item-info">
+                      <div class='product-item-detail'>
                         <div class='product-image'>
-                            <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
+                          <a [routerLink]="['/',item.product_id]"><img src="{{item.image}}" alt=""></a>
                         </div>
-                        <div class='product-description1'
-                            style="text-align: center;padding-left: 6px;padding-right: 6px;">
-                            <div class='product-title'>
-                                <p><a href=""></a> {{[item.product_name]}}</p>
-                            </div>
+                        <div class='product-description'>
+                          <div style="display: flex;justify-content: space-between;padding-right: 15px;">
+                            <p>
+                              <ngb-rating [max]="5" [(rate)]="item.rate" [readonly]="true"
+                                style="color: #fd7e14;font-size: 16px"></ngb-rating>
+                            </p>
+                            <p>Mã SP: {{item.product_id}}</p>
+                          </div>
+                          <div class='product-title'>
+                            <a [routerLink]="['/',item.product_id]"
+                              style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                          </div>
                         </div>
-                        <div class='product-price' style="align-self: flex-end; margin-left: 15px;">
+                        <div style="align-self: flex-end; margin-left: 15px;">
+                          <div class='product-price'>
                             <del class='product-price-old' [hidden]="item.isCheckPrice">{{item.price | currency: 'VND'
-                                }}</del>
-                            <span class='product-price-new'>{{item.price_display | currency: 'VND'}}</span>
+                              }}</del>
+                            <span class='product-price-new'>{{item.price_display| currency: 'VND'}}</span>
+                          </div>
+                          <div class='product-checked'>
+                            <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
+                            <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                                (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
+                          </div>
                         </div>
-                    </div>
-                </div>
+                      </div>
+                    </a>
+                    <a [routerLink]="['/',item.product_id]">
+                      <div class="product-item-detail-hover">
+                        <div style="height: 240px;overflow:hidden;border:0.5px solid #243a76;">
+                          <div
+                            style="background: linear-gradient(to right,#243a76,#ed1b24); color: #fff;height: 35px;padding-left: 12px;padding-top: 5px;">
+                            <h3 style="font-weight: 500;">Chi tiết</h3>
+                          </div>
+                          <div style="padding-left: 10px;padding-right:5px">
+                            <p style="font-size:18px">- Bảo hành: <span>{{item.warranty}} tháng</span></p>
+                            <div style="background: #243a76;color: #fff;border-radius: 4px;width: 50%;margin-top: 10px;">
+                              <p style="color: #fff;padding-left:5px">Thông số kĩ thuật</p>
+                            </div>
+                            <p *ngFor="let description1 of item.descriptions">- {{[description1]}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
             </div>
         </div>
     </div>

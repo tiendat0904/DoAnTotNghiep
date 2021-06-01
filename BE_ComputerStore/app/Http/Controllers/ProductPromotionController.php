@@ -95,6 +95,13 @@ class ProductPromotionController extends Controller
                             self::promotion_date_id => 'required',
                             self::promotion_level => 'required',
                         ]);
+                        $productPromotion = DB::table(self::table)
+                        ->where(self::product_id ,'=', $request->product_id)
+                        ->where(self::promotion_date_id , '', $request->promotion_date_id)
+                        ->get();
+                        if(count($productPromotion)>0){
+                            return response()->json(['error' => 'Sản phẩm đã có khuyến mãi trong ngày hôm đấy, vui lòng kiểm tra lại !!!'], 400);
+                        }
                         if ($validator->fails()) {
                             return response()->json(['error' => $validator->errors()->all()], 400);
                         }

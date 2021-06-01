@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
     private productTypeService: ProductTypeService,
     private productService: ProductService,
     private trademarkService: TrademarkService) { }
-    
+
 
   ngOnInit(): void {
     this.searchedKeyword = '';
@@ -206,6 +206,15 @@ export class HeaderComponent implements OnInit {
 
     this.fetchProductType();
     this.fetchProductTrademark();
+  }
+
+
+  getNavigation(link) {
+    if (localStorage.getItem("account_id")) {
+      this.router.navigate([link]);
+    } else {
+      this.toastr.warning("Vui lòng đăng nhập để sử dụng dịch vụ",'www.tiendatcomputer.vn cho biết');
+    }
   }
 
   fetchProductType() {

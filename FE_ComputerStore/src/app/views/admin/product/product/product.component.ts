@@ -120,7 +120,7 @@ export class ProductComponent implements OnInit {
     let selectedproduct = [];
     if (item !== null && item !== undefined && item !== '') {
       selectedproduct.push(item);
-      this.delete(selectedproduct);
+      this.delete(selectedproduct,item);
       return;
     }
     selectedproduct = this.listFilterResult
@@ -137,9 +137,10 @@ export class ProductComponent implements OnInit {
     this.view.view(model, type);
   }
 
-  public delete(listid: any) {
+  public delete(listid: any,product_id:any = null) {
     const modelDelete = {
-      listId: listid
+      listId: listid,
+      product_id:product_id
     };
     for (var i = 0; i < this.listFilterResult.length; i++) {
       if (this.listFilterResult[i].checked == true) {
@@ -159,13 +160,18 @@ export class ProductComponent implements OnInit {
       (result) => {
         this.fetchListProduct();
         this.changeModel();
-        if (result.error) {
-          this.toastr.error(result.error.error, "www.tiendatcomputer.vn cho biết" );
-        } else {
-          this.toastr.success(result.success,'www.tiendatcomputer.vn cho biết');
-        }
+        this.toastr.success(result.success,'www.tiendatcomputer.vn cho biết');
+        // }
+        // if (result.error) {
+        //   this.toastr.error(result.error.error, "www.tiendatcomputer.vn cho biết" );
+        // } else {
+        //   this.toastr.success(result.success,'www.tiendatcomputer.vn cho biết');
+        // }
         this.modalReference.dismiss();
-      },
+      },err =>{
+        this.toastr.error(err.error.error, "www.tiendatcomputer.vn cho biết" );
+        this.modalReference.dismiss();
+      }
     );
   }
 

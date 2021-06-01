@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { billModel } from '../../models/bill-model';
 import { forgotPasswordModel } from '../../models/forgot-password-model';
 import { mailModel } from '../../models/mail-model';
 
@@ -20,5 +21,7 @@ export class MailService {
     return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'sendcode', model);
   }
 
-  
+  sendcontact(model: mailModel): Observable<any>{
+    return this.httpClient.post(environment.BASE_API_URL + environment.BASE_API +'sendcontact', model);
+  }
 }

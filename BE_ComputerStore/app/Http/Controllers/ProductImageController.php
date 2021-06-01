@@ -230,15 +230,15 @@ class ProductImageController extends Controller
             }
 
             $objs = [];
-                $images = $arr_value[self::image];
-                if (count($images) > 0) {
-                    foreach ($images as $image) {
-                        $objs[self::product_id] = $request->product_id;
-                        $objs[self::image] = $image;
-                        DB::table(self::table)->insert($objs);
-                    }
+            $images = $arr_value[self::image];
+            if (count($images) > 0) {
+                foreach ($images as $image) {
+                    $objs[self::product_id] = $request->product_id;
+                    $objs[self::image] = $image;
+                    DB::table(self::table)->insert($objs);
                 }
-                return response()->json(['success' => 'Cập nhật hình ảnh sản phẩm thành công'], 201); 
+            }
+            return response()->json(['success' => 'Cập nhật hình ảnh sản phẩm thành công'], 201);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

@@ -24,6 +24,7 @@ class ProductController extends Controller
     const createdBy = 'createdBy';
     const updatedBy = 'updatedBy';
     const updatedDate = 'updatedDate';
+    const image = "image";
 
     /**
      * NhaCungCapController constructor.
@@ -189,14 +190,39 @@ class ProductController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $obj = [];
-            $obj = $request->all();
-            $obj[self::updatedDate] = date('Y-m-d h:i:s');
-            $obj[self::updatedBy] = $user->account_id;
-            if (count($obj) == 1) {
+            $arr_value = [];
+            if ($request->product_name) {
+                $arr_value[self::product_name] = $request->product_name;
+            }
+            if ($request->trademark_id) {
+                $arr_value[self::trademark_id] = $request->trademark_id;
+            }
+            if ($request->product_type_id) {
+                $arr_value[self::product_type_id] = $request->product_type_id;
+            }
+            if ($request->description) {
+                $arr_value[self::description] = $request->description;
+            }
+            if ($request->warranty) {
+                $arr_value[self::warranty] = $request->warranty;
+            }
+            $arr_value[self::updatedDate] = date('Y-m-d h:i:s');
+            $arr_value[self::updatedBy] = $user->account_id;
+            if (count($arr_value) == 1) {
                 return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
             }
-            DB::table(self::table)->where(self::id, $id)->update($obj);
+            $objs = [];
+            if ($request->image) {
+                $images = $request->image;
+                if (count($images) > 0) {
+                    foreach ($images as $image) {
+                        $objs[self::id] = $request->product_id;
+                        $objs[self::image] = $image;
+                        DB::table(ProductImageController::table)->insert($objs);
+                    }
+                }
+            }
+            DB::table(self::table)->where(self::id, $id)->update($arr_value);
             return response()->json(['success' => 'Chỉnh sửa thành công'], 201);
             // return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
@@ -207,13 +233,13 @@ class ProductController extends Controller
     public function updateview(Request $request, $id)
     {
         //
-            $obj = [];
-            $obj = $request->all();
-            if (count($obj) == 1) {
-                return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
-            }
-            DB::table(self::table)->where(self::id, $id)->update($obj);
-            return response()->json(['success' => 'Chỉnh sửa thành công'], 201);
+        $obj = [];
+        $obj = $request->all();
+        if (count($obj) == 1) {
+            return response()->json(['error' => 'Chỉnh sửa thất bại. Thiếu thông tin'], 400);
+        }
+        DB::table(self::table)->where(self::id, $id)->update($obj);
+        return response()->json(['success' => 'Chỉnh sửa thành công'], 201);
     }
 
     /**
@@ -228,6 +254,21 @@ class ProductController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+            if ($request->product_id) {
+                $coupon = DB::table(CouponDetailController::table)
+                    ->where(CouponDetailController::product_id, '=', $request->product_id)
+                    ->get();
+                if (count($coupon) > 0) {
+                    return response()->json(['error' => 'Sản phẩm đã có trong phiếu nhập, vui lòng kiểm tra lại !!!'], 400);
+                }
+
+                $bill = DB::table(BillDetailController::table)
+                    ->where(BillDetailController::product_id, '=', $request->product_id)
+                    ->get();
+                if (count($coupon) > 0) {
+                    return response()->json(['error' => 'Sản phẩm đã có trong hóa đơn, vui lòng kiểm tra lại !!!'], 400);
+                }
+            }
             $this->base->destroy($request);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {

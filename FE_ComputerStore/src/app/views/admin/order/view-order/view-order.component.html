@@ -6,7 +6,7 @@
    <div class="col-sm-3" style="background-color:#fff;margin-right: 20px;">
       <h2 style="font-size:30px;margin-top: 15px;"> Xem hóa đơn</h2>
       <form [formGroup]="formGroup" (ngSubmit)="save()">
-         <div class="row" *ngIf = "checkEmployee">
+         <!-- <div class="row" *ngIf = "checkEmployee">
             <div class="col-md-12">
                <div class="form-group">
                   <label>Tên nhân viên</label>
@@ -17,7 +17,7 @@
                   </select>
                </div>
             </div>
-         </div>
+         </div> -->
 
          <div class="row">
             <div class="col-md-12">
@@ -26,6 +26,34 @@
                   <input type="text" name="" class="form-control" [(ngModel)]="update_name "
                      formControlName="name" id="name" readonly />
                </div>
+            </div>
+         </div>
+
+         <div class="row">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label>Địa chỉ</label>
+                  <input type="text" name="" class="form-control"  [(ngModel)]="update_address" formControlName="address" id="address" readonly />
+                  <div *ngIf="submitted && formGroup.controls['address'].errors?.required">
+                    <div *ngIf="formGroup.controls['address'].errors?.required" style="color: red">
+                      * Địa chỉ không được để trống
+                    </div>
+                  </div>
+                </div>
+            </div>
+         </div>
+
+         <div class="row">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label>Số điện thoại</label>
+                  <input type="text" name="" class="form-control" [(ngModel)]="update_phone_number"  formControlName="phone_number" id="phone_number"  readonly/>
+                  <div *ngIf="submitted && formGroup.controls['phone_number'].errors?.required">
+                    <div *ngIf="formGroup.controls['phone_number'].errors?.required" style="color: red">
+                      * Số điện thoại không được để trống
+                    </div>
+                  </div>
+                </div>
             </div>
          </div>
 

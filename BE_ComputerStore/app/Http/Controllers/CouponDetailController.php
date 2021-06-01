@@ -191,6 +191,14 @@ class CouponDetailController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
+            if($request->product_id){
+                $data=DB::table(BillDetailController::table)
+                ->where(BillDetailController::product_id,'=', $request->product_id)
+                ->get();
+                if(count($data)>0){
+                    return response()->json(['error' => 'Sản phẩm đã có trong hóa đơn, vui lòng kiểm tra lại !!!'], 400);
+                }
+            }
             $this->base->destroy($request);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {

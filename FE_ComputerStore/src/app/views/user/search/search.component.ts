@@ -124,29 +124,41 @@ export class SearchComponent implements OnInit, OnDestroy {
           return (bill.customer_id === account_id && bill.order_status_id === 1);
         });
         if (list_bill_filter.length !== 0) {
-          this.billDetailService.getAll().subscribe(data => {
-            list_bill_detail = data.data;
-            list_bill_detail_filter = list_bill_detail.filter(function (bill) {
-              return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);
-            });
-            if (list_bill_detail_filter.length === 0) {
-              billDetailModel = {
-                bill_id: list_bill_filter[0].bill_id,
-                product_id: product_detail.product_id,
-                price: product_detail.price_display,
-                amount: 1,
-              }
-              this.billDetailService.create(billDetailModel).subscribe(data => {
-              });
-            } else {
-              billDetailModel = {
-                bill_detail_id: list_bill_detail_filter[0].bill_detail_id,
-                amount: list_bill_detail_filter[0].amount + 1
-              }
-              this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id, billDetailModel).subscribe(data => {
-              });
-            }
-          })
+          billDetailModel = {
+            bill_id: list_bill_filter[0].bill_id,
+            product_id: product_detail.product_id,
+            price: product_detail.price_display,
+            amount: 1,
+          }
+          this.billDetailService.create(billDetailModel).subscribe(data => {
+            this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
+          },err =>{
+            console.log(err.error.error)
+            this.toastr.warning(err.error.error,'www.tiendatcomputer.vn cho biết');
+          });
+          // this.billDetailService.getAll().subscribe(data => {
+          //   list_bill_detail = data.data;
+          //   list_bill_detail_filter = list_bill_detail.filter(function (bill) {
+          //     return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);
+          //   });
+          //   if (list_bill_detail_filter.length === 0) {
+          //     billDetailModel = {
+          //       bill_id: list_bill_filter[0].bill_id,
+          //       product_id: product_detail.product_id,
+          //       price: product_detail.price_display,
+          //       amount: 1,
+          //     }
+          //     this.billDetailService.create(billDetailModel).subscribe(data => {
+          //     });
+          //   } else {
+          //     billDetailModel = {
+          //       bill_detail_id: list_bill_detail_filter[0].bill_detail_id,
+          //       amount: list_bill_detail_filter[0].amount + 1
+          //     }
+          //     this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id, billDetailModel).subscribe(data => {
+          //     });
+          //   }
+          // })
         } else {
           billModel = {
             customer_id: account_id,
@@ -168,9 +180,11 @@ export class SearchComponent implements OnInit, OnDestroy {
           });
         }
       })
+    }else{
+      this.cartService.addToCart(product);
+      this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
     }
-    this.cartService.addToCart(product);
-    this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
+    
   }
 
   public filterProducts(): void {

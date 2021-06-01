@@ -45,7 +45,6 @@ export class OrderCustomerComponent implements OnInit {
       })
     } else {
       this.toastr.warning("Vui lòng đăng nhập để sử dụng dịch vụ",'www.tiendatcomputer.vn cho biết');
-      this.router.navigate(['/login']);
     }
   }
 }

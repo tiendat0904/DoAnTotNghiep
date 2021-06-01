@@ -61,7 +61,7 @@
 
 .header-toolbar{
     width: 100%;
-    padding-left: 558px;
+    padding-left: 550px;
     padding-top: 10px;
     max-width: 1420px;
 }
@@ -124,6 +124,26 @@ a{
     height: 40px;
     border:  0.5px solid white;
     border-radius: 10px;
+}
+
+.autocomplete-suggestions{
+    width: 565px;
+    position: absolute;
+    display: none;
+    overflow: auto;
+    left: 444px;
+    z-index: 999;
+    background-color: #fff;
+    max-height: 300px;
+}
+
+.autocomplete-suggestions img{
+    height: 65px;
+    width: 65px;
+}
+
+.autocomplete-suggestions a{
+    display: block;
 }
 
 .button-search{
@@ -379,22 +399,3 @@ a{
 }
 
 
-.autocomplete-suggestions{
-    width: 565px;
-    position: absolute;
-    display: none;
-    overflow: auto;
-    left: 444px;
-    z-index: 999;
-    background-color: #fff;
-    max-height: 300px;
-}
-
-.autocomplete-suggestions img{
-    height: 65px;
-    width: 65px;
-}
-
-.autocomplete-suggestions a{
-    display: block;
-}

@@ -57,6 +57,9 @@ export class UpdateOrderComponent implements OnInit {
   update_order_type_id = null;
   update_order_status_id = null;
   update_name = null;
+  update_address = null;
+  update_phone_number = null;
+
   constructor(
     private modalService: NgbModal,
     private billDetailService: BillDetailService,
@@ -75,10 +78,6 @@ export class UpdateOrderComponent implements OnInit {
     //   this.arraylist_bill = data.data;
     //   // this.update_bill_id = this.arraylist_bill.length+1;
     // },)
-
-
-
-
   }
 
 
@@ -105,9 +104,10 @@ export class UpdateOrderComponent implements OnInit {
           this.update_order_type_id = data.data.order_type_id;
           this.update_order_status_id = data.data.order_status_id;
           this.update_name = data.data.name;
+          this.update_phone_number = data.data.phone_number;
+          this.update_address = data.data.address;
         }
       }
-
     })
 
     this.formGroup = this.fb.group({
@@ -115,6 +115,8 @@ export class UpdateOrderComponent implements OnInit {
       employee_id: [this.update_employee_id],
       // customer_id: [this.update_customer_id],
       name : [this.update_name],
+      phone_number: [this.update_phone_number],
+      address : [this.update_address],
       created_at: [this.update_created_at],
       order_type_id:[this.update_order_type_id],
       order_status_id:[this.update_order_status_id],
@@ -160,6 +162,8 @@ export class UpdateOrderComponent implements OnInit {
       employee_id:this.formGroup.get('employee_id')?.value,
       order_status_id: this.formGroup.get('order_status_id')?.value,
       order_type_id: this.formGroup.get('order_type_id')?.value,
+      address: this.formGroup.get('address')?.value,
+      phone_number: this.formGroup.get('phone_number')?.value
     };
 
     this.billService.update(this.update_bill_id, bill).subscribe(res => {
@@ -322,30 +326,6 @@ export class UpdateOrderComponent implements OnInit {
 
   initModal(model: any, type = null): void {
     this.view.view(model, type);
-  }
-
-  changeStatus(event: any) {
-    this.isLoading = true;
-    let list = [];
-    // tslint:disable-next-line: radix
-    switch (parseInt(event)) {
-      case -1:
-        this.listFilterResult = [...this.listFilterResult1];
-        this.isLoading = false;
-        break;
-      case 1:
-        list = [...this.listFilterResult1];
-        this.listFilterResult = list.filter(item => item.isActive === 1);
-        this.isLoading = false;
-        break;
-      case 0:
-        list = [...this.listFilterResult1];
-        this.listFilterResult = list.filter(item => item.isActive === 0);
-        this.isLoading = false;
-        break;
-      default:
-        break;
-    }
   }
 
   public delete(listid: any) {

@@ -60,33 +60,6 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Thương hiệu</label>
-            <ng-select [items]="arraylist_trademark" placeholder="Hãy chọn nhãn hiệu" bindLabel="trademark_name"
-              bindValue="trademark_id" formControlName="trademark_id">
-            </ng-select>
-            <div *ngIf="submitted && formGroup.controls['trademark_id'].errors?.required">
-              <div *ngIf="formGroup.controls['trademark_id'].errors?.required" style="color: red">
-                * Mã thương hiệu không được để trống
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Bảo hành(Tháng)</label>
-            <input type="text" name="" class="form-control" formControlName="warranty" id="warranty" rows="10"
-              cols="30">
-            <div *ngIf="submitted && formGroup.controls['warranty'].errors?.required">
-              <div *ngIf="formGroup.controls['warranty'].errors?.required" style="color: red">
-                * Bảo hành không được để trống
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="form-group">
         <label>Mô tả sản phẩm</label>
         <textarea type="text" name="" class="form-control" formControlName="description" id="description" rows="3"

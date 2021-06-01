@@ -82,8 +82,8 @@
                            <input type="checkbox" [(ngModel)]="listFilterResult[i + (page-1)*pageSize].checked"
                               (ngModelChange)="changeModel()" value="{{ e.bill_id }}" />
                         <td>{{ i + (page-1)*pageSize + 1 }}</td>
-                        <td [innerHTML]="e.name"></td>
-                        <td >0{{e.phone_number}}</td>
+                        <td [innerHTML]="e.name ? e.name : e.customer_name "></td>
+                        <td >0{{e.phone_number ? e.phone_number: ''}}</td>
                         <td [innerHTML]="e.total_money |  currency: 'VND'"></td>
                         <td>
                            <div class='order_status' [innerHTML]="e.order_status_description"

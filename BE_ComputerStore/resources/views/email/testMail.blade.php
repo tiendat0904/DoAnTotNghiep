@@ -3,10 +3,7 @@
         <tbody>
             <tr>
                 <td style="padding:20px 30px;width:auto">
-
-
                     <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;background:#fff;width:800px;margin:auto">
-
                         <tbody>
                             <tr>
                                 <td style="background:linear-gradient(to right,#243a76,#ed1b24)">

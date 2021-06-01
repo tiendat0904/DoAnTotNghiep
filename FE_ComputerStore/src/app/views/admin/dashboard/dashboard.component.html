@@ -87,7 +87,7 @@
             <tr>
             </tr>
             <tr *ngFor="
-                  let e of array_customer  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
+                  let e of array_customer | slice:0:5 | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
                   let i = index
                   ">
               <td>{{ i + (page-1)*pageSize + 1 }}</td>

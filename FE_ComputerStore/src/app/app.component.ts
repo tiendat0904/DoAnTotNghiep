@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 
 import { IconSetService } from '@coreui/icons-angular';
 import { freeSet } from '@coreui/icons';
-
+import { FacebookService, InitParams } from "ngx-facebook";
 @Component({
   // tslint:disable-next-line
   selector: 'body',
@@ -13,13 +13,15 @@ import { freeSet } from '@coreui/icons';
 export class AppComponent implements OnInit {
   constructor(
     private router: Router,
-    public iconSet: IconSetService
+    public iconSet: IconSetService,
+    private facebookService: FacebookService
   ) {
     // iconSet singleton
     iconSet.icons = { ...freeSet };
   }
 
   ngOnInit() {
+    //  this.initFacebookService();
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
@@ -27,4 +29,8 @@ export class AppComponent implements OnInit {
       window.scrollTo(0, 0);
     });
   }
+  // private initFacebookService(): void {
+  //   const initParams: InitParams = { xfbml:true, version:'v3.2'};
+  //   this.facebookService.init(initParams);
+  // }
 }

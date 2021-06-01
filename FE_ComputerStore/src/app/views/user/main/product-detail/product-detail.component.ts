@@ -109,6 +109,16 @@ export class ProductDetailComponent implements OnInit {
           for (let item of this.list_product_trademark_filter) {
             if (item.product_id === product_id) {
             } else {
+              item.descriptions = item.description.split("\n");
+              item.checkAmount = true;
+              if (item.amount === 0) {
+                item.check = "Liên hệ : 18001008";
+                item.checkAmount = true;
+              }
+              else {
+                item.check = "Còn hàng";
+                item.checkAmount = false;
+              }
               if (item.price_new === null) {
                 item.isCheckPrice = true;
                 item.price_display = item.price;
@@ -144,29 +154,18 @@ export class ProductDetailComponent implements OnInit {
             return (bill.customer_id === account_id && bill.order_status_id === 1);
           });
           if (list_bill_filter.length !== 0) {
-            this.billDetailService.getAll().subscribe(data => {
-              this.list_bill_detail = data.data;
-              list_bill_detail_filter = this.list_bill_detail.filter(function (bill) {
-                return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);
-              });
-              if (list_bill_detail_filter.length === 0) {
-                this.billDetailModel = {
-                  bill_id: list_bill_filter[0].bill_id,
-                  product_id: product_detail.product_id,
-                  price: product_detail.price_display,
-                  amount: 1,
-                }
-                this.billDetailService.create(this.billDetailModel).subscribe(data => {
-                });
-              } else {
-                this.billDetailModel = {
-                  bill_detail_id: list_bill_detail_filter[0].bill_detail_id,
-                  amount: list_bill_detail_filter[0].amount + 1
-                }
-                this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id, this.billDetailModel).subscribe(data => {
-                });
-              }
-            })
+            this.billDetailModel = {
+              bill_id: list_bill_filter[0].bill_id,
+              product_id: product_detail.product_id,
+              price: product_detail.price_display,
+              amount: 1,
+            }
+            this.billDetailService.create(this.billDetailModel).subscribe(data => {
+              this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
+            },err =>{
+              console.log(err.error.error)
+              this.toastr.warning(err.error.error,'www.tiendatcomputer.vn cho biết');
+            });
           } else {
             this.billModel = {
               customer_id: account_id,
@@ -188,17 +187,15 @@ export class ProductDetailComponent implements OnInit {
             });
           }
         })
-      }
-      this.cartService.addToCart(this.product);
-      this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
+      }else{
+        this.cartService.addToCart(this.product);
+        this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
+      } 
     }
   }
 
   fetchComment() {
-    this.checkRepComment = false;
-    this.list_comment_noparent = [];
-    this.list_comment_rate = [];
-    this.list_comment_parent = [];
+   
     this.currentRate = 0;
     if (localStorage.getItem("account_id")) {
       this.accountService.getInfo().subscribe(data => {
@@ -209,7 +206,12 @@ export class ProductDetailComponent implements OnInit {
     }
     this.route.params.subscribe(params => {
       let product_id = Number.parseInt(params['product_id']);
+      this.checkRepComment = false;
+      this.list_comment_noparent = [];
+      this.list_comment_rate = [];
+      this.list_comment_parent = [];
       this.commentService.detail(product_id).subscribe(data => {
+       
         this.list_comment = data.data;
         for (let item of this.list_comment) {
           if (item.status !== "Đang chờ xử lý") {

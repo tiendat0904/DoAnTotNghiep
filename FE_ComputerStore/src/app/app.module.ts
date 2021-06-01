@@ -24,8 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {AngularFireModule} from "@angular/fire";
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {AngularFireDatabaseModule} from "@angular/fire/database";
-
-
+import { FacebookModule } from 'ngx-facebook';
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -80,6 +79,7 @@ import { UpdateCommentCustomerComponent } from './views/admin/New folder/update-
 import { CommentCustomerComponent } from './views/admin/New folder/comment-customer/comment-customer.component';
 import { EmployeeComponent } from './views/admin/emloyee/employee/employee.component';
 import { UpdateEmployeeComponent } from './views/admin/emloyee/update-employee/update-employee.component';
+
 registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
@@ -121,6 +121,7 @@ registerLocaleData(localeFr, 'vi');
     PipesModule,
     MDBBootstrapModule.forRoot(),
     MatProgressSpinnerModule,
+    // FacebookModule.forRoot()
   ],
   declarations: [
     AppComponent,

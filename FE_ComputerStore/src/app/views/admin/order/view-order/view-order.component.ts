@@ -58,6 +58,9 @@ export class ViewOrderComponent implements OnInit {
   update_order_type_id = null;
   update_order_status_id = null;
   update_name = null;
+  update_address = null;
+  update_phone_number = null;
+
   constructor(
     private modalService: NgbModal,
     private billDetailService: BillDetailService,
@@ -107,6 +110,8 @@ export class ViewOrderComponent implements OnInit {
           this.update_order_type_id = data.data.order_type_id;
           this.update_order_status_id = data.data.order_status_id;
           this.update_name = data.data.name;
+          this.update_phone_number = data.data.phone_number;
+          this.update_address = data.data.address;
         }
       }
       if(this.update_employee_id !== null){
@@ -121,6 +126,8 @@ export class ViewOrderComponent implements OnInit {
       employee_id: [this.update_employee_id],
       // customer_id: [this.update_customer_id],
       name : [this.update_name],
+      phone_number: [this.update_phone_number],
+      address : [this.update_address],
       created_at: [this.update_created_at],
       order_type_id:[this.update_order_type_id],
       order_status_id:[this.update_order_status_id],

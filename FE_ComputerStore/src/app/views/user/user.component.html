@@ -1,7 +1,90 @@
-<body style="background-color: #f4f4f4;">
+<div style="background-color: #f4f4f4;">
     <app-header1></app-header1>
-    <div style="max-height: 4700px; background-color: rgb(255, 255, 255);margin-left: 100px;margin-right: 100px;margin-bottom: 20px;">
+    <div
+        style="max-height: 4700px; background-color: rgb(255, 255, 255);margin-left: 100px;margin-right: 100px;margin-bottom: 20px;">
         <router-outlet></router-outlet>
     </div>
     <app-footer1></app-footer1>
-</body>
+</div>
+<div id="icon-fixed-right">
+    <a href="https://www.facebook.com/tiendatcomputerstore" target="_blank" class="icon-fixed-right-a"><i class="fa fa-facebook" style="background-color: #4267b2;"></i></a>
+    <a href="https://www.youtube.com/channel/UCIoWNINN5sJcx1zboLXZmeA" target="_blank" class ="icon-fixed-right-a"><i class="icons fab fa-youtube"  style="background-color: red;"></i></a>
+    <a href="javascript:void(0)" (click)="open(contact)" class="icon-fixed-right-a"><i class="icons fas fa-envelope"  style="background-color: #3754a5;"></i></a>
+    <a href="javascript:void(0)" (click)="open(hotline)" class="icon-fixed-right-a"><i class="icons fas fa-phone fa-flip-horizontal"  style="background-color: #278c56;"></i></a>
+    <a href="/#/build-pc" class ="icon-fixed-right-a"><i class="icons fa fa-wrench"  style="background-color: #3754a5;"></i></a>
+    <a href="https://www.messenger.com/t/102758562026019" target="_blank" class="icon-fixed-right-a"><i class="icons fab fa-facebook-messenger"  style="background-color: #4267b2;"></i></a>
+    <a href="javascript:void(0)" id="toTop" (click) = "onActivate($event)" style="display:none;" class="active icon-fixed-right-a"><i class="icons fas fa-arrow-up"  style="background-color: #ed1b24;"></i></a>
+  </div>
+  <ng-template #hotline let-modal>
+    <div class="modal-header" style="padding: 1rem 1rem 0 1rem;">
+        <h4 class="modal-title" id="modal-basic-title">
+           HOTLINE LIÊN HỆ MUA HÀNG
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+           <span aria-hidden="true">x</span>
+        </button>
+     </div>
+     <div class="modal-body">
+        <div class="content-popup" style="padding:0 20px 15px; font-size:14px; line-height:1.6;">
+            <ul class="showroom-right-menu">
+              <li>
+                <span class="showroom-order">01</span>
+                <p class="showroom-address">Số 10 ngõ 5 Nguyễn Khánh Toàn, Hà Nội</p>
+                 <p class="showroom-hotline">Điện thoại: <b style="color:#ed1b24">0386123369</b></p>
+              </li>
+              <li>
+                <span class="showroom-order">02</span>
+                <p class="showroom-address">Số 6 Hải Thượng Lãn Ông,Thái Hòa, Nghệ An</p>
+                 <p class="showroom-hotline">Điện thoại: <b style="color:#ed1b24">0336181546</b></p>
+              </li>
+              <li>
+                <span class="showroom-order">03</span>
+                <p class="showroom-address">Số 595/22 Cách Mạng Tháng 8, Phường 15, Quận 10, TP.HCM</p>
+                 <p class="showroom-hotline">Điện thoại: <b style="color:#ed1b24">0982769175</b></p>
+              </li>
+            </ul>
+          </div>
+     </div>
+ </ng-template>
+
+ <ng-template #contact let-modal>
+    <div class="modal-header" style="padding: 1rem 1rem 0 1rem;">
+        <h4 class="modal-title" id="modal-basic-title">
+           LIÊN HỆ VỚI CHÚNG TÔI
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+           <span aria-hidden="true">x</span>
+        </button>
+     </div>
+     <div class="modal-body">
+        <div class="content-popup">
+            <form [formGroup]="formGroup"  (ngSubmit)="save()">
+              <input type="text" size="50" name="contact_name" id="contact_name" formControlName="contact_name" autocomplete="off" placeholder="Họ và tên" class="khaipv-input">
+              <div *ngIf="submitted && formGroup.controls['contact_name'].errors?.required">
+                <div *ngIf="formGroup.controls['contact_name'].errors?.required" style="color: red">
+                  * Họ tên không được để trống
+                </div>
+              </div>
+              <input type="text" size="50" name="contact_email" id="contact_email" formControlName="contact_email" autocomplete="off" placeholder="Email" class="khaipv-input">
+              <div *ngIf="submitted && formGroup.controls['contact_email'].errors?.required">
+                <div *ngIf="formGroup.controls['contact_email'].errors?.required" style="color: red">
+                  * Email không được để trống
+                </div>
+              </div>
+              <input type="text" size="50" name="contact_tel" id="contact_tel" formControlName="contact_tel" autocomplete="off" placeholder="Số điện thoại" class="khaipv-input">
+              <div *ngIf="submitted && formGroup.controls['contact_tel'].errors?.required">
+                <div *ngIf="formGroup.controls['contact_tel'].errors?.required" style="color: red">
+                  * Số điện thoại không được để trống
+                </div>
+              </div>
+              <textarea rows="5" name="contact_message" id="contact_message" formControlName="contact_message" style="width:100% !important;" placeholder="Nội dung liên hệ" class="khaipv-textarea"></textarea>
+              <div *ngIf="submitted && formGroup.controls['contact_message'].errors?.required">
+                <div *ngIf="formGroup.controls['contact_message'].errors?.required" style="color: red">
+                  * nội dung liên hệ không được để trống
+                </div>
+              </div>
+             <button class ="submit-button" type="submit">Gửi liên hệ</button>
+            </form>
+          </div>
+     </div>
+ </ng-template>
