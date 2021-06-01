@@ -17,6 +17,7 @@ use App\Http\Controllers\ReportController;
 
 Route::post('register', [AccountController::class, 'register']);
 Route::post('login', [AccountController::class, 'login']);
+Route::post('loginbysocal', [AccountController::class, 'loginbysocal']);
 
 Route::get('/getaccountcustomer', [\App\Http\Controllers\AccountController::class, 'getAccountCustomer']);
 

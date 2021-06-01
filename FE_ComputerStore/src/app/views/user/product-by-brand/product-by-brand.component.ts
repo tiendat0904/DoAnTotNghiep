@@ -48,7 +48,9 @@ export class ProductByBrandComponent implements OnInit {
 
   ngOnInit(): void { 
     this.route.params.subscribe(params => {
+      this.list_product_type_selected = [];
       this.trademark_id = Number.parseInt(params['trademark_id']);
+      
       this.fetchProduct();
     });
   }

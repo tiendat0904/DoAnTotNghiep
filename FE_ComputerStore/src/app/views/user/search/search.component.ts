@@ -33,8 +33,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   page = 1;
   pageSize = 16;
 
-  constructor(private productService: ProductService, 
-    private route: ActivatedRoute, 
+  constructor(private productService: ProductService,
+    private route: ActivatedRoute,
     private trademarkService: TrademarkService,
     private cartService: CartService,
     private toastr: ToastrService,
@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.search = localStorage.getItem("search");
     this.fetchProduct();
-    
+
   }
 
   ngOnDestroy(): void {
@@ -65,43 +65,42 @@ export class SearchComponent implements OnInit, OnDestroy {
         } else {
           this.list_product_laptop = this.list_product_laptop1 = filterResult;
         }
-        this.trademarkService.getAll().subscribe(data => {
-          this.list_trademark = data.data;
-          if (this.list_product_laptop !== null) {
-            for (let item1 of this.list_trademark) {
-              for (let item2 of this.list_product_laptop) {
-                if (item1.trademark_id === item2.trademark_id) {
-                  this.list_trademark_selected.push(item1);
-                }
+      });
+      this.trademarkService.getAll().subscribe(data => {
+        this.list_trademark = data.data;
+        if (this.list_product_laptop !== null) {
+          for (let item1 of this.list_trademark) {
+            for (let item2 of this.list_product_laptop) {
+              if (item1.trademark_id === item2.trademark_id) {
+                this.list_trademark_selected.push(item1);
               }
             }
-            this.list_trademark_show = this.list_trademark_selected.filter((test, index, array) =>
-              index === array.findIndex((findTest) =>
-                findTest.trademark_name === test.trademark_name
-              ));
           }
-        })
-        for (let item of this.list_product_laptop) {
-          item.descriptions = item.description.split("\n");
-          item.checkAmount = true;
-          if (item.amount === 0) {
-            item.check = "Liên hệ : 18001008";
-            item.checkAmount = true;
-          }
-          else {
-            item.check = "Còn hàng";
-            item.checkAmount = false;
-          }
-          if (item.price_new === null) {
-            item.isCheckPrice = true;
-            item.price_display = item.price;
-          } else {
-            item.isCheckPrice = false;
-            item.price_display = item.price_new;
-          }
+          this.list_trademark_show = this.list_trademark_selected.filter((test, index, array) =>
+            index === array.findIndex((findTest) =>
+              findTest.trademark_name === test.trademark_name
+            ));
         }
-        
-      });
+      })
+      for (let item of this.list_product_laptop) {
+        item.descriptions = item.description.split("\n");
+        item.checkAmount = true;
+        if (item.amount === 0) {
+          item.check = "Liên hệ : 18001008";
+          item.checkAmount = true;
+        }
+        else {
+          item.check = "Còn hàng";
+          item.checkAmount = false;
+        }
+        if (item.price_new === null) {
+          item.isCheckPrice = true;
+          item.price_display = item.price;
+        } else {
+          item.isCheckPrice = false;
+          item.price_display = item.price_new;
+        }
+      }
     });
   }
 
@@ -132,9 +131,9 @@ export class SearchComponent implements OnInit, OnDestroy {
           }
           this.billDetailService.create(billDetailModel).subscribe(data => {
             this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
-          },err =>{
+          }, err => {
             console.log(err.error.error)
-            this.toastr.warning(err.error.error,'www.tiendatcomputer.vn cho biết');
+            this.toastr.warning(err.error.error, 'www.tiendatcomputer.vn cho biết');
           });
           // this.billDetailService.getAll().subscribe(data => {
           //   list_bill_detail = data.data;
@@ -180,11 +179,11 @@ export class SearchComponent implements OnInit, OnDestroy {
           });
         }
       })
-    }else{
+    } else {
       this.cartService.addToCart(product);
       this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
     }
-    
+
   }
 
   public filterProducts(): void {

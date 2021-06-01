@@ -25,6 +25,11 @@ import {AngularFireModule} from "@angular/fire";
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {AngularFireDatabaseModule} from "@angular/fire/database";
 import { FacebookModule } from 'ngx-facebook';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login';
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -103,6 +108,7 @@ registerLocaleData(localeFr, 'vi');
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
+    SocialLoginModule,
     IconModule,
     NgxPrintModule,
     IconSetModule.forRoot(),
@@ -169,6 +175,24 @@ registerLocaleData(localeFr, 'vi');
       provide: LOCALE_ID,
       useValue: 'vi' // 'de' for Germany, 'fr' for France ...
      },
+     {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '102353461476-ocmuil7gnr9fhlgpbc4qduabcto4j37s.apps.googleusercontent.com'
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('301225781674354')
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    },
     IconSetService,
   ],
   bootstrap: [ AppComponent ]

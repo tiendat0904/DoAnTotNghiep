@@ -2,7 +2,7 @@
     position: absolute;
     background-color:#fff;
     width: 480px;
-    z-index: 3;
+    z-index: 999;
     left: 300px;
     top:135px; 
 }
@@ -371,19 +371,6 @@ a{
     background-color: #f9f9f9;
     height: 30px;
 }
-
-
-// #header-basket{
-//     position: relative;
-//     z-index: 1;
-// }
-
-
-// #header-basket:hover +  #header-hide{
-//     display: block;
-//     transition: 0.6s;
-   
-// }
 
 .header-bottom{
     background-color: #243a76;

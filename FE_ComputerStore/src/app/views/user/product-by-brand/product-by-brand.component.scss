@@ -32,6 +32,11 @@ hr{
     height: 1243.6px;
 }
 
+.product-image{
+    display: flex;
+    justify-content: center;
+}
+
 .product-item{
     border: 1px solid #ddd;
     width: 25%;

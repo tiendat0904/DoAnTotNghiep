@@ -9,6 +9,21 @@
                 <form [formGroup]="formLogin">
                   <h1>Login</h1>
                   <p class="text-muted">Sign In to your account</p>
+                  <div class="kpx_login">
+                    <div>
+                      <a  (click)="signInWithFB()" class="btn btn-lg btn-block kpx_btn-facebook" data-toggle="tooltip" data-placement="top"
+                      title="Facebook" style="background-color: #3b5998;color: #fff;">
+                      <i class="fa fa-facebook"></i>
+                    </a>
+                    </div>
+                    <div style="width: 55px;padding-left: 5px;">
+                      <a (click)=" signInWithGoogle()" class="btn btn-lg btn-block kpx_btn-google-plus" data-toggle="tooltip"
+                      data-placement="top" title="Google Plus" style="background-color: #c32f10;color: #fff;">
+                      <i class="fa fa-google-plus"></i>
+                    </a>
+                    </div>
+                    
+                  </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-user"></i></span>

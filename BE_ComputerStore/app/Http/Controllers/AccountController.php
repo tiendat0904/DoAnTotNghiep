@@ -456,6 +456,25 @@ class AccountController extends Controller
         }
     }
 
+
+    public function loginbysocal(Request $request)
+    {
+        $arrayvalue = $request->all();
+        $arrayvalue[self::account_type_id] = 3;
+        $checkUser = DB::table(self::table)->where(self::email, '=', $request->email)->get();
+        if(count($checkUser)>0){
+            $checkUser1 = Account::where(self::email, $request->email)->first();
+            $token = $checkUser1->createToken('ComputerStore')->accessToken;
+            return response()->json([ 'token' => $token, 'data' => $checkUser], 200);
+        }
+        else{
+            DB::table(self::table)->insert($arrayvalue);
+            $objs = DB::table(self::table)->orderByDesc(self::id)->first();
+            $token = $objs->createToken('ComputerStore')->accessToken;
+            return response()->json(['token' => $token, 'data' => $objs], 200);
+        }
+    }
+
     public function userInfo()
     {
         $user = auth()->user();
