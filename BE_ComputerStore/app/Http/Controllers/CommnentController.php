@@ -43,7 +43,7 @@ class CommnentController extends Controller
             ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
             ->join(AccountController::table, self::table . '.' . self::account_id, '=', AccountController::table . '.' . AccountController::id)
             ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
-            ->select(self::table . '.*',ProductController::table . '.' . ProductController::product_name, AccountController::table . '.' . AccountController::full_name, AccountTypeController::table . '.' . AccountTypeController::description, AccountTypeController::table . '.' . AccountTypeController::id, AccountController::table . '.' . AccountController::image)
+            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name, AccountController::table . '.' . AccountController::full_name, AccountTypeController::table . '.' . AccountTypeController::description, AccountTypeController::table . '.' . AccountTypeController::id, AccountController::table . '.' . AccountController::image)
             ->get();
         $code = 200;
         return response()->json(['data' => $objs], $code);
@@ -79,7 +79,6 @@ class CommnentController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()], 400);
         }
-
         $obj = [];
         if ($request->parentCommentId) {
             $obj[self::parentCommentId] = $request->parentCommentId;
@@ -151,16 +150,16 @@ class CommnentController extends Controller
             $rate = [];
             $rateTotal = 0;
             $productRates = DB::table(self::table)
-            ->where(self::product_id, '=' , $request->product_id)
-            ->Where(self::status, '=', "Đã xác nhận")
-            ->Where(self::rate, '>', 0)
-            ->get();
-            if(count($productRates)>0){
-                foreach($productRates as $productRate){
+                ->where(self::product_id, '=', $request->product_id)
+                ->Where(self::status, '=', "Đã xác nhận")
+                ->Where(self::rate, '>', 0)
+                ->get();
+            if (count($productRates) > 0) {
+                foreach ($productRates as $productRate) {
                     $rateTotal += $productRate->rate;
                 }
-                $rate[self::rate] = $rateTotal/count($productRates);
-                DB::table(ProductController::table)->where(ProductController::id,'=',$request->product_id)->update($rate);
+                $rate[self::rate] = $rateTotal / count($productRates);
+                DB::table(ProductController::table)->where(ProductController::id, '=', $request->product_id)->update($rate);
             }
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {

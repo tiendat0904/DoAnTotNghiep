@@ -31,15 +31,14 @@ class CartController extends Controller
     {
         //
         $objs = null;
-            $code = null;
-            $objs = DB::table(self::table)
+        $code = null;
+        $objs = DB::table(self::table)
             ->join(ProductController::table, ProductController::table . '.' . ProductController::id, '=', self::table . '.' . self::product_id)
             ->join(AccountController::table, self::table . '.' . self::customer_id, '=', AccountController::table . '.' . AccountController::id)
             ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name, AccountController::table . '.' . AccountController::full_name . ' as customer_name')
             ->get();
-            $code = 200;
-
-            return response()->json(['data' => $objs], $code);
+        $code = 200;
+        return response()->json(['data' => $objs], $code);
     }
 
     /**
@@ -94,7 +93,6 @@ class CartController extends Controller
         } catch (\Throwable $e) {
             return response()->json(['error' => $e], 500);
         }
-
         $this->base->store($request);
         return response()->json($this->base->getMessage(), $this->base->getStatus());
     }

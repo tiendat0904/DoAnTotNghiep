@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { image } from 'html2canvas/dist/types/css/types/image';
 import { Toast, ToastrService } from 'ngx-toastr';
@@ -63,7 +64,8 @@ export class ProductDetailComponent implements OnInit {
     private billDetailService: BillDetailService,
     private commentService: CommentService,
     private accountService: AccountService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
@@ -72,11 +74,16 @@ export class ProductDetailComponent implements OnInit {
     this.fetchComment();
   }
 
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
+  }
+
   fetchProductDetail() {
     let productview: productModel;
     this.route.params.subscribe(params => {
       let product_id = Number.parseInt(params['product_id']);
       this.productService.detail(product_id).subscribe(data => {
+        this.setTitle(data.data.product_name);
         this.product = data.data;
         this.photos = data.data.image;
         if (this.product.amount === 0) {

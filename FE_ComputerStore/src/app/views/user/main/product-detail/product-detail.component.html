@@ -4,7 +4,7 @@
 <div class='product-detail-page'>
     <div class='product-detail-icon' *ngIf="product">
         <a href=""><i class="fas fa-home"></i></a>
-        <p style="margin-top: 5px;margin-left: 5px;">></p>
+        <p style="margin-left: 5px;">></p>
         <p style="font-size: 20px;margin-left: 5px;">{{product.product_type_name}}</p>
     </div>
     <hr />
@@ -47,7 +47,7 @@
             </div>
             <div class='product-button'>
                 <div>
-                    <button style="margin-right: 6px; background-color: red;">ĐẶT MUA NGAY</button>
+                    <button [routerLink]="['/cart']" style="margin-right: 6px; background-color: red;"  (click)="addProductToCart()">ĐẶT MUA NGAY</button>
                 </div>
                 <div>
                     <button style="color: black; outline: none;" (click)="addProductToCart()">CHO VÀO GIỎ</button>
@@ -133,7 +133,7 @@
                         style="padding: 5px 10px;"></textarea>
                 </div>
                 <div class="send-comment">
-                    <button (click)="sendComment('','1');">Gửi bình luận</button>
+                    <button (click)="sendComment('','1');" style="width: 125px;">Gửi bình luận</button>
                 </div>
             </div>
         </div>

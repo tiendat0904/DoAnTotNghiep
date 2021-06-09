@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { accountModel } from '../../../../models/account-model';
@@ -14,9 +15,10 @@ export class ChangePasswordComponent implements OnInit {
 
   formGroup: FormGroup;
   constructor(private accountService: AccountService,
-    private toastr: ToastrService, private fb: FormBuilder, private router: Router) { }
+    private toastr: ToastrService, private fb: FormBuilder, private router: Router,private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle("Thay đổi mật khẩu");
     this.formGroup = new FormGroup({
       old_password: new FormControl(),
       new_password: new FormControl(),

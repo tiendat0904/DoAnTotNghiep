@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { avatarDefault } from '../../../../../environments/environment';
@@ -22,7 +23,8 @@ export class AccountInfoComponent implements OnInit {
     private accountService: AccountService,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private router: Router) { }
+    private router: Router,
+    private titleService: Title) { }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
@@ -35,6 +37,7 @@ export class AccountInfoComponent implements OnInit {
   }
 
   fetchgetInfo() {
+    this.titleService.setTitle("Thông tin tài khoản");
     this.accountService.getInfo().subscribe(data => {
       this.account = data.data;
       this.formGroup = this.fb.group({

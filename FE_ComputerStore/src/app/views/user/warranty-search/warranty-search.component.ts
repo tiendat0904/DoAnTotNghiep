@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { billDetailModel } from '../../../models/bill-detail-model';
 import { BillDetailService } from '../../../services/bill-detail/bill-detail.service';
 declare var $: any;
@@ -17,15 +18,16 @@ export class WarrantySearchComponent implements OnInit {
   searchedWarranty: any;
   warrantyDate: any;
   orderDate: any;
-  constructor(private billDetailService: BillDetailService, private datePipe: DatePipe) { }
+  constructor(private billDetailService: BillDetailService, private datePipe: DatePipe,private titleService: Title,) { }
 
   ngOnInit(): void {
     this.isCheck = true;
     this.isCheck1 = true;
-    
+    this.titleService.setTitle("Tra cứu bảo hành");
   }
 
   warrantySearch() {
+    
     if (this.searchedWarranty.length === 0) {
       this.isCheck = false;
       this.isCheck1 = false;

@@ -126,7 +126,7 @@ class OrderTypeController extends Controller
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $this->base->update($request, $id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-          } else {
+        } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
     }

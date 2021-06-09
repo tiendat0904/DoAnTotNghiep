@@ -1,5 +1,6 @@
 import { Options } from '@angular-slider/ngx-slider';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../../loader/loader.service';
@@ -52,6 +53,7 @@ export class ProductByBrandComponent implements OnInit {
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
     private billService: BillService,
+    private titleService: Title,
     public loaderService: LoaderService) { }
 
 
@@ -61,6 +63,10 @@ export class ProductByBrandComponent implements OnInit {
       this.trademark_id = Number.parseInt(params['trademark_id']);
       this.fetchProduct();
     });
+  }
+
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 
   fetchProduct() {
@@ -74,6 +80,7 @@ export class ProductByBrandComponent implements OnInit {
         return (laptop.trademark_id.toString() === trademark_id.toString());
       });
       this.trademark_name = this.list_product_laptop1[0].trademark_name;
+      this.titleService.setTitle(this.trademark_name);
       this.productTypeService.getAll().subscribe(data => {
         this.list_product_type = data.data;
         for (let item1 of this.list_product_type) {

@@ -1,5 +1,6 @@
 import { Options } from '@angular-slider/ngx-slider';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../../loader/loader.service';
@@ -48,16 +49,22 @@ export class SearchComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
-    private billService: BillService, public loaderService: LoaderService) { }
+    private titleService: Title,
+    private billService: BillService, 
+    public loaderService: LoaderService) { }
 
   ngOnInit(): void {
     this.search = localStorage.getItem("search");
+    this.setTitle("Danh sách " + this.search);
     this.fetchProduct();
-
   }
 
   ngOnDestroy(): void {
     this.list_product_laptop = null;
+  }
+
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 
   fetchProduct() {

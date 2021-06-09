@@ -36,14 +36,14 @@ class VoucherController extends Controller
         // $user = auth()->user();
         // $ac_type = $user->account_type_id;
         // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $objs = null;
-            $code = null;
-            $objs = DB::table(self::table)
-                ->join(AccountController::table, self::table . '.' . self::customer_id, '=', AccountController::table . '.' . AccountController::id)
-                ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name)
-                ->get();
-            $code = 200;
-            return response()->json(['data' => $objs], $code);
+        $objs = null;
+        $code = null;
+        $objs = DB::table(self::table)
+            ->join(AccountController::table, self::table . '.' . self::customer_id, '=', AccountController::table . '.' . AccountController::id)
+            ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name)
+            ->get();
+        $code = 200;
+        return response()->json(['data' => $objs], $code);
         // } 
         // else {
         //     $objs = DB::table(self::table)
@@ -104,14 +104,14 @@ class VoucherController extends Controller
         // $user = auth()->user();
         // $ac_type = $user->account_type_id;
         // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $objs = null;
-            $code = null;
-            $objs = DB::table(self::table)
-                ->join(AccountController::table, self::table . '.' . self::customer_id, '=', AccountController::table . '.' . AccountController::id)
-                ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name)
-                ->where(self::table . '.' . self::customer_id, '=', $id)->get();
-            $code = 200;
-            return response()->json(['data' => $objs], $code);
+        $objs = null;
+        $code = null;
+        $objs = DB::table(self::table)
+            ->join(AccountController::table, self::table . '.' . self::customer_id, '=', AccountController::table . '.' . AccountController::id)
+            ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name)
+            ->where(self::table . '.' . self::customer_id, '=', $id)->get();
+        $code = 200;
+        return response()->json(['data' => $objs], $code);
         // } 
         // else {
         //     $objs = DB::table(self::table)
@@ -122,7 +122,7 @@ class VoucherController extends Controller
         //     $code = 200;
         //     return response()->json(['data' => $objs], $code);
         // }
-        
+
     }
 
     /**
@@ -149,8 +149,8 @@ class VoucherController extends Controller
         // $user = auth()->user();
         // $ac_type = $user->account_type_id;
         // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $this->base->update($request, $id);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+        $this->base->update($request, $id);
+        return response()->json($this->base->getMessage(), $this->base->getStatus());
         // } else {
         //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         // }
@@ -168,8 +168,8 @@ class VoucherController extends Controller
         // $user = auth()->user();
         // $ac_type = $user->account_type_id;
         // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            $this->base->destroy($request);
-            return response()->json($this->base->getMessage(), $this->base->getStatus());
+        $this->base->destroy($request);
+        return response()->json($this->base->getMessage(), $this->base->getStatus());
         // } else {
         //     return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         // }

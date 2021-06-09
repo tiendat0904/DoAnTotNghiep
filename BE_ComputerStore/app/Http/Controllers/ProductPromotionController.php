@@ -42,7 +42,7 @@ class ProductPromotionController extends Controller
             $objs = DB::table(self::table)
                 ->leftJoin(ProductController::table, ProductController::table . '.' . ProductController::id, '=', self::table . '.' . self::product_id)
                 ->join(PromotionDateController::table, PromotionDateController::table . '.' . PromotionDateController::id, '=', self::table . '.' . self::promotion_date_id)
-                ->select(self::table . '.' . self::id, self::table . '.' . self::product_id, ProductController::table . '.' . ProductController::product_name, self::table . '.' . self::promotion_date_id, PromotionDateController::table . '.' . PromotionDateController::date, self::promotion_level)        
+                ->select(self::table . '.' . self::id, self::table . '.' . self::product_id, ProductController::table . '.' . ProductController::product_name, self::table . '.' . self::promotion_date_id, PromotionDateController::table . '.' . PromotionDateController::date, self::promotion_level)
                 ->get();
             return response()->json(['data' => $objs], 200);
         }
@@ -96,10 +96,10 @@ class ProductPromotionController extends Controller
                             self::promotion_level => 'required',
                         ]);
                         $productPromotion = DB::table(self::table)
-                        ->where(self::product_id ,'=', $request->product_id)
-                        ->where(self::promotion_date_id , '', $request->promotion_date_id)
-                        ->get();
-                        if(count($productPromotion)>0){
+                            ->where(self::product_id, '=', $request->product_id)
+                            ->where(self::promotion_date_id, '', $request->promotion_date_id)
+                            ->get();
+                        if (count($productPromotion) > 0) {
                             return response()->json(['error' => 'Sản phẩm đã có khuyến mãi trong ngày hôm đấy, vui lòng kiểm tra lại !!!'], 400);
                         }
                         if ($validator->fails()) {
@@ -112,7 +112,6 @@ class ProductPromotionController extends Controller
             } catch (\Throwable $e) {
                 return response()->json(['error' => $e], 500);
             }
-
             $this->base->store($request);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
@@ -157,7 +156,7 @@ class ProductPromotionController extends Controller
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $this->base->update($request, $id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-          } else {
+        } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
     }

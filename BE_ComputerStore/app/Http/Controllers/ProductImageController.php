@@ -182,7 +182,6 @@ class ProductImageController extends Controller
         }
     }
 
-
     public function showbyproduct($id)
     {
         //

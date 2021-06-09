@@ -42,7 +42,6 @@ class ProductController extends Controller
     public function index()
     {
         //
-
         date_default_timezone_set(BaseController::timezone);
         $date = date('Y-m-d');
         $objs = null;
@@ -101,7 +100,6 @@ class ProductController extends Controller
                 self::description => ' required',
                 "image" => 'required',
             ]);
-
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->all()], 400);
             }
@@ -118,11 +116,9 @@ class ProductController extends Controller
             $arr_value1[self::created_at] = date('Y-m-d h:i:s');
             $arr_value1[self::createdBy] = $user->account_id;
             DB::table(self::table)->insert($arr_value1);
-
             $product_id = DB::table(self::table)->latest('product_id')->select(self::table . '.' . self::id)->first();
             $objs = [];
             $images = $arr_value['image'];
-
             if (count($images) > 0) {
                 foreach ($images as $image) {
                     $objs[self::id] = $product_id->product_id;
@@ -260,7 +256,6 @@ class ProductController extends Controller
                 if (count($coupon) > 0) {
                     return response()->json(['error' => 'Sản phẩm đã có trong phiếu nhập, vui lòng kiểm tra lại !!!'], 400);
                 }
-
                 $bill = DB::table(BillDetailController::table)
                     ->where(BillDetailController::product_id, '=', $request->product_id)
                     ->get();

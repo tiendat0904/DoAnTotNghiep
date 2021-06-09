@@ -19,6 +19,7 @@ import * as htmlToImage from 'html-to-image';
 import { MailService } from '../../../services/mail/mail.service';
 import { mailModel } from '../../../models/mail-model';
 import { LoaderService } from '../../../loader/loader.service';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -74,6 +75,7 @@ export class CartComponent implements OnInit {
     private voucherService: VoucherService,
     private modalService: NgbModal,
     private mailService: MailService,
+    private titleService: Title,
     public loaderService: LoaderService) { 
       this.formGroup = new FormGroup({
         name: new FormControl(),
@@ -88,7 +90,6 @@ export class CartComponent implements OnInit {
     this.submitted = true;
     this.selectedType = 0;
     this.loadListProductCart();
-    
   }
 
   CaptureData() {
@@ -131,6 +132,7 @@ export class CartComponent implements OnInit {
   }
 
   loadListProductCart() {
+    this.titleService.setTitle("Thông tin giỏ hàng");
     this.searchedKeyword = '';
     this.checkCart = true;
     this.list_product = [];

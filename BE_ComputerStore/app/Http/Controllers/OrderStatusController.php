@@ -62,19 +62,19 @@ class OrderStatusController extends Controller
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
             $arr_value = $request->all();
-                if (count($arr_value) > 0) {
-                    $validator = Validator::make($arr_value, [
-                        self::value => 'required',
-                        self::description => 'required',
-                    ]);
-                    if ($validator->fails()) {
-                        return response()->json(['error' => $validator->errors()->all()], 400);
-                    }
-                } else {
-                    return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
+            if (count($arr_value) > 0) {
+                $validator = Validator::make($arr_value, [
+                    self::value => 'required',
+                    self::description => 'required',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error' => $validator->errors()->all()], 400);
                 }
-                $this->base->store($request);
-                return response()->json($this->base->getMessage(), $this->base->getStatus());
+            } else {
+                return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
+            }
+            $this->base->store($request);
+            return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }

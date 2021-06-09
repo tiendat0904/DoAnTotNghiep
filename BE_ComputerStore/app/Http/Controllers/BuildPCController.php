@@ -35,11 +35,11 @@ class BuildPCController extends Controller
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::KH) {
             $objs = DB::table(self::table)
-            ->Join(ProductImageController::table, self::table . '.' . self::product_id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
-            ->Join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
-            ->Join(ProductTypeController::table, ProductTypeController::table . '.' . ProductTypeController::id, '=', ProductController::table . '.' . ProductController::product_type_id)
-            ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name, ProductImageController::table . '.' . ProductImageController::image, ProductController::table . '.' . ProductController::warranty, ProductTypeController::table . '.' . ProductTypeController::product_type_name, ProductController::table . '.' . ProductController::product_type_id)
-            ->get();
+                ->Join(ProductImageController::table, self::table . '.' . self::product_id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+                ->Join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
+                ->Join(ProductTypeController::table, ProductTypeController::table . '.' . ProductTypeController::id, '=', ProductController::table . '.' . ProductController::product_type_id)
+                ->select(self::table . '.*', ProductController::table . '.' . ProductController::product_name, ProductImageController::table . '.' . ProductImageController::image, ProductController::table . '.' . ProductController::warranty, ProductTypeController::table . '.' . ProductTypeController::product_type_name, ProductController::table . '.' . ProductController::product_type_id)
+                ->get();
             return response()->json(['data' => $objs], 200);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
@@ -82,18 +82,15 @@ class BuildPCController extends Controller
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
             $data = DB::table(self::table)
-            ->select(self::table . '.*')
-            ->where(self::product_id, '=', $arr_value[self::product_id])
-            ->where(self::customer_id, '=', $arr_value[self::customer_id])
-            ->get();
-            if(count($data)>0){
-
-            }
-            else{
+                ->select(self::table . '.*')
+                ->where(self::product_id, '=', $arr_value[self::product_id])
+                ->where(self::customer_id, '=', $arr_value[self::customer_id])
+                ->get();
+            if (count($data) > 0) {
+            } else {
                 $this->base->store($request);
                 return response()->json($this->base->getMessage(), $this->base->getStatus());
             }
-            
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
@@ -166,7 +163,6 @@ class BuildPCController extends Controller
      */
     public function destroy(Request $request)
     {
-
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::KH) {

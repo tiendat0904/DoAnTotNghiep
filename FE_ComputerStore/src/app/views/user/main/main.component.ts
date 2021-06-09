@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastrService } from 'ngx-toastr';
@@ -72,7 +73,8 @@ export class MainComponent implements OnInit,OnDestroy {
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
     private billService: BillService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private titleService: Title,
   ) {
     
    }
@@ -120,6 +122,7 @@ export class MainComponent implements OnInit,OnDestroy {
   }
 
   fetchProductNew() {
+    this.titleService.setTitle("TIENDATCOMPUTER");
     this.productService.getAll().subscribe(data => {
       this.list_product_new = data.data;
       for (let item of this.list_product_new) {

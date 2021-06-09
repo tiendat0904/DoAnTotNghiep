@@ -70,7 +70,6 @@ class CouponDetailController extends Controller
     public function store(Request $request)
     {
         //
-
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
@@ -113,7 +112,7 @@ class CouponDetailController extends Controller
                     return response()->json(['error' => 'Thêm mới thất bại. Sản phẩm đã có trong phiếu nhập này'], 400);
                 }
                 DB::table(self::table)->insert($arr_value);
-                return response()->json(['success' => 'Thêm mới thành công','data'=> $arr_value], 201);
+                return response()->json(['success' => 'Thêm mới thành công', 'data' => $arr_value], 201);
             } else {
                 return response()->json(['error' => 'Thêm mới thất bại. Không có dữ liệu'], 400);
             }
@@ -191,11 +190,11 @@ class CouponDetailController extends Controller
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
-            if($request->product_id){
-                $data=DB::table(BillDetailController::table)
-                ->where(BillDetailController::product_id,'=', $request->product_id)
-                ->get();
-                if(count($data)>0){
+            if ($request->product_id) {
+                $data = DB::table(BillDetailController::table)
+                    ->where(BillDetailController::product_id, '=', $request->product_id)
+                    ->get();
+                if (count($data) > 0) {
                     return response()->json(['error' => 'Sản phẩm đã có trong hóa đơn, vui lòng kiểm tra lại !!!'], 400);
                 }
             }

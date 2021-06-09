@@ -133,18 +133,18 @@ class PromotionDateController extends Controller
                     ->join(ProductPromotionController::table, ProductPromotionController::table . '.' . ProductPromotionController::product_id, '=', ProductController::table . '.' . ProductController::id)
                     ->join(ProductTypeController::table, ProductTypeController::table . '.' . ProductTypeController::id, '=', ProductController::table . '.' . ProductController::product_type_id)
                     ->join(TrademarkController::table, TrademarkController::table . '.' . TrademarkController::id, '=', ProductController::table . '.' . ProductController::trademark_id)
-                    ->select(ProductController::table . '.*',ProductTypeController::table . '.' . ProductTypeController::product_type_name,TrademarkController::table . '.' . TrademarkController::trademark_name)
+                    ->select(ProductController::table . '.*', ProductTypeController::table . '.' . ProductTypeController::product_type_name, TrademarkController::table . '.' . TrademarkController::trademark_name)
                     ->where(ProductController::table . '.' . ProductController::id, '=', $obj->product_id)
                     ->get();
                 foreach ($obj_products as $obj_product) {
                     $obj_images = DB::table(ProductImageController::table)
-                    ->join(ProductController::table, ProductController::table . '.' . ProductController::id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
-                    ->select(ProductImageController::table . '.' . ProductImageController::image)
-                    ->where(ProductController::table . '.' . ProductController::id, '=', $obj->product_id)
-                    ->get();
-                foreach ($obj_images as $obj_image) {
-                    $obj_product->image[] =  $obj_image->image;
-                }
+                        ->join(ProductController::table, ProductController::table . '.' . ProductController::id, '=', ProductImageController::table . '.' . ProductImageController::product_id)
+                        ->select(ProductImageController::table . '.' . ProductImageController::image)
+                        ->where(ProductController::table . '.' . ProductController::id, '=', $obj->product_id)
+                        ->get();
+                    foreach ($obj_images as $obj_image) {
+                        $obj_product->image[] =  $obj_image->image;
+                    }
                     $obj->listProduct[] =  $obj_product;
                 }
             }

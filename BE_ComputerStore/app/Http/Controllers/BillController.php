@@ -46,7 +46,6 @@ class BillController extends Controller
      */
     public function index()
     {
-
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH) {
@@ -60,17 +59,15 @@ class BillController extends Controller
                 ->select(self::table . '.*', OrderStatusController::table . '.' . OrderStatusController::description . ' as order_status_description', OrderTypeController::table . '.' . OrderTypeController::description . ' as order_type_description', 'emp.' . AccountConTroller::full_name . ' as employee_name', 'cus.' . AccountConTroller::full_name . ' as customer_name')
                 ->get();
             $code = 200;
-
             return response()->json(['data' => $objs], $code);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
     }
 
+
     public function getBill()
     {
-
-
         $objs = null;
         $code = null;
         $objs = DB::table(self::table)
@@ -82,7 +79,6 @@ class BillController extends Controller
             ->orderByDesc(self::id)
             ->first();
         $code = 200;
-
         return response()->json(['data' => $objs], $code);
     }
 
@@ -104,7 +100,6 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
-
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH) {
@@ -150,7 +145,6 @@ class BillController extends Controller
 
     public function storenotaccount(Request $request)
     {
-
         // $user = auth()->user();
         // $ac_type = $user->account_type_id;
         // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH) {
@@ -213,7 +207,6 @@ class BillController extends Controller
         if ($request->note) {
             $arr_value[self::note] = $request->note;
         }
-
         if ($request->phone_number) {
             $arr_value[self::phone_number] = $request->phone_number;
         }
@@ -326,8 +319,6 @@ class BillController extends Controller
             $this->base->update($request, $id);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         }
-
-
         // $user = auth()->user();
         // $ac_type = $user->account_type_id;
         // if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -98,7 +99,8 @@ export class BuildPcComponent implements OnInit {
     private router: Router,
     private billService: BillService,
     private billDetailService: BillDetailService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
@@ -351,6 +353,7 @@ export class BuildPcComponent implements OnInit {
 
   loadproduct() {
     this.array_build_pc = [];
+    this.titleService.setTitle("Cấu hình PC");
     if (localStorage.getItem("account_id")) {
       this.pcService.detail(localStorage.getItem("account_id")).subscribe(data => {
         if (data.data !== [])

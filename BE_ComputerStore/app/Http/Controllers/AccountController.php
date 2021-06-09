@@ -100,13 +100,13 @@ class AccountController extends Controller
     public function getAccountCustomer()
     {
         //
-            $objs = DB::table(self::table)
-                ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number,AccountTypeController::table . '.' . AccountTypeController::id, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
-                ->Where(self::table . '.' . self::account_type_id, '=', '3')
-                ->get();
-            $code = 200;
-            return response()->json(['data' => $objs], $code);
+        $objs = DB::table(self::table)
+            ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
+            ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::id, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+            ->Where(self::table . '.' . self::account_type_id, '=', '3')
+            ->get();
+        $code = 200;
+        return response()->json(['data' => $objs], $code);
     }
 
     public function getAccountOfEmployee()
@@ -117,7 +117,7 @@ class AccountController extends Controller
         if ($ac_type == self::NV || $ac_type == self::QT) {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number,AccountTypeController::table . '.' . AccountTypeController::id, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::id, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
                 ->Where(self::table . '.' . self::account_type_id, '=', '1')
                 ->orWhere(self::table . '.' . self::account_type_id, '=', '2')
                 ->get();
@@ -128,7 +128,6 @@ class AccountController extends Controller
         }
     }
 
-
     public function getAccountEmployeeByAdmin()
     {
         //
@@ -137,7 +136,7 @@ class AccountController extends Controller
         if ($ac_type == self::QT) {
             $objs = DB::table(self::table)
                 ->join(AccountTypeController::table, self::table . '.' . self::account_type_id, '=', AccountTypeController::table . '.' . AccountTypeController::id)
-                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number,AccountTypeController::table . '.' . AccountTypeController::id, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
+                ->select(self::id, self::created_at, self::email, self::full_name, self::address, self::phone_number, AccountTypeController::table . '.' . AccountTypeController::id, AccountTypeController::table . '.' . AccountTypeController::value, AccountTypeController::table . '.' . AccountTypeController::description, self::image)
                 ->orWhere(self::table . '.' . self::account_type_id, '=', '2')
                 ->get();
             $code = 200;
@@ -185,7 +184,6 @@ class AccountController extends Controller
             if (count($data) > 0) {
                 return response()->json(['error' => 'Username đã được đăng ký'], 400);
             }
-
             $array = [];
             $array[self::email] = $request->email;
             $array[self::password] =  bcrypt($request->password);
@@ -198,11 +196,10 @@ class AccountController extends Controller
             $array[self::account_type_id] = $request->account_type_id;
             $array[self::created_at] = date('Y-m-d h:i:s');
             DB::table(self::table)->insert($array);
-
             $email = $request->email;
             $ac = Account::where(self::email, $email)->first();
             $token = $ac->createToken('ComputerStore')->accessToken;
-            return response()->json(['token' => $token,"success" => "Thêm mới tài khoản thành công", 'data' => $ac], 201);
+            return response()->json(['token' => $token, "success" => "Thêm mới tài khoản thành công", 'data' => $ac], 201);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
@@ -305,7 +302,7 @@ class AccountController extends Controller
                 $array[self::image] = $request->image;
             }
             $array[self::updatedDate] = date('Y-m-d h:i:s');
-            $array[self::updatedBy] =$user->account_id;
+            $array[self::updatedBy] = $user->account_id;
             if ($request->new_password != null && !Hash::check($request->old_password, $ac->password)) {
                 return response()->json(['error' => 'Chỉnh sửa thất bại. Mật khẩu cũ không chính xác'], 400);
             } elseif ($request->new_password != null && $request->old_password != null && $request->new_password == $request->old_password) {
@@ -330,19 +327,19 @@ class AccountController extends Controller
         }
     }
 
-
-    public function resetPassword(Request $request){
+    public function resetPassword(Request $request)
+    {
         $array = [];
         $array[self::email] = $request->email;
         $array[self::password] = bcrypt($request->new_password);
         $array[self::created_at] = date('Y-m-d h:i:s');
         DB::table(self::table)->where(self::email, $request->email)->update($array);
-            $ac = Account::where(self::email, $request->email)->first();
-            if ($request->new_password != null) {
-                $token = $ac->createToken('ComputerStore')->accessToken;
-                return response()->json(['token' => $token, 'data' => $ac], 200);
-            }
-            return response()->json(['data' => $ac], 200);
+        $ac = Account::where(self::email, $request->email)->first();
+        if ($request->new_password != null) {
+            $token = $ac->createToken('ComputerStore')->accessToken;
+            return response()->json(['token' => $token, 'data' => $ac], 200);
+        }
+        return response()->json(['data' => $ac], 200);
     }
 
     /**
@@ -435,15 +432,11 @@ class AccountController extends Controller
             self::email => 'required',
             self::password => 'required',
         ]);
-
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()], 400);
         }
-
         $email = $request->email;
-
         $ac = Account::where(self::email, $email)->first();
-
         if ($ac) {
             if (Hash::check($request->password, $ac->password)) {
                 $token = $ac->createToken('ComputerStore')->accessToken;
@@ -456,18 +449,16 @@ class AccountController extends Controller
         }
     }
 
-
     public function loginbysocal(Request $request)
     {
         $arrayvalue = $request->all();
         $arrayvalue[self::account_type_id] = 3;
         $checkUser = DB::table(self::table)->where(self::email, '=', $request->email)->get();
-        if(count($checkUser)>0){
+        if (count($checkUser) > 0) {
             $checkUser1 = Account::where(self::email, $request->email)->first();
             $token = $checkUser1->createToken('ComputerStore')->accessToken;
-            return response()->json([ 'token' => $token, 'data' => $checkUser], 200);
-        }
-        else{
+            return response()->json(['token' => $token, 'data' => $checkUser], 200);
+        } else {
             DB::table(self::table)->insert($arrayvalue);
             $objs = DB::table(self::table)->orderByDesc(self::id)->first();
             $token = $objs->createToken('ComputerStore')->accessToken;

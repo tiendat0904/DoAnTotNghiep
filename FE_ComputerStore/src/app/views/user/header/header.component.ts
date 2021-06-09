@@ -56,6 +56,116 @@ export class HeaderComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.renderTopMenu();
+    this.fetchProductType();
+    this.fetchProductTrademark();
+  }
+
+
+  getNavigation(link) {
+    if (localStorage.getItem("account_id")) {
+      this.router.navigate([link]);
+    } else {
+      this.toastr.warning("Vui lòng đăng nhập để sử dụng dịch vụ", 'www.tiendatcomputer.vn cho biết');
+    }
+  }
+
+  fetchProductType() {
+    this.productTypeService.getAll().subscribe(data => {
+      this.list_product_type = data.data;
+    })
+  }
+
+  fetchProductTrademark() {
+    this.trademarkService.getBrandHightlight().subscribe(data => {
+      this.list_trademark = data.data;
+    })
+  }
+
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
+  }
+
+  public searchDetail() {
+    this.searchedKeyword = null;
+    this.list_product_filter = null;
+  }
+
+  public search() {
+    if (this.searchedKeyword.length === 0) {
+      this.toastr.warning("Vui lòng nhập sản phẩm bạn muốn tìm kiếm", 'www.tiendatcomputer.vn cho biết');
+    } else {
+      localStorage.setItem("search", this.searchedKeyword);
+      this.searchedKeyword = null;
+      this.list_product_filter = null;
+      this.redirectTo('/search');
+    }
+  }
+
+  public filterByKeyword() {
+    var filterResult = [];
+    this.productService.getAll().subscribe(data => {
+      this.list_product = data.data;
+      for (let item of this.list_product) {
+        if (item.price_new === null) {
+          item.price_display = item.price;
+        } else {
+          item.price_display = item.price_new;
+        }
+      }
+      if (this.searchedKeyword === null || this.searchedKeyword.length === 0) {
+        this.check_search = true;
+        this.list_product_filter = null;
+      } else {
+        this.check_search = false;
+        this.list_product_filter = this.list_product;
+        var keyword = this.searchedKeyword.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+        this.list_product_filter.forEach(item => {
+          var product_name = item.product_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+          var product_type_name = item.product_type_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+          var product_price = item.price_display.toString();
+          if (product_name.includes(keyword) || product_type_name.includes(keyword) || product_price.includes(keyword)) {
+            filterResult.push(item);
+          }
+        });
+        if (filterResult.length === 0) {
+          this.check_product = false;
+          this.list_product_filter = null;
+        } else {
+          this.check_product = true;
+          this.list_product_filter = filterResult;
+        }
+      }
+    })
+
+  }
+
+
+  fetchgetInfo() {
+    this.accountService.getInfo().subscribe(data => {
+      this.name = data.data.full_name;
+      if (data.image == null) {
+        this.picture = this.urlPictureDefault;
+      } else {
+        this.picture = data.data.image;
+      }
+    }, error => {
+      this.url = "#/login";
+      this.name = "Đăng nhập";
+      $('#header-hide').hide();
+      $('#header-account').hover(
+        function () {
+          $('#header-hide').hide();
+        },
+        function () {
+          $('#header-hide').hide();
+        }
+      )
+    })
+  }
+
+  renderTopMenu() {
     this.searchedKeyword = '';
     this.check_product = true;
     this.picture = this.urlPictureDefault;
@@ -199,118 +309,8 @@ export class HeaderComponent implements OnInit {
         }
       )
     }
-    if (this.name !== null) {
-    }
-    if (this.name) {
-    }
-
-    this.fetchProductType();
-    this.fetchProductTrademark();
   }
 
-
-  getNavigation(link) {
-    if (localStorage.getItem("account_id")) {
-      this.router.navigate([link]);
-    } else {
-      this.toastr.warning("Vui lòng đăng nhập để sử dụng dịch vụ",'www.tiendatcomputer.vn cho biết');
-    }
-  }
-
-  fetchProductType() {
-    this.productTypeService.getAll().subscribe(data => {
-      this.list_product_type = data.data;
-    })
-  }
-
-  fetchProductTrademark() {
-    this.trademarkService.getBrandHightlight().subscribe(data => {
-      this.list_trademark = data.data;
-    })
-  }
-
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate([uri]));
-  }
-
-  public searchDetail() {
-    this.searchedKeyword = null;
-    this.list_product_filter = null;
-  }
-
-  public search() {
-    if (this.searchedKeyword.length === 0) {
-      this.toastr.warning("Vui lòng nhập sản phẩm bạn muốn tìm kiếm", 'www.tiendatcomputer.vn cho biết');
-    } else {
-      localStorage.setItem("search", this.searchedKeyword);
-      this.searchedKeyword = null;
-      this.list_product_filter = null;
-      this.redirectTo('/search');
-    }
-  }
-
-  public filterByKeyword() {
-    var filterResult = [];
-    this.productService.getAll().subscribe(data => {
-      this.list_product = data.data;
-      for (let item of this.list_product) {
-        if (item.price_new === null) {
-          item.price_display = item.price;
-        } else {
-          item.price_display = item.price_new;
-        }
-      }
-      if (this.searchedKeyword === null || this.searchedKeyword.length === 0) {
-        this.check_search = true;
-        this.list_product_filter = null;
-      } else {
-        this.check_search = false;
-        this.list_product_filter = this.list_product;
-        var keyword = this.searchedKeyword.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
-        this.list_product_filter.forEach(item => {
-          var product_name = item.product_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
-          var product_type_name = item.product_type_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
-          var product_price = item.price_display.toString();
-          if (product_name.includes(keyword) || product_type_name.includes(keyword) || product_price.includes(keyword)) {
-            filterResult.push(item);
-          }
-        });
-        if (filterResult.length === 0) {
-          this.check_product = false;
-          this.list_product_filter = null;
-        } else {
-          this.check_product = true;
-          this.list_product_filter = filterResult;
-        }
-      }
-    })
-
-  }
-
-
-  fetchgetInfo() {
-    this.accountService.getInfo().subscribe(data => {
-      this.name = data.data.full_name;
-      if (data.image == null) {
-        this.picture = this.urlPictureDefault;
-      } else {
-        this.picture = data.data.image;
-      }
-    }, error => {
-      this.url = "#/login";
-      this.name = "Đăng nhập";
-      $('#header-hide').hide();
-      $('#header-account').hover(
-        function () {
-          $('#header-hide').hide();
-        },
-        function () {
-          $('#header-hide').hide();
-        }
-      )
-    })
-  }
 
   onLogout() {
     localStorage.removeItem('Token');

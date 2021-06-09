@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../../../loader/loader.service';
@@ -22,6 +23,7 @@ export class OrderCustomerComponent implements OnInit {
     private billService: BillService,
     private toastr: ToastrService,
     private router: Router,
+    private titleService: Title,
     public loaderService: LoaderService) { }
 
   ngOnInit(): void {
@@ -29,6 +31,7 @@ export class OrderCustomerComponent implements OnInit {
   }
 
   fetchOrderCustomer() {
+    this.titleService.setTitle("Danh sách đơn hàng");
     if (localStorage.getItem("account_id")) {
       this.billService.getAll().subscribe(data => {
         this.arraylist_bill = data.data;

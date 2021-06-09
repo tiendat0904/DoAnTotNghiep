@@ -23,10 +23,10 @@
     <div class='col-lg-2 filter-product'>
       <h5 style="font-weight: normal ; text-align: center; border:1px solid #ddd;height: 33px;padding-top: 6px;">LỌC SẢN
         PHẨM</h5>
-      <h4 style="font-weight: 500;">Hãng sản xuất</h4>
-      <div *ngFor="let item of list_trademark_show">
+      <h4 style="font-weight: 500;">Loại sản phẩm</h4>
+      <div *ngFor="let item of list_product_type_show">
         <input type="checkbox" [(ngModel)]="item.selected" (ngModelChange)="filterProducts()"
-          style="margin-right: 3px">{{item.trademark_name}}
+          style="margin-right: 3px">{{item.product_type_name}}
       </div>
       <h4 style="margin-top: 15px;margin-bottom: 0;font-weight: 500;">Khoảng giá</h4>
       <p>Từ: <input [ngModel]="minValue | number: '1.0-0'" readonly (ngModelChange)="minValue=$event"

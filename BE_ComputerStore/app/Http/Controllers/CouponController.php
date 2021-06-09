@@ -44,12 +44,11 @@ class CouponController extends Controller
             $objs = null;
             $code = null;
             $objs = DB::table(self::table)
-            ->join(SupplierController::table, SupplierController::table . '.' . SupplierController::id, '=', self::table . '.' . self::supplier_id)
-            ->join(AccountController::table, self::table . '.' . self::employee_id, '=', AccountController::table . '.' . AccountController::id)
-            ->select(self::table . '.*', SupplierController::table . '.' . SupplierController::supplier_name, AccountController::table . '.' . AccountController::full_name . ' as employee_name')
-            ->get();
+                ->join(SupplierController::table, SupplierController::table . '.' . SupplierController::id, '=', self::table . '.' . self::supplier_id)
+                ->join(AccountController::table, self::table . '.' . self::employee_id, '=', AccountController::table . '.' . AccountController::id)
+                ->select(self::table . '.*', SupplierController::table . '.' . SupplierController::supplier_name, AccountController::table . '.' . AccountController::full_name . ' as employee_name')
+                ->get();
             $code = 200;
-
             return response()->json(['data' => $objs], $code);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
@@ -86,7 +85,6 @@ class CouponController extends Controller
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->all()], 400);
             }
-
             $obj = [];
             $obj[self::supplier_id] = $request->supplier_id;
             $obj[self::coupon_code] = $request->coupon_code;
@@ -108,12 +106,11 @@ class CouponController extends Controller
                     ->insert([
                         CouponDetailController::coupon_id => $coupon_id->coupon_id,
                         CouponDetailController::product_id => $listCouponDetail['product_id'],
-                        CouponDetailController::price =>$listCouponDetail['price'],
+                        CouponDetailController::price => $listCouponDetail['price'],
                         CouponDetailController::amount => $listCouponDetail['amount'],
                     ]);
             }
-
-            return response()->json(['success' => "Thêm mới thành công"], 201); 
+            return response()->json(['success' => "Thêm mới thành công"], 201);
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
         }
@@ -136,11 +133,11 @@ class CouponController extends Controller
                 ->join(AccountController::table, self::table . '.' . self::employee_id, '=', AccountController::table . '.' . AccountController::id)
                 ->select(self::table . '.*', SupplierController::table . '.' . SupplierController::supplier_name, AccountController::table . '.' . AccountController::full_name . ' as employee_name')
                 ->where(self::table . '.' . self::id, '=', $id)->first();
-    //            $listCouponDetail = DB::table(ChiTietPhieuNhapController::table)
-    //                ->join(SanPhamController::table, ChiTietPhieuNhapController::table . '.' . ChiTietPhieuNhapController::ma_san_pham, '=', SanPhamController::table . '.' . SanPhamController::id)
-    //                ->select(ChiTietPhieuNhapController::table . '.*', SanPhamController::table . '.' . SanPhamController::ten_san_pham)
-    //                ->where(ChiTietPhieuNhapController::ma_phieu_nhap, '=', $id)
-    //                ->get();
+            //            $listCouponDetail = DB::table(ChiTietPhieuNhapController::table)
+            //                ->join(SanPhamController::table, ChiTietPhieuNhapController::table . '.' . ChiTietPhieuNhapController::ma_san_pham, '=', SanPhamController::table . '.' . SanPhamController::id)
+            //                ->select(ChiTietPhieuNhapController::table . '.*', SanPhamController::table . '.' . SanPhamController::ten_san_pham)
+            //                ->where(ChiTietPhieuNhapController::ma_phieu_nhap, '=', $id)
+            //                ->get();
             if ($objs) {
                 return response()->json([
                     'data' => $objs

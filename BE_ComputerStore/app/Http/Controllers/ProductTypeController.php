@@ -70,9 +70,9 @@ class ProductTypeController extends Controller
             }
             $this->base->store($request);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
-            } else {
-                return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
-            }
+        } else {
+            return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);
+        }
     }
 
     /**

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../../loader/loader.service';
@@ -27,7 +28,9 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
     private router: Router,
     private billService:BillService,
     private toastr: ToastrService,
-    private billDetailService:BillDetailService,public loaderService:LoaderService) { }
+    private billDetailService:BillDetailService,
+    private titleService: Title,
+    public loaderService:LoaderService) { }
   ngOnDestroy(): void {
     // localStorage.removeItem("listProduct");
     // localStorage.removeItem("total_money");
@@ -35,8 +38,6 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.fetchOrderSuccess();
-    
-    
   }
 
   fetchOrderSuccess(){
@@ -48,6 +49,7 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
     //     this.update_address = data.data.address;
     //   })
     // }else{
+      this.titleService.setTitle("Đặt hàng thành công");
       setTimeout(() => {
         this.billService.getBill().subscribe(data =>{
           this.total_money = data.data.into_money;
