@@ -133,7 +133,7 @@ h4{
 }
 
 .product-description{
-    margin-left: 15px;
+    margin:0 10px;
 }
 
 .product-price-new{
@@ -251,6 +251,11 @@ h4{
 
 ::ng-deep .carousel-control-next-icon{
     background-image: url('https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2FUntitled-2.png?alt=media&token=549ec238-fbe3-4c99-9379-28c05b5a6185') !important;
+}
+
+.product-title{
+    height: 40px;
+    overflow: hidden;
 }
 
 

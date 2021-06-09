@@ -6,26 +6,37 @@
     <a href=""><i class="fas fa-home"></i></a>
     <p style="margin-top: 1px;margin-left: 5px;">></p>
     <p style="font-size: 20px;margin-left: 5px;">Tìm kiếm : {{search}}</p>
-    <select (change)="changeStatus($event.target.value)" [value]="checkSelect" class="custom-select col-md-4 col-lg-2 col-sm-12"
-      style="position: relative;left: 835px;">
-      <option value="0"  selected disabled>Lọc sản phẩm</option>
+    <select (change)="changeStatus($event.target.value)" [value]="checkSelect"
+      class="custom-select col-md-4 col-lg-2 col-sm-12" style="position: absolute;right: 132px;">
+      <option value="0" selected disabled>Sắp xếp theo</option>
       <option value="1">Sản phẩm mới về</option>
       <option value="2">Giá giảm dần</option>
       <option value="3">Giá tăng dần</option>
+      <option value="4">Lượt xem</option>
+      <option value="5">Đánh giá</option>
     </select>
   </div>
   <hr />
 </div>
 <div class='container'>
   <div class='row' style="margin-left: 3px;">
-    <div class='col-lg-2'>
+    <div class='col-lg-2 filter-product'>
       <h5 style="font-weight: normal ; text-align: center; border:1px solid #ddd;height: 33px;padding-top: 6px;">LỌC SẢN
         PHẨM</h5>
-      <h4>Hãng sản xuất</h4>
+      <h4 style="font-weight: 500;">Hãng sản xuất</h4>
       <div *ngFor="let item of list_trademark_show">
         <input type="checkbox" [(ngModel)]="item.selected" (ngModelChange)="filterProducts()"
           style="margin-right: 3px">{{item.trademark_name}}
       </div>
+      <h4 style="margin-top: 15px;margin-bottom: 0;font-weight: 500;">Khoảng giá</h4>
+      <p>Từ: <input [ngModel]="minValue | number: '1.0-0'" readonly (ngModelChange)="minValue=$event"
+          style="width: 186.86px;padding-left: 5px;">
+      </p>
+      <p>Đến: <input [ngModel]="maxValue | number: '1.0-0'" readonly (ngModelChange)="maxValue=$event"
+          style="width: 186.86px;padding-left: 5px;">
+      </p>
+      <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ngx-slider>
+      <button (click)="filterPrice()">Lọc giá</button>
     </div>
     <div class='col-lg-10'>
       <div class="product-grid" style="display: flex;flex-wrap: wrap;align-content: flex-start;">
@@ -39,14 +50,14 @@
             <div class='product-description' style="margin-left: 10px;">
               <div style="display: flex;justify-content: space-between;padding-right: 15px;">
                 <p>
-                  <ngb-rating [max]="5" [(rate)]="item.rate" [readonly]="true"
-                    style="color: #fd7e14;font-size: 16px"></ngb-rating>
+                  <ngb-rating [max]="5" [(rate)]="item.rate" [readonly]="true" style="color: #fd7e14;font-size: 16px">
+                  </ngb-rating>
                 </p>
                 <p>Mã SP: {{item.product_id}}</p>
               </div>
               <div class='product-title'>
                 <a [routerLink]="['/',item.product_id]"
-                style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
+                  style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
               </div>
             </div>
             <div style="align-self: flex-end; margin-left: 15px;">

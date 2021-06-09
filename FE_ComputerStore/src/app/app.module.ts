@@ -24,7 +24,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
-import { FacebookModule } from 'ngx-facebook';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {
   GoogleLoginProvider,
@@ -84,6 +83,7 @@ import { EmployeeComponent } from './views/admin/emloyee/employee/employee.compo
 import { UpdateEmployeeComponent } from './views/admin/emloyee/update-employee/update-employee.component';
 import { CommentCustomerComponent } from './views/admin/comment/comment-customer/comment-customer.component';
 import { UpdateCommentCustomerComponent } from './views/admin/comment/update-comment-customer/update-comment-customer.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 registerLocaleData(localeFr, 'vi');
 @NgModule({
@@ -127,6 +127,7 @@ registerLocaleData(localeFr, 'vi');
     PipesModule,
     MDBBootstrapModule.forRoot(),
     MatProgressSpinnerModule,
+    NgxSliderModule,
     // FacebookModule.forRoot()
   ],
   declarations: [

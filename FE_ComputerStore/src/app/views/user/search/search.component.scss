@@ -101,3 +101,21 @@ hr{
     height: 40px;
     overflow: hidden;
 }
+
+::ng-deep .ngx-slider-pointer{
+    outline: none;
+    width: 15px !important;
+    height: 15px !important;
+    top: -5px !important;
+
+}
+
+.filter-product button{
+    width: 100%;
+    background-color: #243a76;
+    outline: none;
+    color: #fff;
+    border: 0;
+    line-height: 25px;
+    border-radius: 3px;
+}

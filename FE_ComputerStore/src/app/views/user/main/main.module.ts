@@ -8,9 +8,6 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PipesModule } from '../../../pipe/pipes/pipes.module';
-import { MainComponent } from './main.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductLaptopComponent } from './product-laptop/product-laptop.component';
 // Angular
 
 @NgModule({

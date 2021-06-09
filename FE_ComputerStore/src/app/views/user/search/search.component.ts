@@ -1,3 +1,4 @@
+import { Options } from '@angular-slider/ngx-slider';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -33,6 +34,13 @@ export class SearchComponent implements OnInit, OnDestroy {
   product_type_name: any;
   page = 1;
   pageSize = 16;
+  minValue: number = 0;
+  maxValue: number = 100000000;
+  options: Options = {
+    floor: 0,
+    ceil: 100000000,
+    step: 500000
+  };
 
   constructor(private productService: ProductService,
     private route: ActivatedRoute,
@@ -56,6 +64,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     var filterResult = [];
     this.checkSelect = 0;
     this.list_product_laptop = [];
+    this.list_trademark_selected = [];
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       var keyword = this.search.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
@@ -167,6 +176,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public filterProducts(): void {
+    this.minValue = 0;
+    this.maxValue = 100000000;
     if (this.checkSelect !== 0) {
       this.checkSelect = 0;
     }
@@ -184,7 +195,22 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
   }
 
+  filterPrice() {
+    if (this.checkSelect !== 0) {
+      this.checkSelect = 0;
+    }
+    for (let item of this.list_trademark_show) {
+      item.selected = false;
+    }
+    let list_product_filter = this.list_product_laptop1;
+    let list = list_product_filter.filter(product => product.price_display < this.maxValue && product.price_display > this.minValue);
+    // this.list_product_laptop = [];
+    this.list_product_laptop = list;
+  }
+
   changeStatus(event: any) {
+    this.minValue = 0;
+    this.maxValue = 100000000;
     for (let item of this.list_trademark_show) {
       item.selected = false;
     }
@@ -205,6 +231,16 @@ export class SearchComponent implements OnInit, OnDestroy {
       case 3:
         this.list_product_laptop.sort(function (a, b) {
           return a.price - b.price;
+        });
+        break;
+      case 4:
+        this.list_product_laptop.sort(function (a, b) {
+          return b.view - a.view;
+        });
+        break;
+      case 5:
+        this.list_product_laptop.sort(function (a, b) {
+          return b.rate - a.rate;
         });
         break;
       default:

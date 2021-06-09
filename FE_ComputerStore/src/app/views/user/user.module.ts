@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-
-
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common'
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
 
 // Dropdowns Component
 
@@ -32,6 +33,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '../../loader/interceptor.service';
 import { ProductByBrandComponent } from './product-by-brand/product-by-brand.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 // Angular
 
 @NgModule({
@@ -49,6 +51,7 @@ import { ProductByBrandComponent } from './product-by-brand/product-by-brand.com
     PipesModule,
     MDBBootstrapModule.forRoot(),
     MatProgressSpinnerModule,
+    NgxSliderModule,
     // FacebookModule.forRoot()
   ],
   declarations: [
@@ -70,7 +73,8 @@ import { ProductByBrandComponent } from './product-by-brand/product-by-brand.com
 
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+    // { provide: LOCALE_ID, useValue: 'fr-FR' }
   ]
 })
 export class UserModule { }

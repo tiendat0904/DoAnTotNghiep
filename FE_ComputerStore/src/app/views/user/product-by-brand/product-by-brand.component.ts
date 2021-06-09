@@ -1,3 +1,4 @@
+import { Options } from '@angular-slider/ngx-slider';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -35,28 +36,37 @@ export class ProductByBrandComponent implements OnInit {
   price_new: any;
   page = 1;
   pageSize = 12;
-  constructor(private productService: ProductService, 
-    private route: ActivatedRoute, 
+  minValue: number = 0;
+  maxValue: number = 100000000;
+  options: Options = {
+    floor: 0,
+    ceil: 100000000,
+    step: 500000
+  };
+
+  constructor(private productService: ProductService,
+    private route: ActivatedRoute,
     private trademarkService: TrademarkService,
-    private productTypeService:ProductTypeService,
+    private productTypeService: ProductTypeService,
     private cartService: CartService,
     private toastr: ToastrService,
     private billDetailService: BillDetailService,
-    private billService: BillService, 
+    private billService: BillService,
     public loaderService: LoaderService) { }
 
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.list_product_type_selected = [];
       this.trademark_id = Number.parseInt(params['trademark_id']);
-      
       this.fetchProduct();
     });
   }
 
   fetchProduct() {
     this.checkSelect = 0;
+    this.list_product_laptop = [];
+    this.list_product_type_show = [];
     this.productService.getAll().subscribe(data => {
       let trademark_id = this.trademark_id;
       this.list_product = data.data;
@@ -125,9 +135,9 @@ export class ProductByBrandComponent implements OnInit {
           }
           this.billDetailService.create(billDetailModel).subscribe(data => {
             this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
-          },err =>{
+          }, err => {
             console.log(err.error.error)
-            this.toastr.warning(err.error.error,'www.tiendatcomputer.vn cho biết');
+            this.toastr.warning(err.error.error, 'www.tiendatcomputer.vn cho biết');
           });
           // this.billDetailService.getAll().subscribe(data => {
           //   list_bill_detail = data.data;
@@ -173,33 +183,49 @@ export class ProductByBrandComponent implements OnInit {
           });
         }
       })
-    }else{
+    } else {
       this.cartService.addToCart(product);
       this.toastr.success("Đã thêm sản phẩm vào giỏ hàng", 'www.tiendatcomputer.vn cho biết')
     }
-    
+
   }
 
   public filterProducts(): void {
+    this.minValue = 0;
+    this.maxValue = 100000000;
     if (this.checkSelect !== 0) {
       this.checkSelect = 0;
     }
-    this.list_product_laptop = this.list_product_laptop1;
-    let list_product_filter = this.list_product_laptop;
+    // this.list_product_laptop = this.list_product_laptop1;
+    let list_product_filter = this.list_product_laptop1;
     const activeColors = this.list_product_type_show.filter(c => c.selected).map(c => c.product_type_id);
 
     if (activeColors.length === 0) {
       this.list_product_laptop = this.list_product_laptop1;
-
     } else {
       let list = list_product_filter.filter(product => activeColors.includes(product.product_type_id));
-      this.list_product_laptop = [];
+      // this.list_product_laptop = [];
       this.list_product_laptop = list;
 
     }
   }
-  
+
+  filterPrice() {
+    if (this.checkSelect !== 0) {
+      this.checkSelect = 0;
+    }
+    for (let item of this.list_product_type_show) {
+      item.selected = false;
+    }
+    let list_product_filter = this.list_product_laptop1;
+    let list = list_product_filter.filter(product => product.price_display < this.maxValue && product.price_display > this.minValue);
+    // this.list_product_laptop = [];
+    this.list_product_laptop = list;
+  }
+
   changeStatus(event: any) {
+    this.minValue = 0;
+    this.maxValue = 100000000;
     for (let item of this.list_product_type_show) {
       item.selected = false;
     }
@@ -221,6 +247,16 @@ export class ProductByBrandComponent implements OnInit {
       case 3:
         this.list_product_laptop.sort(function (a, b) {
           return a.price - b.price;
+        });
+        break;
+      case 4:
+        this.list_product_laptop.sort(function (a, b) {
+          return b.view - a.view;
+        });
+        break;
+      case 5:
+        this.list_product_laptop.sort(function (a, b) {
+          return b.rate - a.rate;
         });
         break;
       default:
