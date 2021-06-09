@@ -115,7 +115,6 @@ export class UpdatePromotionDateComponent implements OnInit {
       var filterResult = [];
       if (this.searchedKeyword.length == 0) {
         this.list_product = this.filterResultTemplist;
-        console.log(this.list_product);
         this.changeModel();
       } else {
         this.list_product = this.filterResultTemplist;
@@ -310,6 +309,7 @@ export class UpdatePromotionDateComponent implements OnInit {
     if (this.isAdd) {
       if (this.list_product_filter.length !== 0) {
         this.promotionDateService.create(promotion_date).subscribe(res => {
+          console.log(res.success);
           for (var i = 0; i < this.list_product.length; i++) {
             if (this.list_product[i].checked == true) {
               this.list_product[i].checked = false;

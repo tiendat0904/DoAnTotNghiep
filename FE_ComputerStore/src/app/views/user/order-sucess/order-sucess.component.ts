@@ -48,23 +48,27 @@ export class OrderSucessComponent implements OnInit,OnDestroy {
     //     this.update_address = data.data.address;
     //   })
     // }else{
-      this.billService.getBill().subscribe(data =>{
-        this.total_money = data.data.into_money;
-        this.update_customer_name = data.data.name;
-        this.update_note = data.data.note;
-        this.update_phone_number = data.data.phone_number;
-        this.update_address = data.data.address;
-        this.update_email = data.data.email;
-        this.billDetailService.getbybill(data.data.bill_id).subscribe(data =>{
-          this.array_product = data.data;
-        });
-       
-      })
+      setTimeout(() => {
+        this.billService.getBill().subscribe(data =>{
+          this.total_money = data.data.into_money;
+          this.update_customer_name = data.data.name;
+          this.update_note = data.data.note;
+          this.update_phone_number = data.data.phone_number;
+          this.update_address = data.data.address;
+          this.update_email = data.data.email;
+          this.billDetailService.getbybill(data.data.bill_id).subscribe(data =>{
+            this.array_product = data.data;
+          });
+        })
+        
+      },1000);
+    }
+  
+      
     // }
 
     // this.array_product = JSON.parse(localStorage.getItem('listProduct'));
     // for(let item of this.array_product_filter){
     //   this.array_product.push(item);
     // }
-  }
 }

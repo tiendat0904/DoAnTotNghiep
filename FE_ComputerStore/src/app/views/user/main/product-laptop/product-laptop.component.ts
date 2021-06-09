@@ -25,7 +25,7 @@ export class ProductLaptopComponent implements OnInit {
   list_trademark_selected: Array<trademarkModel> = [];
   list_trademark_show: Array<trademarkModel> = [];
   list_product_laptop = [];
-  list_product_laptop1: Array<productModel> = [];;
+  list_product_laptop1: Array<productModel> = [];
   isCheckPrice: boolean;
   checkSelect: any;
   product_type_id: any;

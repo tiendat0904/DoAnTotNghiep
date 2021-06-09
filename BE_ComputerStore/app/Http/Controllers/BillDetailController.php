@@ -459,6 +459,13 @@ class BillDetailController extends Controller
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT || $ac_type == AccountController::KH) {
             $this->base->update($request, $id);
+            $update_bills= [];
+            $update_total_money = null;
+            $update_bills= DB::table(self::table)->where(self::bill_id,'=',$request->bill_id)->get();
+            foreach($update_bills as $update_bill){
+                $update_total_money += (double)$update_bill->price * (double)$update_bill->amount;
+            }
+            DB::table(BillController::table)->where(BillController::id,'=',$request->bill_id)->update([BillController::total_money => $update_total_money,BillController::into_money => $update_total_money]);
             return response()->json($this->base->getMessage(), $this->base->getStatus());
         } else {
             return response()->json(['error' => 'Tài khoản không đủ quyền truy cập'], 403);

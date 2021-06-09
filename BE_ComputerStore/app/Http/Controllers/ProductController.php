@@ -62,7 +62,6 @@ class ProductController extends Controller
                     $obj->image[] =  $obj_image->image;
                 }
             }
-
             $code = 200;
             return response()->json(['data' => $objs], $code);
         } catch (\Throwable $e) {

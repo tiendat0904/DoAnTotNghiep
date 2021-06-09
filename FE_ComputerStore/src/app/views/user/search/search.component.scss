@@ -39,7 +39,9 @@ hr{
 .product-item{
     border: 1px solid #ddd;
     width: 25%;
+    word-break: break-word;
     position: relative;
+    height: 400px;
     top: 0;
     left: 0;
     right: 0;
@@ -48,11 +50,12 @@ hr{
 
 .product-price-new{
     color: red;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .product-checked{
     display: -webkit-inline-box;
+    margin-top: 5px;
 }
 
 .product-checked p{
@@ -92,4 +95,9 @@ hr{
     opacity: 1;
     z-index: 99;
     cursor: pointer;
+}
+
+.product-title{
+    height: 40px;
+    overflow: hidden;
 }

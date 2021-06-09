@@ -326,9 +326,7 @@ export class LoginComponent {
                           price: item.product.price_display,
                           amount: item.quantity,
                         }
-                        this.billDetailService.create(this.billDetailModel).subscribe(data => {
-                          data.data.success();
-                        });
+                        this.billDetailService.create(this.billDetailModel).subscribe();
                       }
                     }
                   });

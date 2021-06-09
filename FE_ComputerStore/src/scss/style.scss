@@ -29,7 +29,7 @@
 }
 
 ::ng-deep .modal-content{
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
 }
 
 .table-wrapper {
@@ -133,16 +133,11 @@ table.table td .edit{
     }
 }
 
-// .modal-content{
-    
-//     margin-bottom: 370px;
-
-// }
-
 .justify-content-center {
     display: flex !important;
     justify-content: center !important;
 }
+
 .justify-content-center button{
     border-radius: 16px;
     height: 32px;

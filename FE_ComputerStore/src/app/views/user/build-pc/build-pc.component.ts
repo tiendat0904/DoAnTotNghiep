@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from '../../../loader/loader.service';
@@ -94,6 +95,7 @@ export class BuildPcComponent implements OnInit {
     private cartService: CartService,
     private toastr: ToastrService, private modalService: NgbModal,
     private productService: ProductService,
+    private router: Router,
     private billService: BillService,
     private billDetailService: BillDetailService,
     public loaderService: LoaderService
@@ -172,6 +174,7 @@ export class BuildPcComponent implements OnInit {
 
         })
         this.toastr.success("Thêm vào giỏ hàng thành công", 'www.tiendatcomputer.vn cho biết');
+        this.router.navigate(['cart']);
       } else {
         this.toastr.warning("Bộ PC đang trống, vui lòng thêm linh kiện !!!", 'www.tiendatcomputer.vn cho biết');
       }
@@ -181,6 +184,7 @@ export class BuildPcComponent implements OnInit {
           this.cartService.addToCartByPC(item);
         }
         this.toastr.success("Thêm vào giỏ hàng thành công", 'www.tiendatcomputer.vn cho biết');
+        this.router.navigate(['cart']);
       } else {
         this.toastr.warning("Bộ PC đang trống, vui lòng thêm linh kiện !!!", 'www.tiendatcomputer.vn cho biết');
       }
@@ -440,11 +444,9 @@ export class BuildPcComponent implements OnInit {
           }
         }
       })
-
     } else {
       let pricecheck: any;
       this.array_pc = this.pcService.getItems();
-      console.log(this.array_pc);
       if (this.array_pc !== [] && this.array_pc !== null) {
         for (let item of this.array_pc) {
           if (item.product.price_new === null) {
@@ -457,6 +459,7 @@ export class BuildPcComponent implements OnInit {
             product_name: item.product.product_name,
             image: item.product.image,
             price: pricecheck,
+            warranty: item.product.warranty,
             quantity: item.quantity,
             product_type_name: item.product.product_type_name
           }

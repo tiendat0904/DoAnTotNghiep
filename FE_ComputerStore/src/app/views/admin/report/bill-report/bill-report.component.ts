@@ -82,7 +82,7 @@ export class BillReportComponent implements OnInit {
         this.reportService.reportBill(model).subscribe(data => {
           if (data.data !== null) {
             this.arraylist_bill = data.data;
-            this.listFilterResult = data.data;
+            this.listFilterResult = this.arraylist_bill.filter(bill => bill.order_status_description !== "SELECTING");
             for (let item of this.listFilterResult) {
               this.Revenue += item.into_money;
             }
@@ -99,7 +99,7 @@ export class BillReportComponent implements OnInit {
       this.reportService.reportBill(model).subscribe(data => {
         if (data.data !== null) {
           this.arraylist_bill = data.data;
-          this.listFilterResult = data.data;
+          this.listFilterResult = this.arraylist_bill.filter(bill => bill.order_status_description !== "SELECTING");
           for (let item of this.listFilterResult) {
             this.Revenue += item.into_money;
           }

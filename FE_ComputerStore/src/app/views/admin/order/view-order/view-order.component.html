@@ -81,7 +81,7 @@
                <div class="form-group">
                   <label>Phương thức thanh toán</label>
                   <select [(ngModel)]="update_order_type_id" class="form-control" name=""
-                     formControlName="order_type_id" id="" readonly>
+                     formControlName="order_type_id" id="" disabled>
                      <option *ngFor="let e of arraylist_order_type" value="{{e.order_type_id}}">{{e.description}}
                      </option>
                   </select>
@@ -98,7 +98,7 @@
                <div class="form-group">
                   <label>Trạng thái đơn hàng</label>
                   <select [(ngModel)]="update_order_status_id" class="form-control" name=""
-                     formControlName="order_status_id" id="" readonly>
+                     formControlName="order_status_id" id="" disabled>
                      <option *ngFor="let e of arraylist_order_status" value="{{e.order_status_id}}">{{e.description}}
                      </option>
                   </select>
@@ -124,7 +124,7 @@
             <div class="col-md-12">
                <div class="form-group">
                   <label for="total_money">Tổng tiền(VNĐ)</label>
-                  <input type="text" name="" class="form-control" [ngModel]="update_total_money | currency: 'VND'"
+                  <input type="text" name="" class="form-control" [value]="update_total_money | currency: 'VND'"
                      (ngModelChange)="update_total_money=$event" formControlName="total_money" id="total_money"
                      readonly />
                </div>
@@ -132,7 +132,7 @@
             <div class="col-md-12">
                <div class="form-group">
                   <label for="into_money">Thành tiền(VNĐ)</label>
-                  <input type="text" name="" class="form-control" [ngModel]="update_into_money | currency: 'VND'"
+                  <input type="text" name="" class="form-control" [value]="update_into_money | currency: 'VND'"
                      (ngModelChange)="update_into_money=$event" formControlName="into_money" id="into_money" readonly />
                </div>
             </div>
@@ -172,7 +172,7 @@
                               <th>STT</th>
                               <th>Tên sản phẩm</th>
                               <th>Số lượng(cái)</th>
-                              <th>Giá nhập(VNĐ)</th>
+                              <th>Giá bán(VNĐ)</th>
                            </tr>
                         </thead>
                         <tbody>

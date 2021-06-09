@@ -34,6 +34,7 @@ export class UpdateOrderDetailComponent implements OnInit {
   formGroup: FormGroup;
   isAdd = false;
   image: string = null;
+  price_display:number;
   isEdit = false;
   avatarUrl;
   isEditimage=false;
@@ -95,21 +96,18 @@ export class UpdateOrderDetailComponent implements OnInit {
         this.isEdit = false;
         this.isAdd = true;
         this.title = `Thêm mới thông tin chi tiết hóa đơn`;
-        //  this.update_bill_id = this.arrCheck.length+1;
         break;
       case 'show':
         this.isInfo = true;
         this.isEdit = false;
         this.isAdd = false;
         this.title = `Xem chi tiết thông tin chi tiết hóa đơn `;
-        //  this.update_bill_id = this.model.id;
         break;
       case 'edit':
         this.isInfo = false;
         this.isEdit = true;
         this.isAdd = false;
         this.title = `Chỉnh sửa thông tin chi tiết hóa đơn `;
-        //  this.update_bill_id = this.model.id;
         break;
       default:
         this.isInfo = false;
@@ -117,6 +115,16 @@ export class UpdateOrderDetailComponent implements OnInit {
         this.isAdd = true;
         break;
     }
+  }
+
+  changeStatus(event: any){
+    this.productService.detail(event.target.value).subscribe(data => {
+      if(data.data.price){
+        this.price_display = data.data.price;
+      }else{
+        this.price_display = data.data.price_new;
+      }
+    })
   }
 
   view(model: billDetailModel, type = null): void {
@@ -133,21 +141,16 @@ export class UpdateOrderDetailComponent implements OnInit {
           bill_id: [ this.update_bill_id],
           product_id: [ null, [Validators.required]],
           amount: [ null, [Validators.required]],
-          price : [ null , [Validators.required]],
-  
-          
+          price : [],  
         });
       }else{
         this.formGroup = this.fb.group({
           bill_id: [ this.mess_bill1],
           product_id: [ null, [Validators.required]],
           amount: [ null, [Validators.required]],
-          price : [ null , [Validators.required]],
-  
-          
+          price : [],
         });
       }
-      
     } else {
       this.formGroup = this.fb.group({
         bill_id: [{value: this.mess_bill1, disabled: this.isInfo}],
@@ -204,8 +207,6 @@ export class UpdateOrderDetailComponent implements OnInit {
       }
       );
     }
-    
-    
     if (this.isEdit) {
       billDetail = {
         bill_detail_id: this.model.bill_detail_id,
@@ -220,20 +221,10 @@ export class UpdateOrderDetailComponent implements OnInit {
         bill_id: this.formGroup.get('bill_id')?.value,
         product_id: this.formGroup.get('product_id')?.value,
         amount: this.formGroup.get('amount')?.value,
-        price : this.formGroup.get('price')?.value,
+        price : this.price_display
       };
     }
     if (this.isAdd) {
-      for (let i = 0; i < this.arrCheck.length; i++) {
-        if (this.arrCheck[i].bill_detail_id === billDetail.bill_detail_id) {
-          check = true;
-          break;
-        }
-      }
-      // if (check === true) {
-      //   this.toastr.error('Mã nhà cung cấp đã tồn tại');
-      //   return;
-      // }
       this.billDetailService.create(billDetail).subscribe(res => {
         this.closeModalReloadData();
         
@@ -247,10 +238,8 @@ export class UpdateOrderDetailComponent implements OnInit {
             }
           }
         },)
-
         this.toastr.success(res.success, 'www.tiendatcomputer.vn cho biết');
         this.modalReference.dismiss();
-       
       },
       err => {
         this.toastr.error(err.error.error, 'www.tiendatcomputer.vn cho biết');

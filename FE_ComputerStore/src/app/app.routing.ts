@@ -4,9 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
 import { AuthGuard } from './guard/auth/auth.guard';
+import { CommentCustomerComponent } from './views/admin/comment/comment-customer/comment-customer.component';
 import { CustomerComponent } from './views/admin/customer/customer/customer.component';
 import { EmployeeComponent } from './views/admin/emloyee/employee/employee.component';
-import { CommentCustomerComponent } from './views/admin/New folder/comment-customer/comment-customer.component';
 import { NewsComponent } from './views/admin/news/news/news.component';
 import { ProductPromotionComponent } from './views/admin/promotion-date/product-promotion/product-promotion.component';
 import { PromotionDateComponent } from './views/admin/promotion-date/promotion-date/promotion-date.component';

@@ -48,7 +48,6 @@ export class SelectItemBuildPcComponent implements OnInit {
   }
 
   add(product: productModel) {
-    let checkProduct: boolean;
     let pcModel: BuildPCModel;
     if (localStorage.getItem("account_id")) {
       pcModel = {
@@ -66,10 +65,8 @@ export class SelectItemBuildPcComponent implements OnInit {
                 const modelDelete = {
                   id: item.build_pc_id
                 };
-                this.pcService.delete(modelDelete).subscribe(data =>{
-                });
-                this.pcService.create(pcModel).subscribe();;
-                
+                this.pcService.create(pcModel).subscribe();
+                this.pcService.delete(modelDelete).subscribe(); 
                 this.eventEmit.emit('success');
                 this.modalReference.dismiss();
               }
@@ -87,7 +84,6 @@ export class SelectItemBuildPcComponent implements OnInit {
 
         }
       })
-
     } else {
       this.array_pc = this.pcService.getItems();
       if (this.pcService.getItems() && this.array_pc.length !== 0) {

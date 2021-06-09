@@ -6,6 +6,13 @@
     z-index: 99999;
 }
 
+.picsum-img-wrapper img{
+    border-radius: 20px;
+    width: 739px;
+    height: 430px;
+    object-fit: fill;
+}
+
 hr{
     border : 1px solid #243a76;
     background-color: #243a76;
@@ -17,6 +24,7 @@ hr{
     padding-left: 0px;
     padding-right: 0px;
     z-index: 2;
+    width: 230px;
 }
 
 .main-slider-left ul{
@@ -31,9 +39,9 @@ hr{
 }
 
 .main-slider-left ul a{
-    font-size: 17px;
+    font-size: 16px;
     border: 1px solid #ddd;
-    height: 30.78px;
+    line-height: 31.4px;
     color: black;
     
 }
@@ -63,11 +71,12 @@ hr{
 
 .main-slider-right img{
     height: 215px;
-    width: 329px;
+    width: 319px;
 }
 
 .banner-duoi-slider{
     display: flex;
+    margin-top: 15px;
     margin-left: -15px;
     margin-right: -15px;
 }
@@ -106,6 +115,11 @@ hr{
     // left: 845px;
     // top: 10px;
     font-size: 17px;
+}
+
+.product-title{
+    height: 40px;
+    overflow: hidden;
 }
 
 .product-title-container{
@@ -147,6 +161,10 @@ hr{
   
 }
 
+.product-checked{
+    margin-top: 5px;
+}
+
 .product-item{
     border: 1px solid #ddd;
     width: 20%;
@@ -159,11 +177,11 @@ hr{
 }
 
 .product-description{
-    margin-left: 15px;
+    margin: 0 10px;
 }
 
 .product-price-new{
-    font-size: 22px;
+    font-size: 18px;
     color: red;
 }
 
@@ -225,8 +243,16 @@ hr{
     bottom: 230px;
 }
 ::ng-deep .owl-item{
-    height: 400px !important;
+    height: 420px !important;
 }
+
+::ng-deep .carousel-indicators{
+    bottom: 0px!important;
+}
+
+// ::ng-deep .owl-stage-outer{
+//     height: 450px !important;
+// }
 
 ::ng-deep .owl-next i:hover{
     color: #ed1b24;

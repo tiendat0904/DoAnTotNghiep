@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule,LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy, PathLocationStrategy, CurrencyPipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import {NgxPrintModule} from 'ngx-print';
+import { NgxPrintModule } from 'ngx-print';
 import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -21,9 +21,9 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { ToastrModule } from 'ngx-toastr';
-import {AngularFireModule} from "@angular/fire";
-import {AngularFireStorageModule} from "@angular/fire/storage";
-import {AngularFireDatabaseModule} from "@angular/fire/database";
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireStorageModule } from "@angular/fire/storage";
+import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { FacebookModule } from 'ngx-facebook';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {
@@ -44,7 +44,7 @@ import {
 
 // Import routing module
 import { AppRoutingModule } from './app.routing';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 // Import 3rd party components
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -78,18 +78,18 @@ import { UpdateCustomerComponent } from './views/admin/customer/update-customer/
 import { AccountModule } from './views/admin/account/account.module';
 import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './views/forgot-password/reset-password/reset-password.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UpdateCommentCustomerComponent } from './views/admin/New folder/update-comment-customer/update-comment-customer.component';
-import { CommentCustomerComponent } from './views/admin/New folder/comment-customer/comment-customer.component';
 import { EmployeeComponent } from './views/admin/emloyee/employee/employee.component';
 import { UpdateEmployeeComponent } from './views/admin/emloyee/update-employee/update-employee.component';
+import { CommentCustomerComponent } from './views/admin/comment/comment-customer/comment-customer.component';
+import { UpdateCommentCustomerComponent } from './views/admin/comment/update-comment-customer/update-comment-customer.component';
 
 registerLocaleData(localeFr, 'vi');
 @NgModule({
   imports: [
     BrowserModule,
-    NgbModule,  
+    NgbModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     AppAsideModule,
@@ -113,12 +113,12 @@ registerLocaleData(localeFr, 'vi');
     NgxPrintModule,
     IconSetModule.forRoot(),
     ToastrModule.forRoot({
-			timeOut: 3000,
-			positionClass: 'toast-top-center',
-			closeButton: true,
-			maxOpened: 5,
-			newestOnTop: true
-		  }),
+      timeOut: 3000,
+      positionClass: 'toast-top-center',
+      closeButton: true,
+      maxOpened: 5,
+      newestOnTop: true
+    }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
     AngularFireDatabaseModule,
@@ -154,28 +154,29 @@ registerLocaleData(localeFr, 'vi');
     CommentCustomerComponent,
     UpdateCommentCustomerComponent,
     EmployeeComponent,
-    UpdateEmployeeComponent
+    UpdateEmployeeComponent,
+ 
     // MainComponent,
     // ProductDetailComponent
-   
+
   ],
   providers: [
-    DatePipe,CurrencyPipe,
+    DatePipe, CurrencyPipe,
     {
-      
+
       provide: LocationStrategy,
       useClass: HashLocationStrategy,
     },
     {
-		  provide: HTTP_INTERCEPTORS,
-		  useClass: JwtInterceptor,
-		  multi: true
-		},
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
     {
       provide: LOCALE_ID,
       useValue: 'vi' // 'de' for Germany, 'fr' for France ...
-     },
-     {
+    },
+    {
       provide: 'SocialAuthServiceConfig',
       useValue: {
         autoLogin: false,
@@ -195,6 +196,6 @@ registerLocaleData(localeFr, 'vi');
     },
     IconSetService,
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

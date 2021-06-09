@@ -12,7 +12,7 @@ class ProductTypeController extends Controller
     const id = 'product_type_id';
     const product_type_name = 'product_type_name';
     const description = 'description';
-
+    const icon = "icon";
     /**
      * NhaCungCapController constructor.
      * @param $base
@@ -60,6 +60,7 @@ class ProductTypeController extends Controller
             if (count($arr_value) > 0) {
                 $validator = Validator::make($arr_value, [
                     self::product_type_name => 'required',
+                    self::icon => 'required',
                 ]);
                 if ($validator->fails()) {
                     return response()->json(['error' => $validator->errors()->all()], 400);

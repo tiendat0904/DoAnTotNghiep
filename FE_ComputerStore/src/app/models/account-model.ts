@@ -10,7 +10,7 @@ export interface accountModel{
     phone_number?: string,
     value?: string,
     image?: string,
-    account_type_id?: bigint,
+    account_type_id?: number,
     created_at?: Date;
     checked?:  boolean
  }

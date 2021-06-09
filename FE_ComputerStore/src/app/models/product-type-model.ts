@@ -1,6 +1,8 @@
-export interface productTypeModel{
+export interface productTypeModel {
     product_type_id?: bigint,
     product_type_name?: String,
     description?: String,
-    selected?:boolean,
- }
+    selected?: boolean,
+    icon?:string,
+    checked?: boolean,
+}

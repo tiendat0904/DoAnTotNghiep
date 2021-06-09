@@ -71,15 +71,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Loại tài khoản</label>
-            <select class="form-control" name="" formControlName="account_type_id" id="">
-              <option *ngFor="let e of arraylist_account_type" value="{{e.account_type_id}}">{{e.description}}
-              </option>
-            </select>
-            <div *ngIf="submitted && formGroup.controls['account_type_id'].errors?.required">
-              <div *ngIf="formGroup.controls['account_type_id'].errors?.required" style="color: red">
-                * Loại tài khoản không được để trống
-              </div>
-            </div>
+            <input type="text" name="" value="Nhân viên" class="form-control" readonly/>
           </div>
         </div>
       </div>

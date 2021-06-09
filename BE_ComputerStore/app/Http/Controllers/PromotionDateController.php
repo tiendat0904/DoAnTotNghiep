@@ -64,7 +64,7 @@ class PromotionDateController extends Controller
         //
         // return response()->json(['data' => $request->listProduct], 201);
         date_default_timezone_set(BaseController::timezone);
-        $date = date('d-m-Y');
+        $date = date('Y-m-d');
         $user = auth()->user();
         $ac_type = $user->account_type_id;
         if ($ac_type == AccountController::NV || $ac_type == AccountController::QT) {
@@ -79,12 +79,12 @@ class PromotionDateController extends Controller
                 }
                 $time = strtotime($arr_value[self::date]);
                 $ngay = date('Y-m-d', $time);
-                if (date('d-m-Y', $time) < $date) {
+                if (date('Y-m-d', $time) < $date) {
                     return response()->json(['error' => 'Ngày không hợp lệ. Ngày nhập phải lớn hơn ngày hiện tại'], 400);
                 }
                 $ngay_km = DB::table(self::table)->whereDate(self::date, '=', date('Y-m-d', $time))->get();
                 if (count($ngay_km) > 0) {
-                    return response()->json(['error' => 'Dữ liệu đã tồn tại'], 400);
+                    return response()->json(['error' => 'Đã tồn tại ngày khuyến mãi này, vui lòng kiểm tra lại !!!'], 400);
                 }
                 if ((int)$arr_value['promotion_level'] < 0 || (int)$arr_value['promotion_level'] > 100) {
                     return response()->json(['error' => 'Mức khuyến mãi không hợp lệ'], 400);

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit,ChangeDetectionStrategy,ChangeDetectorRef , ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,9 +19,10 @@ import { UpdateOrderDetailComponent } from '../update-order-detail/update-order-
 @Component({
   selector: 'app-view-order',
   templateUrl: './view-order.component.html',
-  styleUrls: ['./view-order.component.scss']
+  styleUrls: ['./view-order.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewOrderComponent implements OnInit {
+export class ViewOrderComponent implements OnInit,AfterViewInit {
 
   @ViewChild(UpdateOrderDetailComponent) view!: UpdateOrderDetailComponent;
   arraylist_bill_detail: Array<billDetailModel> = [];
@@ -37,8 +38,8 @@ export class ViewOrderComponent implements OnInit {
   closeResult: string;
   isLoading = false;
   isSelected = true;
-  update_total_money = 0.00;
-  update_into_money = 0.00;
+  update_total_money:number;
+  update_into_money:number;
   submitted = false;
   formGroup: FormGroup;
   searchedKeyword: string;
@@ -73,7 +74,8 @@ export class ViewOrderComponent implements OnInit {
     private billService: BillService,
     private orderTypeService: OrderTypeService,
     private orderStatusService: OrderStatusService,
-    public loaderService:LoaderService 
+    public loaderService:LoaderService,
+    public cdRef:ChangeDetectorRef
   ) {
     // this.billService.getAll().subscribe(data => {
     //   this.arraylist_bill = data.data;
@@ -83,6 +85,9 @@ export class ViewOrderComponent implements OnInit {
 
 
 
+  }
+  ngAfterViewInit(): void {
+    this.cdRef.detectChanges();
   }
 
 

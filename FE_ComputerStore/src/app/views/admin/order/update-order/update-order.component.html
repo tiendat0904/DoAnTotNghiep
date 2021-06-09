@@ -110,7 +110,7 @@
             <div class="col-md-12">
                <div class="form-group">
                   <label for="total_money">Tổng tiền(VNĐ)</label>
-                  <input type="text" name="" class="form-control" [ngModel]="update_total_money | currency: 'VND'"
+                  <input type="text" name="" class="form-control" [value]="update_total_money | currency: 'VND'"
                      (ngModelChange)="update_total_money=$event" formControlName="total_money" id="total_money"
                      readonly />
                </div>
@@ -118,7 +118,7 @@
             <div class="col-md-12">
                <div class="form-group">
                   <label for="into_money">Thành tiền(VNĐ)</label>
-                  <input type="text" name="" class="form-control" [ngModel]="update_into_money | currency: 'VND'"
+                  <input type="text" name="" class="form-control" [value]="update_into_money | currency: 'VND'"
                      (ngModelChange)="update_into_money=$event" formControlName="into_money" id="into_money" readonly />
                </div>
             </div>
@@ -194,7 +194,7 @@
                               <th>STT</th>
                               <th>Tên sản phẩm</th>
                               <th>Số lượng(cái)</th>
-                              <th>Giá nhập(VNĐ)</th>
+                              <th>Giá bán(VNĐ)</th>
                               <th>Thao tác</th>
                            </tr>
                         </thead>
@@ -239,6 +239,8 @@
                                     </div>
                                  </ng-template>
                                  <div class="row justify-content-center">
+                                    <button (click)="initModal(e,'edit')" class="btn btn-warning" title="Edit"><i
+                                       class="fas fa-edit edit" aria-hidden="true"></i></button>
                                     <button class="btn btn-danger" (click)="open(mymodal)" title="Delete"
                                        data-toggle="tooltip"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                  </div>

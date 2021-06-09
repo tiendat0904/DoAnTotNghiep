@@ -40,12 +40,13 @@ hr{
 
 .product-description i{
     margin-right: 5px;
-    color: #ffee00;
+    color: #243a76;
 }
 
 #p{
     background-color: #243a76;
     text-align: center;
+    line-height: 30px;
     font-size: 17px;
     margin-bottom: 0;
     color: #fff;
@@ -204,6 +205,7 @@ h4{
     border:0;
     line-height: 25px;
     outline: none;
+    margin-top: 5px;
 }
 
 .product-title-container h3::after{

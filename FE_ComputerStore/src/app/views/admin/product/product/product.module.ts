@@ -15,6 +15,8 @@ import { UpdateProductImageComponent } from '../update-product-image/update-prod
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '../../../../loader/interceptor.service';
+import { ProductTypeComponent } from '../product-type/product-type.component';
+import { UpdateProductTypeComponent } from '../update-product-type/update-product-type.component';
 // Angular
 
 @NgModule({
@@ -34,6 +36,8 @@ import { InterceptorService } from '../../../../loader/interceptor.service';
     UpdateProductComponent,
     ProductImageComponent,
     UpdateProductImageComponent,
+    ProductTypeComponent,
+    UpdateProductTypeComponent,
   ]
   ,
   providers:[

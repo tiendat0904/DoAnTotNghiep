@@ -39,11 +39,11 @@ class CommnentController extends Controller
         //
         $objs = null;
         $code = null;
-        $comment_noparent = [];
         $objs = DB::table(self::table)
+            ->join(ProductController::table, self::table . '.' . self::product_id, '=', ProductController::table . '.' . ProductController::id)
             ->join(AccountController::table, self::table . '.' . self::account_id, '=', AccountController::table . '.' . AccountController::id)
             ->join(AccountTypeController::table, AccountTypeController::table . '.' . AccountTypeController::id, '=', AccountController::table . '.' . AccountController::account_type_id)
-            ->select(self::table . '.*', AccountController::table . '.' . AccountController::full_name, AccountTypeController::table . '.' . AccountTypeController::description, AccountTypeController::table . '.' . AccountTypeController::id, AccountController::table . '.' . AccountController::image)
+            ->select(self::table . '.*',ProductController::table . '.' . ProductController::product_name, AccountController::table . '.' . AccountController::full_name, AccountTypeController::table . '.' . AccountTypeController::description, AccountTypeController::table . '.' . AccountTypeController::id, AccountController::table . '.' . AccountController::image)
             ->get();
         $code = 200;
         return response()->json(['data' => $objs], $code);

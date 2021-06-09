@@ -72,6 +72,11 @@ export const navItems: INavData[] = [
         icon: 'icon-badge'
       },
       {
+        name: 'Loại sản phẩm',
+        url: '/admin/product/product-type',
+        icon: 'icon-badge'
+      },
+      {
         name: 'Hình ảnh sản phẩm',
         url: '/admin/product/product-image',
         icon: 'icon-badge'

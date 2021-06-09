@@ -1,17 +1,16 @@
 <div class="header-main-center-scoll">
     <div class="header-main-scoll" style="z-index: 999;width: 100%;background-color: #243a76;height: 50px;">
-        <div style="padding-right: 72px;margin-left: 79px;position: relative;top: 12px;">
+        <div style="padding-right: 90px;margin-left: 79px;position: relative;top: 15px;">
             <div class="danh-muc-san-pham">
                 <a>
                     <i class="fa fa-bars" aria-hidden="true" style="font-size: 18px; color: #fff;"></i>
                     <span>Danh mục sản phẩm</span>
                 </a>
             </div>
-           
             <div class='main-slider-left-scoll'>
                 <ul>
                     <a *ngFor="let item of list_product_type | slice:0:14;"
-                        [routerLink]="['/product-type/',item.product_type_id]">{{item.product_type_name}}
+                        [routerLink]="['/product-type/',item.product_type_id]"><img [src]="item.icon" style="width: 20px;height: 20px;margin: 0 8px;"  alt="">{{item.product_type_name}}
                         {{item.description}}</a>
                 </ul>
             </div>
@@ -20,11 +19,12 @@
             <div>
                 <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword"
                     placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off"
-                    style="outline: none;height: 30px;background-color: #fff;">
-                <button style="background-color: #f78d1c;outline: none; color: #fff;height: 31px;width: 40px;"
-                    (click)="search();"><i class="header-i fa fa-search " aria-hidden="true"></i></button>
+                    style="outline: none;height: 30px;width: 650px;;background-color: #fff;padding: 0 10px;">
+                <button style="background-color: #f78d1c;outline: none; color: #fff;height: 30.6px;width: 41px;border-bottom-right-radius: 10px;
+                border-top-right-radius: 10px;position: relative;left: -40px;top: 1px;border: 0;" (click)="search();"><i
+                        class="header-i fa fa-search " aria-hidden="true"></i></button>
             </div>
-            <div style="display: block;" class="autocomplete-suggestions" [hidden]="check_search">
+            <div style="display: block;left: 0;width: 653px;" class="autocomplete-suggestions" [hidden]="check_search">
                 <p [hidden]="check_product">Không tìm thấy sản phẩm phù hợp</p>
                 <a [routerLink]="['/',item.product_id]" *ngFor="let item of list_product_filter"
                     (click)="searchDetail()">
@@ -36,11 +36,11 @@
                 </a>
             </div>
         </div>
-        <div style="width: 300px; display:-webkit-inline-box;position: relative;margin:20px;left: 55px;bottom: 6px;">
+        <div style="width: 300px; display:-webkit-inline-box;position: relative;margin:20px;left: -15px;bottom: 6px;">
             <a class="header-item1" href="">
                 <i class="icon-tag"></i>
             </a>
-            <a class="header-item1" href="javascript:void(0)" (click) = "getNavigation('/account/order')">
+            <a class="header-item1" href="javascript:void(0)" (click)="getNavigation('/account/order')">
                 <i class="icon-handbag"></i>
                 <!-- <div style="height: 5px;"></div>
                 <span style="font-size: 15px;">Đơn hàng</span> -->
@@ -78,15 +78,16 @@
     </div>
 
 </div>
-<div class = "brand-hover">
+<div class="brand-hover">
     <div>
         <div>
             <div>
                 <p>THƯƠNG HIỆU NỔI BẬT</p>
             </div>
-            <div class ="brand-hover-detail">
-                <a class = "brand-hover-a" [routerLink]="['/brand/',item.trademark_id]"  *ngFor="let item of list_trademark | slice:0:12;">
-                   <img class = "brand-hover-image" src="{{item.image}}" alt="">
+            <div class="brand-hover-detail">
+                <a class="brand-hover-a" [routerLink]="['/brand/',item.trademark_id]"
+                    *ngFor="let item of list_trademark | slice:0:12;">
+                    <img class="brand-hover-image" src="{{item.image}}" alt="">
                 </a>
             </div>
         </div>
@@ -122,17 +123,17 @@
     <div class="header-main">
         <div class="header-main-center">
             <a href="#/"><img class="header-main-logo-img"
-                    src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2Flogodone4.PNG?alt=media&token=da4d981c-cba2-4c74-98b9-7cd58792cf0e"
+                    src="https://firebasestorage.googleapis.com/v0/b/upload-image-904a9.appspot.com/o/computerstore%2FCapture1.PNG?alt=media&token=b9ca3119-15f7-4733-a7db-49746e3b878b"
                     alt=""></a>
             <div class="header-main-search">
                 <div>
-                    <div class ="header-main-brand">
-                        <button class ="findbybrand">Tìm theo hãng <i class="fas fa-angle-down"></i></button>
+                    <div class="header-main-brand">
+                        <button class="findbybrand">Tìm theo hãng <i class="fas fa-angle-down"></i></button>
                     </div>
                     <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword"
-                        placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off" style="outline: none;">
-                    <button class ="button-search" style="outline: none; color: #fff;" (click)="search();"><i class="header-i fa fa-search "
-                            aria-hidden="true"></i></button>
+                        placeholder="Nhập tên sản phẩm,từ khóa cần tìm" autocomplete="off" style="outline: none;padding: 0 10px;">
+                    <button class="button-search" style="outline: none; color: #fff;" (click)="search();"><i
+                            class="header-i fa fa-search " aria-hidden="true"></i></button>
                 </div>
                 <div style="display: block;" class="autocomplete-suggestions" [hidden]="check_search">
                     <p [hidden]="check_product">Không tìm thấy sản phẩm phù hợp</p>
@@ -152,7 +153,7 @@
                     <div style="height: 5px;"></div>
                     <span style="font-size: 15px;color: #20a8d8;">Khuyến mãi</span>
                 </a>
-                <a class="header-item" href="javascript:void(0)" (click) = "getNavigation('/account/order')">
+                <a class="header-item" href="javascript:void(0)" (click)="getNavigation('/account/order')">
                     <i class="icon-handbag"></i>
                     <div style="height: 5px;"></div>
                     <span style="font-size: 15px;color: #20a8d8;">Đơn hàng</span>
@@ -192,32 +193,32 @@
     </div>
     <div class="header-bottom">
         <div class="danh-muc-san-pham1">
-            <a class="header-bottom-a" >
+            <a class="header-bottom-a" style="margin-left: 81px;">
                 <i class="fa fa-bars" aria-hidden="true" style="font-size: 18px; color: #fff;"></i>
                 <span>Danh mục sản phẩm</span>
             </a>
         </div>
-        
+
         <div class='main-slider-left-scoll1'>
             <ul>
                 <a *ngFor="let item of list_product_type | slice:0:14;"
-                    [routerLink]="['/product-type/',item.product_type_id]">{{item.product_type_name}}
+                    [routerLink]="['/product-type/',item.product_type_id]" style="padding-left: 0;"><img [src]="item.icon" style="width: 20px;height: 20px;margin: 0 8px;"  alt="">{{item.product_type_name}}
                     {{item.description}}</a>
             </ul>
         </div>
-        <a  class = "header-bottom-a">
+        <a class="header-bottom-a">
             <span class='glyphicon glyphicon-ok'></span>
             <span>Linh kiện chính hãng</span>
         </a>
-        <a  class = "header-bottom-a">
+        <a class="header-bottom-a">
             <i class='fas fa-shuttle-van' style="font-size: 18px; color: #fff;"></i>
             <span>Ship COD toàn quốc</span>
         </a>
-        <a  class = "header-bottom-a">
+        <a class="header-bottom-a">
             <i class="fa fa-exchange" style="font-size: 18px; color: #fff;"></i>
             <span>Đổi trả miễn phí</span>
         </a>
-        <a href="/#/warranty-search" class = "header-bottom-a">
+        <a href="/#/warranty-search" class="header-bottom-a">
             <i class="fa fa-search-plus" style="font-size: 18px; color: #fff;"></i>
             <span>Tra cứu bảo hành</span>
         </a>

@@ -57,7 +57,6 @@ export class UpdateEmployeeComponent implements OnInit {
         phone_number: new FormControl(),
         created_at: new FormControl(),
         password_employee:new FormControl(),
-        account_type_id:new FormControl()
       });
   }
 
@@ -124,7 +123,6 @@ export class UpdateEmployeeComponent implements OnInit {
         email_employee: [null, [Validators.required]],
         address: [null, [Validators.required]],
         phone_number: [null, [Validators.required]],
-        account_type_id :[null, [Validators.required]],
         created_at: [this.datepipe.transform(Date.now(), 'shortDate')],
       });
       this.urlPictureDefault = avatarDefault;
@@ -135,7 +133,6 @@ export class UpdateEmployeeComponent implements OnInit {
         email_employee: [{ value: this.model.email, disabled: this.isInfo }, [Validators.required]],
         address: [{ value: this.model.address, disabled: this.isInfo }, [Validators.required]],
         phone_number: [{ value: this.model.phone_number, disabled: this.isInfo }, [Validators.required]],
-        account_type_id:[{ value: this.model.account_type_id, disabled: this.isInfo }, [Validators.required]],
         created_at: [{ value: this.model.created_at, disabled: this.isInfo }, [Validators.required]],
       });
       if (this.model.image === null) {
@@ -187,7 +184,7 @@ export class UpdateEmployeeComponent implements OnInit {
         email: this.formGroup.get('email_employee')?.value,
         address: this.formGroup.get('address')?.value,
         phone_number: this.formGroup.get('phone_number')?.value,
-        account_type_id: this.formGroup.get('account_type_id')?.value,
+        account_type_id: 2,
         image: this.urlPictureDefault,
       };
     } else {
@@ -197,7 +194,7 @@ export class UpdateEmployeeComponent implements OnInit {
         email: this.formGroup.get('email_employee')?.value,
         address: this.formGroup.get('address')?.value,
         phone_number: this.formGroup.get('phone_number')?.value,
-        account_type_id: this.formGroup.get('account_type_id')?.value,
+        account_type_id: 2,
         image: this.urlPictureDefault,
       };
     }

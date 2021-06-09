@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit,ChangeDetectionStrategy,ChangeDetectorRef , ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -17,9 +17,10 @@ import { UpdateCouponDetailComponent } from '../update-coupon-detail/update-coup
 @Component({
   selector: 'app-view-coupon',
   templateUrl: './view-coupon.component.html',
-  styleUrls: ['./view-coupon.component.scss']
+  styleUrls: ['./view-coupon.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewCouponComponent implements OnInit {
+export class ViewCouponComponent implements OnInit,AfterViewInit {
 
   @ViewChild(UpdateCouponDetailComponent) view!: UpdateCouponDetailComponent;
   arraylist_coupon_detail: Array<couponDetailModel> = [];
@@ -32,7 +33,7 @@ export class ViewCouponComponent implements OnInit {
   modalReference: any;
   isDelete = true;
   closeResult: string;
-  update_total_money = 0.00;
+  update_total_money :number;
   submitted = false;
   formGroup: FormGroup;
   searchedKeyword: string;
@@ -56,11 +57,15 @@ export class ViewCouponComponent implements OnInit {
     private supplierService: SupplierService,
     private actRoute: ActivatedRoute,
     private couponService: CouponService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    public cdRef:ChangeDetectorRef
   ) {
     this.couponService.getAll().subscribe(data => {
       this.arraylist_coupon = data.data;
     })
+  }
+  ngAfterViewInit(): void {
+    this.cdRef.detectChanges();
   }
 
   ngOnInit(): void {

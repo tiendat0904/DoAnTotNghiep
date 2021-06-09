@@ -17,6 +17,7 @@ class CreateProductTypesTable extends Migration
             $table->id('product_type_id');
             $table->string('product_type_name');
             $table->string('description')->nullable();
+            $table->string('icon');
         });
     }
 

@@ -28,6 +28,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   list_product_laptop = [];
   list_product_laptop1 = [];
   search: string;
+  checkSelect: any;
   product_type_id: any;
   product_type_name: any;
   page = 1;
@@ -53,6 +54,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   fetchProduct() {
     var filterResult = [];
+    this.checkSelect = 0;
+    this.list_product_laptop = [];
     this.productService.getAll().subscribe(data => {
       this.list_product = data.data;
       var keyword = this.search.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
@@ -135,29 +138,6 @@ export class SearchComponent implements OnInit, OnDestroy {
             console.log(err.error.error)
             this.toastr.warning(err.error.error, 'www.tiendatcomputer.vn cho biết');
           });
-          // this.billDetailService.getAll().subscribe(data => {
-          //   list_bill_detail = data.data;
-          //   list_bill_detail_filter = list_bill_detail.filter(function (bill) {
-          //     return (bill.bill_id === list_bill_filter[0].bill_id && bill.product_id === product_detail.product_id);
-          //   });
-          //   if (list_bill_detail_filter.length === 0) {
-          //     billDetailModel = {
-          //       bill_id: list_bill_filter[0].bill_id,
-          //       product_id: product_detail.product_id,
-          //       price: product_detail.price_display,
-          //       amount: 1,
-          //     }
-          //     this.billDetailService.create(billDetailModel).subscribe(data => {
-          //     });
-          //   } else {
-          //     billDetailModel = {
-          //       bill_detail_id: list_bill_detail_filter[0].bill_detail_id,
-          //       amount: list_bill_detail_filter[0].amount + 1
-          //     }
-          //     this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id, billDetailModel).subscribe(data => {
-          //     });
-          //   }
-          // })
         } else {
           billModel = {
             customer_id: account_id,
@@ -187,22 +167,27 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public filterProducts(): void {
-    this.list_product_laptop = this.list_product_laptop1;
-    let list_product_filter = this.list_product_laptop;
+    if (this.checkSelect !== 0) {
+      this.checkSelect = 0;
+    }
+    // this.list_product_laptop = this.list_product_laptop1;
+    let list_product_filter = this.list_product_laptop1;
     const activeColors = this.list_trademark_show.filter(c => c.selected).map(c => c.trademark_id);
 
     if (activeColors.length === 0) {
       this.list_product_laptop = this.list_product_laptop1;
-
     } else {
       let list = list_product_filter.filter(product => activeColors.includes(product.trademark_id));
-      this.list_product_laptop = [];
+      // this.list_product_laptop = [];
       this.list_product_laptop = list;
 
     }
   }
 
   changeStatus(event: any) {
+    for (let item of this.list_trademark_show) {
+      item.selected = false;
+    }
     switch (parseInt(event)) {
       case 0:
         this.list_product_laptop = [...this.list_product_laptop];

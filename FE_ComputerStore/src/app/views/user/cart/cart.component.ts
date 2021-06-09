@@ -428,6 +428,7 @@ export class CartComponent implements OnInit {
         });
       })
     } else {
+      this.toastr.success("Xóa giỏ hàng thành công", 'www.tiendatcomputer.vn cho biết');
       this.cartService.clearCart();
     }
     setTimeout(() => {
@@ -479,6 +480,7 @@ export class CartComponent implements OnInit {
           });
           bill_detail_id = list_bill_detail_filter[0].bill_detail_id;
           this.billDetailModel = {
+            bill_id : list_bill_detail_filter[0].bill_id,
             amount: list_bill_detail_filter[0].amount + 1
           }
           this.billDetailService.update(list_bill_detail_filter[0].bill_detail_id, this.billDetailModel).subscribe(data => {

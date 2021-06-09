@@ -1,12 +1,12 @@
 <div *ngIf="loaderService.isLoading | async" class="loader-container">
-  <mat-progress-spinner mode="indeterminate" style="top: 40%; left: 40%;"></mat-progress-spinner>
+  <mat-progress-spinner mode="indeterminate" style="top: 20%; left: 50%;"></mat-progress-spinner>
 </div>
 <div class='container'>
   <div class='row main-slider'>
-    <div class='main-slider-left col-lg-2'>
+    <div class='main-slider-left'>
       <ul>
-        <a *ngFor="let item of list_product_type | slice:0:14;"
-          [routerLink]="['/product-type/',item.product_type_id]">{{item.product_type_name}} {{item.description}}</a>
+        <a *ngFor="let item of list_product_type | slice:0:13;"
+          [routerLink]="['/product-type/',item.product_type_id]"><img [src]="item.icon" style="width: 20px;height: 20px;margin: 0 8px;"  alt="">{{item.product_type_name}} {{item.description}}</a>
       </ul>
     </div>
     <div class='col-lg-7'>
@@ -98,7 +98,7 @@
                     </div>
                     <div class='product-title'>
                       <a [routerLink]="['/',item.product_id]"
-                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                        style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
                     </div>
                   </div>
                   <div style="align-self: flex-end; margin-left: 15px;">
@@ -109,7 +109,7 @@
                     </div>
                     <div class='product-checked'>
                       <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                      <div style="padding-left: 150px;" [hidden]="item.checkAmount"><button
                           (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
                     </div>
                   </div>
@@ -168,7 +168,7 @@
                     </div>
                     <div class='product-title'>
                       <a [routerLink]="['/',item.product_id]"
-                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                        style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
                     </div>
                   </div>
                   <div style="align-self: flex-end; margin-left: 15px;">
@@ -179,7 +179,7 @@
                     </div>
                     <div class='product-checked'>
                       <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                      <div style="padding-left: 150px;" [hidden]="item.checkAmount"><button
                           (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
                     </div>
                   </div>
@@ -238,7 +238,7 @@
                     </div>
                     <div class='product-title'>
                       <a [routerLink]="['/',item.product_id]"
-                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                        style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
                     </div>
                   </div>
                   <div style="align-self: flex-end; margin-left: 15px;">
@@ -249,7 +249,7 @@
                     </div>
                     <div class='product-checked'>
                       <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                      <div style="padding-left: 150px;" [hidden]="item.checkAmount"><button
                           (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
                     </div>
                   </div>
@@ -308,7 +308,7 @@
                     </div>
                     <div class='product-title'>
                       <a [routerLink]="['/',item.product_id]"
-                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                        style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
                     </div>
                   </div>
                   <div style="align-self: flex-end; margin-left: 15px;">
@@ -319,7 +319,7 @@
                     </div>
                     <div class='product-checked'>
                       <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                      <div style="padding-left: 150px;" [hidden]="item.checkAmount"><button
                           (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
                     </div>
                   </div>
@@ -378,7 +378,7 @@
                     </div>
                     <div class='product-title'>
                       <a [routerLink]="['/',item.product_id]"
-                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                        style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
                     </div>
                   </div>
                   <div style="align-self: flex-end; margin-left: 15px;">
@@ -389,7 +389,7 @@
                     </div>
                     <div class='product-checked'>
                       <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                      <div style="padding-left: 150px;" [hidden]="item.checkAmount"><button
                           (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
                     </div>
                   </div>
@@ -448,7 +448,7 @@
                     </div>
                     <div class='product-title'>
                       <a [routerLink]="['/',item.product_id]"
-                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                        style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
                     </div>
                   </div>
                   <div style="align-self: flex-end; margin-left: 15px;">
@@ -459,7 +459,7 @@
                     </div>
                     <div class='product-checked'>
                       <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                      <div style="padding-left: 150px;" [hidden]="item.checkAmount"><button
                           (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
                     </div>
                   </div>
@@ -518,7 +518,7 @@
                     </div>
                     <div class='product-title'>
                       <a [routerLink]="['/',item.product_id]"
-                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                        style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
                     </div>
                   </div>
                   <div style="align-self: flex-end; margin-left: 15px;">
@@ -529,7 +529,7 @@
                     </div>
                     <div class='product-checked'>
                       <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                      <div style="padding-left: 150px;" [hidden]="item.checkAmount"><button
                           (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
                     </div>
                   </div>
@@ -588,7 +588,7 @@
                     </div>
                     <div class='product-title'>
                       <a [routerLink]="['/',item.product_id]"
-                        style="color: #333; text-decoration: none;font-weight: 600;">{{[item.product_name]}}</a>
+                        style="color: #333; text-decoration: none;font-weight: 500;text-transform: uppercase;font-size: 13px;">{{[item.product_name]}}</a>
                     </div>
                   </div>
                   <div style="align-self: flex-end; margin-left: 15px;">
@@ -599,7 +599,7 @@
                     </div>
                     <div class='product-checked'>
                       <p [ngStyle]="{'color':item.check === 'Còn hàng' ? '#2cc067' : '#0074da' }">{{item.check}}</p>
-                      <div style="padding-left: 135px;" [hidden]="item.checkAmount"><button
+                      <div style="padding-left: 150px;" [hidden]="item.checkAmount"><button
                           (click)="addProductToCart(item);"><i class="icon-basket"></i></button></div>
                     </div>
                   </div>

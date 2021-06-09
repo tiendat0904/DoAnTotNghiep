@@ -44,7 +44,6 @@ export class PrintOrderComponent implements OnInit {
       link.download = "Bill" + created_at + bill_id + ".png";
       link.href = canvas;
       link.click();
-      this.toastr.success("Tải đơn hàng thành công");
     });
   }
 

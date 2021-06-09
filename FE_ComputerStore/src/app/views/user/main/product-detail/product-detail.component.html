@@ -21,7 +21,7 @@
             </mdb-carousel>
         </div>
         <div class='col-lg-5 product-description'>
-            <h3 style=" color: #000000ef; text-transform: uppercase;font-size: 22px;">{{product.product_name}}</h3>
+            <h3 style=" color: #000000ef; text-transform: uppercase;font-size: 22px;word-break: break-word;">{{product.product_name}}</h3>
             <hr style="width: 100%;" />
             <span>Mã SP: {{product.product_id}}</span>
             <span>|  Đánh giá: </span>
@@ -86,7 +86,7 @@
 <div style="background-color: #f4f4f4;">
     <div style="padding-top: 30px;width: 74%;">
         <div style="background-color: #fff;">
-            <h2 style="padding-top: 10px;padding-left: 18px;">Đánh GIÁ SẢN PHẨM</h2>
+            <h2 style="padding-top: 10px;padding-left: 18px;">ĐÁNH GIÁ SẢN PHẨM</h2>
             <hr style="width: 58.4rem;">
             <div style="display: -webkit-inline-box;padding-left: 20px;">
                 <img style="max-height: 40px;max-width: 40px;" [src]="image_default" alt="">
@@ -192,7 +192,7 @@
                 <h3 style="font-size: 20px;">Cùng thương hiệu</h3>
             </div>
             <div class="product-grid" style="display: flex;width: 100%;" >
-                <div class='product-item' style="width: 20%;" *ngFor="let item of (list_product_trademark | slice:list_product_trademark.length - 5);">
+                <div class='product-item' style="width: 19.5%" *ngFor="let item of (list_product_trademark | slice:list_product_trademark.length - 5);">
                     <a class="product-item-info">
                       <div class='product-item-detail'>
                         <div class='product-image'>
