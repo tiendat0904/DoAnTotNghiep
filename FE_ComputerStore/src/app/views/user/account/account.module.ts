@@ -16,6 +16,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { OrderCustomerComponent } from './order-customer/order-customer.component';
 import { OrderDetailCustomerComponent } from './order-detail-customer/order-detail-customer.component';
+import { VoucherCustomerComponent } from './voucher-customer/voucher-customer.component';
 
 // Angular
 
@@ -36,7 +37,8 @@ import { OrderDetailCustomerComponent } from './order-detail-customer/order-deta
     AccountInfoComponent,
     ChangePasswordComponent,
     OrderCustomerComponent,
-    OrderDetailCustomerComponent
+    OrderDetailCustomerComponent,
+    VoucherCustomerComponent
   ]
 })
 export class AccountModule { }

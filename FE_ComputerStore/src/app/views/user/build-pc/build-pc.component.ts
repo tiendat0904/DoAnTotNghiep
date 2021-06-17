@@ -139,7 +139,7 @@ export class BuildPcComponent implements OnInit {
 
   addToCart() {
     if (localStorage.getItem("account_id")) {
-      if (this.array_build_pc.length !== 0) {
+      if (this.array_build_pc != null && this.array_build_pc.length !== 0) {
         this.billService.getByAccount(localStorage.getItem("account_id")).subscribe(data => {
           if (data.data !== []) {
             this.array_bill = data.data;
@@ -181,7 +181,7 @@ export class BuildPcComponent implements OnInit {
         this.toastr.warning("Bộ PC đang trống, vui lòng thêm linh kiện !!!", 'www.tiendatcomputer.vn cho biết');
       }
     } else {
-      if (this.array_pc.length !== 0) {
+      if ( this.array_pc != null && this.array_pc.length !== 0) {
         for (let item of this.array_pc) {
           this.cartService.addToCartByPC(item);
         }

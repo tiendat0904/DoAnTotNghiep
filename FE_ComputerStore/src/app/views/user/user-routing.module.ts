@@ -11,6 +11,7 @@ import { NewsComponent } from './news/news.component';
 import { OrderSucessComponent } from './order-sucess/order-sucess.component';
 import { ProductByBrandComponent } from './product-by-brand/product-by-brand.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PromotionProductsComponent } from './promotion-products/promotion-products.component';
 import { SearchComponent } from './search/search.component';
 import { WarrantySearchComponent } from './warranty-search/warranty-search.component';
 
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: '',
         component: MainComponent
+      },
+      {
+        path: 'khuyenmai',
+        component: PromotionProductsComponent
       },
       {
         path: 'product-type/:product_type_id',

@@ -34,6 +34,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '../../loader/interceptor.service';
 import { ProductByBrandComponent } from './product-by-brand/product-by-brand.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { PromotionProductsComponent } from './promotion-products/promotion-products.component';
 // Angular
 
 @NgModule({
@@ -70,6 +71,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     BuildPcComponent,
     SelectItemBuildPcComponent,
     ProductByBrandComponent,
+    PromotionProductsComponent,
 
   ],
   providers: [

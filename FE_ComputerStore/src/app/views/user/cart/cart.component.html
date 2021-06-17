@@ -167,15 +167,20 @@
                 <div style="padding-right: 5px;">
                     <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" autocomplete="off">
                     <div style="background-color: #fff;" *ngFor="let item of list_voucher_filter">
-                        <p style="font-weight: normal; color: red;"><span style="font-weight: normal">Voucher
+                        <div  *ngIf="checkVoucher; else elseBlock">
+                            <p style="font-weight: normal; color: red;"><span
+                                style="font-weight: normal">Voucher
                                 :</span>{{item.voucher_level}}%</p>
+                        </div>
                     </div>
+                    <p style="font-weight: normal; color: red;"  *ngIf="checkVoucher1">Mã voucher không hợp lệ !</p>
                 </div>
+               
                 <button
                     style="border-radius: 3px;border:0px;height: 35px;background-color: #243a76;width: 100px;color: #fff;"
                     (click)="useVouvher();">Áp dụng</button>
             </div>
-            <div>
+            <div style="margin-top: 15px;">
                 <span style="margin-right: 142px;">Tổng tiền</span><span>{{total | currency: 'VND'}}</span>
             </div>
             <div>

@@ -1,0 +1,25 @@
+.loader-container{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    opacity: 0.85;
+    z-index: 99999;
+}
+
+.close{
+    outline: none;
+    height: 40px;
+}
+
+.close:hover{
+    span{
+        color: white;
+    }
+    background-color: red;
+}
+
+.close span {
+    position: relative;
+    bottom: 8px;
+}

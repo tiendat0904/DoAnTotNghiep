@@ -98,6 +98,11 @@ export const navItems: INavData[] = [
         url: '/admin/product-promotion',
         icon: 'icon-present'
       },
+      {
+        name: 'Voucher',
+        url: '/admin/voucher',
+        icon: 'icon-present'
+      },
     ]
   },
   {

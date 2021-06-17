@@ -7,7 +7,7 @@ import { FacebookService, InitParams } from "ngx-facebook";
 @Component({
   // tslint:disable-next-line
   selector: 'body',
-  template: '<router-outlet></router-outlet>',
+  template: '<router-outlet></router-outlet>  <app-user></app-user>',
   providers: [IconSetService],
 })
 export class AppComponent implements OnInit {

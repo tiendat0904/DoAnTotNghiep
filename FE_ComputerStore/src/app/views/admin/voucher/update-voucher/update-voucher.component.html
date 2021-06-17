@@ -1,0 +1,111 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">{{ title }}</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <h5 *ngIf="isEdit || isAdd" style="font-size:22px;padding-left: 20px;"> Chọn khách hàng</h5>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-sm-8 button-reset">
+            <button (click)="resetCustomer();" [hidden]="checkedCustomer || isInfo">Làm mới <i
+                    class="fas fa-sync-alt"></i></button>
+        </div>
+        <div class="col-sm-4">
+            <div class="search-box" style="padding-right: 22px;">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" (keyup)="filterByKeyword()" [(ngModel)]="searchedKeyword" class="form-control"
+                    placeholder="Search&hellip;">
+            </div>
+        </div>
+    </div>
+    <div class="row" style="width: 99%;align-self: center;">
+        <div class="col-12" style="height: 300px;">
+            <table class="table table-striped table-hover table-bordered" *ngIf="condition; else elseBlock">
+                <thead>
+                    <tr>
+                        <th scope="col" *ngIf="isEdit || isAdd || isInfo">
+                            <input type="checkbox" *ngIf="isEdit || isAdd" [checked]="isAllCheckBoxChecked()"
+                                (change)="checkAllCheckBox($event)" />
+                        <th>STT</th>
+                        <th>Tên khách hàng</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    </tr>
+                    <tr *ngFor="
+                       let e of list_customer  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;
+                       let i = index
+                       ">
+                        <td *ngIf="isEdit || isAdd || isInfo">
+                            <input type="checkbox" [(ngModel)]="list_customer[i + (page-1)*pageSize].checked"
+                                (ngModelChange)="changeModel()" value="{{ e.account_id }}" [attr.disabled]="isInfo ? true : null"/>
+                        <td>{{ i + (page-1)*pageSize + 1 }}</td>
+                        <td [innerHTML]="e.full_name "></td>
+                        <td [innerHTML]="e.email "></td>
+                        <td [innerHTML]="e.phone_number "></td>
+                    </tr>
+                </tbody>
+            </table>
+            <ng-template #elseBlock>
+                <p style="margin-left: 3px;font-size: 15px;">Không tìm thấy sản phẩm phù hợp.</p>
+            </ng-template>
+        </div>
+        <div class="col-12 justify-content-center">
+            <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
+                [pageSize]="pageSize" [collectionSize]="list_customer.length"></ngb-pagination>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formGroup" (ngSubmit)="save()">
+            <div class="form-group">
+                <label>Ngày bắt đầu</label>
+                <input type="date" name="" class="form-control" formControlName="startDate" id="startDate" [readonly]="isInfo" />
+                <div *ngIf="submitted && formGroup.controls['startDate'].errors?.required">
+                    <div *ngIf="formGroup.controls['startDate'].errors?.required" style="color: red">
+                        * Ngày bắt đầu không được để trống
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Ngày hết hạn</label>
+                <input type="date" name="" class="form-control" formControlName="endDate" id="endDate"  [readonly]="isInfo" />
+                <div *ngIf="submitted && formGroup.controls['endDate'].errors?.required">
+                    <div *ngIf="formGroup.controls['endDate'].errors?.required" style="color: red">
+                        * Ngày hết hạn không được để trống
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Mức voucher(%)</label>
+                <input type="number" name="" min="0" max="100" class="form-control" formControlName="voucher_level"
+                    id="voucher_level" [readonly]="isInfo" />
+                <div *ngIf="submitted && formGroup.controls['voucher_level'].errors?.required">
+                    <div *ngIf="formGroup.controls['voucher_level'].errors?.required" style="color: red">
+                        * Mức voucher không được để trống
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" align="center">
+                <button type="submit" class="btn btn-success" style="width: 100px;height:38px; background:'green';"
+                    *ngIf="isEdit || isAdd">
+                    Lưu
+                </button>
+                <button type="button" class="btn btn-danger" style="width: 100px"
+                    (click)="modal.dismiss('Cross click')">
+                    Thoát
+                </button>
+            </div>
+
+        </form>
+    </div>
+</ng-template>

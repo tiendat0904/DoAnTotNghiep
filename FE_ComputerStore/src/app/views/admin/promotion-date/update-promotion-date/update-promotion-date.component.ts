@@ -215,14 +215,14 @@ export class UpdatePromotionDateComponent implements OnInit {
       this.checkedProduct = true;
       this.filterResultTemplist = this.list_product;
     } else {
-      if (this.isEdit) {
+      // if (this.isEdit) {
         this.list_product = this.list_product_main;
         this.list_product_select = [];
         this.promotionDateService.detail(model.promotion_date_id).subscribe(data => {
           this.arraylist_promotion_date_filter = data.data;
           this.formGroup = this.fb.group({
-            date: [{ value: this.model.date, disabled: this.isInfo }, [Validators.required]],
-            promotion_level: [{ value: this.arraylist_promotion_date_filter[0].promotion_level, disabled: this.isInfo }, [Validators.required]],
+            date: [{ value: this.model.date, disabled: this.isAdd }, [Validators.required]],
+            promotion_level: [{ value: this.arraylist_promotion_date_filter[0].promotion_level, disabled: this.isAdd }, [Validators.required]],
           });
           for (let item of this.arraylist_promotion_date_filter) {
             this.list_product_select.push(item.listProduct[0]);
@@ -240,20 +240,21 @@ export class UpdatePromotionDateComponent implements OnInit {
           this.changeModel();
           this.filterResultTemplist = this.list_product;
         })
-      } else {
-        this.list_product_select = [];
-        this.promotionDateService.detail(model.promotion_date_id).subscribe(data => {
-          this.arraylist_promotion_date_filter = data.data;
-          this.formGroup = this.fb.group({
-            date: [{ value: this.model.date, disabled: this.isInfo }, [Validators.required]],
-            promotion_level: [{ value: this.arraylist_promotion_date_filter[0].promotion_level, disabled: this.isInfo }, [Validators.required]],
-          });
-          for (let item of this.arraylist_promotion_date_filter) {
-            this.list_product_select.push(item.listProduct[0]);
-          }
-          this.list_product = this.list_product_select;
-        })
-      }
+      // } else {
+      //   this.list_product_select = [];
+      //   this.promotionDateService.detail(model.promotion_date_id).subscribe(data => {
+      //     this.arraylist_promotion_date_filter = data.data;
+      //     this.formGroup = this.fb.group({
+      //       date: [{ value: this.model.date, disabled: this.isInfo }, [Validators.required]],
+      //       promotion_level: [{ value: this.arraylist_promotion_date_filter[0].promotion_level, disabled: this.isInfo }, [Validators.required]],
+      //     });
+      //     for (let item of this.arraylist_promotion_date_filter) {
+      //       this.list_product_select.push(item.listProduct[0]);
+      //     }
+      //     this.list_product = this.list_product_select;
+      //     console.log(this.list_product);
+      //   })
+      // }
     }
   }
 

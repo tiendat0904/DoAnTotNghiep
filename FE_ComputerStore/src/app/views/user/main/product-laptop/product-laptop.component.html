@@ -6,6 +6,10 @@
     <a href=""><i class="fas fa-home"></i></a>
     <p style="margin-left: 5px;">></p>
     <p style="font-size: 20px;margin-left: 5px">{{product_type_name}}</p>
+    <div style="position: absolute;right: 395px">
+      <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
+        [pageSize]="pageSize" [collectionSize]="list_product_laptop.length"></ngb-pagination>
+    </div>
     <select (change)="changeStatus($event.target.value)" class="custom-select col-md-4 col-lg-2 col-sm-12"
       [value]="checkSelect" style="position: absolute;right: 132px;">
       <option value="0" selected disabled>Sắp xếp theo</option>
@@ -88,10 +92,6 @@
             </div>
           </a>
         </div>
-      </div>
-      <div class="col-12 justify-content-center">
-        <ngb-pagination [ellipses]="true" [rotate]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="page"
-          [pageSize]="pageSize" [collectionSize]="list_product_laptop.length"></ngb-pagination>
       </div>
     </div>
   </div>

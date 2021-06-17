@@ -38,6 +38,11 @@ export class WarrantySearchComponent implements OnInit {
           var date = new Date(data.data.updatedDate);
           this.orderDate = this.datePipe.transform(date, "dd/MM/yyyy");
           this.warrantyDate = this.datePipe.transform(date.setMonth(date.getMonth() + data.data.warranty), "dd/MM/yyyy");
+          if(this.orderDate < this.warrantyDate){
+            console.log("1");
+          }else{
+            console.log("2");
+          }
           this.isCheck = true;
           this.isCheck1 = false;
         } else {

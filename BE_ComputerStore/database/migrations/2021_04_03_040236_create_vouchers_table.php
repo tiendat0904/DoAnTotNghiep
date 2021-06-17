@@ -15,8 +15,8 @@ class CreateVouchersTable extends Migration
     {
         Schema::create('vouchers', function (Blueprint $table) {
             $table->id('voucher_id');
-            $table->bigInteger('customer_id');
-            $table->bigInteger('voucher_level');
+            $table->date('startDate');
+            $table->date('endDate');
         });
     }
 

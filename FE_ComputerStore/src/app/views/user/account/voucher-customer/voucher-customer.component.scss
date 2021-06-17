@@ -1,0 +1,19 @@
+.loader-container{
+    position: absolute;
+    height: 100%;
+    width: 87%;
+    opacity: 0.85;
+    z-index: 99999;
+}
+
+span{
+    display: block;
+    padding: 1rem 0;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.row{
+    background-color: white;
+}

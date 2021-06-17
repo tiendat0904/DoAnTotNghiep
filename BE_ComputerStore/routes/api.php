@@ -55,6 +55,11 @@ Route::get('/voucher', [\App\Http\Controllers\VoucherController::class, 'index']
 Route::get('/voucher/{id}', [\App\Http\Controllers\VoucherController::class, 'show']);
 Route::post('/voucher/delete', [\App\Http\Controllers\VoucherController::class, 'destroy']);
 
+
+Route::get('/voucher-customer', [\App\Http\Controllers\VoucherCustomerController::class, 'index']);
+Route::get('/voucher-customer/{id}', [\App\Http\Controllers\VoucherCustomerController::class, 'show']);
+Route::put('/voucher-customer/{id}', [\App\Http\Controllers\VoucherCustomerController::class, 'update']);
+
 Route::middleware('auth:api')->group(function () {
     Route::get('info', [AccountController::class, 'userInfo']);
     Route::post('logout', [AccountController::class, 'logout']);

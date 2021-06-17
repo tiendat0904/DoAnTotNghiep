@@ -20,6 +20,9 @@ import { MailService } from '../../../services/mail/mail.service';
 import { mailModel } from '../../../models/mail-model';
 import { LoaderService } from '../../../loader/loader.service';
 import { Title } from '@angular/platform-browser';
+import { voucherCustomerModel } from '../../../models/voucher-customer-model';
+import { VoucherCustomerServiceService } from '../../../services/voucher-customer-service/voucher-customer-service.service';
+import { DatePipe } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -32,8 +35,8 @@ export class CartComponent implements OnInit {
   list_item: Array<ItemModel> = [];
   list_product: Array<billDetailModel> = [];
   list_bill: Array<billModel> = [];
-  list_voucher: Array<voucherModel> = [];
-  list_voucher_filter: Array<voucherModel> = [];
+  list_voucher: Array<voucherCustomerModel> = [];
+  list_voucher_filter: Array<voucherCustomerModel> = [];
   list_product_filter: Array<billDetailModel> = [];
   list_bill_detail: Array<billDetailModel> = [];
   list_bill_filter: Array<billModel> = [];
@@ -45,7 +48,7 @@ export class CartComponent implements OnInit {
   itemModel: ItemModel;
   checkCart: boolean;
   account: accountModel;
-  voucherModel: voucherModel;
+  voucherModel: voucherCustomerModel;
   bill_id: any;
   bill_detail_id: any;
   billModel: any;
@@ -60,6 +63,7 @@ export class CartComponent implements OnInit {
   update_address: any;
   selectedType: any;
   checkVoucher: boolean;
+  checkVoucher1: boolean;
   modalReference: any;
   closeResult: string;
 
@@ -67,12 +71,13 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService,
     private fb: FormBuilder,
     // private productService: ProductService,
+    private datePipe: DatePipe,
     private billService: BillService,
     private billDetailService: BillDetailService,
     private accountService: AccountService,
     private router: Router,
     private toastr: ToastrService,
-    private voucherService: VoucherService,
+    private voucherService: VoucherCustomerServiceService,
     private modalService: NgbModal,
     private mailService: MailService,
     private titleService: Title,
@@ -212,28 +217,31 @@ export class CartComponent implements OnInit {
 
   public filterByKeyword() {
     var filterResult = [];
+    this.checkVoucher = false;
+    this.checkVoucher1 = false;
     this.voucherService.detail(localStorage.getItem("account_id")).subscribe(data => {
       this.list_voucher = data.data;
       if (this.searchedKeyword === null || this.searchedKeyword.length === 0) {
         this.list_voucher_filter = null;
         this.total_money = this.total;
       } else {
-        this.list_voucher_filter = this.list_voucher;
+        this.list_voucher_filter = this.list_voucher.filter(voucher => (voucher.status === "Chưa sử dụng" && this.datePipe.transform(new Date, "dd/MM/yyyy") >= this.datePipe.transform(voucher.startDate, "dd/MM/yyyy")  && this.datePipe.transform(new Date, "dd/MM/yyyy") <= this.datePipe.transform(voucher.endDate, "dd/MM/yyyy")));
         var keyword = this.searchedKeyword.toString();
         for (let item of this.list_voucher_filter) {
-          var voucher_id = item.voucher_id.toString();
+          var voucher_id = item.voucher_customer_id.toString();
           if (voucher_id === keyword) {
             filterResult.push(item);
           }
         }
-        if (filterResult.length === 0) {
+        if (filterResult.length === 0 || filterResult === []) {
           this.list_voucher_filter = null;
+          this.checkVoucher1 = true;
         } else {
+          this.checkVoucher = true;
           this.list_voucher_filter = filterResult;
         }
       }
     })
-
   }
 
   useVouvher() {
@@ -264,11 +272,12 @@ export class CartComponent implements OnInit {
             this.toastr.warning("Vui lòng chọn hình thức thanh toán", 'www.tiendatcomputer.vn cho biết');
           } else {
             if (this.list_voucher_filter.length !== 0) {
-              const modelDelete = {
-                id: this.list_voucher_filter[0].voucher_id
-              };
-              this.voucherService.delete(modelDelete).subscribe(data => {
-              })
+              let voucher: voucherCustomerModel;
+              voucher = {
+                voucher_customer_id :this.list_voucher_filter[0].voucher_customer_id,
+                status : "Đã sử dụng"
+              }
+              this.voucherService.update(this.list_voucher_filter[0].voucher_id,voucher).subscribe();
               bill = {
                 order_status_id: 2,
                 phone_number: this.formGroup.get('phone_number')?.value,

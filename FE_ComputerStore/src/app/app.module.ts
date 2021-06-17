@@ -84,6 +84,8 @@ import { UpdateEmployeeComponent } from './views/admin/emloyee/update-employee/u
 import { CommentCustomerComponent } from './views/admin/comment/comment-customer/comment-customer.component';
 import { UpdateCommentCustomerComponent } from './views/admin/comment/update-comment-customer/update-comment-customer.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { VoucherComponent } from './views/admin/voucher/voucher/voucher.component';
+import { UpdateVoucherComponent } from './views/admin/voucher/update-voucher/update-voucher.component';
 
 registerLocaleData(localeFr, 'vi');
 @NgModule({
@@ -156,6 +158,8 @@ registerLocaleData(localeFr, 'vi');
     UpdateCommentCustomerComponent,
     EmployeeComponent,
     UpdateEmployeeComponent,
+    VoucherComponent,
+    UpdateVoucherComponent,
  
     // MainComponent,
     // ProductDetailComponent

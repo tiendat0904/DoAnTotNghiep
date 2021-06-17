@@ -12,6 +12,7 @@ import { ProductPromotionComponent } from './views/admin/promotion-date/product-
 import { PromotionDateComponent } from './views/admin/promotion-date/promotion-date/promotion-date.component';
 import { SupplierComponent } from './views/admin/supplier/supplier/supplier.component';
 import { TrademarkComponent } from './views/admin/trademark/trademark/trademark.component';
+import { VoucherComponent } from './views/admin/voucher/voucher/voucher.component';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
@@ -159,6 +160,10 @@ export const routes: Routes = [
       {
         path: 'product-promotion',
         component: ProductPromotionComponent,
+      },
+      {
+        path: 'voucher',
+        component: VoucherComponent,
       },
       {
         path: 'product',
